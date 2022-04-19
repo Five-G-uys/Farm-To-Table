@@ -1,6 +1,5 @@
 {
   "name": "farm-to-table",
-  "type": "module",
   "version": "1.0.0",
   "description": "Final Project for Operation Spark",
   "main": "index.js",
