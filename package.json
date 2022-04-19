@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "start": "nodemon src/server/index.ts",
+    "start": "ts-node src/server/index.ts",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
