@@ -1,12 +1,13 @@
 {
   "name": "farm-to-table",
+  "type": "module",
   "version": "1.0.0",
   "description": "Final Project for Operation Spark",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "start": "node dist/index.js",
+    "start": "nodemon src/server/index.ts",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
@@ -42,6 +43,7 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "nodemon": "^2.0.15",
     "ts-loader": "^9.2.8",
+    "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   }
 }
