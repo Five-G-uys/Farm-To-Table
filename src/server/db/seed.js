@@ -35,3 +35,5 @@ const Farms = db.define('Farms', {
 // }
 
 // seedSequelize();
+
+// console.log('did it work????????')
