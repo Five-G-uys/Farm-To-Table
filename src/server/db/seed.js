@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { db } from './database.ts';
 import { DataTypes } from 'sequelize';
 import postgres from 'postgres';
@@ -18,22 +19,22 @@ const Farms = db.define('Farms', {
   },
 });
 
-// const seedSequelize = () => {
-//   postgres
-//   .createConnection({ user: "root", password: "" })
-//   .then((db) =>
-//     db.query("CREATE DATABASE IF NOT EXISTS `Farm2Table`").then(() => db.end())
-//   )
-//   .catch(err => console.log(22, 'error', err))
-//   .then(() =>
-//     console.log(
-//       "\x1b[33m",
-//       "\nDatabase (Postgres): 'Farm2Table' successfully created!"
-//     )
-//   )
-//   .then(() => Farms.sync())
-// }
+const seedSequelize = () => {
+  postgres
+    .connect({ user: 'root', password: '12345678' })
+    .then((db) =>
+      db
+        .query('CREATE DATABASE IF NOT EXISTS `farm-to-table`')
+        .then(() => db.end())
+    )
+    .catch((err) => console.error('error', err))
+    .then(() =>
+      console.log(
+        '\x1b[33m',
+        "\nDatabase (Postgres): 'farm-to-table' successfully created!"
+      )
+    )
+    .then(() => Farms.sync());
+};
 
-// seedSequelize();
-
-// console.log('did it work????????')
+seedSequelize();
