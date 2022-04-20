@@ -1,5 +1,6 @@
 import { db } from './database.ts';
 import { DataTypes } from 'sequelize';
+
 import postgres from 'postgres';
 
 const Farms = db.define('Farms', {
