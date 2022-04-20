@@ -2,22 +2,22 @@
   "development": {
     "username": "root",
     "password": "12345678",
-    "database": "farm-to-table",
-    "host": "127.0.0.1",
+    "database": "farm-to-table/dev",
+    "host": "farm-to-table.cruztemxiwjt.us-east-2.rds.amazonaws.com",
     "dialect": "postgres"
   },
   "test": {
     "username": "root",
     "password": "12345678",
-    "database": "farm-to-table",
-    "host": "127.0.0.1",
+    "database": "farm-to-table/dev",
+    "host": "farm-to-table.cruztemxiwjt.us-east-2.rds.amazonaws.com",
     "dialect": "postgres"
   },
   "production": {
     "username": "root",
     "password": "12345678",
-    "database": "farm-to-table",
-    "host": "127.0.0.1",
+    "database": "farm-to-table/dev",
+    "host": "farm-to-table.cruztemxiwjt.us-east-2.rds.amazonaws.com",
     "dialect": "postgres"
   }
 }
