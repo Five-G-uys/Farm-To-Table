@@ -1,9 +1,10 @@
-// // eslint-disable-next-line @typescript-eslint/no-var-requires
-import { DataTypes } from "sequelize";
-import { db } from "../database";
-// import { Farm } from "./Farm";
+import { DataTypes } from 'sequelize';
+import { db } from '../database';
+import Farms from './Farms';
+import Events from './Events';
+import Users from './Users';
 
-const RSVP = db.define("rsvp", {
+const RSVP = db.define('rsvp', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -19,26 +20,26 @@ const RSVP = db.define("rsvp", {
   description: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+  },
+  farm_id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    allowNull: false,
+    references: { model: Farms, key: 'id' },
+  },
+  event_id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    allowNull: false,
+    references: { model: Events, key: 'id' },
   },
   user_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    // references: { model: User, key: "id" }
+    references: { model: Users, key: 'id' },
   },
-    farm_id: {
-      type: DataTypes.INTEGER,
-      unique: true,
-      allowNull: false,
-    //   references: { model: Farm, key: "id" },
-    },
-    event_id: {
-      type: DataTypes.INTEGER,
-      unique: true,
-      allowNull: false,
-    //   references: { model: Events, key: "id" },
-    },
 });
 
 export default RSVP;

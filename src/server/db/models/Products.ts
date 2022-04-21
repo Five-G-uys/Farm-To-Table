@@ -1,9 +1,9 @@
-import { DataTypes } from "sequelize";
-import { db } from "../database";
-// import Farms from "./Farm";
-//import { Farm } from "./Farm";
+import { DataTypes } from 'sequelize';
+import { db } from '../database';
+import Farms from './Farms';
+import Vendors from './Vendors';
 
-const Products = db.define("products", {
+const Products = db.define('products', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -19,13 +19,13 @@ const Products = db.define("products", {
   description: {
     type: DataTypes.STRING,
     unique: false,
-    allowNull: false
+    allowNull: false,
   },
   vendor_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    // references: { model: Vendor, key: "id" }
+    references: { model: Vendors, key: 'id' },
   },
   quantity: {
     type: DataTypes.INTEGER,
@@ -35,34 +35,34 @@ const Products = db.define("products", {
   tier: {
     type: DataTypes.INTEGER,
     unique: false,
-    allowNull: false
+    allowNull: false,
   },
   img_url: {
     type: DataTypes.STRING,
-    unique: false, 
-    allowNull: false  
+    unique: false,
+    allowNull: false,
   },
   available: {
     type: DataTypes.BOOLEAN,
     unique: false,
-    allowNull: false
+    allowNull: false,
   },
   add_ons: {
     type: DataTypes.BOOLEAN,
     unique: false,
-    allowNull: false
+    allowNull: false,
   },
   farm_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    // references: { model: Farm, key: "id" }
+    references: { model: Farms, key: 'id' },
   },
   created_at: {
     type: DataTypes.DATE,
     unique: false,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 export default Products;
