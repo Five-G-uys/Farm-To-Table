@@ -1,8 +1,10 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 require("./db/database.ts");
-
-
+// import User from "./db/models/User";
+// console.log("LINE 5 ", User);
+// import Roles from "./db/models/Roles";
+// console.log("LINE 7", Roles);
 dotenv.config();
 
 const app: Express = express();
