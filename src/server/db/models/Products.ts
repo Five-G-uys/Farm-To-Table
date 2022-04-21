@@ -1,8 +1,9 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Farms from './Farms';
+import Vendors from './Vendors';
 
-const Subscriptions = db.define('subscriptions', {
+const Products = db.define('products', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -10,14 +11,9 @@ const Subscriptions = db.define('subscriptions', {
     allowNull: false,
     autoIncrement: true,
   },
-  season: {
+  name: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.INTEGER,
-    unique: false,
     allowNull: false,
   },
   description: {
@@ -25,13 +21,34 @@ const Subscriptions = db.define('subscriptions', {
     unique: false,
     allowNull: false,
   },
+  vendor_id: {
+    type: DataTypes.INTEGER,
+    unique: false,
+    allowNull: false,
+    references: { model: Vendors, key: 'id' },
+  },
+  quantity: {
+    type: DataTypes.INTEGER,
+    unique: false,
+    allowNull: false,
+  },
   tier: {
+    type: DataTypes.INTEGER,
+    unique: false,
+    allowNull: false,
+  },
+  img_url: {
     type: DataTypes.STRING,
     unique: false,
     allowNull: false,
   },
-  payment_option: {
-    type: DataTypes.STRING,
+  available: {
+    type: DataTypes.BOOLEAN,
+    unique: false,
+    allowNull: false,
+  },
+  add_ons: {
+    type: DataTypes.BOOLEAN,
     unique: false,
     allowNull: false,
   },
@@ -48,4 +65,4 @@ const Subscriptions = db.define('subscriptions', {
   },
 });
 
-export default Subscriptions;
+export default Products;

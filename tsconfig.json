@@ -98,6 +98,6 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["src/**/*.ts", "src/server/db/seed.js"],
+  "include": ["src/**/*.ts", "src/server/db/seed.ts"],
   "exclude": ["node_modules"]
 }

@@ -1,8 +1,10 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Farms from './Farms';
+import Subscriptions from './Subscriptions';
+import Users from './Users';
 
-const Subscriptions = db.define('subscriptions', {
+const Orders = db.define('orders', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -10,36 +12,28 @@ const Subscriptions = db.define('subscriptions', {
     allowNull: false,
     autoIncrement: true,
   },
-  season: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.INTEGER,
-    unique: false,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING,
-    unique: false,
-    allowNull: false,
-  },
-  tier: {
-    type: DataTypes.STRING,
-    unique: false,
-    allowNull: false,
-  },
-  payment_option: {
-    type: DataTypes.STRING,
-    unique: false,
-    allowNull: false,
-  },
   farm_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
     references: { model: Farms, key: 'id' },
+  },
+  subscription_id: {
+    type: DataTypes.INTEGER,
+    unique: false,
+    allowNull: false,
+    references: { model: Subscriptions, key: 'id' },
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    unique: false,
+    allowNull: false,
+    references: { model: Users, key: 'id' },
+  },
+  deliver_date: {
+    type: DataTypes.DATE,
+    unique: false,
+    allowNull: false,
   },
   created_at: {
     type: DataTypes.DATE,
@@ -48,4 +42,4 @@ const Subscriptions = db.define('subscriptions', {
   },
 });
 
-export default Subscriptions;
+export default Orders;

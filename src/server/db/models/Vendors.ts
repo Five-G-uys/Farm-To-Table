@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Farms from './Farms';
 
-const Events = db.define('events', {
+const Vendors = db.define('vendors', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -15,7 +15,7 @@ const Events = db.define('events', {
     unique: true,
     allowNull: false,
   },
-  description: {
+  contact_information: {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
@@ -28,4 +28,4 @@ const Events = db.define('events', {
   },
 });
 
-export default Events;
+export default Vendors;

@@ -1,8 +1,10 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Farms from './Farms';
+import Events from './Events';
+import Users from './Users';
 
-const Events = db.define('events', {
+const RSVP = db.define('rsvp', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -26,6 +28,18 @@ const Events = db.define('events', {
     allowNull: false,
     references: { model: Farms, key: 'id' },
   },
+  event_id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    allowNull: false,
+    references: { model: Events, key: 'id' },
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    unique: false,
+    allowNull: false,
+    references: { model: Users, key: 'id' },
+  },
 });
 
-export default Events;
+export default RSVP;

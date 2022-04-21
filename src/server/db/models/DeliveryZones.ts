@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Farms from './Farms';
 
-const Subscriptions = db.define('subscriptions', {
+const DeliveryZones = db.define('delivery_zones', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -10,27 +10,7 @@ const Subscriptions = db.define('subscriptions', {
     allowNull: false,
     autoIncrement: true,
   },
-  season: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.INTEGER,
-    unique: false,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING,
-    unique: false,
-    allowNull: false,
-  },
-  tier: {
-    type: DataTypes.STRING,
-    unique: false,
-    allowNull: false,
-  },
-  payment_option: {
+  name: {
     type: DataTypes.STRING,
     unique: false,
     allowNull: false,
@@ -41,11 +21,11 @@ const Subscriptions = db.define('subscriptions', {
     allowNull: false,
     references: { model: Farms, key: 'id' },
   },
-  created_at: {
-    type: DataTypes.DATE,
+  zip_code: {
+    type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
   },
 });
 
-export default Subscriptions;
+export default DeliveryZones;
