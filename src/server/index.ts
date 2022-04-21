@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import express, { Express, Request, Response } from "express";
-import dotenv from "dotenv";
-require("./db/database.ts");
-import User from "./db/models/User";
-console.log("LINE 5 index.ts", User);
-import Roles from "./db/models/Roles";
-import Farms from "./db/models/Farms";
-console.log("LINE 7 index.ts", Roles);
-console.log("LINE 9 index.ts", Farms);
-=======
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 require('./db/database.ts');
@@ -37,7 +26,6 @@ console.log(
   Vendors
 );
 
->>>>>>> e665d827cad5b6529a6fb024ce635e33b3d87181
 dotenv.config();
 
 const app: Express = express();

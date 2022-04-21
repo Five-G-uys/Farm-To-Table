@@ -10,13 +10,5 @@ export const db = new Sequelize(
   }
 ); // Example for postgres
 db.authenticate()
-<<<<<<< HEAD
-  .then(() => console.info("CONNECTED TO DATABASE"))
-  .catch((err = "err") => console.warn("DB ERROR", err));
-
-//sync all models to the database
-// db.sync({ force: true });
-=======
   .then(() => console.info('CONNECTED TO DATABASE'))
   .catch((err = 'err') => console.warn('DB ERROR', err));
->>>>>>> e665d827cad5b6529a6fb024ce635e33b3d87181
