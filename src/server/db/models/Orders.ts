@@ -1,10 +1,9 @@
-// // eslint-disable-next-line @typescript-eslint/no-var-requires
 import { DataTypes } from "sequelize";
 import { db } from "../database";
 // import Farms from "./Farm";
 //import { Farm } from "./Farm";
 
-const Subscriptions = db.define("subscriptions", {
+const Orders = db.define("orders", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -12,28 +11,20 @@ const Subscriptions = db.define("subscriptions", {
     allowNull: false,
     autoIncrement: true,
   },
-  season: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-  },
-  price: {
+  user_id: {
     type: DataTypes.INTEGER,
     unique: false,
-    allowNull: false
+    allowNull: false,
+    // references: { model: User, key: "id" }
   },
-  description: {
-    type: DataTypes.STRING,
+  subscription_id: {
+    type: DataTypes.INTEGER,
     unique: false,
-    allowNull: false
+    allowNull: false,
+    // references: { model: Subscriptions, key: "id" }
   },
-  tier: {
-    type: DataTypes.STRING,
-    unique: false,
-    allowNull: false
-  },
-  payment_option: {
-    type: DataTypes.STRING,
+  deliver_date: {
+    type: DataTypes.DATE,
     unique: false,
     allowNull: false
   },
@@ -50,4 +41,4 @@ const Subscriptions = db.define("subscriptions", {
   }
 });
 
-export default Subscriptions;
+export default Orders;

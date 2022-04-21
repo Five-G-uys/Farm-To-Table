@@ -1,5 +1,5 @@
 CREATE TABLE "farms" (
-  "farm_id" int,
+  "id" int,
   "name" varchar(50),
   "description" varchar(200)
 );
@@ -16,9 +16,8 @@ CREATE TABLE "users" (
 );
 
 CREATE TABLE "roles" (
-  "role_id" SERIAL PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(50),
-  "created_at" timestamp,
   "farm_id" int
 );
 
@@ -42,7 +41,7 @@ CREATE TABLE "orders" (
   "created_at" timestamp
 );
 
-CREATE TABLE "deliveryZone" (
+CREATE TABLE "delivery_zone" (
   "delivery_zone_id" int,
   "name" varchar(50),
   "farm_id" int,

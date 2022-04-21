@@ -1,9 +1,9 @@
-// // eslint-disable-next-line @typescript-eslint/no-var-requires
 import { DataTypes } from "sequelize";
 import { db } from "../database";
-console.log("LINE FOUR Roles", db);
+// import Farms from "./Farm";
 //import { Farm } from "./Farm";
-const Farms = db.define("farms", {
+
+const DeliveryZone = db.define("delivery_zone", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -13,14 +13,20 @@ const Farms = db.define("farms", {
   },
   name: {
     type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING,
     unique: false,
-    allowNull: true //for now. 
+    allowNull: false
+  },
+  farm_id: {
+    type: DataTypes.INTEGER,
+    unique: false,
+    allowNull: false,
+    // references: { model: Farm, key: "id" }
+  },
+  zip_code: {
+    type: DataTypes.INTEGER,
+    unique: false,
+    allowNull: false
   }
 });
 
-export default Farms;
+export default DeliveryZone;
