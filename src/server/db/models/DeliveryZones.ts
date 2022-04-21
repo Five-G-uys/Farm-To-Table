@@ -1,9 +1,8 @@
-import { DataTypes } from "sequelize";
-import { db } from "../database";
-// import Farms from "./Farm";
-//import { Farm } from "./Farm";
+import { DataTypes } from 'sequelize';
+import { db } from '../database';
+import Farms from './Farms';
 
-const DeliveryZone = db.define("delivery_zone", {
+const DeliveryZones = db.define('delivery_zones', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -14,19 +13,19 @@ const DeliveryZone = db.define("delivery_zone", {
   name: {
     type: DataTypes.STRING,
     unique: false,
-    allowNull: false
+    allowNull: false,
   },
   farm_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    // references: { model: Farm, key: "id" }
+    references: { model: Farms, key: 'id' },
   },
   zip_code: {
     type: DataTypes.INTEGER,
     unique: false,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
-export default DeliveryZone;
+export default DeliveryZones;

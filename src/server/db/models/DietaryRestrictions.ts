@@ -1,10 +1,10 @@
-import { DataTypes } from "sequelize";
-import { db } from "../database";
-// import Products from "./Products";
-// import Farms from "./Farm";
-//import { Farm } from "./Farm";
+import { DataTypes } from 'sequelize';
+import { db } from '../database';
+import Farms from './Farms';
+import Products from './Products';
+import Users from './Users';
 
-const DietaryRestrictions = db.define("dietary_restrictions", {
+const DietaryRestrictions = db.define('dietary_restrictions', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -12,29 +12,29 @@ const DietaryRestrictions = db.define("dietary_restrictions", {
     allowNull: false,
     autoIncrement: true,
   },
-  user_id: {
+  farm_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    // references: { model: User, key: "id" }
+    references: { model: Farms, key: 'id' },
   },
   product_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    // references: { model: Products, key: "id" }
+    references: { model: Products, key: 'id' },
   },
-  farm_id: {
+  user_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    // references: { model: Farm, key: "id" }
+    references: { model: Users, key: 'id' },
   },
   created_at: {
     type: DataTypes.DATE,
     unique: false,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 export default DietaryRestrictions;
