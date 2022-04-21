@@ -1,8 +1,8 @@
 // // eslint-disable-next-line @typescript-eslint/no-var-requires
 import { DataTypes } from "sequelize";
 import { db } from "../database";
-console.log("LINE FOUR Roles", db);
-//import { Farm } from "./Farm";
+//console.log("LINE FOUR Roles", db);
+import Farms from "./Farms";
 const Roles = db.define("roles", {
   id: {
     type: DataTypes.INTEGER,
@@ -17,13 +17,15 @@ const Roles = db.define("roles", {
     allowNull: false,
   },
 
-  //   farm_id: {
-  //     type: DataTypes.INTEGER,
-  //     unique: true,
-  //     allowNull: false,
-  //     references: { model: Farm, key: "id" },
-  //   },
+  farm_id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    allowNull: false,
+    references: { model: Farms, key: "id" },
+  },
 });
+
+Roles.sync().then(() => console.log("LINE 29 Roles.ts || worked"));
 
 export default Roles;
 // console.log("LINE 27", Roles);

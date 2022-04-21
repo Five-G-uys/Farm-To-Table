@@ -1,8 +1,9 @@
 import { DataTypes } from "sequelize";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import { db } from "../database";
-console.log("LINE FOUR", db);
-//import Roles from "./Roles";
+//console.log("LINE FOUR", db);
+import Roles from "./Roles";
+import Farms from "./Farms";
 
 const User = db.define("users", {
   id: {
@@ -27,25 +28,29 @@ const User = db.define("users", {
     unique: true,
     allowNull: false,
   },
-  // role_id: {
-  //   type: DataTypes.STRING,
-  //   unique: true,
-  //   allowNull: false,
-  //   references: {
-  //     model: Roles,
-  //     key: "id",
-  //   },
-  // },
+  role_id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    allowNull: false,
+    references: {
+      model: Roles,
+      key: "id",
+    },
+  },
   delivery_zone: { type: DataTypes.STRING, unique: true, allowNull: false },
-  // farm_id: {
-  //   type: DataTypes.INTEGER,
-  //   unique: true,
-  //   allowNull: false,
-  //   references: {
-  //     model: Farm,
-  //     key: "id",
-  //   },
-  // },
+  farm_id: {
+    type: DataTypes.INTEGER,
+    unique: true,
+    allowNull: false,
+    references: {
+      model: Farms,
+      key: "id",
+    },
+  },
+});
+
+User.sync().then(() => {
+  console.log("LINE 53 USer.ts || worked");
 });
 
 export default User;

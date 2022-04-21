@@ -1,22 +1,22 @@
-import { db } from './database.ts';
-import { DataTypes } from 'sequelize';
-import postgres from 'postgres';
+// import { db } from './database.ts';
+// import { DataTypes } from 'sequelize';
+// import postgres from 'postgres';
 
-const Farms = db.define('Farms', {
-  farm_id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowAutoIncrement: false,
-    allowNull: true,
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING,
-  },
-});
+// const Farms = db.define('Farms', {
+//   farm_id: {
+//     type: DataTypes.INTEGER,
+//     primaryKey: true,
+//     allowAutoIncrement: false,
+//     allowNull: true,
+//   },
+//   name: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//   },
+//   description: {
+//     type: DataTypes.STRING,
+//   },
+// });
 
 // const seedSequelize = () => {
 //   postgres
