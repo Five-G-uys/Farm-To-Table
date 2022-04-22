@@ -10,12 +10,10 @@ module.exports = {
   mode: 'development',
   entry: path.resolve(srcDir, 'index.tsx'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
   },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-  },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -45,9 +43,12 @@ module.exports = {
       // },
     ],
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(srcDir, 'index.tsx'),
+      template: path.resolve(srcDir, 'index.html'),
       inject: 'body',
     }),
     new NodePolyfillPlugin(),
