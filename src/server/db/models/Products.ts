@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Farms from './Farms';
-import Vendors from './Vendors';
+// import Vendors from './Vendors';
 
 const Products = db.define('products', {
   id: {
@@ -25,7 +25,7 @@ const Products = db.define('products', {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    references: { model: Vendors, key: 'id' },
+    // references: { model: Vendors, key: 'id' },
   },
   quantity: {
     type: DataTypes.INTEGER,
