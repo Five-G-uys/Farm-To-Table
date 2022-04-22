@@ -50,8 +50,4 @@ app.get('*', (req: Request, res: Response) => {
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 198b91ccfa8d055a59bd225bfbd37f6d87ae5fa7
