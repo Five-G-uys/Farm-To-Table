@@ -33,7 +33,7 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.LOCAL_PORT;
 
-const dist = path.resolve(__dirname, '..', 'client', 'dist');
+const dist = path.resolve(__dirname, '..', '..', 'dist');
 console.log('LINE 37 || INDEX.TSX', __dirname);
 
 app.use(express.json());
@@ -41,12 +41,17 @@ app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
 
 // NEED TO FIGURE OUT HOW TO GET INDEX.HTML TO POPULATE IN THE DIST FOLDER SO WE CAN SERVE IT FROM HERE
-// THE INDEX.HTML HARDCODED IN DIST FOLDER BY CAITY'S GROUP. MIGHT BE WORTH TRYING IF HTMLWEBPACKPLUGIN DOESN'T WORK
+// THE INDEX.HTML HARDCODED IN DIST FOLDER BY CAITY'S GROUP. MIGHT BE WORTH TRYING IF HTMLWEBPACKPLUGIN DOESN'T WORKasdf
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('⚡️Olá⚡️, ⚡️Cinco Gajos⚡️... In TypeScr⚡️pt');
+// KEEP AT BOTTOM OF GET REQUESTS
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.resolve(dist, 'index.html'));
 });
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 198b91ccfa8d055a59bd225bfbd37f6d87ae5fa7
