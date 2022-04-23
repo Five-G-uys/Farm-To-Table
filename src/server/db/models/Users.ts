@@ -3,7 +3,7 @@ import { db } from '../database';
 import Farms from './Farms';
 import Roles from './Roles';
 
-const Users = db.define('users', {
+const Users = db.define('user', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -18,7 +18,6 @@ const Users = db.define('users', {
   },
   name: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
   },
   email: {
@@ -28,38 +27,43 @@ const Users = db.define('users', {
   },
   address: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: true,
   },
   picture: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: true,
   },
   subscribed: {
     type: DataTypes.BOOLEAN,
-    unique: true,
     allowNull: false,
+    defaultValue: false,
   },
   farm_id: {
     type: DataTypes.INTEGER,
-    unique: true,
     allowNull: false,
     references: {
       model: Farms,
       key: 'id',
     },
+    defaultValue: 1
   },
   role_id: {
     type: DataTypes.INTEGER,
-    unique: true,
     allowNull: false,
     references: {
       model: Roles,
       key: 'id',
     },
+    defaultValue: 1
   },
-  delivery_zone: { type: DataTypes.STRING, unique: true, allowNull: false },
-});
+  delivery_zone: { 
+    type: DataTypes.STRING, 
+    allowNull: true 
+  },
+}, {freezeTableName: true, tableName: 'user'});
+
+// Users.sync().then(() => {
+//   console.log("Users table synced");
+// });
 
 export default Users;

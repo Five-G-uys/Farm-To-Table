@@ -9,7 +9,7 @@
     "start": "npx nodemon src/server/index.ts",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "seed": "ts-node src/server/db/seed.ts"
+    "migrate": "ts-node src/server/db/seed.ts"
   },
   "repository": {
     "type": "git",
@@ -53,6 +53,7 @@
     "@types/node": "^17.0.25",
     "@types/passport": "^1.0.7",
     "@types/passport-google-oauth2": "^0.1.5",
+    "@types/passport-google-oauth20": "^2.0.11",
     "@types/sequelize": "^4.28.11",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",

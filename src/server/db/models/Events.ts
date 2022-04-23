@@ -13,12 +13,10 @@ const Events = db.define("events", {
   },
   eventName: {
     type: DataTypes.STRING,
-    unique: false,
     allowNull: false,
   },
   description: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
   },
   category: { type: DataTypes.STRING, unique: false, allowNull: false },

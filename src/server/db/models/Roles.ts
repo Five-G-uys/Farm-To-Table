@@ -15,14 +15,6 @@ const Roles = db.define('roles', {
     unique: true,
     allowNull: false,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    unique: true,
-    allowNull: false,
-    references: { model: Farms, key: 'id' },
-  },
 });
-
-Roles.sync().then(() => console.log("LINE 29 Roles.ts || worked"));
 
 export default Roles;

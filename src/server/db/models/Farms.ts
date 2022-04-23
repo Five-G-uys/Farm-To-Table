@@ -11,13 +11,10 @@ const Farms = db.define('farms', {
   },
   name: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
   },
   description: {
     type: DataTypes.STRING,
-    unique: false,
-    allowNull: true, //for now.
   },
 });
 

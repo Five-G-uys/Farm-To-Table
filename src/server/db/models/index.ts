@@ -24,6 +24,7 @@ export const syncModels = async (dropTables = false) => {
     await DietaryRestrictionsModel.sync(options);
     await OrdersModel.sync(options);
     await RSVPModel.sync(options);
+    console.log("models synced!")
   } catch (err) {
     console.error(err);
   }

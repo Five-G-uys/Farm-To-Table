@@ -12,17 +12,14 @@ const Vendors = db.define('vendors', {
   },
   name: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
   },
   contact_information: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
   },
   farm_id: {
     type: DataTypes.INTEGER,
-    unique: true,
     allowNull: false,
     references: { model: Farms, key: 'id' },
   },
