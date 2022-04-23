@@ -1,10 +1,12 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-import cloudinary from "@cloudinary/react";
-window.cloudinary = cloudinary;
+//import cloudinary from "cloudinary";
+//window.cloudinary = cloudinary;
 const EventsPage = () => {
-  const [farm, setFarm] = useState({
+  const [event, setEvent] = useState({
     eventName: "",
     description: "",
     thumbnail: "",
@@ -17,34 +19,32 @@ const EventsPage = () => {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setFarm((state) => {
+    setEvent((state) => {
       return {
         ...state,
         [name]: value,
       };
     });
-    console.log(farm);
+    console.log(event);
   };
 
   const postEvent = () => {
     axios
       .post("/event", {
         event: {
-          eventName: farm.eventName,
-          description: farm.description,
-          thumbnail: farm.thumbnail,
-          category: farm.category,
+          eventName: event.eventName,
+          description: event.description,
+          thumbnail: event.thumbnail,
+          category: event.category,
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((data) => console.log("saved!", data))
       .catch((err) => console.error(err));
   };
-
-  const CLOUD_PRESET2 = "py2mpki2";
-  const CLOUD_NAME = "ddg1jsejq";
-
-  //CLOUDINARY USER PHOTO UPLOAD SETUP
+  console.log(process.env.CLOUD_PRESET2);
+  const CLOUD_NAME = process.env.CLOUD_NAME;
+  const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
     const widget = window.cloudinary.createUploadWidget(
       {
@@ -53,8 +53,8 @@ const EventsPage = () => {
       },
       (error: unknown, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === "success") {
-          console.log("LINE 59", result.info.url);
-          setFarm((state) => {
+          console.log("LINE 56", result.info.url);
+          setEvent((state) => {
             return {
               ...state,
               thumbnail: result.info.url,
@@ -66,10 +66,12 @@ const EventsPage = () => {
     );
     widget.open();
   };
+
+  //{ event: string; info: { url: string } })
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => {}, [farm.thumbnail]);
-  console.log(farm);
-  const { eventName, description, thumbnail, category } = farm;
+  useEffect(() => {}, [event.thumbnail]);
+  console.log(event);
+  const { eventName, description, thumbnail, category } = event;
   return (
     <div className="event">
       <h3 className="create-event">Create event</h3>
@@ -81,7 +83,7 @@ const EventsPage = () => {
         <br></br>
         {thumbnail && <img src={thumbnail} />}
         <br></br>
-
+        <br></br>
         <form onSubmit={postEvent}>
           <input
             type="text"
@@ -100,15 +102,14 @@ const EventsPage = () => {
           ></textarea>
           <br></br>
           <br></br>
-          <textarea
+          {/* <textarea
             className="input"
             placeholder="thumbnail"
             value={thumbnail}
             name="thumbnail"
             onChange={handleInputEvent}
-          ></textarea>
-          <br></br>
-          <br></br>
+          ></textarea> */}
+
           <input
             className="name"
             type="text"
