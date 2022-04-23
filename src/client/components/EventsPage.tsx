@@ -48,28 +48,28 @@ const EventsPage = () => {
   };
 
   //CLOUDINARY USER PHOTO UPLOAD SETUP
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const showWidget = () => {
-  //   const widget = window.cloudinary.createUploadWidget(
-  //     {
-  //       cloudName: `${process.env.CLOUD_NAME}`,
-  //       uploadPreset: `${process.env.CLOUD_PRESET}`,
-  //     },
-  //     (error: unknown, result: object) => {
-  //       if (!error && result && result.event === "success") {
-  //         console.log("LINE 59", result.info.url);
-  //         setFarm((state) => {
-  //           return {
-  //             ...state,
-  //             thumbnail: result.info.url,
-  //           };
-  //         });
-  //         console.log("LINE 63", result.info.url);
-  //       }
-  //     }
-  //   );
-  //   widget.open();
-  // };
+  //eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const showWidget = () => {
+    const widget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: `${process.env.CLOUD_NAME}`,
+        uploadPreset: `${process.env.CLOUD_PRESET}`,
+      },
+      (error: unknown, result: { event: string; info: { url: string } }) => {
+        if (!error && result && result.event === "success") {
+          console.log("LINE 59", result.info.url);
+          setFarm((state) => {
+            return {
+              ...state,
+              thumbnail: result.info.url,
+            };
+          });
+          console.log("LINE 63", result.info.url);
+        }
+      }
+    );
+    widget.open();
+  };
 
   //////////////////////////////////////////
   // const myWidget = window.cloudinary.createUploadWidget(
