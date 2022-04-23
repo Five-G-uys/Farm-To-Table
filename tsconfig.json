@@ -4,6 +4,8 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "jsx": "react" /* Specify what JSX code is generated. */,
     "typeRoots": ["./src/types", "./types/index.d.ts"],
+    "paths": { "cloudinary": ["."] },
+    "baseUrl": ".",
 
     /* Modules */
     "module": "commonjs" /* Specify what module code is generated. */,
@@ -14,7 +16,11 @@
 
     /* Emit */
     "outDir": "./dist" /* Specify an output folder for all emitted files. */,
-
+    "lib": ["es6", "dom"],
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noEmit": true,
     /* Interop Constraints */
     "allowSyntheticDefaultImports": true /* Allow 'import x from y' when a module doesn't have a default export. */,
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,

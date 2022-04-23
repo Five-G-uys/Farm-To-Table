@@ -1,6 +1,6 @@
 export {};
 //import cloudinary from "@cloudinary/react";
-export declare global {
+declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cloudinary: any;
