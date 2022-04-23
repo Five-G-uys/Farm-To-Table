@@ -1,8 +1,9 @@
-import { DataTypes } from 'sequelize';
-import { db } from '../database';
-import Farms from './Farms';
+import { DataTypes } from "sequelize";
+import { db } from "../database";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Farms from "./Farms";
 
-const Events = db.define('events', {
+const Events = db.define("events", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -10,9 +11,9 @@ const Events = db.define('events', {
     allowNull: false,
     autoIncrement: true,
   },
-  name: {
+  eventName: {
     type: DataTypes.STRING,
-    unique: true,
+    unique: false,
     allowNull: false,
   },
   description: {
@@ -20,12 +21,14 @@ const Events = db.define('events', {
     unique: true,
     allowNull: false,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    unique: true,
-    allowNull: false,
-    references: { model: Farms, key: 'id' },
-  },
+  category: { type: DataTypes.STRING, unique: false, allowNull: false },
+  thumbnail: { type: DataTypes.STRING, unique: false, allowNull: false },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   unique: true,
+  //   allowNull: true,
+  //   references: { model: Farms, key: "id" },
+  // },
 });
 
 export default Events;
