@@ -10,9 +10,9 @@ const Events = db.define("events", {
     allowNull: false,
     autoIncrement: true,
   },
-  name: {
+  eventName: {
     type: DataTypes.STRING,
-    unique: true,
+    unique: false,
     allowNull: false,
   },
   description: {
@@ -20,12 +20,14 @@ const Events = db.define("events", {
     unique: true,
     allowNull: false,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    unique: true,
-    allowNull: true,
-    references: { model: Farms, key: "id" },
-  },
+  category: { type: DataTypes.STRING, unique: false, allowNull: false },
+  thumbnail: { type: DataTypes.STRING, unique: false, allowNull: false },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   unique: true,
+  //   allowNull: true,
+  //   references: { model: Farms, key: "id" },
+  // },
 });
 
 export default Events;

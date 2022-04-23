@@ -1,15 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter} from 'react-router-dom';
-import { Routes} from 'react-router-dom';
-import { Route} from 'react-router-dom';
+import React from "react";
+//import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+import ReactDOMClient from "react-dom/client";
 
-import App from './components/App';
-import HomePage from './components/HomePage';
-import SubscriptionsPage from './components/SubscriptionsPage'
-import OrdersPage from './components/OrdersPage';
-import EventsPage from './components/EventsPage';
-import ProfilePage from './components/ProfilePage';
+import App from "./components/App";
+import HomePage from "./components/HomePage";
+import SubscriptionsPage from "./components/SubscriptionsPage";
+import OrdersPage from "./components/OrdersPage";
+import EventsPage from "./components/EventsPage";
+import ProfilePage from "./components/ProfilePage";
 
 const element = (
   <BrowserRouter>
@@ -23,5 +24,7 @@ const element = (
     </Routes>
   </BrowserRouter>
 );
-
-ReactDOM.render(element, document.getElementById('app'));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const container: any = document.getElementById("app");
+const root = ReactDOMClient.createRoot(container);
+root.render(element);
