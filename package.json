@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "dev": "webpack --watch",
-    "start": "ts-node src/server/index.ts",
+    "start": "npx nodemon src/server/index.ts",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "seed": "ts-node src/server/db/seed.ts"
