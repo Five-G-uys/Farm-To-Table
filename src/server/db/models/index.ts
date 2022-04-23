@@ -41,7 +41,7 @@ export const syncModels = async (dropTables = false) => {
       .then((arr: string | any[]) =>
         console.log(
           '\x1b[32m',
-          `\nDatabase (MySQL): Successfully seeded Farms with ${arr.length} entries!\n`,
+          `\nDatabase (PostgreSQL): Successfully seeded Farms with ${arr.length} entries!\n`,
           '\x1b[37m'
         )
       )
@@ -52,7 +52,7 @@ export const syncModels = async (dropTables = false) => {
       .then((arr: string | any[]) =>
         console.log(
           '\x1b[32m',
-          `\nDatabase (MySQL): Successfully seeded Roles with ${arr.length} entries!\n`,
+          `\nDatabase (PostgreSQL): Successfully seeded Roles with ${arr.length} entries!\n`,
           '\x1b[37m'
         )
       )
@@ -63,7 +63,7 @@ export const syncModels = async (dropTables = false) => {
       .then((arr: string | any[]) =>
         console.log(
           '\x1b[32m',
-          `\nDatabase (MySQL): Successfully seeded subscribers with ${arr.length} entries!\n`,
+          `\nDatabase (PostgreSQL): Successfully seeded subscribers with ${arr.length} entries!\n`,
           '\x1b[37m'
         )
       );
