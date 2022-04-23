@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-import Farms from './Farms';
+// import Farms from './Farms';
 import Events from './Events';
 import Users from './Users';
 
@@ -22,12 +22,12 @@ const RSVP = db.define('rsvp', {
     unique: true,
     allowNull: false,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    unique: true,
-    allowNull: false,
-    references: { model: Farms, key: 'id' },
-  },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   unique: false,
+  //   allowNull: false,
+  //   references: { model: Farms, key: 'id' },
+  // },
   event_id: {
     type: DataTypes.INTEGER,
     unique: true,

@@ -1,7 +1,12 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
+<<<<<<< HEAD
 import Farms from './Farms';
 // import Vendors from './Vendors';
+=======
+// import Farms from './Farms';
+import Vendors from './Vendors';
+>>>>>>> 40aa4d3a0a343a18de05d38aa8681e5dde52e76f
 
 const Products = db.define('products', {
   id: {
@@ -52,12 +57,12 @@ const Products = db.define('products', {
     unique: false,
     allowNull: false,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    unique: false,
-    allowNull: false,
-    references: { model: Farms, key: 'id' },
-  },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   unique: false,
+  //   allowNull: false,
+  //   references: { model: Farms, key: 'id' },
+  // },
   created_at: {
     type: DataTypes.DATE,
     unique: false,
