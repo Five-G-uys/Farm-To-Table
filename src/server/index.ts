@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-<<<<<<< HEAD
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
@@ -14,46 +13,12 @@ const axios = require('axios');
 // Import database and models
 require('./db/database.ts');
 require('./middleware/auth');
-import {Farms, Roles, Events, Orders, DeliveryZones, Products, RSVP, Subscriptions, Users, Vendors} from './db/models';
+import {Farms, Roles, Orders, DeliveryZones, Products, RSVP, Subscriptions, Users, Vendors} from './db/models';
+import Events from "./db/models/Events";
+//import { postEvent } from "./routes/EventRoutes";
 
 // Needs to stay until used elsewhere (initializing models)
 console.log(Farms, Roles, Events, Orders, DeliveryZones,Products, RSVP, Subscriptions, Users, Vendors);
-=======
-/* eslint-disable @typescript-eslint/no-var-requires */
-import express, { Express, Request, Response } from "express";
-
-//import { postEvent } from "./routes/EventRoutes";
-
-//console.log(postEvent);
-import dotenv from "dotenv";
-const path = require("path");
-require("./db/database.ts");
-import Events from "./db/models/Events";
-import {
-  Farms,
-  Roles,
-  // Events,
-  Orders,
-  DeliveryZones,
-  Products,
-  RSVP,
-  Subscriptions,
-  Users,
-  Vendors,
-} from "./db/models";
-console.log(
-  Farms,
-  Roles,
-  Events,
-  Orders,
-  DeliveryZones,
-  Products,
-  RSVP,
-  Subscriptions,
-  Users,
-  Vendors
-);
->>>>>>> db7fb7cce5e05c328c4d827cb404832ef4caa29c
 
 dotenv.config();
 
@@ -78,7 +43,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-<<<<<<< HEAD
 const successLoginUrl = 'http://localhost:5555/#/';
 const errorLoginUrl = 'http://localhost:5555/login/error';
 
@@ -113,12 +77,6 @@ app.get(
 //     });
 // });
 
-
-
-// *** KEEP AT BOTTOM OF GET REQUESTS ***
-app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.resolve(dist, 'index.html'));
-=======
 //Events resquests
 app.post("/event", (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category } = req.body.event;
@@ -149,7 +107,6 @@ app.post("/event", (req: Request, res: Response) => {
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.resolve(dist, "index.html"));
->>>>>>> db7fb7cce5e05c328c4d827cb404832ef4caa29c
 });
 
 app.listen(port, () => {

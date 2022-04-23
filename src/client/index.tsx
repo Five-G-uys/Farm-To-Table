@@ -5,7 +5,6 @@ import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import ReactDOMClient from "react-dom/client";
 
-<<<<<<< HEAD
 import App from './components/App';
 import HomePage from './components/HomePage';
 import SubscriptionsPage from './components/SubscriptionsPage'
@@ -14,14 +13,6 @@ import EventsPage from './components/EventsPage';
 import ProfilePage from './components/ProfilePage';
 import Login from './components/Login';
 
-=======
-import App from "./components/App";
-import HomePage from "./components/HomePage";
-import SubscriptionsPage from "./components/SubscriptionsPage";
-import OrdersPage from "./components/OrdersPage";
-import EventsPage from "./components/EventsPage";
-import ProfilePage from "./components/ProfilePage";
->>>>>>> db7fb7cce5e05c328c4d827cb404832ef4caa29c
 
 const element = (
   <BrowserRouter>

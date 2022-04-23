@@ -6,7 +6,7 @@ require('dotenv').config();
 const { application } = require('express'); // find name in project
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { Users } = require('../database/models/users.js')
+const { Users } = require('../db/models/User')
 
 
 passport.use(new GoogleStrategy({
