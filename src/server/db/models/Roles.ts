@@ -16,4 +16,6 @@ const Roles = db.define('roles', {
   },
 });
 
+Roles.sync().then(() => console.log("LINE 29 Roles.ts || worked"));
+
 export default Roles;
