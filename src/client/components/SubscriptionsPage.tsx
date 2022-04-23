@@ -33,12 +33,7 @@ const SubscriptionsPage = () => {
 
   return (
     <div>
-      <input
-        type='checkbox'
-        text='Subscribed'
-        value={checkedOne}
-        onChange={() => setCheckedOne(!checkedOne)}
-      />
+      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
       <button onClick={handleSubscribed}>Submit</button>
     </div>
   );

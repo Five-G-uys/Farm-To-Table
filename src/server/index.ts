@@ -77,8 +77,14 @@ app.post('/event', (req: Request, res: Response) => {
 });
 
 ////////SUBSCRIPTION REQUEST////////////
-app.put(`/subscribed/:user`, (req, res) => {
-  req.params.user;
+app.put(`/subscribed/:user`, (req: Request, res: Response) => {
+  Users.update(req.body, { where: { name: req.params.user } })
+    .then((response: unknown) => {
+      console.log('LINE 83 Routes', response);
+    })
+    .catch((err: unknown) => {
+      console.error('LINE 86 ROUTES:', err);
+    });
 });
 
 // KEEP AT BOTTOM OF GET REQUESTS
