@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { db } from "../database";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Farms from "./Farms";
 
 const Events = db.define("events", {

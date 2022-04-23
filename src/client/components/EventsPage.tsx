@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 //import axios from "axios";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//import cloudinary from "cloudinary-react";
+import cloudinary from "cloudinary";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import createUploadWidget from "cloudinary";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 //import dotenv from "config();
 
@@ -46,13 +48,14 @@ const EventsPage = () => {
   };
 
   //CLOUDINARY USER PHOTO UPLOAD SETUP
-  // let showWidget = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const showWidget = () => {
   //   const widget = window.cloudinary.createUploadWidget(
   //     {
   //       cloudName: `${process.env.CLOUD_NAME}`,
   //       uploadPreset: `${process.env.CLOUD_PRESET}`,
   //     },
-  //     (error: string, result: object) => {
+  //     (error: unknown, result: object) => {
   //       if (!error && result && result.event === "success") {
   //         console.log("LINE 59", result.info.url);
   //         setFarm((state) => {
@@ -67,6 +70,19 @@ const EventsPage = () => {
   //   );
   //   widget.open();
   // };
+
+  //////////////////////////////////////////
+  // const myWidget = window.cloudinary.createUploadWidget(
+  //   {
+  //     cloudName: "my_cloud_name",
+  //     uploadPreset: "my_preset",
+  //   },
+  //   (error: unknown, result: { event: string; info: unknown }) => {
+  //     if (!error && result && result.event === "success") {
+  //       console.log("Done! Here is the image info: ", result.info);
+  //     }
+  //   }
+  // );
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [farm.thumbnail]);

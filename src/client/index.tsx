@@ -25,6 +25,6 @@ const element = (
   </BrowserRouter>
 );
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const container: any = document.getElementById("app");
-const root = ReactDOMClient.createRoot(container);
+const id: any = document.getElementById("app");
+const root = ReactDOMClient.createRoot(id);
 root.render(element);
