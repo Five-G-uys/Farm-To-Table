@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-import Farms from './Farms';
+// import Farms from './Farms';
 import Subscriptions from './Subscriptions';
 
 const Orders = db.define('orders', {
@@ -11,12 +11,12 @@ const Orders = db.define('orders', {
     allowNull: false,
     autoIncrement: true,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    unique: false,
-    allowNull: false,
-    references: { model: Farms, key: 'id' },
-  },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   unique: false,
+  //   allowNull: false,
+  //   references: { model: Farms, key: 'id' },
+  // },
   subscription_id: {
     type: DataTypes.INTEGER,
     unique: false,

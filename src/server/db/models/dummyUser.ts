@@ -1,19 +1,19 @@
-const dummyFarm = [
-  {
-    id: 1,
-    name: "Baby's First Farm",
-    description:
-      'Broccoli and brussels sprouts and bell peppers and bananas and bok-choy',
-  },
-];
+// const dummyFarm = [
+//   {
+//     id: 1,
+//     name: "Baby's First Farm",
+//     description:
+//       'Broccoli and brussels sprouts and bell peppers and bananas and bok-choy',
+//   },
+// ];
 
-const dummyRole = [
-  {
-    id: 1,
-    role: 'subscriber',
-    farm_id: 1,
-  },
-];
+// const dummyRole = [
+//   {
+//     id: 1,
+//     role: 'subscriber',
+//     // farm_id: 1,
+//   },
+// ];
 
 const dummyUser = [
   {
@@ -21,8 +21,8 @@ const dummyUser = [
     name: 'Ingeborg Pipes',
     address: '9041 Crownhardt Alley',
     subscribed: false,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'Postira',
   },
   {
@@ -30,8 +30,8 @@ const dummyUser = [
     name: 'Guido Fruchter',
     address: '230 Del Mar Point',
     subscribed: false,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'Rovira',
   },
   {
@@ -39,8 +39,8 @@ const dummyUser = [
     name: 'Gui Grain',
     address: '85348 Daystar Crossing',
     subscribed: false,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'El Gouna',
   },
   {
@@ -48,8 +48,8 @@ const dummyUser = [
     name: 'Hatty McCallam',
     address: '4981 Declaration Pass',
     subscribed: false,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'Moscavide',
   },
   {
@@ -57,8 +57,8 @@ const dummyUser = [
     name: 'Rossie Norcliff',
     address: '6217 Waywood Plaza',
     subscribed: false,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'Kavýli',
   },
   {
@@ -66,8 +66,8 @@ const dummyUser = [
     name: 'Kiersten Matusson',
     address: '4 Reindahl Alley',
     subscribed: false,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'Sebadelhe',
   },
   {
@@ -75,8 +75,8 @@ const dummyUser = [
     name: 'Jodee Stubbeley',
     address: '7 Sycamore Place',
     subscribed: false,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'Gaojia',
   },
   {
@@ -84,8 +84,8 @@ const dummyUser = [
     name: 'Tommy Lenox',
     address: '447 Hayes Circle',
     subscribed: false,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'Vũ Thư',
   },
   {
@@ -93,8 +93,8 @@ const dummyUser = [
     name: 'Chicky Pagden',
     address: '86735 Garrison Park',
     subscribed: true,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'San Diego',
   },
   {
@@ -102,10 +102,10 @@ const dummyUser = [
     name: 'Roxine Emmens',
     address: '05 Ryan Circle',
     subscribed: false,
-    farm_id: 1,
-    role_id: 1,
+    // farm_id: 1,
+    // role_id: 1,
     delivery_zone: 'Bang Pakong',
   },
 ];
 
-module.exports = { dummyFarm, dummyRole, dummyUser };
+module.exports = { dummyUser };

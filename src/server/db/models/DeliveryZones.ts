@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-import Farms from './Farms';
+// import Farms from './Farms';
 
 const DeliveryZones = db.define('delivery_zones', {
   id: {
@@ -15,12 +15,12 @@ const DeliveryZones = db.define('delivery_zones', {
     unique: false,
     allowNull: false,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    unique: false,
-    allowNull: false,
-    references: { model: Farms, key: 'id' },
-  },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   unique: false,
+  //   allowNull: false,
+  //   references: { model: Farms, key: 'id' },
+  // },
   zip_code: {
     type: DataTypes.INTEGER,
     unique: false,
