@@ -11,7 +11,17 @@ const Users = db.define('users', {
     allowNull: false,
     autoIncrement: true,
   },
+  googleId:{
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
   name: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  email: {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
@@ -19,7 +29,12 @@ const Users = db.define('users', {
   address: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: false,
+    allowNull: true,
+  },
+  picture: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: true,
   },
   subscribed: {
     type: DataTypes.BOOLEAN,
