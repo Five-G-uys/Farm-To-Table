@@ -5,7 +5,7 @@ const Farms = db.define('farms', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    unique: true,
+    unique: false,
     allowNull: false,
     autoIncrement: true,
   },

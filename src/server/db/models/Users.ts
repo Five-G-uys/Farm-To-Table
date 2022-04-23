@@ -7,7 +7,7 @@ const Users = db.define('users', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    unique: true,
+    unique: false,
     allowNull: false,
     autoIncrement: true,
   },
@@ -23,12 +23,12 @@ const Users = db.define('users', {
   },
   subscribed: {
     type: DataTypes.BOOLEAN,
-    unique: true,
+    unique: false,
     allowNull: false,
   },
   farm_id: {
     type: DataTypes.INTEGER,
-    unique: true,
+    unique: false,
     allowNull: false,
     references: {
       model: Farms,
@@ -37,7 +37,7 @@ const Users = db.define('users', {
   },
   role_id: {
     type: DataTypes.INTEGER,
-    unique: true,
+    unique: false,
     allowNull: false,
     references: {
       model: Roles,

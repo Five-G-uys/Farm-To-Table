@@ -24,7 +24,7 @@ const RSVP = db.define('rsvp', {
   },
   farm_id: {
     type: DataTypes.INTEGER,
-    unique: true,
+    unique: false,
     allowNull: false,
     references: { model: Farms, key: 'id' },
   },

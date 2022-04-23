@@ -22,7 +22,7 @@ const Events = db.define('events', {
   },
   farm_id: {
     type: DataTypes.INTEGER,
-    unique: true,
+    unique: false,
     allowNull: false,
     references: { model: Farms, key: 'id' },
   },
