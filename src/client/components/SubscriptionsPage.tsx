@@ -6,11 +6,11 @@ import axios from 'axios';
 const SubscriptionsPage = () => {
   const [checkedOne, setCheckedOne] = useState(false);
 
-  const handleChangeOne = () => {
-    console.log('Line 11 SubPage', checkedOne);
-    setCheckedOne(!checkedOne);
-    console.log('Line 13 SubPage', checkedOne);
-  };
+  // const handleChangeOne = () => {
+  //   console.log('Line 11 SubPage', checkedOne);
+  //   setCheckedOne(!checkedOne);
+  //   console.log('Line 13 SubPage', checkedOne);
+  // };
 
   const user = {
     id: 2,
