@@ -15,32 +15,34 @@ const Subscriptions = db.define('subscriptions', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  price: {
+  year: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  flat_price: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  weekly_price: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
   description: {
+    type: DataTypes.STRING(10000),
+    allowNull: false,
+  },
+  start_date: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  tier: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  payment_option: {
+  end_date: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   farm_id: {
     type: DataTypes.INTEGER,
-    unique: false,
     allowNull: false,
     references: { model: Farms, key: 'id' },
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: Users, key: 'id' },
   },
 });
 
