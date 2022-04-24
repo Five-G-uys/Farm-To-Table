@@ -52,7 +52,6 @@ app.use(express.urlencoded({ extended: true }));
 //Events requests
 app.post("/event", (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category } = req.body.event;
-  console.log("Request Object postEvent", req);
   console.log(
     "55 Request object postEvent",
     eventName,
@@ -74,6 +73,18 @@ app.post("/event", (req: Request, res: Response) => {
       (err: string) => console.error("Post Request Failed", err),
       res.sendStatus(500)
     );
+});
+//Events get request
+app.get("/events", (req: Request, res: Response) => {
+  Events.findAll()
+    .then((response: { data: object }) => {
+      console.log(response, "This is line 81 events gotten");
+      res.status(200).send(response);
+    })
+    .catch((err: object) => {
+      console.log("Something went wrong", err);
+      res.sendStatus(404);
+    });
 });
 
 ////////SUBSCRIPTION REQUEST////////////

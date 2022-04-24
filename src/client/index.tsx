@@ -11,6 +11,7 @@ import SubscriptionsPage from "./components/SubscriptionsPage";
 import OrdersPage from "./components/OrdersPage";
 import EventsPage from "./components/EventsPage";
 import ProfilePage from "./components/ProfilePage";
+import EventCard from "./components/EventCard";
 
 const element = (
   <BrowserRouter>
@@ -21,6 +22,7 @@ const element = (
       <Route path="orders-page" element={<OrdersPage />} />
       <Route path="events-page" element={<EventsPage />} />
       <Route path="profile-page" element={<ProfilePage />} />
+      <Route path="event-card" element={<EventCard />} />
     </Routes>
   </BrowserRouter>
 );
