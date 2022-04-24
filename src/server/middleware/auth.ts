@@ -14,10 +14,11 @@ import UserInterface from '../../types/interfaces/UserInterface';
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID || '',
   clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-  callbackURL: "http://localhost:5555/api/auth/google/callback",
+  callbackURL: "http://localhost:5555/auth/google/callback",
   passReqToCallback: true
 },
   async (req, accessToken, refreshToken, profile, done) => {    
+  console.log(profile);
   const defaultUser = {
     name: profile._json.name,
     email: profile._json.email,
@@ -37,21 +38,4 @@ passport.use(new GoogleStrategy({
 }
 ));
 
-passport.serializeUser((user, done) => {
-  console.log("Serializing User:", user)
-  done(null, (user as UserInterface).id);
-});
 
-// Try catch instead of .catch
-passport.deserializeUser(async(id, done) => {
-  
-  const user = await Users.findOne({ where: { id } })
-    .catch((err: Error) => {
-      console.log("error deserializing", err);
-    })
-    if(user){
-      done(null, user);
-    } else {
-      done(new Error('user not found'))
-    }
-});

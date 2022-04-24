@@ -27,20 +27,16 @@ const Users = db.define('user', {
   },
   address: {
     type: DataTypes.STRING,
-    allowNull: true,
   },
   picture: {
     type: DataTypes.STRING,
-    allowNull: true,
   },
   subscribed: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
     defaultValue: false,
   },
   farm_id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
     references: {
       model: Farms,
       key: 'id',
