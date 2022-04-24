@@ -32,13 +32,13 @@ const EventCard = () => {
   return (
     <div>
       <h1 className="card-event">Events for this month</h1>
-      <div>
+      <div className="card">
         {Array.isArray(eventArray) &&
           eventArray.map(
             (event: {
               eventName: string;
               description: string;
-              thumbnail: any;
+              thumbnail: React.ImgHTMLAttributes<string>;
               category: string;
               id: number;
             }) => {

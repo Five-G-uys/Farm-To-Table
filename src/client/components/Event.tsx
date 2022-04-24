@@ -6,21 +6,22 @@ import React from "react";
 interface AppProps {
   eventName: string;
   description: string;
-  thumbnail: UrlWithStringQuery;
+  thumbnail: React.ImgHTMLAttributes<string>;
   category: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({ eventName, description, thumbnail, category }: AppProps) => {
   console.log("LINE 37", eventName, description, thumbnail);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //const { eventName, description, category, thumbnail } = event;
+
   return (
     <div>
-      <h1>{eventName}</h1>
-      <h3>{description}</h3>
-      <h3>{category}</h3>
-      <img src={thumbnail} />
+      <section className="sect-event">
+        <img src={thumbnail} className="event-img" />
+        <h1 className="event-name">{eventName}</h1>
+        <h3 className="event-desc">{description}</h3>
+        <h3 className="event-category">{category}</h3>
+      </section>
     </div>
   );
 };
