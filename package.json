@@ -4,17 +4,9 @@
   "description": "Final Project for Operation Spark",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc",
-    "webbuild": "webpack --watch",
-    "start": "ts-node src/server/index.ts",
-    "dev": "npx tsc --watch",
-=======
     "build": "webpack",
     "dev": "webpack --watch",
     "start": "npx nodemon src/server/index.ts",
->>>>>>> 40aa4d3a0a343a18de05d38aa8681e5dde52e76f
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "seed": "ts-node src/server/db/seed.ts"

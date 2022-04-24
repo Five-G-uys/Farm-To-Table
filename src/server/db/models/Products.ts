@@ -1,12 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-<<<<<<< HEAD
-import Farms from './Farms';
-// import Vendors from './Vendors';
-=======
 // import Farms from './Farms';
-import Vendors from './Vendors';
->>>>>>> 40aa4d3a0a343a18de05d38aa8681e5dde52e76f
+// import Vendors from './Vendors';
 
 const Products = db.define('products', {
   id: {
