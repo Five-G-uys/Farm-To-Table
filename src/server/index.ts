@@ -150,11 +150,6 @@ app.get("/api/userProfile", (req, res) => {
 // });
 
 //Events requests
-app.post("/event", (req: any, res: any) => {
-  console.log(req.user);
-});
-
-//Events requests
 app.post("/event", (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category } = req.body.event;
   console.log(
