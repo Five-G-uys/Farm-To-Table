@@ -5,6 +5,14 @@ import axios from 'axios';
 
 const SubscriptionsPage = () => {
   const [checkedOne, setCheckedOne] = useState(false);
+  // const [firstName, setFirstName] = useState();
+
+  const [subscription, setSubscription] = useState({
+    season: '',
+    price: 0,
+    payment_option: '',
+    description: '',
+  });
 
   // const handleChangeOne = () => {
   //   console.log('Line 11 SubPage', checkedOne);
@@ -24,17 +32,36 @@ const SubscriptionsPage = () => {
     axios
       .put(`/subscribed/${user.name}`, { subscribed: checkedOne })
       .then((response) => {
-        console.log('Line 16 SubscriptionsPage', response);
+        console.log('SubscriptionsPage.tsx response', response);
       })
       .catch((err) => {
-        console.log('Line 19 SubscriptionsPage', err);
+        console.log('SubscriptionsPage.tsx error', err);
       });
   };
 
   return (
     <div>
       <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
-      <button onClick={handleSubscribed}>Submit</button>
+      <label htmlFor='season'> Spring Season </label>
+      <br />
+      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <label htmlFor='season'> Autumn Season </label>
+      <br />
+      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <label htmlFor='season'> Winter Season </label>
+      <br />
+      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <label htmlFor='season'> Whole Year </label>
+      <br />
+      {/* <input
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        placeholder='First name'
+        type='text'
+        name='firstName'
+        required
+      /> */}
+      <button onClick={handleSubscribed}>Subscribe</button>
     </div>
   );
 };
