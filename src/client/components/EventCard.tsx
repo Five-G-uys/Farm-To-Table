@@ -1,11 +1,11 @@
-import React, { useState, useEffect, ReactNode } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Event from "./Event";
-//import { Key } from "node:readline";
-//import { eventNames } from "node:process";
+import axios from "axios";
+
 const EventCard = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [events, setEvents] = useState({ eventArray: {} });
+
   const getAllEvents = () => {
     axios
       .get("/events")
@@ -31,7 +31,7 @@ const EventCard = () => {
 
   return (
     <div>
-      <h1 className="card-event">Events for this month</h1>
+      <h1 className="card-event">Spring Season Events</h1>
       <div className="card">
         {Array.isArray(eventArray) &&
           eventArray.map(
@@ -41,6 +41,7 @@ const EventCard = () => {
               thumbnail: React.ImgHTMLAttributes<string>;
               category: string;
               id: number;
+              eventDate: string;
             }) => {
               return (
                 <Event
@@ -48,6 +49,7 @@ const EventCard = () => {
                   category={event.category}
                   thumbnail={event.thumbnail}
                   description={event.description}
+                  eventDate={event.eventDate}
                   key={event.id}
                 />
               );

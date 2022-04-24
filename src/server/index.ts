@@ -139,7 +139,8 @@ app.get("/api/userProfile", (req, res) => {
 
 //Events requests
 app.post("/api/event", (req: Request, res: Response) => {
-  const { eventName, description, thumbnail, category } = req.body.event;
+  const { eventName, description, thumbnail, category, eventDate } =
+    req.body.event;
 
   console.log("162 Request object postEvent", req.body);
   Events.create({
@@ -147,6 +148,7 @@ app.post("/api/event", (req: Request, res: Response) => {
     description,
     thumbnail,
     category,
+    eventDate,
   })
     .then((data: any) => {
       console.log("Return Events Route || Post Request", data);

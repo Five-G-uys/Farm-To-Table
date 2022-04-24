@@ -11,6 +11,7 @@ const EventsPage = () => {
     description: "",
     thumbnail: "",
     category: "",
+    eventDate: "",
   });
 
   const handleInputEvent = (
@@ -18,11 +19,11 @@ const EventsPage = () => {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
     setEvent((state) => {
       return {
         ...state,
-        [name]: value,
+        [name]: type === "checkbox" ? checked : value,
       };
     });
     console.log(event);
@@ -36,6 +37,8 @@ const EventsPage = () => {
           description: event.description,
           thumbnail: event.thumbnail,
           category: event.category,
+          eventDate: event.eventDate,
+          eventType: "",
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -71,7 +74,8 @@ const EventsPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [event.thumbnail]);
   console.log(event);
-  const { eventName, description, thumbnail, category } = event;
+  const { eventName, description, thumbnail, category, eventDate, eventType } =
+    event;
   return (
     <div className="event">
       <h3 className="create-event">Create event</h3>
@@ -112,6 +116,49 @@ const EventsPage = () => {
             onChange={handleInputEvent}
             className="form-input"
           />
+          <input
+            type="text"
+            placeholder="DD/MM/YEAR"
+            value={eventDate}
+            name="eventDate"
+            onChange={handleInputEvent}
+            className="form-input"
+          />
+
+          <fieldset>
+            <legend>Type of event</legend>
+            <input
+              type="radio"
+              id="Farmers Market"
+              name="eventType"
+              value="Farmers Market"
+              checked={eventType === "Farmers Market"}
+              onChange={handleInputEvent}
+            />
+            <label htmlFor="Farmers Market">Farmers Market</label>
+            <br />
+            <input
+              type="radio"
+              id="customerDay"
+              name="eventType"
+              value="customerDay"
+              checked={eventType === "customerDay"}
+              onChange={handleInputEvent}
+            />
+            <label htmlFor="customerDay">customerDay</label>
+            <br />
+
+            <input
+              type="radio"
+              id="Community volunteer"
+              name="eventType"
+              value="Community volunteer"
+              checked={eventType === "Community volunteer"}
+              onChange={handleInputEvent}
+            />
+            <label htmlFor="Farmers-Market">Community volunteering</label>
+            <br />
+          </fieldset>
           <br></br>
           <br></br>
           <button type="submit" className="form--submit">
