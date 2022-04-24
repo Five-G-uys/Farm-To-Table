@@ -78,23 +78,25 @@ const EventsPage = () => {
       <br></br>
       <div>
         <button onClick={showWidget} className="input-btn">
-          Upload Image
+          Upload event image
         </button>
         <br></br>
         {thumbnail && <img src={thumbnail} />}
         <br></br>
         <br></br>
-        <form onSubmit={postEvent}>
+        <form onSubmit={postEvent} className="form-event">
           <input
             type="text"
             placeholder="eventName"
             value={eventName}
             name="eventName"
             onChange={handleInputEvent}
-          ></input>
+            className="input"
+          />
           <br></br>
           <br></br>
           <textarea
+            className="text-form"
             placeholder="description"
             value={description}
             name="description"
@@ -102,23 +104,20 @@ const EventsPage = () => {
           ></textarea>
           <br></br>
           <br></br>
-          {/* <textarea
-            className="input"
-            placeholder="thumbnail"
-            value={thumbnail}
-            name="thumbnail"
-            onChange={handleInputEvent}
-          ></textarea> */}
-
           <input
-            className="name"
             type="text"
             placeholder="category"
             value={category}
             name="category"
             onChange={handleInputEvent}
-          ></input>
-          <button type="submit">Save event</button>
+            className="form-input"
+          />
+          
+          <br></br>
+          <br></br>
+          <button type="submit" className="form--submit">
+            Save event
+          </button>
         </form>
       </div>
     </div>

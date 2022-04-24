@@ -1,18 +1,22 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import FarmsModel from './Farms';
-import DeliveryZonesModel from './DeliveryZones';
-import EventsModel from './Events';
-import RolesModel from './Roles';
-import VendorsModel from './Vendors';
-import ProductsModel from './Products';
-import UsersModel from './Users';
-import SubscriptionsModel from './Subscriptions';
-import DietaryRestrictionsModel from './DietaryRestrictions';
-import OrdersModel from './Orders';
-import RSVPModel from './Rsvps';
+import FarmsModel from "./Farms";
+import DeliveryZonesModel from "./DeliveryZones";
+import EventsModel from "./Events";
+import RolesModel from "./Roles";
+import VendorsModel from "./Vendors";
+import ProductsModel from "./Products";
+import UsersModel from "./Users";
+import SubscriptionsModel from "./Subscriptions";
+import DietaryRestrictionsModel from "./DietaryRestrictions";
+import OrdersModel from "./Orders";
+import RSVPModel from "./Rsvps";
 // const { dummyFarm } = require('./dummyUser');
 // const { dummyRole } = require('./dummyUser');
+<<<<<<< HEAD
 // const { dummyUser } = require('./dummyUser');
+=======
+//const { dummyUser } = require('./dummyUser');
+>>>>>>> 4d40a544d988347922678d28d77f9de0f8cab0af
 
 export const syncModels = async (dropTables = false) => {
   const options = { force: dropTables };
@@ -28,7 +32,7 @@ export const syncModels = async (dropTables = false) => {
     await DietaryRestrictionsModel.sync(options);
     await OrdersModel.sync(options);
     await RSVPModel.sync(options);
-    console.log("models synced!")
+    console.log("models synced!");
   } catch (err) {
     console.error(err);
   }
