@@ -5,14 +5,14 @@ import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import ReactDOMClient from "react-dom/client";
 
-import App from './components/App';
-import HomePage from './components/HomePage';
-import SubscriptionsPage from './components/SubscriptionsPage'
-import OrdersPage from './components/OrdersPage';
-import EventsPage from './components/EventsPage';
-import ProfilePage from './components/ProfilePage';
-import Login from './components/Login';
-
+import EventCard from "./components/EventCard";
+import App from "./components/App";
+import HomePage from "./components/HomePage";
+import SubscriptionsPage from "./components/SubscriptionsPage";
+import OrdersPage from "./components/OrdersPage";
+import EventsPage from "./components/EventsPage";
+import ProfilePage from "./components/ProfilePage";
+import Login from "./components/Login";
 
 const element = (
   <BrowserRouter>
@@ -23,7 +23,8 @@ const element = (
       <Route path="orders-page" element={<OrdersPage />} />
       <Route path="events-page" element={<EventsPage />} />
       <Route path="profile-page" element={<ProfilePage />} />
-      <Route path='login' element={<Login />} />
+      <Route path="event-card" element={<EventCard />} />
+      <Route path="login" element={<Login />} />
     </Routes>
   </BrowserRouter>
 );
