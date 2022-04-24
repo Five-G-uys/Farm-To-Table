@@ -3,9 +3,14 @@
     "target": "es5" /* ? Maybe should be "es5" ? Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "jsx": "react" /* Specify what JSX code is generated. */,
-    "typeRoots": ["./src/types", "./types/index.d.ts"],
+    "typeRoots": [
+      "./src/types",
+      "./types/index.d.ts",
+      "../node_modules/@types"
+    ],
     "paths": { "cloudinary": ["."] },
     "baseUrl": ".",
+    "types": ["node"],
 
     /* Modules */
     "module": "commonjs" /* Specify what module code is generated. */,
