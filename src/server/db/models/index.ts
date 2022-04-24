@@ -12,7 +12,7 @@ import OrdersModel from "./Orders";
 import RSVPModel from "./Rsvps";
 // const { dummyFarm } = require('./dummyUser');
 // const { dummyRole } = require('./dummyUser');
-//const { dummyUser } = require('./dummyUser');
+// const { dummyUser } = require('./dummyUser');
 
 export const syncModels = async (dropTables = false) => {
   const options = { force: dropTables };
