@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Farms from './Farms';
+import Users from './Users';
 
 const Subscriptions = db.define('subscriptions', {
   id: {
@@ -32,8 +33,14 @@ const Subscriptions = db.define('subscriptions', {
   },
   farm_id: {
     type: DataTypes.INTEGER,
+    unique: false,
     allowNull: false,
     references: { model: Farms, key: 'id' },
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: { model: Users, key: 'id' },
   },
 });
 

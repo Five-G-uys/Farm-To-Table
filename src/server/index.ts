@@ -135,9 +135,12 @@ app.get("/api/userProfile",(req, res) => {
 
 
 //Events requests
-app.post("/event", (req: Request, res: Response, next) => {
+app.post("/event", (req: any, res: any) => {
   console.log(req.user)
+});
 
+//Events requests
+app.post("/event", (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category } = req.body.event;
   console.log("Request Object postEvent", req);
   console.log(
@@ -174,6 +177,16 @@ const isAdmin = (req: { user: { role_id: number; }; }, res: any, next: any) => {
 }
 
 
+////////SUBSCRIPTION REQUEST////////////
+app.put(`/subscribed/:user`, (req: Request, res: Response) => {
+  Users.update(req.body, { where: { name: req.params.user }, returning: true })
+    .then((response: any) => {
+      console.log("LINE 83 Routes", response[1]);
+    })
+    .catch((err: unknown) => {
+      console.error("LINE 86 ROUTES:", err);
+    });
+});
 
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get("*", (req: Request, res: Response) => {
@@ -187,5 +200,4 @@ app.listen(port, () => {
 
 function findUser(crushers: any) {
   throw new Error('Function not implemented.');
-}
-
+};

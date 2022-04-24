@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-import Farms from './Farms';
 
 const Roles = db.define('roles', {
   id: {

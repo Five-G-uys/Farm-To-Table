@@ -18,6 +18,7 @@ const Profile = (): React.ReactElement => {
   const [ picture, setPicture ] = useState('');
 
   useEffect((): void => {
+    // TAKE THIS AXIOS CALL TO GET USER
     axios.get<AxiosResponse>('/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         const { name, picture }: { name: string, picture: string} = data;

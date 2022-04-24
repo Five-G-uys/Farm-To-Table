@@ -7,7 +7,7 @@ const Users = db.define('user', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    unique: true,
+    unique: false,
     allowNull: false,
     autoIncrement: true,
   },
@@ -57,9 +57,5 @@ const Users = db.define('user', {
     allowNull: true 
   },
 }, {freezeTableName: true, tableName: 'user'});
-
-// Users.sync().then(() => {
-//   console.log("Users table synced");
-// });
 
 export default Users;
