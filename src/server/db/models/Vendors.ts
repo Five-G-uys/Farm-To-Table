@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-// import Farms from './Farms';
+import Farms from './Farms';
 
 const Vendors = db.define('vendors', {
   id: {
@@ -12,20 +12,17 @@ const Vendors = db.define('vendors', {
   },
   name: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
   },
   contact_information: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
   },
-  // farm_id: {
-  //   type: DataTypes.INTEGER,
-  //   unique: false,
-  //   allowNull: false,
-  //   references: { model: Farms, key: 'id' },
-  // },
+  farm_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: { model: Farms, key: 'id' },
+  },
 });
 
 export default Vendors;
