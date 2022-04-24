@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
 require('dotenv').config();
 const { DB_PORT, RDS_URL, DB_NAME, DB_PASSWORD, DB_USERNAME } = process.env;
 
