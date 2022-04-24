@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+<<<<<<< HEAD
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
+=======
+import { Sequelize } from 'sequelize';
+require('dotenv').config();
+>>>>>>> 509dc8d047ad042503cd3a2082bfe459abe1c7ba
 const { DB_PORT, RDS_URL, DB_NAME, DB_PASSWORD, DB_USERNAME } = process.env;
 console.log("WHATA HECK", RDS_URL);
 

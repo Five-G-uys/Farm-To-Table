@@ -1,24 +1,21 @@
-// import { DataTypes } from 'sequelize';
-// import { db } from '../database';
+import { DataTypes } from 'sequelize';
+import { db } from '../database';
 
-// const Farms = db.define('farms', {
-//   id: {
-//     type: DataTypes.INTEGER,
-//     primaryKey: true,
-//     unique: false,
-//     allowNull: false,
-//     autoIncrement: true,
-//   },
-//   name: {
-//     type: DataTypes.STRING,
-//     unique: true,
-//     allowNull: false,
-//   },
-//   description: {
-//     type: DataTypes.STRING,
-//     unique: false,
-//     allowNull: true, //for now.
-//   },
-// });
+const Farms = db.define('farms', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    unique: true,
+    allowNull: false,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.STRING,
+  },
+});
 
-// export default Farms;
+export default Farms;

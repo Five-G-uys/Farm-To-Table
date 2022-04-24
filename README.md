@@ -1,10 +1,16 @@
 # Farm to Table Thesis
 Final Project for Operation Spark
-Uber for CSA's
+Its Uber for CSA Subscriptions
+User can sign up for a season and access/alter subscription information
+Employees can access delivery routes and packing lists
+And Farmers can manage it all in one easy to use application
+
+# Deployed Instance
+Url: http://ec2-54-200-56-17.us-west-2.compute.amazonaws.com:5555/
 
 # Team ACE
-Product Owner: 
-Scrum Master: 
+Product Owner:
+Scrum Master:
 Development Team: Rodolfo, Rene, John, Santo, Murphy
 
 ## Application Walk Through
@@ -58,5 +64,5 @@ Google Oauth requires a google cloud account. First create your account and then
 1. First fork the repo and clone it to your local machine.
 2. Collect all env keys
 3. Run npm install to install all dependencies
-4. Run npm run webbuild to start Webpack
+4. Run npm run dev to start Webpack
 5. Run npm start to run the server
