@@ -26,7 +26,7 @@ import {
   Vendors,
 } from "./db/models";
 import Events from "./db/models/Events";
-import UserInterface from "../types/interfaces/UserInterface";
+import UserInterface from "../types/UserInterface";
 //import { postEvent } from "./routes/EventRoutes";
 
 // // Needs to stay until used elsewhere (initializing models)
@@ -137,35 +137,18 @@ app.get("/api/userProfile", (req, res) => {
     });
 });
 
-// app.get("/profile",(req, res) => {
-//   Users.findOne()
-//     .then((data: any) => {
-//       console.log('data', data);
-//       res.send(data).status(200);
-//     })
-//     .catch((err: Error) => {
-//       console.error(err);
-//       res.sendStatus(500);
-//     });
-// });
-
 //Events requests
-app.post("/event", (req: Request, res: Response) => {
+app.post("/api/event", (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category } = req.body.event;
-  console.log(
-    "55 Request object postEvent",
-    eventName,
-    description,
-    thumbnail,
-    category
-  );
+
+  console.log("162 Request object postEvent", req.body);
   Events.create({
     eventName,
     description,
     thumbnail,
     category,
   })
-    .then((data: object) => {
+    .then((data: any) => {
       console.log("Return Events Route || Post Request", data);
       res.status(201);
     })
@@ -174,11 +157,12 @@ app.post("/event", (req: Request, res: Response) => {
       res.sendStatus(500);
     });
 });
+
 //Events get request
 app.get("/events", (req: Request, res: Response) => {
   Events.findAll()
     .then((response: any) => {
-      console.log(response, "This is line 81 events gotten");
+      console.log(response, "This is line 186 events gotten");
       res.status(200).send(response);
     })
     .catch((err: object) => {

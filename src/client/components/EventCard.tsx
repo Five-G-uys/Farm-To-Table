@@ -1,8 +1,8 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import axios from "axios";
 import Event from "./Event";
-import { Key } from "node:readline";
-import { eventNames } from "node:process";
+//import { Key } from "node:readline";
+//import { eventNames } from "node:process";
 const EventCard = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [events, setEvents] = useState({ eventArray: {} });
@@ -10,7 +10,7 @@ const EventCard = () => {
     axios
       .get("/events")
       .then((data) => {
-        console.log("SUCESSFULLY FECTHED DATA", Array.isArray(data.data));
+        console.log("SUCESSFULLY FECTHED DATA", data.data);
         setEvents((state) => {
           return {
             ...state,
@@ -27,7 +27,7 @@ const EventCard = () => {
   }, []);
 
   const { eventArray } = events;
-  console.log("line 28", Array.isArray(eventArray));
+  console.log("line 28", eventArray);
 
   return (
     <div>

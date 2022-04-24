@@ -30,7 +30,7 @@ const EventsPage = () => {
 
   const postEvent = () => {
     axios
-      .post("/event", {
+      .post("/api/event", {
         event: {
           eventName: event.eventName,
           description: event.description,
@@ -51,7 +51,7 @@ const EventsPage = () => {
         cloudName: CLOUD_NAME,
         uploadPreset: CLOUD_PRESET2,
       },
-      (error: unknown, result: { event: string; info: { url: string } }) => {
+      (error: any, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === "success") {
           console.log("LINE 56", result.info.url);
           setEvent((state) => {
@@ -112,7 +112,6 @@ const EventsPage = () => {
             onChange={handleInputEvent}
             className="form-input"
           />
-          
           <br></br>
           <br></br>
           <button type="submit" className="form--submit">
