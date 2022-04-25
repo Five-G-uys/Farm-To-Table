@@ -14,9 +14,11 @@ import OrdersPage from './components/OrdersPage';
 import EventsPage from './components/EventsPage';
 import ProfilePage from './components/ProfilePage';
 import Login from './components/Login';
+import NewNavBar from './components/NewNavBar';
 
 const element = (
   <BrowserRouter>
+    <NewNavBar />
     <Routes>
       <Route path='/' element={<App />} />
       <Route path='home-page' element={<HomePage />} />
