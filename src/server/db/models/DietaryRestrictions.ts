@@ -2,7 +2,6 @@ import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Farms from './Farms';
 import Products from './Products';
-import Users from './Users';
 
 const DietaryRestrictions = db.define('dietary_restrictions', {
   id: {
@@ -17,19 +16,10 @@ const DietaryRestrictions = db.define('dietary_restrictions', {
     allowNull: false,
     references: { model: Farms, key: 'id' },
   },
-  product_id: {
+  problematic_products_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: { model: Products, key: 'id' },
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: Users, key: 'id' },
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
   },
 });
 
