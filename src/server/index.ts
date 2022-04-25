@@ -129,7 +129,7 @@ app.get("/api/userProfile", (req, res) => {
 
 //Events requests
 app.post("/api/event", (req: Request, res: Response) => {
-  const { eventName, description, thumbnail, category, eventDate } =
+  const { eventName, description, thumbnail, category, eventDate, eventType } =
     req.body.event;
 
   console.log("162 Request object postEvent", req.body);
@@ -139,6 +139,7 @@ app.post("/api/event", (req: Request, res: Response) => {
     thumbnail,
     category,
     eventDate,
+    eventType,
   })
     .then((data: any) => {
       console.log("Return Events Route || Post Request", data);
@@ -175,17 +176,16 @@ app.put(`/subscribed/:user`, (req: Request, res: Response) => {
 });
 
 // Home page routes
-app.get('/api/farms', (req: Request, res: Response) => {
+app.get("/api/farms", (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      console.log("this is the data from the farm api call", data)
-      res.status(200).send(data)
+      console.log("this is the data from the farm api call", data);
+      res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err)
-    })
-})
-
+      console.error("OH NOOOOO", err);
+    });
+});
 
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get("*", (req: Request, res: Response) => {
@@ -199,6 +199,3 @@ app.listen(port, () => {
 function findUser(crushers: any) {
   throw new Error("Function not implemented.");
 }
-
-
-

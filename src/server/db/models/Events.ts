@@ -26,6 +26,7 @@ const Events = db.define("events", {
     references: { model: Farms, key: "id" },
   },
   eventDate: { type: DataTypes.STRING, allowNull: false },
+  eventType: { type: DataTypes.STRING, allowNull: false },
 });
 
 export default Events;
