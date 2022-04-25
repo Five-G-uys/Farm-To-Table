@@ -3,7 +3,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 // Import Dependencies
+<<<<<<< HEAD
 import express, { Express, Request, Response } from 'express';
+=======
+import express, { Express, Request, response, Response } from "express";
+>>>>>>> 9a51c0df2db804a838a3814b825629cb42ffaa7e
 //import dotenv from "dotenv";
 require('dotenv').config();
 const path = require('path');
@@ -189,6 +193,19 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
     });
 });
 
+// Home page routes
+app.get('/api/farms', (req: Request, res: Response) => {
+  Farms.findAll()
+    .then((data: any) => {
+      console.log("this is the data from the farm api call", data)
+      res.status(200).send(data)
+    })
+    .catch((err: unknown) => {
+      console.error("OH NOOOOO", err)
+    })
+})
+
+
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.resolve(dist, 'index.html'));
@@ -201,3 +218,6 @@ app.listen(port, () => {
 function findUser(crushers: any) {
   throw new Error('Function not implemented.');
 }
+
+
+
