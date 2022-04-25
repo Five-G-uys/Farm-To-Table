@@ -129,13 +129,8 @@ app.get('/api/userProfile', (req, res) => {
 });
 
 //Events requests
-<<<<<<< HEAD
-app.post("/api/event", (req: Request, res: Response) => {
-  const { eventName, description, thumbnail, category, eventDate, eventType } =
-=======
 app.post('/api/event', (req: Request, res: Response) => {
-  const { eventName, description, thumbnail, category, eventDate } =
->>>>>>> 5d00472140905dba67df2a2c50c67c5fe27a61f8
+  const { eventName, description, thumbnail, category, eventDate, eventType } =
     req.body.event;
 
   // console.log('162 Request object postEvent', req.body);
@@ -233,8 +228,8 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
     .catch((err: any) => {
       console.log('LINE 244 || SERVER INDEX', err);
       res.send(err);
-    })
-  })
+    });
+});
 app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
   Subscriptions.findAll()
     .then((data: any) => {
@@ -246,22 +241,14 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
 });
 
 // Home page routes
-app.get("/api/farms", (req: Request, res: Response) => {
+app.get('/api/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-<<<<<<< HEAD
-      console.log("this is the data from the farm api call", data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
-=======
       console.log('this is the data from the farm api call', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
       console.error('OH NOOOOO', err);
->>>>>>> 5d00472140905dba67df2a2c50c67c5fe27a61f8
     });
 });
 
