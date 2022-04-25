@@ -14,14 +14,14 @@ const DeliveryZones = db.define('delivery_zones', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  zip_codes: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   farm_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: { model: Farms, key: 'id' },
-  },
-  zip_code: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
   },
 });
 

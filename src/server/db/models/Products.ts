@@ -25,11 +25,7 @@ const Products = db.define('products', {
     references: { model: Vendors, key: 'id' },
   },
   quantity: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  tier: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   img_url: {
@@ -37,10 +33,6 @@ const Products = db.define('products', {
     allowNull: false,
   },
   available: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-  },
-  add_ons: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
