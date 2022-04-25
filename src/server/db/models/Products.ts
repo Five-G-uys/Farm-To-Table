@@ -30,7 +30,6 @@ const Products = db.define('products', {
   },
   img_url: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   available: {
     type: DataTypes.BOOLEAN,
