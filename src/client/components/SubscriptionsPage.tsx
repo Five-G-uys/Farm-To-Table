@@ -1,40 +1,126 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import { number } from 'prop-types';
 
 const SubscriptionsPage = () => {
   const [checkedOne, setCheckedOne] = useState(false);
+  const [id, setId] = useState(0);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [address, setAddress] = useState();
+  const [phone, setPhone] = useState();
 
-  const handleChangeOne = () => {
-    console.log('Line 11 SubPage', checkedOne);
-    setCheckedOne(!checkedOne);
-    console.log('Line 13 SubPage', checkedOne);
-  };
+  // const [subscription, setSubscription] = useState({
+  //   season: '',
+  //   price: 0,
+  //   payment_option: '',
+  //   description: '',
+  // });
 
-  const user = {
-    id: 2,
-    name: 'Guido Fruchter',
-    address: '230 Del Mar Point',
-    subscribed: false,
-    delivery_zone: 'Rovira',
-  };
+  // const handleChangeOne = () => {
+  //   console.log('Line 11 SubPage', checkedOne);
+  //   setCheckedOne(!checkedOne);
+  //   console.log('Line 13 SubPage', checkedOne);
+  // };
+
+  useEffect((): void => {
+    // TAKE THIS AXIOS CALL TO GET USER
+    axios
+      .get<AxiosResponse>('/api/userProfile')
+      .then(({ data }: AxiosResponse) => {
+        const { id }: { id: number } = data;
+        setId(id);
+      })
+      .catch((err) => console.warn(err));
+  }, []);
 
   const handleSubscribed = () => {
     axios
-      .put(`/subscribed/${user.name}`, { subscribed: checkedOne })
+      .put(`/subscribed/${id}`, { subscribed: checkedOne })
       .then((response) => {
-        console.log('Line 16 SubscriptionsPage', response);
+        // console.log('SubscriptionsPage.tsx response', response);
       })
       .catch((err) => {
-        console.log('Line 19 SubscriptionsPage', err);
+        console.log('SubscriptionsPage.tsx error', err);
       });
+
+    if (checkedOne) {
+      axios
+        .post(`/api/add_subscription_entry/${id}`, {
+          farm_id: 1,
+          user_id: id,
+          subscription_id: 1,
+        })
+        .then((response) => {
+          console.log('LINE 56 || SUBSCRIPTIONSPAGE.TSX ||', response);
+        })
+        .catch((err) => {
+          console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
+        });
+    }
   };
 
   return (
     <div>
+      <div>Give us some more information about yourself!</div>
+      <input
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        placeholder='First name'
+        type='text'
+        name='firstName'
+        required
+      />
+      <div>
+        <input
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          placeholder='Last name'
+          type='text'
+          name='lastName'
+          required
+        />
+      </div>
+      <div>
+        <input
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder='Address'
+          type='text'
+          name='address'
+          required
+        />
+      </div>
+      <div>
+        <input
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder='Phone number'
+          type='text'
+          name='phone'
+          required
+        />
+      </div>
+      <div>
+        Now choose a seasonal package and subscribe for 12 weeks of home
+        deliveries. Or select the whole year!
+      </div>
+      <br />
       <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
-      <button onClick={handleSubscribed}>Submit</button>
+      <label htmlFor='season'> Spring Season </label>
+      <br />
+      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <label htmlFor='season'> Autumn Season </label>
+      <br />
+      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <label htmlFor='season'> Winter Season </label>
+      <br />
+      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <label htmlFor='season'> Whole Year </label>
+      <br />
+      <button onClick={handleSubscribed}>Subscribe</button>
     </div>
   );
 };
