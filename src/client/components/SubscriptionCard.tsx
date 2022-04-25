@@ -3,16 +3,22 @@ import React from 'react';
 interface aProps {
   season: string;
   year: number;
-  flatPrice: number;
+  flat_price: number;
   description: string;
 }
-const SubscriptionCard = ({ season, year, flatPrice, description }: aProps) => {
+const SubscriptionCard = ({
+  season,
+  year,
+  flat_price,
+  description,
+}: aProps) => {
   return (
     <div>
-      <h1>{season}</h1>
-      <h2>{year}</h2>
-      <h3>{flatPrice}</h3>
-      <h4>{description}</h4>
+      <h1>
+        {season} {year}
+      </h1>
+      <h2>Flat Price: ${flat_price}.00</h2>
+      <h3>{description}</h3>
     </div>
   );
 };
