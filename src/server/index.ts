@@ -66,7 +66,7 @@ const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
   }
 };
 
-const successLoginUrl = 'http://localhost:5555/home-page';
+const successLoginUrl = process.env.CALLBACK_URI;
 const errorLoginUrl = 'http://localhost:5555/login/error';
 
 // all backend routes should start at a common place that dont exist on the front end
