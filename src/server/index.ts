@@ -129,8 +129,14 @@ app.get('/api/userProfile', (req, res) => {
 });
 
 //Events requests
+<<<<<<< HEAD
 app.post('/api/event', (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category } = req.body.event;
+=======
+app.post("/api/event", (req: Request, res: Response) => {
+  const { eventName, description, thumbnail, category, eventDate } =
+    req.body.event;
+>>>>>>> 23fc042ca8debd1fc9468a15407111468868a7e1
 
   console.log('162 Request object postEvent', req.body);
   Events.create({
@@ -138,6 +144,7 @@ app.post('/api/event', (req: Request, res: Response) => {
     description,
     thumbnail,
     category,
+    eventDate,
   })
     .then((data: any) => {
       console.log('Return Events Route || Post Request', data);
