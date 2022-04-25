@@ -22,7 +22,7 @@ const Products = db.define('products', {
   vendor_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    // references: { model: Vendors, key: 'id' },
+    references: { model: Vendors, key: 'id' },
   },
   quantity: {
     type: DataTypes.INTEGER,
