@@ -9,18 +9,23 @@ import EventCard from "./components/EventCard";
 import App from "./components/App";
 import HomePage from "./components/HomePage";
 import SubscriptionsPage from "./components/SubscriptionsPage";
+import Confirmation from "./components/Confirmation";
 import OrdersPage from "./components/OrdersPage";
 import EventsPage from "./components/EventsPage";
 import ProfilePage from "./components/ProfilePage";
 import Login from "./components/Login";
+import NewNavBar from "./components/NewNavBar";
 import "./styles.css";
 
 const element = (
   <BrowserRouter>
+    <NewNavBar />
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="home-page" element={<HomePage />} />
-      <Route path="subscriptions-page" element={<SubscriptionsPage />} />
+      <Route path="subscriptions-page" element={<SubscriptionsPage />}>
+        <Route path="confirmation-page" element={<Confirmation />} />
+      </Route>
       <Route path="orders-page" element={<OrdersPage />} />
       <Route path="events-page" element={<EventsPage />} />
       <Route path="profile-page" element={<ProfilePage />} />

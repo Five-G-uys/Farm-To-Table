@@ -1,27 +1,27 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
-const srcDir = path.resolve(__dirname, "src", "client");
-const distDir = path.resolve(__dirname, "dist");
-const Dotenv = require("dotenv-webpack");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+const srcDir = path.resolve(__dirname, 'src', 'client');
+const distDir = path.resolve(__dirname, 'dist');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  mode: "development",
-  entry: path.resolve(srcDir, "index.tsx"),
+  mode: 'development',
+  entry: path.resolve(srcDir, 'index.tsx'),
   output: {
-    filename: "bundle.js",
+    filename: 'bundle.js',
     path: path.resolve(distDir),
   },
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
         test: /\.(jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "ts-loader",
+          loader: 'ts-loader',
           options: {
             transpileOnly: true, // want set to true by default
           },
@@ -35,13 +35,17 @@ module.exports = {
     ],
   },
   resolve: {
+<<<<<<< HEAD
+    extensions: ['.tsx', '.ts', '.js'],
+=======
     extensions: [".tsx", ".ts", ".js", "css"],
+>>>>>>> 23fc042ca8debd1fc9468a15407111468868a7e1
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(srcDir, "index.html"),
-      inject: "body",
+      template: path.resolve(srcDir, 'index.html'),
+      inject: 'body',
     }),
     new NodePolyfillPlugin(),
     new Dotenv(),
