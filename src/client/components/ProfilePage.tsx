@@ -8,10 +8,9 @@
 
 // export default ProfilePage;
 
-
-import React from 'react';
-import { useState, useEffect } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import React from "react";
+import { useState, useEffect } from "react";
+import axios, { AxiosResponse } from "axios";
 
 const Profile = (): React.ReactElement => {
   const [ name, setName ] = useState('');
@@ -24,7 +23,8 @@ const Profile = (): React.ReactElement => {
 
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
-    axios.get<AxiosResponse>('/api/userProfile')
+    axios
+      .get<AxiosResponse>("/api/userProfile")
       .then(({ data }: AxiosResponse) => {
         console.log(data);
         const { name, picture, email, subscribed, address }: { name: string, picture: string, email: string, subscribed: boolean, address: string} = data;
@@ -38,10 +38,10 @@ const Profile = (): React.ReactElement => {
   }, []);
 
   return (
-    <div className='page-wrap'>
+    <div className="page-wrap">
       <h1>My Profile</h1>
-      <div className='profileDiv'>
-        <img className='profilePic' src={picture} />
+      <div className="profileDiv">
+        <img className="profilePic" src={picture} />
       </div>
       <h3>Name: {name}</h3>
       <h3>Address: {address}</h3>
