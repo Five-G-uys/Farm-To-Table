@@ -13,12 +13,14 @@ const SubscriptionCard = ({
   description,
 }: aProps) => {
   return (
-    <div>
-      <h1>
-        {season} {year}
-      </h1>
-      <h2>Flat Price: ${flat_price}.00</h2>
-      <h3>{description}</h3>
+    <div className='card'>
+      <div className='form-event'>
+        <h1>
+          {season} {year}
+        </h1>
+        <h2>Flat Price: ${flat_price}.00</h2>
+        <h3>{description}</h3>
+      </div>
     </div>
   );
 };

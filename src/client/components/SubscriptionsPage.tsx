@@ -2,15 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { number } from 'prop-types';
+// import { Link } from 'react-router-dom';
 import SubscriptionCard from './SubscriptionCard';
 const SubscriptionsPage = () => {
   const [checkedOne, setCheckedOne] = useState(false);
   const [id, setId] = useState(0);
-  // const [firstName, setFirstName] = useState();
-  // const [lastName, setLastName] = useState();
-  // const [address, setAddress] = useState();
-  // const [phone, setPhone] = useState();
 
   const [subscription, setSubscription] = useState({
     season: '',
@@ -83,16 +79,30 @@ const SubscriptionsPage = () => {
         whole year!
       </div>
       <br />
-      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <input
+        type='checkbox'
+        className='form-event'
+        onChange={() => setCheckedOne(!checkedOne)}
+      />
       <label htmlFor='season'> Spring 2022 </label>
       <br />
-      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <input
+        type='checkbox'
+        className='form-event'
+        onChange={() => setCheckedOne(!checkedOne)}
+      />
       <label htmlFor='season'> Fall 2022 </label>
       <br />
-      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <input
+        type='checkbox'
+        className='form-event'
+        onChange={() => setCheckedOne(!checkedOne)}
+      />
       <label htmlFor='season'> Whole Year </label>
       <br />
-      <button onClick={handleSubscribed}>Subscribe</button>
+      <button className='form--submit' onClick={handleSubscribed}>
+        Subscribe
+      </button>
     </div>
     // </div>
   );
