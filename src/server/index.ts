@@ -3,11 +3,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 // Import Dependencies
-<<<<<<< HEAD
-import express, { Express, Request, Response } from 'express';
-=======
 import express, { Express, Request, response, Response } from "express";
->>>>>>> 9a51c0df2db804a838a3814b825629cb42ffaa7e
+
 //import dotenv from "dotenv";
 require('dotenv').config();
 const path = require('path');

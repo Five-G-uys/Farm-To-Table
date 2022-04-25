@@ -102,7 +102,7 @@ const SubscriptionsPage = () => {
       <br />
       <Link to={`/confirmation-page`}>
         <button className='form--submit' onClick={handleSubscribed}>
-          Subscribe
+          Subscribe!
         </button>
       </Link>
     </div>
