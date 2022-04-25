@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SubscriptionCard from './SubscriptionCard';
 const SubscriptionsPage = () => {
   const [checkedOne, setCheckedOne] = useState(false);
@@ -100,9 +100,11 @@ const SubscriptionsPage = () => {
       />
       <label htmlFor='season'> Whole Year </label>
       <br />
-      <button className='form--submit' onClick={handleSubscribed}>
-        Subscribe
-      </button>
+      <Link to={`/confirmation-page`}>
+        <button className='form--submit' onClick={handleSubscribed}>
+          Subscribe
+        </button>
+      </Link>
     </div>
     // </div>
   );
