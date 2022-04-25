@@ -31,9 +31,9 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          "style-loader",
+          'style-loader',
           {
-            loader: "typings-for-css-modules-loader",
+            loader: 'typings-for-css-modules-loader',
             options: {
               modules: true,
               namedExport: true,
@@ -45,11 +45,7 @@ module.exports = {
     ],
   },
   resolve: {
-<<<<<<< HEAD
-    extensions: ['.tsx', '.ts', '.js'],
-=======
-    extensions: [".tsx", ".ts", ".js", "css"],
->>>>>>> 23fc042ca8debd1fc9468a15407111468868a7e1
+    extensions: ['.tsx', '.ts', '.js', 'css'],
   },
 
   plugins: [
