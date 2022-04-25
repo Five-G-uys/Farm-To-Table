@@ -31,9 +31,10 @@ const EventCard = () => {
 
   return (
     <div className="events">
-      <nav className='nav'>
+      <nav className="nav">
         <h1 className="nav-event">Spring Season Events</h1>
       </nav>
+      <h2 className="title-card">Events for this month</h2>
       <div className="card">
         {Array.isArray(eventArray) &&
           eventArray.map(
@@ -58,6 +59,7 @@ const EventCard = () => {
             }
           )}
       </div>
+      <footer className="footer"></footer>
     </div>
   );
 };

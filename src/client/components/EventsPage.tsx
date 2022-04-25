@@ -90,7 +90,7 @@ const EventsPage = () => {
         <form onSubmit={postEvent} className="form-event">
           <input
             type="text"
-            placeholder="eventName"
+            placeholder="Name of event"
             value={eventName}
             name="eventName"
             onChange={handleInputEvent}
@@ -100,7 +100,7 @@ const EventsPage = () => {
           <br></br>
           <textarea
             className="text-form"
-            placeholder="description"
+            placeholder="Description"
             value={description}
             name="description"
             onChange={handleInputEvent}
@@ -117,7 +117,7 @@ const EventsPage = () => {
           />
 
           <fieldset>
-            <legend>Type of event</legend>
+            <legend className="radio-title">Type of event</legend>
             <input
               type="radio"
               id="Farmers Market"
@@ -136,7 +136,7 @@ const EventsPage = () => {
               checked={eventType === "Customer Day"}
               onChange={handleInputEvent}
             />
-            <label htmlFor="customerDay">customer Day</label>
+            <label htmlFor="customerDay">Customer Day</label>
             <br />
 
             <input
