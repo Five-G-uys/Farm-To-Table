@@ -13,6 +13,7 @@ import OrdersPage from "./components/OrdersPage";
 import EventsPage from "./components/EventsPage";
 import ProfilePage from "./components/ProfilePage";
 import Login from "./components/Login";
+import "./styles.css";
 
 const element = (
   <BrowserRouter>
