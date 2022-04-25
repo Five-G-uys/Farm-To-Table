@@ -130,21 +130,21 @@ const EventsPage = () => {
             <br />
             <input
               type="radio"
-              id="customerDay"
+              id="Customer Day"
               name="eventType"
-              value="customerDay"
-              checked={eventType === "customerDay"}
+              value="Customer Day"
+              checked={eventType === "Customer Day"}
               onChange={handleInputEvent}
             />
-            <label htmlFor="customerDay">customerDay</label>
+            <label htmlFor="customerDay">customer Day</label>
             <br />
 
             <input
               type="radio"
-              id="Community volunteer"
+              id="Community Volunteering"
               name="eventType"
-              value="Community volunteer"
-              checked={eventType === "Community volunteer"}
+              value="Community Volunteering"
+              checked={eventType === "Community Volunteering"}
               onChange={handleInputEvent}
             />
             <label htmlFor="Farmers-Market">Community volunteering</label>
