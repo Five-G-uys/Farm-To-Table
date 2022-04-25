@@ -57,6 +57,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Middleware
+const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
+  if (!req.user || req.user.role_id !== 3) {
+    return next(new Error('User is Unauthorized!'));
+  } else {
+    next();
+  }
+};
+
 const successLoginUrl = 'http://localhost:5555/home-page';
 const errorLoginUrl = 'http://localhost:5555/login/error';
 
@@ -70,25 +79,6 @@ passport.deserializeUser((user: any, done: any) => {
   console.log('Deserializing User:', user);
   done(null, user);
 });
-
-// passport.serializeUser((user: UserInterface, done: (arg0: null, arg1: number) => void) => {
-//   // console.log("Serializing User:", user)
-//   done(null, (user as UserInterface).id);
-// });
-
-// // Try catch instead of .catch
-// passport.deserializeUser(async(id: any, done: any) => {
-
-//   const user = await Users.findOne({ where: { id } })
-//     .catch((err: Error) => {
-//       console.log("error deserializing", err);
-//     })
-//     if(user){
-//       done(null, user);
-//     } else {
-//       done(new Error('user not found'))
-//     }
-// });
 
 // Auth Routes
 
@@ -171,15 +161,6 @@ app.get('/events', (req: Request, res: Response) => {
       res.sendStatus(404);
     });
 });
-
-// Middleware
-const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
-  if (!req.user || req.user.role_id !== 3) {
-    return next(new Error('User is Unauthorized!'));
-  } else {
-    next();
-  }
-};
 
 ////////SUBSCRIPTION REQUEST////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
