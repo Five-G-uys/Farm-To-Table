@@ -3,7 +3,7 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import axios from 'axios';
 import HomePage from './HomePage';
-import NavBar from './Navbar'
+// import NavBar from './Navbar'
 // import AboutUsPage from './AboutUsPage';
 // import EventsPage from './EventsPage';
 // import ProfilePage from './ProfilePage';
@@ -17,7 +17,7 @@ const App= () => {
     <div>
       
       <HomePage />
-      <NavBar/>
+      {/* <NavBar/> */}
     </div>
   )
 };
