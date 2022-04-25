@@ -66,7 +66,7 @@ const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
   }
 };
 
-const successLoginUrl = 'http://localhost:5555/home-page';
+const successLoginUrl = process.env.CALLBACK_URI;
 const errorLoginUrl = 'http://localhost:5555/login/error';
 
 // all backend routes should start at a common place that dont exist on the front end
@@ -129,7 +129,11 @@ app.get('/api/userProfile', (req, res) => {
 });
 
 //Events requests
+<<<<<<< HEAD
 app.post('/api/event', (req: Request, res: Response) => {
+=======
+app.post("/api/event", (req: Request, res: Response) => {
+>>>>>>> 8be8e43ee043d2d0b5f8bc16129a5e4508111414
   const { eventName, description, thumbnail, category, eventDate, eventType } =
     req.body.event;
 
