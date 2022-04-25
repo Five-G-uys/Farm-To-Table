@@ -54,7 +54,6 @@ const Users = db.define('user', {
   },
   delivery_zone: { 
     type: DataTypes.STRING, 
-    allowNull: true 
   },
 }, {freezeTableName: true, tableName: 'user'});
 

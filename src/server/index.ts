@@ -165,7 +165,7 @@ app.get('/events', (req: Request, res: Response) => {
 });
 
 ////////SUBSCRIPTION REQUEST////////////
-app.put(`/subscribed/:id`, (req: Request, res: Response) => {
+app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
   Users.update(req.body, { where: { id: req.params.id }, returning: true })
     .then((response: any) => {
       // console.log('Subscription Route', response[1]);
@@ -227,6 +227,15 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
     .catch((err: any) => {
       console.log('LINE 244 || SERVER INDEX', err);
       res.send(err);
+    })
+  })
+app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
+  Subscriptions.findAll()
+    .then((data: any) => {
+      res.status(200).send(data);
+    })
+    .catch((err: any) => {
+      console.error('Subscription Route ERROR', err);
     });
 });
 

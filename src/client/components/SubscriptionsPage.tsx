@@ -2,28 +2,19 @@
 
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { number } from 'prop-types';
-
+import { Link } from 'react-router-dom';
+import SubscriptionCard from './SubscriptionCard';
 const SubscriptionsPage = () => {
   const [checkedOne, setCheckedOne] = useState(false);
   const [id, setId] = useState(0);
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [address, setAddress] = useState();
-  const [phone, setPhone] = useState();
 
-  // const [subscription, setSubscription] = useState({
-  //   season: '',
-  //   price: 0,
-  //   payment_option: '',
-  //   description: '',
-  // });
-
-  // const handleChangeOne = () => {
-  //   console.log('Line 11 SubPage', checkedOne);
-  //   setCheckedOne(!checkedOne);
-  //   console.log('Line 13 SubPage', checkedOne);
-  // };
+  const [subscription, setSubscription] = useState({
+    season: '',
+    year: 0,
+    flat_price: 0,
+    description: '',
+    subArray: [],
+  });
 
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
@@ -34,13 +25,26 @@ const SubscriptionsPage = () => {
         setId(id);
       })
       .catch((err) => console.warn(err));
+    axios
+      .get(`/api/subscriptions/`)
+      .then((response) => {
+        setSubscription((state) => {
+          return { ...state, subArray: response.data };
+        });
+        console.log('LINE 46 SubscriptionPage.tsx', response);
+      })
+      .catch((err) => {
+        console.error('Line 49 subPage.tsx', err);
+      });
   }, []);
+
+  console.log('LINE 45', subscription.subArray);
 
   const handleSubscribed = () => {
     axios
-      .put(`/subscribed/${id}`, { subscribed: checkedOne })
+      .put(`/api/subscribed/${id}`, { subscribed: checkedOne })
       .then((response) => {
-        // console.log('SubscriptionsPage.tsx response', response);
+        console.log('LINE 36', response);
       })
       .catch((err) => {
         console.log('SubscriptionsPage.tsx error', err);
@@ -62,66 +66,62 @@ const SubscriptionsPage = () => {
     }
   };
 
+  const { subArray } = subscription;
+
   return (
     <div>
-      <div>Give us some more information about yourself!</div>
+      <div>
+        {subArray.map(
+          (sub: {
+            season: string;
+            year: number;
+            flat_price: number;
+            description: string;
+            id: number;
+          }) => {
+            return (
+              <SubscriptionCard
+                season={sub.season}
+                year={sub.year}
+                flat_price={sub.flat_price}
+                description={sub.description}
+                key={sub.id}
+              />
+            );
+          }
+        )}
+        Choose a seasonal package for 12 weeks of home deliveries. Or select the
+        whole year!
+      </div>
+      <br />
       <input
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        placeholder='First name'
-        type='text'
-        name='firstName'
-        required
+        type='checkbox'
+        className='form-event'
+        onChange={() => setCheckedOne(!checkedOne)}
       />
-      <div>
-        <input
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          placeholder='Last name'
-          type='text'
-          name='lastName'
-          required
-        />
-      </div>
-      <div>
-        <input
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder='Address'
-          type='text'
-          name='address'
-          required
-        />
-      </div>
-      <div>
-        <input
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder='Phone number'
-          type='text'
-          name='phone'
-          required
-        />
-      </div>
-      <div>
-        Now choose a seasonal package and subscribe for 12 weeks of home
-        deliveries. Or select the whole year!
-      </div>
+      <label htmlFor='season'> Spring 2022 </label>
       <br />
-      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
-      <label htmlFor='season'> Spring Season </label>
+      <input
+        type='checkbox'
+        className='form-event'
+        onChange={() => setCheckedOne(!checkedOne)}
+      />
+      <label htmlFor='season'> Fall 2022 </label>
       <br />
-      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
-      <label htmlFor='season'> Autumn Season </label>
-      <br />
-      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
-      <label htmlFor='season'> Winter Season </label>
-      <br />
-      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <input
+        type='checkbox'
+        className='form-event'
+        onChange={() => setCheckedOne(!checkedOne)}
+      />
       <label htmlFor='season'> Whole Year </label>
       <br />
-      <button onClick={handleSubscribed}>Subscribe</button>
+      <Link to={`/confirmation-page`}>
+        <button className='form--submit' onClick={handleSubscribed}>
+          Subscribe!
+        </button>
+      </Link>
     </div>
+    // </div>
   );
 };
 
