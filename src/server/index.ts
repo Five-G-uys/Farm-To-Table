@@ -27,6 +27,7 @@ import {
 } from './db/models';
 import Events from './db/models/Events';
 import UserInterface from '../types/UserInterface';
+import { send } from 'process';
 //import { postEvent } from "./routes/EventRoutes";
 
 // // Needs to stay until used elsewhere (initializing models)
@@ -181,7 +182,7 @@ const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
 };
 
 ////////SUBSCRIPTION REQUEST////////////
-app.put(`/subscribed/:id`, (req: Request, res: Response) => {
+app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
   Users.update(req.body, { where: { id: req.params.id }, returning: true })
     .then((response: any) => {
       // console.log('Subscription Route', response[1]);
@@ -192,6 +193,16 @@ app.put(`/subscribed/:id`, (req: Request, res: Response) => {
     })
     .catch((err: unknown) => {
       console.error('SUBSCRIPTION ROUTES:', err);
+    });
+});
+
+app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
+  Subscriptions.findAll()
+    .then((data: any) => {
+      res.status(200).send(data);
+    })
+    .catch((err: any) => {
+      console.error('Subscription Route ERROR', err);
     });
 });
 

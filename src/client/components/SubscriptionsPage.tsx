@@ -3,20 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { number } from 'prop-types';
-
+import SubscriptionCard from './SubscriptionCard';
 const SubscriptionsPage = () => {
   const [checkedOne, setCheckedOne] = useState(false);
   const [id, setId] = useState(0);
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [address, setAddress] = useState();
-  const [phone, setPhone] = useState();
+  // const [firstName, setFirstName] = useState();
+  // const [lastName, setLastName] = useState();
+  // const [address, setAddress] = useState();
+  // const [phone, setPhone] = useState();
 
-  // const handleChangeOne = () => {
-  //   console.log('Line 11 SubPage', checkedOne);
-  //   setCheckedOne(!checkedOne);
-  //   console.log('Line 13 SubPage', checkedOne);
-  // };
+  const [subscription, setSubscription] = useState({
+    season: '',
+    year: 0,
+    flatPrice: 0,
+    description: '',
+    subArray: [],
+  });
 
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
@@ -27,22 +29,37 @@ const SubscriptionsPage = () => {
         setId(id);
       })
       .catch((err) => console.warn(err));
+    axios
+      .get(`/api/subscriptions/`)
+      .then((response) => {
+        setSubscription((state) => {
+          return { ...state, subArray: response.data };
+        });
+        console.log('LINE 46 SubscriptionPage.tsx', response);
+      })
+      .catch((err) => {
+        console.error('Line 49 subPage.tsx', err);
+      });
   }, []);
+
+  console.log('LINE 45', subscription.subArray);
 
   const handleSubscribed = () => {
     axios
-      .put(`/subscribed/${id}`, { subscribed: checkedOne })
+      .put(`/api/subscribed/${id}`, { subscribed: checkedOne })
       .then((response) => {
-        console.log('SubscriptionsPage.tsx response', response);
+        console.log('LINE 36', response);
       })
       .catch((err) => {
         console.log('SubscriptionsPage.tsx error', err);
       });
   };
 
+  const { subArray } = subscription;
+
   return (
     <div>
-      <div>Give us some more information about yourself!</div>
+      {/* <div>Give us some more information about yourself!</div>
       <input
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
@@ -80,13 +97,32 @@ const SubscriptionsPage = () => {
           name='phone'
           required
         />
-      </div>
+      </div> */}
       <div>
+        {subArray.map(
+          (sub: {
+            season: string;
+            year: number;
+            flatPrice: number;
+            description: string;
+            id: number;
+          }) => {
+            return (
+              <SubscriptionCard
+                season={sub.season}
+                year={sub.year}
+                flatPrice={sub.flatPrice}
+                description={sub.description}
+                key={sub.id}
+              />
+            );
+          }
+        )}
         Now choose a seasonal package and subscribe for 12 weeks of home
         deliveries. Or select the whole year!
       </div>
       <br />
-      {/* <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
+      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
       <label htmlFor='season'> Spring Season </label>
       <br />
       <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
@@ -97,9 +133,10 @@ const SubscriptionsPage = () => {
       <br />
       <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
       <label htmlFor='season'> Whole Year </label>
-      <br /> */}
+      <br />
       <button onClick={handleSubscribed}>Subscribe</button>
     </div>
+    // </div>
   );
 };
 
