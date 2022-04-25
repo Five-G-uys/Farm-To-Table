@@ -12,6 +12,7 @@ const EventsPage = () => {
     thumbnail: "",
     category: "",
     eventDate: "",
+    eventType: "",
   });
 
   const handleInputEvent = (
@@ -36,9 +37,8 @@ const EventsPage = () => {
           eventName: event.eventName,
           description: event.description,
           thumbnail: event.thumbnail,
-          category: event.category,
           eventDate: event.eventDate,
-          eventType: "",
+          eventType: event.eventType,
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -74,15 +74,14 @@ const EventsPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [event.thumbnail]);
   console.log(event);
-  const { eventName, description, thumbnail, category, eventDate, eventType } =
-    event;
+  const { eventName, description, thumbnail, eventDate, eventType } = event;
   return (
     <div className="event">
       <h3 className="create-event">Create event</h3>
       <br></br>
       <div>
         <button onClick={showWidget} className="input-btn">
-          Upload event image
+          Add image to Event
         </button>
         <br></br>
         {thumbnail && <img src={thumbnail} />}
@@ -108,14 +107,6 @@ const EventsPage = () => {
           ></textarea>
           <br></br>
           <br></br>
-          <input
-            type="text"
-            placeholder="category"
-            value={category}
-            name="category"
-            onChange={handleInputEvent}
-            className="form-input"
-          />
           <input
             type="text"
             placeholder="DD/MM/YEAR"

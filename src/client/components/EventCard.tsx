@@ -30,8 +30,10 @@ const EventCard = () => {
   console.log("line 28", eventArray);
 
   return (
-    <div>
-      <h1 className="card-event">Spring Season Events</h1>
+    <div className="events">
+      <nav className='nav'>
+        <h1 className="nav-event">Spring Season Events</h1>
+      </nav>
       <div className="card">
         {Array.isArray(eventArray) &&
           eventArray.map(
@@ -39,14 +41,14 @@ const EventCard = () => {
               eventName: string;
               description: string;
               thumbnail: React.ImgHTMLAttributes<string>;
-              category: string;
+              eventType: string;
               id: number;
               eventDate: string;
             }) => {
               return (
                 <Event
                   eventName={event.eventName}
-                  category={event.category}
+                  eventType={event.eventType}
                   thumbnail={event.thumbnail}
                   description={event.description}
                   eventDate={event.eventDate}

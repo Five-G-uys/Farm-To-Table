@@ -18,7 +18,6 @@ const Events = db.define("events", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  category: { type: DataTypes.STRING, unique: false, allowNull: false },
   thumbnail: { type: DataTypes.STRING, unique: false, allowNull: false },
   farm_id: {
     type: DataTypes.INTEGER,

@@ -7,7 +7,7 @@ interface AppProps {
   eventName: string;
   description: string;
   thumbnail: React.ImgHTMLAttributes<string>;
-  category: string;
+  eventType: string;
   eventDate: string;
 }
 
@@ -16,20 +16,22 @@ const Event = ({
   eventName,
   description,
   thumbnail,
-  category,
+  eventType,
   eventDate,
 }: AppProps) => {
   console.log("LINE 37", eventName, description, thumbnail);
 
   return (
     <div>
-      <section className="sect-event">
-        <img src={thumbnail} className="event-img" />
-        <h1 className="event-name">{eventName}</h1>
-        <h3 className="event-desc">{description}</h3>
-        <h3 className="event-category">{category}</h3>
-        <h4 className="event-date">{eventDate}</h4>
-      </section>
+      {thumbnail && (
+        <section className="sect-event">
+          <img src={thumbnail} className="event-img" />
+          <h1 className="event-name">{eventName}</h1>
+          <h3 className="event-desc">{description}</h3>
+          <h3 className="event-category">{eventType}</h3>
+          <h4 className="event-date">{eventDate}</h4>
+        </section>
+      )}
     </div>
   );
 };
