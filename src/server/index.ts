@@ -129,10 +129,6 @@ app.get('/api/userProfile', (req, res) => {
 });
 
 //Events requests
-<<<<<<< HEAD
-
-=======
->>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
 app.post('/api/event', (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category, eventDate, eventType } =
     req.body.event;
@@ -305,7 +301,7 @@ app.post('/api/subscriptions-create', (req: Request, res: Response) => {
     });
 });
 
-//Subscription get request
+//SUbscriptions get request
 app.get('/subscriptions-get', (req: Request, res: Response) => {
   Subscriptions.findAll()
     .then((response: any) => {
