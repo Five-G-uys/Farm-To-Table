@@ -28,7 +28,6 @@ const SubscriptionsAdmin = () => {
         [name]: type === 'checkbox' ? checked : value,
       };
     });
-    console.log(event);
   };
 
   const postSubscription = () => {
