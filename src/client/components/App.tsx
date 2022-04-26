@@ -3,23 +3,37 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import axios from 'axios';
 import HomePage from './HomePage';
-// import NavBar from './Navbar'
-// import AboutUsPage from './AboutUsPage';
-// import EventsPage from './EventsPage';
-// import ProfilePage from './ProfilePage';
-// import SubscriptionsPage from './SubscriptionsPage';
+import { Routes, Route, Link } from 'react-router-dom';
+import EventCard from './EventCard';
+import SubscriptionsPage from './SubscriptionsPage';
+import Confirmation from './Confirmation';
+import OrdersPage from './OrdersPage';
+import EventsPage from './EventsPage';
+import ProfilePage from './ProfilePage';
+import Login from './Login';
+import NewNavBar from './NewNavBar';
 
-const App= () => {
-
-  
-
+const App = () => {
   return (
-    <div>
-      
-      <HomePage />
-      {/* <NavBar/> */}
-    </div>
-  )
+    <>
+      <NewNavBar />
+      <div>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='subscriptions-page' element={<SubscriptionsPage />} />
+          <Route
+            path='subscriptions-page/confirmation-page'
+            element={<Confirmation />}
+          />
+          <Route path='orders-page' element={<OrdersPage />} />
+          <Route path='events-page' element={<EventsPage />} />
+          <Route path='profile-page' element={<ProfilePage />} />
+          <Route path='event-card' element={<EventCard />} />
+          <Route path='login' element={<Login />} />
+        </Routes>
+      </div>
+    </>
+  );
 };
 
 export default App;

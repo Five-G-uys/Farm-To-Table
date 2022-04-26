@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Farms from './Farms';
-import Subscriptions from './Subscriptions';
+import SubscriptionEntries from './SubscriptionEntries';
 
 const Orders = db.define('orders', {
   id: {
@@ -17,11 +17,11 @@ const Orders = db.define('orders', {
     allowNull: false,
     references: { model: Farms, key: 'id' },
   },
-  subscription_id: {
+  subscription_entry_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    references: { model: Subscriptions, key: 'id' },
+    references: { model: SubscriptionEntries, key: 'id' },
   },
   delivery_date: {
     type: DataTypes.DATE,

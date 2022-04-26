@@ -42,7 +42,6 @@ const OrderCard = ({ order }: any) => {
     setExpanded(!expanded);
   };
 
-  console.log('LINE 4 || ORDERCARD ', order);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
