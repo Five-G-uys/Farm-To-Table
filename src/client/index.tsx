@@ -1,10 +1,9 @@
-import React from "react";
-//import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
-import { Routes } from "react-router-dom";
-import { Route } from "react-router-dom";
-import ReactDOMClient from "react-dom/client";
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import ReactDOMClient from 'react-dom/client';
+import App from './components/App';
 
+<<<<<<< HEAD
 import EventCard from "./components/EventCard";
 import App from "./components/App";
 import HomePage from "./components/HomePage";
@@ -34,9 +33,16 @@ const element = (
       {/* <Route path="event-calander" element={<EventCalander />} /> */}
       <Route path="login" element={<Login />} />
     </Routes>
+=======
+import './styles.css';
+
+const element = (
+  <BrowserRouter>
+    <App />
+>>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
   </BrowserRouter>
 );
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const id: any = document.getElementById("app");
+const id: any = document.getElementById('app');
 const root = ReactDOMClient.createRoot(id);
 root.render(element);

@@ -8,7 +8,7 @@
   font-family: "Inter", sans-serif;
 } */
 body {
-  background-image: url("file:///C:/Users/rodol/OneDrive/Desktop/BackGROUND.jpg");
+  background-image: url("/src/BackGROUND.jpg");
   background-color: #e2cece34;
 }
 
