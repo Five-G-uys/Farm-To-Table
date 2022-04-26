@@ -98,9 +98,8 @@ app.get(
     failureRedirect: errorLoginUrl,
     successRedirect: successLoginUrl,
   }),
-  (req, res) => {
-    // console.log('User: ', req.user);
-    res.send('thank you for signing in!');
+  (req: any, res: any) => {
+    res.redirect('/profile-page');
   }
 );
 

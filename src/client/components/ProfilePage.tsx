@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import React from 'react';
 
 // const ProfilePage = () => {
@@ -8,9 +10,10 @@
 
 // export default ProfilePage;
 
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
+import { UserContext } from "./UserContext";
 
 const Profile = (): React.ReactElement => {
   const [ name, setName ] = useState('');
@@ -18,6 +21,8 @@ const Profile = (): React.ReactElement => {
   const [ address, setAddress ] = useState('');
   const [ email, setEmail] = useState('');
   const [ subscribed, setSubscribed ] = useState(false);
+
+  const msg: any = useContext(UserContext);
 
 
 
@@ -43,6 +48,7 @@ const Profile = (): React.ReactElement => {
       <div className="profileDiv">
         <img className="profilePic" src={picture} />
       </div>
+      <h1>{msg}</h1>
       <h3>Name: {name}</h3>
       <h3>Address: {address}</h3>
       <h3>Email: {email}</h3>

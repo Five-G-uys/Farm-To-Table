@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext } from 'react'
 
-export const UserContext = createContext(null)
+export const UserContext: any = createContext(null)
