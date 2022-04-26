@@ -2,11 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SubscriptionCard from './SubscriptionCard';
+
 const SubscriptionsPage = () => {
+  const navigate = useNavigate();
   const [checkedOne, setCheckedOne] = useState(false);
   const [id, setId] = useState(0);
+  const [season, setSeason] = useState('');
+
+  // change checkboxes to radio buttons
 
   const [subscription, setSubscription] = useState({
     season: '',
@@ -41,28 +46,31 @@ const SubscriptionsPage = () => {
   console.log('LINE 45', subscription.subArray);
 
   const handleSubscribed = () => {
-    axios
-      .put(`/api/subscribed/${id}`, { subscribed: checkedOne })
-      .then((response) => {
-        console.log('LINE 36', response);
-      })
-      .catch((err) => {
-        console.log('SubscriptionsPage.tsx error', err);
-      });
+    // axios
+    //   .put(`/api/subscribed/${id}`, { subscribed: checkedOne })
+    //   .then((response) => {
+    //     console.log('LINE 36', response);
+    //   })
+    //   .catch((err) => {
+    //     console.log('SubscriptionsPage.tsx error', err);
+    //   });
 
-    if (checkedOne) {
+    if (season) {
       axios
         .post(`/api/add_subscription_entry/${id}`, {
           farm_id: 1,
-          user_id: id,
-          subscription_id: 1,
+          season: season, // change season to number season id on server side
         })
         .then((response) => {
           console.log('LINE 56 || SUBSCRIPTIONSPAGE.TSX ||', response);
+          //NAVIGATE REDIRECTS TO CONFIRMATION PAGE SO NO NEED FOR LINK TAG IN JSX
+          navigate('/subscriptions-page/confirmation-page');
         })
         .catch((err) => {
           console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
         });
+    } else {
+      alert('You must select one');
     }
   };
 
@@ -95,31 +103,35 @@ const SubscriptionsPage = () => {
       </div>
       <br />
       <input
-        type='checkbox'
+        name='season'
+        value='spring'
+        type='radio'
         className='form-event'
-        onChange={() => setCheckedOne(!checkedOne)}
+        onChange={(e) => setSeason(e.target.value)}
       />
       <label htmlFor='season'> Spring 2022 </label>
       <br />
       <input
-        type='checkbox'
+        name='season'
+        value='fall'
+        type='radio'
         className='form-event'
-        onChange={() => setCheckedOne(!checkedOne)}
+        onChange={(e) => setSeason(e.target.value)}
       />
       <label htmlFor='season'> Fall 2022 </label>
       <br />
       <input
-        type='checkbox'
+        name='season'
+        value='whole year'
+        type='radio'
         className='form-event'
-        onChange={() => setCheckedOne(!checkedOne)}
+        onChange={(e) => setSeason(e.target.value)}
       />
       <label htmlFor='season'> Whole Year </label>
       <br />
-      <Link to={`/confirmation-page`}>
-        <button className='form--submit' onClick={handleSubscribed}>
-          Subscribe!
-        </button>
-      </Link>
+      <button className='form--submit' onClick={handleSubscribed}>
+        {/* <Link to={`/confirmation-page`}>Subscribe!</Link> */}Subscribe!
+      </button>
     </div>
     // </div>
   );

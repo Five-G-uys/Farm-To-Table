@@ -129,7 +129,10 @@ app.get('/api/userProfile', (req, res) => {
 });
 
 //Events requests
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
 app.post('/api/event', (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category, eventDate, eventType } =
     req.body.event;
@@ -171,57 +174,83 @@ app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
   Users.update(req.body, { where: { id: req.params.id }, returning: true })
     .then((response: any) => {
       // console.log('Subscription Route', response[1]);
-      res.redirect(
-        200,
-        'https://localhost:5555/subscriptions-page/confirmation-page'
-      );
+      // res.redirect(
+      //   200,
+      //   'https://localhost:5555/subscriptions-page/confirmation-page'
+      // );
+      res.send(203);
     })
     .catch((err: unknown) => {
       console.error('SUBSCRIPTION ROUTES:', err);
     });
 });
 
-app.post(`/api/add_subscription_entry/:id`, (req: Request, res: Response) => {
-  // console.log('LINE 200 || SERVER INDEX.TS', req.body);
+app.post(
+  `/api/add_subscription_entry/:id`,
+  async (req: Request, res: Response) => {
+    // console.log('LINE 200 || SERVER INDEX.TS', req.body);
 
-  SubscriptionEntries.create(req.body)
-    .then((data: any) => {
-      // console.log(data.dataValues);
+    const addSubscription = (id: number) => {
+      SubscriptionEntries.create({
+        user_id: req.params.id,
+        farm_id: 1,
+        subscription_id: id,
+      })
+        .then((data: any) => {
+          console.log('LINE 196 || SERVER ||', data.dataValues.id);
 
-      const today: Date = new Date();
-      // iterate over number of orders
-      for (let i = 1; i < 15; i++) {
-        const nextWeek = () => {
-          const today = new Date();
-          const nextwk = new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate() + 7 * i
-          );
-          return nextwk;
-        };
-        // console.log('LINE 218 || NEXTWEEK', nextWeek());
-        Orders.create({
-          farm_id: 1,
-          subscription_id: data.dataValues.subscription_id,
-          delivery_date: nextWeek(),
+          const today: Date = new Date();
+          // iterate over number of orders
+          for (let i = 1; i < 15; i++) {
+            const nextWeek = () => {
+              const today = new Date();
+              const nextwk = new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate() + 7 * i
+              );
+              return nextwk;
+            };
+            // console.log('LINE 218 || NEXTWEEK', nextWeek());
+            Orders.create({
+              // subscription_id: data.dataValues.subscription_id,
+              subscription_entry_id: data.dataValues.id,
+              delivery_date: nextWeek(),
+              farm_id: 1,
+            })
+              .then((data: any) => {
+                // console.log('LINE 224 || SERVER INDEX ||', data);
+              })
+              .catch((err: any) => {
+                console.log('LINE 228 || SERVER INDEX || ERROR', err);
+              });
+          }
         })
-          .then((data: any) => {
-            // console.log('LINE 224 || SERVER INDEX ||', data);
-          })
-          .catch((err: any) => {
-            console.log('LINE 228 || SERVER INDEX || ERROR', err);
-          });
+        .catch((err: any) => {
+          console.error(err);
+        });
+    };
+    try {
+      if (req.body.season === 'whole year') {
+        await addSubscription(1);
+        await addSubscription(2);
+        res.status(201).send('Subscribed!');
+      } else {
+        const subscription_id = req.body.season === 'fall' ? 2 : 1;
+        await addSubscription(subscription_id);
+        res.status(201).send('Subscribed!');
       }
-    })
-    .catch((err: any) => {
-      console.error(err);
-    });
-});
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+);
 
 app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
   console.log('LINE 238 || SERVER INDEX', req.params); // user id
-  Orders.findAll({ where: { subscription_id: req.params.id } })
+  // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
+  // QUERY USER TABLE THEN JOIN
+  Orders.findAll({ where: { subscription_entry_id: req.params.id } })
     .then((data: any) => {
       console.log('LINE 241 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
       res.json(data);
@@ -293,7 +322,7 @@ app.get('/subscriptions-get', (req: Request, res: Response) => {
 app.get('/api/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      console.log('this is the data from the farm api call', data);
+      // console.log('this is the data from the farm api call', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
