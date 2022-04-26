@@ -4,6 +4,8 @@ import Farms from './Farms';
 import Events from './Events';
 import Users from './Users';
 
+// 
+
 const RSVP = db.define('rsvp', {
   id: {
     type: DataTypes.INTEGER,

@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UrlWithStringQuery } from "node:url";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface AppProps {
   eventName: string;
@@ -10,7 +10,6 @@ interface AppProps {
   eventType: string;
   eventDate: string;
 }
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
   eventName,
@@ -20,7 +19,22 @@ const Event = ({
   eventDate,
 }: AppProps) => {
   console.log("LINE 37", eventName, description, thumbnail);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [events, setEvents] = useState({});
+
+  const [userId, setUserId] = useState(0);
+
+  useEffect((): void => {
+    // TAKE THIS AXIOS CALL TO GET USER
+    axios
+      .get<AxiosResponse>("/api/userProfile")
+      .then(({ data }: AxiosResponse) => {
+        console.log("USerID", data.id);
+        const { id } = data;
+        setUserId(id);
+      })
+      .catch((err) => console.warn(err));
+  }, []);
   const getAllEvents = () => {
     axios
       .get("/events")
@@ -40,12 +54,14 @@ const Event = ({
   useEffect(() => {
     getAllEvents();
   }, []);
+
   return (
     <div>
       {thumbnail && (
         <>
           <div>
             <h1 className="event-name">{eventName}</h1>
+            <div>{userId}</div>
           </div>
           <section className="sect-event">
             <img src={thumbnail} className="event-img" />

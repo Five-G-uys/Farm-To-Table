@@ -16,6 +16,7 @@ import ProfilePage from "./components/ProfilePage";
 import Login from "./components/Login";
 import NewNavBar from "./components/NewNavBar";
 import "./styles.css";
+//mport EventCalander from "./components/EventCalander";
 
 const element = (
   <BrowserRouter>
@@ -30,6 +31,7 @@ const element = (
       <Route path="events-page" element={<EventsPage />} />
       <Route path="profile-page" element={<ProfilePage />} />
       <Route path="event-card" element={<EventCard />} />
+      {/* <Route path="event-calander" element={<EventCalander />} /> */}
       <Route path="login" element={<Login />} />
     </Routes>
   </BrowserRouter>
