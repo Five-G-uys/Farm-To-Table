@@ -59,7 +59,7 @@ app.use(passport.session());
 
 // Middleware
 const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
-  if (!req.user || req.user.role_id !== 3) {
+  if (!req.user || req.user.role_id !== 4) {
     return next(new Error('User is Unauthorized!'));
   } else {
     next();
