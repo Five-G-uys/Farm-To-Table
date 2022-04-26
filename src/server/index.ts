@@ -3,8 +3,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 // Import Dependencies
-import express, { Express, Request, response, Response } from "express";
-
+import express, { Express, Request, Response } from 'express';
 //import dotenv from "dotenv";
 require('dotenv').config();
 const path = require('path');
@@ -25,10 +24,10 @@ import {
   Subscriptions,
   Users,
   Vendors,
+  SubscriptionEntries,
 } from './db/models';
 import Events from './db/models/Events';
 import UserInterface from '../types/UserInterface';
-import { send } from 'process';
 //import { postEvent } from "./routes/EventRoutes";
 
 // // Needs to stay until used elsewhere (initializing models)
@@ -40,7 +39,7 @@ const app: Express = express();
 const port = process.env.LOCAL_PORT;
 
 const dist = path.resolve(__dirname, '..', '..', 'dist');
-console.log('LINE 37 || INDEX.TSX', __dirname);
+// console.log('LINE 37 || INDEX.TSX', __dirname);
 
 app.use(express.json());
 app.use(express.static(dist));
@@ -120,7 +119,7 @@ app.delete('/api/logout', (req: Request, res: Response) => {
 app.get('/api/userProfile', (req, res) => {
   Users.findOne()
     .then((data: any) => {
-      console.log('data', data);
+      // console.log('data', data);
       res.send(data).status(200);
     })
     .catch((err: any) => {
@@ -130,20 +129,21 @@ app.get('/api/userProfile', (req, res) => {
 });
 
 //Events requests
-app.post("/api/event", (req: Request, res: Response) => {
+app.post('/api/event', (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category, eventDate } =
     req.body.event;
 
-  console.log('162 Request object postEvent', req.body);
+  // console.log('162 Request object postEvent', req.body);
   Events.create({
     eventName,
     description,
     thumbnail,
     category,
     eventDate,
+    // eventType,
   })
     .then((data: any) => {
-      console.log('Return Events Route || Post Request', data);
+      // console.log('Return Events Route || Post Request', data);
       res.status(201);
     })
     .catch((err: string) => {
@@ -156,7 +156,7 @@ app.post("/api/event", (req: Request, res: Response) => {
 app.get('/events', (req: Request, res: Response) => {
   Events.findAll()
     .then((response: any) => {
-      console.log(response, 'This is line 186 events gotten');
+      // console.log(response, 'This is line 186 events gotten');
       res.status(200).send(response);
     })
     .catch((err: object) => {
@@ -180,6 +180,56 @@ app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
     });
 });
 
+app.post(`/api/add_subscription_entry/:id`, (req: Request, res: Response) => {
+  // console.log('LINE 200 || SERVER INDEX.TS', req.body);
+
+  SubscriptionEntries.create(req.body)
+    .then((data: any) => {
+      // console.log(data.dataValues);
+
+      const today: Date = new Date();
+      // iterate over number of orders
+      for (let i = 1; i < 15; i++) {
+        const nextWeek = () => {
+          const today = new Date();
+          const nextwk = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate() + 7 * i
+          );
+          return nextwk;
+        };
+        // console.log('LINE 218 || NEXTWEEK', nextWeek());
+        Orders.create({
+          farm_id: 1,
+          subscription_id: data.dataValues.subscription_id,
+          delivery_date: nextWeek(),
+        })
+          .then((data: any) => {
+            // console.log('LINE 224 || SERVER INDEX ||', data);
+          })
+          .catch((err: any) => {
+            console.log('LINE 228 || SERVER INDEX || ERROR', err);
+          });
+      }
+    })
+    .catch((err: any) => {
+      console.error(err);
+    });
+});
+
+app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
+  console.log('LINE 238 || SERVER INDEX', req.params); // user id
+  Orders.findAll({ where: { subscription_id: req.params.id } })
+    .then((data: any) => {
+      console.log('LINE 241 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
+      res.json(data);
+    })
+    .catch((err: any) => {
+      console.log('LINE 244 || SERVER INDEX', err);
+      res.send(err);
+    })
+  })
 app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
   Subscriptions.findAll()
     .then((data: any) => {
@@ -191,17 +241,16 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
 });
 
 // Home page routes
-app.get('/api/farms', (req: Request, res: Response) => {
+app.get("/api/farms", (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      console.log("this is the data from the farm api call", data)
-      res.status(200).send(data)
+      console.log('this is the data from the farm api call', data);
+      res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err)
-    })
-})
-
+      console.error('OH NOOOOO', err);
+    });
+});
 
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get('*', (req: Request, res: Response) => {
@@ -215,6 +264,3 @@ app.listen(port, () => {
 function findUser(crushers: any) {
   throw new Error('Function not implemented.');
 }
-
-
-

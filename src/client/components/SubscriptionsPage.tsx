@@ -49,6 +49,21 @@ const SubscriptionsPage = () => {
       .catch((err) => {
         console.log('SubscriptionsPage.tsx error', err);
       });
+
+    if (checkedOne) {
+      axios
+        .post(`/api/add_subscription_entry/${id}`, {
+          farm_id: 1,
+          user_id: id,
+          subscription_id: 1,
+        })
+        .then((response) => {
+          console.log('LINE 56 || SUBSCRIPTIONSPAGE.TSX ||', response);
+        })
+        .catch((err) => {
+          console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
+        });
+    }
   };
 
   const { subArray } = subscription;
