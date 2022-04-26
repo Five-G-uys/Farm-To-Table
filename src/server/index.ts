@@ -165,7 +165,7 @@ app.get('/events', (req: Request, res: Response) => {
     });
 });
 
-////////SUBSCRIPTION REQUEST////////////
+////////SUBSCRIPTION REQUESTS////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
   Users.update(req.body, { where: { id: req.params.id }, returning: true })
     .then((response: any) => {
@@ -193,7 +193,7 @@ app.post(
         subscription_id: id,
       })
         .then((data: any) => {
-          console.log('LINE 196 || SERVER ||', data.dataValues.id);
+          // console.log('LINE 196 || SERVER ||', data.dataValues.id);
 
           const today: Date = new Date();
           // iterate over number of orders
@@ -243,12 +243,12 @@ app.post(
 );
 
 app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
-  console.log('LINE 238 || SERVER INDEX', req.params); // user id
+  // console.log('LINE 238 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
   Orders.findAll({ where: { subscription_entry_id: req.params.id } })
     .then((data: any) => {
-      console.log('LINE 241 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
+      // console.log('LINE 241 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
       res.json(data);
     })
     .catch((err: any) => {
@@ -266,13 +266,13 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
     });
 });
 
-//Subscription Creation/Edit/Delete Routes//
+//Subscription ADMIN Creation/Edit/Delete Routes//
 
-app.post('/api/subscriptions-create', (req: Request, res: Response) => {
+app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
+  console.log('LINE 272 ****', req.body.event);
   const {
     season,
     year,
-    thumbnail,
     flat_price,
     weekly_price,
     description,
@@ -280,11 +280,10 @@ app.post('/api/subscriptions-create', (req: Request, res: Response) => {
     end_date,
   } = req.body.event;
 
-  console.log('258 Request object postSubscription', req.body);
+  console.log('283 Request object postSubscription', req.body);
   Subscriptions.create({
     season,
     year,
-    thumbnail,
     flat_price,
     weekly_price,
     description,
@@ -292,7 +291,7 @@ app.post('/api/subscriptions-create', (req: Request, res: Response) => {
     end_date,
   })
     .then((data: any) => {
-      console.log('270 Return Subscriptions Route || Post Request', data);
+      console.log('294 Return Subscriptions Route || Post Request', data);
       res.status(201);
     })
     .catch((err: string) => {
@@ -305,7 +304,7 @@ app.post('/api/subscriptions-create', (req: Request, res: Response) => {
 app.get('/subscriptions-get', (req: Request, res: Response) => {
   Subscriptions.findAll()
     .then((response: any) => {
-      // console.log(response, 'This is line 186 events gotten');
+      console.log(response, 'This is line 307 subscriptions gotten');
       res.status(200).send(response);
     })
     .catch((err: object) => {

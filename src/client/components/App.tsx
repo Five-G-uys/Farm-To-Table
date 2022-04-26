@@ -7,6 +7,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import EventCard from './EventCard';
 import SubscriptionsPage from './SubscriptionsPage';
 import Confirmation from './Confirmation';
+import SubscriptionsAdmin from './SubscriptionsAdmin';
 import OrdersPage from './OrdersPage';
 import EventsPage from './EventsPage';
 import ProfilePage from './ProfilePage';
@@ -25,6 +26,7 @@ const App = () => {
             path='subscriptions-page/confirmation-page'
             element={<Confirmation />}
           />
+          <Route path='subscriptions-admin' element={<SubscriptionsAdmin />} />
           <Route path='orders-page' element={<OrdersPage />} />
           <Route path='events-page' element={<EventsPage />} />
           <Route path='profile-page' element={<ProfilePage />} />
