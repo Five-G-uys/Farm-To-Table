@@ -129,11 +129,8 @@ app.get('/api/userProfile', (req, res) => {
 });
 
 //Events requests
-<<<<<<< HEAD
+
 app.post('/api/event', (req: Request, res: Response) => {
-=======
-app.post("/api/event", (req: Request, res: Response) => {
->>>>>>> 8be8e43ee043d2d0b5f8bc16129a5e4508111414
   const { eventName, description, thumbnail, category, eventDate, eventType } =
     req.body.event;
 
@@ -241,6 +238,54 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
     })
     .catch((err: any) => {
       console.error('Subscription Route ERROR', err);
+    });
+});
+
+//Subscription Creation/Edit/Delete Routes//
+
+app.post('/api/subscriptions-create', (req: Request, res: Response) => {
+  const {
+    season,
+    year,
+    thumbnail,
+    flat_price,
+    weekly_price,
+    description,
+    start_date,
+    end_date,
+  } = req.body.event;
+
+  console.log('258 Request object postSubscription', req.body);
+  Subscriptions.create({
+    season,
+    year,
+    thumbnail,
+    flat_price,
+    weekly_price,
+    description,
+    start_date,
+    end_date,
+  })
+    .then((data: any) => {
+      console.log('270 Return Subscriptions Route || Post Request', data);
+      res.status(201);
+    })
+    .catch((err: string) => {
+      console.error('Post Request Failed', err);
+      res.sendStatus(500);
+    });
+});
+
+//Subscription get request
+app.get('/subscriptions-get', (req: Request, res: Response) => {
+  Subscriptions.findAll()
+    .then((response: any) => {
+      // console.log(response, 'This is line 186 events gotten');
+      res.status(200).send(response);
+    })
+    .catch((err: object) => {
+      console.log('Something went wrong', err);
+      res.sendStatus(404);
     });
 });
 
