@@ -1,4 +1,5 @@
 import React, { useState, MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,8 +13,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Home', 'Events'];
-const settings = ['Profile', 'Orders', 'Subscriptions', 'Logout'];
+const pages = [
+  { name: 'Home', path: '/' },
+  { name: 'Events', path: 'events-page' },
+];
+const settings = [
+  { name: 'Profile', path: 'profile-page' },
+  { name: 'Subscriptions', path: 'subscriptions-page' },
+  { name: 'Orders', path: 'orders-page' },
+];
 
 const NewNavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -77,8 +85,11 @@ const NewNavBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  {/* // link tags are anchor tags under the hood */}
+                  <Link to={page.path}>
+                    <Typography textAlign='center'>{page.name}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -94,11 +105,11 @@ const NewNavBar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link to={page.path}>{page.name}</Link>
               </Button>
             ))}
           </Box>
@@ -126,8 +137,10 @@ const NewNavBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>{setting}</Typography>
+                <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                  <Link to={setting.path}>
+                    <Typography textAlign='center'>{setting.name}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
