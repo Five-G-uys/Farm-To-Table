@@ -59,7 +59,7 @@ app.use(passport.session());
 
 // Middleware
 const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
-  if (!req.user || req.user.role_id !== 3) {
+  if (!req.user || req.user.role_id !== 4) {
     return next(new Error('User is Unauthorized!'));
   } else {
     next();
@@ -98,9 +98,8 @@ app.get(
     failureRedirect: errorLoginUrl,
     successRedirect: successLoginUrl,
   }),
-  (req, res) => {
-    // console.log('User: ', req.user);
-    res.send('thank you for signing in!');
+  (req: any, res: any) => {
+    res.redirect('/profile-page');
   }
 );
 
@@ -117,6 +116,8 @@ app.delete('/api/logout', (req: Request, res: Response) => {
 
 // Get current user route
 app.get('/api/userProfile', (req, res) => {
+  console.log(`Body: `, req);
+  // console.log(`Params: `, req.);
   Users.findOne()
     .then((data: any) => {
       // console.log('data', data);
