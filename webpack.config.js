@@ -30,16 +30,12 @@ module.exports = {
 
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
   resolve: {
-<<<<<<< HEAD
-    extensions: ['.tsx', '.ts', '.js'],
-=======
-    extensions: [".tsx", ".ts", ".js", "css"],
->>>>>>> 23fc042ca8debd1fc9468a15407111468868a7e1
+    extensions: ['.tsx', '.ts', '.js', 'css'],
   },
 
   plugins: [
