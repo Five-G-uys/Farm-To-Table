@@ -9,6 +9,7 @@ import HomePage from './HomePage';
 import EventCard from './EventCard';
 import SubscriptionsPage from './SubscriptionsPage';
 import Confirmation from './Confirmation';
+import SubscriptionsAdmin from './SubscriptionsAdmin';
 import OrdersPage from './OrdersPage';
 import EventsPage from './EventsPage';
 import ProfilePage from './ProfilePage';
@@ -42,14 +43,18 @@ const App = () => {
       <NewNavBar />
       <div>
         <UserContext.Provider value={value}>
-          <h1>{'User Logged In: ${loggedIn(user)}'}</h1>
+          {/* <h1>{'User Logged In: ${loggedIn(user)}'}</h1> */}
           <Routes>
             <Route path='/' element={<HomePage />} />
             {/* Login/Logout Routes */}
             <Route
               path='login'
               element={
-                isLoggedIn(user) ? <Navigate to='/profile-page' /> : <Login />
+                isLoggedIn(user) ? (
+                  <Navigate to='/login/profile-page' />
+                ) : (
+                  <Login />
+                )
               }
             />
 
@@ -59,7 +64,7 @@ const App = () => {
             <Route path='event-card' element={<EventCard />} />
 
             {/* User Routes */}
-            <Route path='profile-page' element={<ProfilePage />} />
+            <Route path='login/profile-page' element={<ProfilePage />} />
             <Route
               path='subscriptions-page/confirmation-page'
               element={<Confirmation />}
@@ -76,6 +81,10 @@ const App = () => {
 
             {/* Admin Routes */}
             <Route path='events-page' element={<EventsPage />} />
+            <Route
+              path='subscriptions-admin'
+              element={<SubscriptionsAdmin />}
+            />
           </Routes>
         </UserContext.Provider>
       </div>

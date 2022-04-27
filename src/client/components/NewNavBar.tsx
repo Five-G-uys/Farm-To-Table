@@ -22,7 +22,7 @@ const settings = [
   { name: 'Login', path: 'login' },
   { name: 'Profile', path: 'login/profile-page' },
   { name: 'Orders', path: 'login/orders-page' },
-  { name: 'Add Season', path: 'admin/edit-seasons' },
+  { name: 'Add Season', path: 'subscriptions-admin' },
   { name: 'Add Event', path: 'events-page' },
   { name: 'Add Product ', path: 'admin/edit-products' },
 ];

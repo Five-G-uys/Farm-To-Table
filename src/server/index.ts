@@ -168,7 +168,7 @@ app.get('/events', (req: Request, res: Response) => {
     });
 });
 
-////////SUBSCRIPTION REQUEST////////////
+////////SUBSCRIPTION REQUESTS////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
   Users.update(req.body, { where: { id: req.params.id }, returning: true })
     .then((response: any) => {
@@ -246,7 +246,7 @@ app.post(
 );
 
 app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
-  console.log('LINE 238 || SERVER INDEX', req.params); // user id
+  // console.log('LINE 238 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
   SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
@@ -297,6 +297,41 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
     })
     .catch((err: any) => {
       console.error('Subscription Route ERROR', err);
+    });
+});
+
+//Subscription ADMIN Creation/Edit/Delete Routes//
+
+app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
+  console.log('LINE 272 ****', req.body.event);
+  const {
+    season,
+    year,
+    flat_price,
+    weekly_price,
+    description,
+    start_date,
+    end_date,
+  } = req.body.event;
+
+  console.log('283 Request object postSubscription', req.body);
+  Subscriptions.create({
+    season,
+    year,
+    flat_price,
+    weekly_price,
+    description,
+    start_date,
+    end_date,
+    farm_id: 1,
+  })
+    .then((data: any) => {
+      console.log('294 Return Subscriptions Route || Post Request', data);
+      res.status(201);
+    })
+    .catch((err: string) => {
+      console.error('Post Request Failed', err);
+      res.sendStatus(500);
     });
 });
 
