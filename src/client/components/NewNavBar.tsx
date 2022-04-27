@@ -18,9 +18,9 @@ const pages = [
   { name: 'Events', path: 'events-page' },
 ];
 const settings = [
-  { name: 'Profile', path: 'profile-page' },
+  { name: 'Profile', path: 'login/profile-page' },
   { name: 'Subscriptions', path: 'subscriptions-page' },
-  { name: 'Orders', path: 'orders-page' },
+  { name: 'Orders', path: 'login/orders-page' },
 ];
 
 const NewNavBar = () => {
