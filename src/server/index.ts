@@ -301,19 +301,6 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     });
 });
 
-//SUbscriptions get request
-app.get('/subscriptions-get', (req: Request, res: Response) => {
-  Subscriptions.findAll()
-    .then((response: any) => {
-      console.log(response, 'This is line 307 subscriptions gotten');
-      res.status(200).send(response);
-    })
-    .catch((err: object) => {
-      console.log('Something went wrong', err);
-      res.sendStatus(404);
-    });
-});
-
 // Home page routes
 app.get('/api/farms', (req: Request, res: Response) => {
   Farms.findAll()
