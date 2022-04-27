@@ -234,6 +234,7 @@ syncModels(true)
     //     farm_id: 1,
     //   },
     // });
+
     // await Subscriptions.findOrCreate({
     //   where: { id: 2 },
     //   defaults: {
