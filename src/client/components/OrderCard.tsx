@@ -50,7 +50,8 @@ const OrderCard = ({ order }: any) => {
             O
           </Avatar>
         }
-        title={`Week ${order.id}`}
+        // NEED TO FIGURE OUT HOW TO MATCH ORDERS TO WEEKS
+        title={`Order Number: ${order.id}`}
       />
       <CardMedia
         component='img'
