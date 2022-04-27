@@ -2,12 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SubscriptionCard from './SubscriptionCard';
 
 const SubscriptionsPage = () => {
   const navigate = useNavigate();
-  const [checkedOne, setCheckedOne] = useState(false);
   const [id, setId] = useState(0);
   const [season, setSeason] = useState('');
 
@@ -122,12 +121,12 @@ const SubscriptionsPage = () => {
       <br />
       <input
         name='season'
-        value='whole year'
+        value='winter'
         type='radio'
         className='form-event'
         onChange={(e) => setSeason(e.target.value)}
       />
-      <label htmlFor='season'> Whole Year </label>
+      <label htmlFor='season'> Winter 2022 </label>
       <br />
       <button className='form--submit' onClick={handleSubscribed}>
         {/* <Link to={`/confirmation-page`}>Subscribe!</Link> */}Subscribe!
