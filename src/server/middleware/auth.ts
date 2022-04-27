@@ -19,7 +19,7 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, done) => {
-      console.log(profile);
+      // console.log(profile);
       const defaultUser = {
         name: profile._json.name,
         email: profile._json.email,
@@ -31,7 +31,7 @@ passport.use(
         where: { googleId: profile.id },
         defaults: defaultUser,
       }).catch((err: any) => {
-        console.log("Error signing up", err);
+        // console.log("Error signing up", err);
         done(err);
       });
 

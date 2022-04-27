@@ -74,11 +74,11 @@ const errorLoginUrl = 'http://localhost:5555/login/error';
 // all backend routes should start at a common place that dont exist on the front end
 
 passport.serializeUser((user: any, done: any) => {
-  console.log('Serializing User:', user);
+  // console.log('Serializing User:', user);
   done(null, user);
 });
 passport.deserializeUser((user: any, done: any) => {
-  console.log('Deserializing User:', user);
+  // console.log('Deserializing User:', user);
   done(null, user);
 });
 
@@ -118,7 +118,7 @@ app.delete('/api/logout', (req: Request, res: Response) => {
 
 // Get current user route
 app.get('/api/userProfile', (req, res) => {
-  console.log(`Body: `, req);
+  // console.log(`Body: `, req);
   // console.log(`Params: `, req.);
   Users.findOne()
     .then((data: any) => {
@@ -163,7 +163,7 @@ app.get('/events', (req: Request, res: Response) => {
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('Something went wrong', err);
+      // console.log('Something went wrong', err);
       res.sendStatus(404);
     });
 });
@@ -252,21 +252,21 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
   SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
     .then((data: Array<object>) => {
       const dataObj: Array<object> = [];
-      console.log(
-        'LINE 253',
-        data.forEach((subscriptionEntry: any) => {
-          console.log('LINE 255', subscriptionEntry.dataValues);
-          if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
-            dataObj.push(subscriptionEntry.dataValues.id);
-          }
-        })
-      );
-      console.log(
-        'LINE 261',
-        dataObj.map((subscriptionEntryId: any) => {
-          return { subscription_entry_id: subscriptionEntryId };
-        })
-      );
+      // console.log(
+      //   'LINE 253',
+      //   data.forEach((subscriptionEntry: any) => {
+      //     console.log('LINE 255', subscriptionEntry.dataValues);
+      //     if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
+      //       dataObj.push(subscriptionEntry.dataValues.id);
+      //     }
+      //   })
+      // );
+      // console.log(
+      //   'LINE 261',
+      //   dataObj.map((subscriptionEntryId: any) => {
+      //     return { subscription_entry_id: subscriptionEntryId };
+      //   })
+      // );
       // Orders.findAll({ where: { subscription_entry_id: req.params.id } })
       Orders.findAll({
         where: {

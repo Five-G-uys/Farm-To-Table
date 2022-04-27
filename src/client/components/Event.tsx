@@ -19,13 +19,13 @@ const Event = ({
   eventType,
   eventDate,
 }: AppProps) => {
-  console.log("LINE 37", eventName, description, thumbnail);
+  // console.log("LINE 37", eventName, description, thumbnail);
   const [events, setEvents] = useState({});
   const getAllEvents = () => {
     axios
       .get("/events")
       .then((data) => {
-        console.log("SUCESSFULLY FECTHED DATA", data.data);
+        // console.log("SUCESSFULLY FECTHED DATA", data.data);
         setEvents((state) => {
           return {
             ...state,
@@ -34,7 +34,7 @@ const Event = ({
         });
       })
       .catch((error) => {
-        console.log("sorry, request failed", error);
+        // console.log("sorry, request failed", error);
       });
   };
   useEffect(() => {

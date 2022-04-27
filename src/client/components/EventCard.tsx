@@ -10,7 +10,7 @@ const EventCard = () => {
     axios
       .get("/events")
       .then((data) => {
-        console.log("SUCESSFULLY FECTHED DATA", data.data);
+        // console.log("SUCESSFULLY FECTHED DATA", data.data);
         setEvents((state) => {
           return {
             ...state,
@@ -27,7 +27,7 @@ const EventCard = () => {
   }, []);
 
   const { eventArray } = events;
-  console.log("line 28", eventArray);
+  // console.log("line 28", eventArray);
 
   return (
     <div className="events">

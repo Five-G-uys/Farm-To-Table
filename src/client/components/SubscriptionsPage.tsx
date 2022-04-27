@@ -35,14 +35,14 @@ const SubscriptionsPage = () => {
         setSubscription((state) => {
           return { ...state, subArray: response.data };
         });
-        console.log('LINE 46 SubscriptionPage.tsx', response);
+        // console.log('LINE 46 SubscriptionPage.tsx', response);
       })
       .catch((err) => {
         console.error('Line 49 subPage.tsx', err);
       });
   }, []);
 
-  console.log('LINE 45', subscription.subArray);
+  // console.log('LINE 45', subscription.subArray);
 
   const handleSubscribed = () => {
     if (season) {
@@ -52,7 +52,7 @@ const SubscriptionsPage = () => {
           season: season, // change season to number season id on server side
         })
         .then((response) => {
-          console.log('LINE 56 || SUBSCRIPTIONSPAGE.TSX ||', response);
+          // console.log('LINE 56 || SUBSCRIPTIONSPAGE.TSX ||', response);
           //NAVIGATE REDIRECTS TO CONFIRMATION PAGE SO NO NEED FOR LINK TAG IN JSX
           navigate('/subscriptions-page/confirmation-page');
         })

@@ -102,52 +102,56 @@ const SubscriptionsAdmin = () => {
             <label htmlFor='Season'>Winter</label>
             <br />
           </fieldset>
+          <label>Year</label>
           <input
             type='text'
-            placeholder='Year'
+            placeholder='ex: 2022'
             value={year}
             name='year'
             onChange={handleInputEvent}
             className='input'
           />
+          <label>Flat Price</label>
           <input
             type='text'
-            placeholder='Flat Price'
+            placeholder='ex: $500'
             value={flat_price}
             name='flat_price'
             onChange={handleInputEvent}
             className='input'
           />
+          <label>Weekly Price</label>
           <input
             type='text'
-            placeholder='Weekly Price'
+            placeholder='ex: $40'
             value={weekly_price}
             name='weekly_price'
             onChange={handleInputEvent}
             className='input'
           />
           <br></br>
-          <br></br>
+          <label>Description</label>
           <textarea
             className='text-form'
-            placeholder='Description'
+            placeholder='ex: A beautiful bounty of fruits and vegetables...'
             value={description}
             name='description'
             onChange={handleInputEvent}
           ></textarea>
           <br></br>
-          <br></br>
+          <label>Start Date</label>
           <input
             type='text'
-            placeholder='DD/MM/YEAR'
+            placeholder='MM/DD/YY'
             value={start_date}
             name='start_date'
             onChange={handleInputEvent}
             className='form-input'
           />
+          <label>End Date</label>
           <input
             type='text'
-            placeholder='DD/MM/YEAR'
+            placeholder='MM/DD/YY'
             value={end_date}
             name='end_date'
             onChange={handleInputEvent}
