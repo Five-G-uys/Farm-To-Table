@@ -48,6 +48,31 @@ const SubscriptionsAdmin = () => {
       .catch((err) => console.error(err));
   };
 
+  // console.log(process.env.CLOUD_PRESET2);
+  const CLOUD_NAME = process.env.CLOUD_NAME;
+  const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
+  const showWidget = () => {
+    const widget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: CLOUD_NAME,
+        uploadPreset: CLOUD_PRESET2,
+      },
+      (error: any, result: { event: string; info: { url: string } }) => {
+        if (!error && result && result.event === 'success') {
+          // console.log("LINE 56", result.info.url);
+          setEvent((state) => {
+            return {
+              ...state,
+              thumbnail: result.info.url,
+            };
+          });
+          // console.log("LINE 63", result.info.url);
+        }
+      }
+    );
+    widget.open();
+  };
+
   //{ event: string; info: { url: string } })
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [subscription.description]);
@@ -66,6 +91,9 @@ const SubscriptionsAdmin = () => {
     <div className='event'>
       <h3 className='create-subscription'>Create Subscription</h3>
       <br></br>
+      <button onClick={showWidget} className='input-btn'>
+        Add image
+      </button>
       <div>
         <form onSubmit={postSubscription} className='form-event'>
           <fieldset>
@@ -111,6 +139,7 @@ const SubscriptionsAdmin = () => {
             onChange={handleInputEvent}
             className='input'
           />
+          <br></br>
           <label>Flat Price</label>
           <input
             type='text'
