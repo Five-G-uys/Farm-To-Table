@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Event from "./Event";
 import axios from "axios";
-import RSVPS from "./RSVPS";
+//import RSVPS from "./RSVPS";
 
 const EventCard = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -28,7 +28,7 @@ const EventCard = () => {
   }, []);
 
   const { eventArray } = events;
-  console.log("line 28", eventArray);
+  // console.log("line 28", eventArray);
 
   return (
     <div className="events">

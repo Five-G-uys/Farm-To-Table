@@ -2,7 +2,7 @@
 import { UrlWithStringQuery } from "node:url";
 import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
-import RSVPS from "./RSVPS";
+//import RSVPS from "./RSVPS";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface AppProps {
   eventName: string;
@@ -51,7 +51,7 @@ AppProps) => {
           };
         });
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.log("sorry, request failed", error);
       });
   };
@@ -94,9 +94,7 @@ AppProps) => {
               <button onClick={handleEventResponse}>RSVP to this event</button>
             </div>
           </section>
-          <div>
-            {/* <RSVPS /> */}
-          </div>
+          <div>{/* <RSVPS /> */}</div>
         </>
       )}
     </div>

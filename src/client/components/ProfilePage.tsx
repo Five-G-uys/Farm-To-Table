@@ -23,7 +23,7 @@ const Profile = (): React.ReactElement => {
     axios
       .get<AxiosResponse>("/api/userProfile")
       .then(({ data }: AxiosResponse) => {
-        console.log(data);
+        // console.log(data);
         setUser(data);
       })
       .catch((err) => console.warn(err));

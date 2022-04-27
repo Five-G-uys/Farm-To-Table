@@ -5,11 +5,21 @@
 // Import Dependencies
 import express, { Express, Request, Response } from "express";
 //import dotenv from "dotenv";
+<<<<<<< HEAD
 require("dotenv").config();
 const path = require("path");
 const passport = require("passport");
 const session = require("express-session");
 const axios = require("axios");
+=======
+require('dotenv').config();
+const path = require('path');
+const passport = require('passport');
+const session = require('express-session');
+const axios = require('axios');
+// require Op object from sequelize to modify where clause in options object
+const { Op } = require('sequelize');
+>>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
 
 // Import database and models
 require("./db/database.ts");
@@ -73,11 +83,19 @@ const errorLoginUrl = "http://localhost:5555/login/error";
 // all backend routes should start at a common place that dont exist on the front end
 
 passport.serializeUser((user: any, done: any) => {
+<<<<<<< HEAD
   console.log("Serializing User:", user);
   done(null, user);
 });
 passport.deserializeUser((user: any, done: any) => {
   console.log("Deserializing User:", user);
+=======
+  // console.log('Serializing User:', user);
+  done(null, user);
+});
+passport.deserializeUser((user: any, done: any) => {
+  // console.log('Deserializing User:', user);
+>>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
   done(null, user);
 });
 
@@ -116,8 +134,13 @@ app.delete("/api/logout", (req: Request, res: Response) => {
 });
 
 // Get current user route
+<<<<<<< HEAD
 app.get("/api/userProfile", (req, res) => {
   console.log(`Body: `, req);
+=======
+app.get('/api/userProfile', (req, res) => {
+  // console.log(`Body: `, req);
+>>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
   // console.log(`Params: `, req.);
   Users.findOne()
     .then((data: any) => {
@@ -162,7 +185,11 @@ app.get("/events", (req: Request, res: Response) => {
       res.status(200).send(response);
     })
     .catch((err: object) => {
+<<<<<<< HEAD
       console.log("Something went wrong", err);
+=======
+      // console.log('Something went wrong', err);
+>>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
       res.sendStatus(404);
     });
 });
@@ -245,7 +272,11 @@ app.post(
         subscription_id: id,
       })
         .then((data: any) => {
+<<<<<<< HEAD
           console.log("LINE 196 || SERVER ||", data.dataValues.id);
+=======
+          // console.log('LINE 196 || SERVER ||', data.dataValues.id);
+>>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
 
           const today: Date = new Date();
           // iterate over number of orders
@@ -298,6 +329,7 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
   console.log("LINE 238 || SERVER INDEX", req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
+<<<<<<< HEAD
   Orders.findAll({ where: { subscription_entry_id: req.params.id } })
     .then((data: any) => {
       console.log("LINE 241 || SERVER INDEX", Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
@@ -306,7 +338,48 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
     .catch((err: any) => {
       console.log("LINE 244 || SERVER INDEX", err);
       res.send(err);
+=======
+  SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
+    .then((data: Array<object>) => {
+      const dataObj: Array<object> = [];
+      // console.log(
+      //   'LINE 253',
+      //   data.forEach((subscriptionEntry: any) => {
+      //     console.log('LINE 255', subscriptionEntry.dataValues);
+      //     if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
+      //       dataObj.push(subscriptionEntry.dataValues.id);
+      //     }
+      //   })
+      // );
+      // console.log(
+      //   'LINE 261',
+      //   dataObj.map((subscriptionEntryId: any) => {
+      //     return { subscription_entry_id: subscriptionEntryId };
+      //   })
+      // );
+      // Orders.findAll({ where: { subscription_entry_id: req.params.id } })
+      Orders.findAll({
+        where: {
+          [Op.or]: dataObj.map((subscriptionEntryId: any) => ({
+            subscription_entry_id: subscriptionEntryId,
+          })),
+        },
+      })
+        .then((data: any) => {
+          // console.log('LINE 241 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
+          res.json(data);
+        })
+        .catch((err: any) => {
+          console.error('LINE 244 || SERVER INDEX', err);
+          res.send(err);
+        });
+    })
+    .catch((err: any) => {
+      console.error('LINE 254', err);
+>>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
     });
+
+  // console.log('LINE 263 ||', dataObj);
 });
 app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
   Subscriptions.findAll()

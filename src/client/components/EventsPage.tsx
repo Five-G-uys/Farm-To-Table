@@ -28,7 +28,7 @@ const EventsPage = () => {
         [name]: type === "checkbox" ? checked : value,
       };
     });
-    console.log(event);
+    // console.log(event);
   };
 
   const postEvent = () => {
@@ -43,10 +43,10 @@ const EventsPage = () => {
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .then((data) => console.log("saved!", data))
+      // .then((data) => console.log("saved!", data))
       .catch((err) => console.error(err));
   };
-  console.log(process.env.CLOUD_PRESET2);
+  // console.log(process.env.CLOUD_PRESET2);
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
@@ -57,14 +57,14 @@ const EventsPage = () => {
       },
       (error: unknown, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === "success") {
-          console.log("LINE 56", result.info.url);
+          // console.log("LINE 56", result.info.url);
           setEvent((state) => {
             return {
               ...state,
               thumbnail: result.info.url,
             };
           });
-          console.log("LINE 63", result.info.url);
+          // console.log("LINE 63", result.info.url);
         }
       }
     );
@@ -72,7 +72,13 @@ const EventsPage = () => {
   };
   console.log("LINE 77777774", user);
 
+<<<<<<< HEAD
   // useEffect(() => {}, [event.thumbnail]);
+=======
+  //{ event: string; info: { url: string } })
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  useEffect(() => {}, [event.thumbnail]);
+>>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
   // console.log(event);
   const { eventName, description, thumbnail, eventDate, eventType } = event;
   return (
