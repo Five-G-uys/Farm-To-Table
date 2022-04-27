@@ -16,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 const pages = [
   { name: 'Home', path: '/' },
   { name: 'Events', path: 'events-page' },
+  { name: 'Products', path: 'products-page' },
 ];
 const settings = [
   { name: 'Profile', path: 'profile-page' },
