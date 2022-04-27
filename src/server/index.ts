@@ -290,6 +290,7 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     description,
     start_date,
     end_date,
+    farm_id: 1,
   })
     .then((data: any) => {
       console.log('294 Return Subscriptions Route || Post Request', data);
