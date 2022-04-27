@@ -1,10 +1,10 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-//import cloudinary from "cloudinary";
-//window.cloudinary = cloudinary;
+import SubscriptionCard from './SubscriptionCard';
+
 const SubscriptionsAdmin = () => {
   const [subscription, setSubscription] = useState({
     season: '',
@@ -61,6 +61,7 @@ const SubscriptionsAdmin = () => {
     start_date,
     end_date,
   } = subscription;
+
   return (
     <div className='event'>
       <h3 className='create-subscription'>Create Subscription</h3>

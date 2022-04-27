@@ -45,15 +45,6 @@ const SubscriptionsPage = () => {
   console.log('LINE 45', subscription.subArray);
 
   const handleSubscribed = () => {
-    // axios
-    //   .put(`/api/subscribed/${id}`, { subscribed: checkedOne })
-    //   .then((response) => {
-    //     console.log('LINE 36', response);
-    //   })
-    //   .catch((err) => {
-    //     console.log('SubscriptionsPage.tsx error', err);
-    //   });
-
     if (season) {
       axios
         .post(`/api/add_subscription_entry/${id}`, {
@@ -80,18 +71,25 @@ const SubscriptionsPage = () => {
       <div>
         {subArray.map(
           (sub: {
+            id: number;
             season: string;
             year: number;
             flat_price: number;
+            weekly_price: number;
             description: string;
-            id: number;
+            start_date: string;
+            end_date: string;
+            farm_id: 1;
           }) => {
             return (
               <SubscriptionCard
                 season={sub.season}
                 year={sub.year}
                 flat_price={sub.flat_price}
+                weekly_price={sub.weekly_price}
                 description={sub.description}
+                start_date={sub.start_date}
+                end_date={sub.end_date}
                 key={sub.id}
               />
             );
