@@ -19,7 +19,7 @@ const OrdersPage = () => {
     axios
       .get<AxiosResponse>('/api/userProfile')
       .then(({ data }: AxiosResponse) => {
-        console.log('LINE 22 || ORDERSPAGE', data);
+        // console.log('LINE 22 || ORDERSPAGE', data);
         const { id }: { id: number } = data;
         setId(id);
       })
@@ -27,11 +27,11 @@ const OrdersPage = () => {
         axios
           .get(`/api/upcoming_orders/${id}`, { params: { id } })
           .then((data: any) => {
-            console.log('LINE 29 || ORDERSPAGE ||SUCCESS', data.data); //array of objects
+            // console.log('LINE 29 || ORDERSPAGE ||SUCCESS', data.data); //array of objects
             setOrders(data.data);
           })
           .catch((error: any) => {
-            console.log('LINE 29 || ORDERSPAGE', error);
+            // console.log('LINE 29 || ORDERSPAGE', error);
           });
       })
       .catch((err) => console.warn(err));
