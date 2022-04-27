@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Event from "./Event";
 import axios from "axios";
+import RSVPS from "./RSVPS";
 
 const EventCard = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -10,7 +11,7 @@ const EventCard = () => {
     axios
       .get("/events")
       .then((data) => {
-        console.log("SUCESSFULLY FECTHED DATA", data.data);
+        //console.log("SUCESSFULLY FECTHED DATA", data.data);
         setEvents((state) => {
           return {
             ...state,
@@ -37,7 +38,6 @@ const EventCard = () => {
       <h2 className="title-card">Events for this month</h2>
       <br></br>
       <br></br>
-
       <div className="card">
         {Array.isArray(eventArray) &&
           eventArray.map(

@@ -28,6 +28,7 @@ import {
 } from "./db/models";
 import Events from "./db/models/Events";
 import UserInterface from "../types/UserInterface";
+import RSVPS from "src/client/components/RSVPS";
 //import { postEvent } from "./routes/EventRoutes";
 
 // // Needs to stay until used elsewhere (initializing models)
@@ -59,13 +60,8 @@ app.use(passport.session());
 
 // Middleware
 const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
-<<<<<<< HEAD
-  if (!req.user || req.user.role_id !== 3) {
-    return next(new Error("User is Unauthorized!"));
-=======
   if (!req.user || req.user.role_id !== 4) {
-    return next(new Error('User is Unauthorized!'));
->>>>>>> 4300d1b529d262546face6e408404d4a43fba284
+    return next(new Error("User is Unauthorized!"));
   } else {
     next();
   }
@@ -103,14 +99,8 @@ app.get(
     failureRedirect: errorLoginUrl,
     successRedirect: successLoginUrl,
   }),
-<<<<<<< HEAD
-  (req, res) => {
-    // console.log('User: ', req.user);
-    res.send("thank you for signing in!");
-=======
   (req: any, res: any) => {
-    res.redirect('/profile-page');
->>>>>>> 4300d1b529d262546face6e408404d4a43fba284
+    res.redirect("/profile-page");
   }
 );
 
@@ -126,13 +116,9 @@ app.delete("/api/logout", (req: Request, res: Response) => {
 });
 
 // Get current user route
-<<<<<<< HEAD
 app.get("/api/userProfile", (req, res) => {
-=======
-app.get('/api/userProfile', (req, res) => {
   console.log(`Body: `, req);
   // console.log(`Params: `, req.);
->>>>>>> 4300d1b529d262546face6e408404d4a43fba284
   Users.findOne()
     .then((data: any) => {
       console.log("122 data", data);
@@ -172,7 +158,7 @@ app.post("/api/event", (req: Request, res: Response) => {
 app.get("/events", (req: Request, res: Response) => {
   Events.findAll()
     .then((response: any) => {
-      console.log(response, "This is line 186 events gotten");
+      //console.log(response, "This is line 186 events gotten");
       res.status(200).send(response);
     })
     .catch((err: object) => {
@@ -184,7 +170,7 @@ app.get("/events", (req: Request, res: Response) => {
 //Get request for the Events with a certain type
 app.post("/api/Rsvp/", (req: Request, res: Response) => {
   console.log("Line 170", "user ID", req.body);
-  console.log("Line 171", "Event Id", req.body.eventId);
+  //console.log("Line 171", "Event Id", req.body.eventId);
   RSVP.create({
     event_id: req.body.eventId,
     user_id: req.body.userId,
@@ -192,16 +178,44 @@ app.post("/api/Rsvp/", (req: Request, res: Response) => {
   })
     .then((data: any) => {
       console.log("174 LINE ", data);
+      res.status(201).send(data);
     })
     .catch((err: any) => {
       console.error("177 REQUEST FAILED", err);
     });
 });
 
-
 //Get request For the RSVP
+app.get("/api/user/rsvps/:userId", (req: Request, res: Response) => {
+  //console.log("REQUEST BODY FROM LINE 189", req.params);
 
+  RSVP.findAll({
+    where: { user_id: req.params.userId },
+  })
+    .then(async (posts: any) => {
+      try {
+        console.log("LINE 199", posts);
+        const promises = posts.map((rsvp: any) => {
+          //console.log("LINE 197", rsvp);
+          return Events.findAll({ where: { id: rsvp.event_id } });
+        });
+        Promise.allSettled(promises).then(async (event: any) => {
+          console.log("LINE 200, EVENTS FOR USER", event[0][0]);
+          res.status(200).send(event);
+        });
+      } catch {
+        console.log("Failed to promisify");
+      }
+    })
+    // RSVP.findAll({ where: { user_id: req.params.userId } })
+    //   .then((data: any) => {
+    //     console.log("LINE 193", data);
 
+    //   })
+    .catch((err: any) => {
+      console.log("ERROR FAILED REQ", err);
+    });
+});
 
 ////////SUBSCRIPTION REQUEST////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {

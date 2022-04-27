@@ -2,6 +2,7 @@
 import { UrlWithStringQuery } from "node:url";
 import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
+import RSVPS from "./RSVPS";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface AppProps {
   eventName: string;
@@ -10,6 +11,7 @@ interface AppProps {
   eventType: string;
   eventDate: string;
   eventId: number;
+  //getAllRSVPSEvents: () => void;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
@@ -19,13 +21,12 @@ const Event = ({
   eventType,
   eventDate,
   eventId,
-}: AppProps) => {
+}: //getAllRSVPSEvents,
+AppProps) => {
   //console.log("LINE 37", eventName, description, thumbnail);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [events, setEvents] = useState({});
-
   const [userId, setUserId] = useState(0);
-
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
@@ -42,7 +43,7 @@ const Event = ({
     axios
       .get("/events")
       .then((data) => {
-        console.log("SUCESSFULLY FECTHED DATA", data.data);
+        //console.log("SUCESSFULLY FECTHED DATA", data.data);
         setEvents((state) => {
           return {
             ...state,
@@ -56,9 +57,10 @@ const Event = ({
   };
   useEffect(() => {
     getAllEvents();
+    // getAllRSVPSEvents();
   }, []);
 
-  console.log("Line 58", userId + "Event Id", eventId);
+  //console.log("Line 58", userId + "Event Id", eventId);
   const handleEventResponse = () => {
     console.log("LINE 63", userId, " and ", eventId);
     axios
@@ -92,6 +94,9 @@ const Event = ({
               <button onClick={handleEventResponse}>RSVP to this event</button>
             </div>
           </section>
+          <div>
+            {/* <RSVPS /> */}
+          </div>
         </>
       )}
     </div>

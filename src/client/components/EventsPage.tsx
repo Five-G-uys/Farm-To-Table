@@ -1,11 +1,12 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { UserContext } from "./UserContext";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-//import cloudinary from "cloudinary";
-//window.cloudinary = cloudinary;
+
 const EventsPage = () => {
+  const { user, setUser } = useContext(UserContext);
   const [event, setEvent] = useState({
     eventName: "",
     description: "",
@@ -69,14 +70,14 @@ const EventsPage = () => {
     );
     widget.open();
   };
+  console.log("LINE 77777774", user);
 
-  //{ event: string; info: { url: string } })
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => {}, [event.thumbnail]);
-  console.log(event);
+  // useEffect(() => {}, [event.thumbnail]);
+  // console.log(event);
   const { eventName, description, thumbnail, eventDate, eventType } = event;
   return (
     <div className="event">
+      <h1>{`${user}`}</h1>
       <h3 className="create-event">Create event</h3>
       <br></br>
       <div>
