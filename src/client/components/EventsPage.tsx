@@ -54,7 +54,7 @@ const EventsPage = () => {
         cloudName: CLOUD_NAME,
         uploadPreset: CLOUD_PRESET2,
       },
-      (error: any, result: { event: string; info: { url: string } }) => {
+      (error: unknown, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === "success") {
           console.log("LINE 56", result.info.url);
           setEvent((state) => {

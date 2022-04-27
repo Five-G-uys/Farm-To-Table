@@ -35,11 +35,7 @@ module.exports = {
     ],
   },
   resolve: {
-<<<<<<< HEAD
-    extensions: [".tsx", ".ts", ".js", "css"],
-=======
     extensions: ['.tsx', '.ts', '.js', 'css'],
->>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
   },
 
   plugins: [

@@ -9,6 +9,7 @@ interface AppProps {
   thumbnail: React.ImgHTMLAttributes<string>;
   eventType: string;
   eventDate: string;
+  eventId: number;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
@@ -17,8 +18,9 @@ const Event = ({
   thumbnail,
   eventType,
   eventDate,
+  eventId,
 }: AppProps) => {
-  console.log("LINE 37", eventName, description, thumbnail);
+  //console.log("LINE 37", eventName, description, thumbnail);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [events, setEvents] = useState({});
 
@@ -29,12 +31,13 @@ const Event = ({
     axios
       .get<AxiosResponse>("/api/userProfile")
       .then(({ data }: AxiosResponse) => {
-        console.log("USerID", data.id);
+        console.log("userId", data);
         const { id } = data;
         setUserId(id);
       })
-      .catch((err) => console.warn(err));
+      .catch((err) => console.warn("Sorry it failed", err));
   }, []);
+
   const getAllEvents = () => {
     axios
       .get("/events")
@@ -55,6 +58,22 @@ const Event = ({
     getAllEvents();
   }, []);
 
+  console.log("Line 58", userId + "Event Id", eventId);
+  const handleEventResponse = () => {
+    console.log("LINE 63", userId, " and ", eventId);
+    axios
+      .post(`/api/Rsvp/`, {
+        userId: userId,
+        eventId: eventId,
+      })
+      .then((data) => {
+        console.log("66 LINE ", data);
+      })
+      .catch((err) => {
+        console.error("68 REQUEST FAILED", err);
+      });
+  };
+
   return (
     <div>
       {thumbnail && (
@@ -69,6 +88,8 @@ const Event = ({
               <h3 className="event-desc">{description}</h3>
               <h3 className="event-category">{eventType}</h3>
               <h4 className="event-date">{eventDate}</h4>
+              <h4>{eventId}</h4>
+              <button onClick={handleEventResponse}>RSVP to this event</button>
             </div>
           </section>
         </>

@@ -66,13 +66,8 @@ const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
   }
 };
 
-<<<<<<< HEAD
-const successLoginUrl = "http://localhost:5555/home-page";
-const errorLoginUrl = "http://localhost:5555/login/error";
-=======
 const successLoginUrl = process.env.CALLBACK_URI;
-const errorLoginUrl = 'http://localhost:5555/login/error';
->>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
+const errorLoginUrl = "http://localhost:5555/login/error";
 
 // all backend routes should start at a common place that dont exist on the front end
 
@@ -124,7 +119,7 @@ app.delete("/api/logout", (req: Request, res: Response) => {
 app.get("/api/userProfile", (req, res) => {
   Users.findOne()
     .then((data: any) => {
-      // console.log('data', data);
+      console.log("122 data", data);
       res.send(data).status(200);
     })
     .catch((err: any) => {
@@ -134,11 +129,7 @@ app.get("/api/userProfile", (req, res) => {
 });
 
 //Events requests
-<<<<<<< HEAD
 app.post("/api/event", (req: Request, res: Response) => {
-=======
-app.post('/api/event', (req: Request, res: Response) => {
->>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
   const { eventName, description, thumbnail, category, eventDate, eventType } =
     req.body.event;
 
@@ -165,7 +156,7 @@ app.post('/api/event', (req: Request, res: Response) => {
 app.get("/events", (req: Request, res: Response) => {
   Events.findAll()
     .then((response: any) => {
-      console.log(response, 'This is line 186 events gotten');
+      console.log(response, "This is line 186 events gotten");
       res.status(200).send(response);
     })
     .catch((err: object) => {
@@ -174,23 +165,38 @@ app.get("/events", (req: Request, res: Response) => {
     });
 });
 
+//Get request for the Events with a certain type
+app.post("/api/Rsvp/", (req: Request, res: Response) => {
+  console.log("Line 170", "user ID", req.body);
+  console.log("Line 171", "Event Id", req.body.eventId);
+  RSVP.create({
+    event_id: req.body.eventId,
+    user_id: req.body.userId,
+    farm_id: 1,
+  })
+    .then((data: any) => {
+      console.log("174 LINE ", data);
+    })
+    .catch((err: any) => {
+      console.error("177 REQUEST FAILED", err);
+    });
+});
+
+
+//Get request For the RSVP
+
+
+
 ////////SUBSCRIPTION REQUEST////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
   Users.update(req.body, { where: { id: req.params.id }, returning: true })
     .then((response: any) => {
       // console.log('Subscription Route', response[1]);
-<<<<<<< HEAD
-      res.redirect(
-        200,
-        "https://localhost:5555/subscriptions-page/confirmation-page"
-      );
-=======
       // res.redirect(
       //   200,
       //   'https://localhost:5555/subscriptions-page/confirmation-page'
       // );
       res.send(203);
->>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
     })
     .catch((err: unknown) => {
       console.error("SUBSCRIPTION ROUTES:", err);
@@ -209,7 +215,7 @@ app.post(
         subscription_id: id,
       })
         .then((data: any) => {
-          console.log('LINE 196 || SERVER ||', data.dataValues.id);
+          console.log("LINE 196 || SERVER ||", data.dataValues.id);
 
           const today: Date = new Date();
           // iterate over number of orders
@@ -234,32 +240,23 @@ app.post(
                 // console.log('LINE 224 || SERVER INDEX ||', data);
               })
               .catch((err: any) => {
-                console.log('LINE 228 || SERVER INDEX || ERROR', err);
+                console.log("LINE 228 || SERVER INDEX || ERROR", err);
               });
           }
         })
-<<<<<<< HEAD
-          .then((data: any) => {
-            // console.log('LINE 224 || SERVER INDEX ||', data);
-          })
-          .catch((err: any) => {
-            console.log("LINE 228 || SERVER INDEX || ERROR", err);
-          });
-=======
         .catch((err: any) => {
           console.error(err);
         });
     };
     try {
-      if (req.body.season === 'whole year') {
+      if (req.body.season === "whole year") {
         await addSubscription(1);
         await addSubscription(2);
-        res.status(201).send('Subscribed!');
+        res.status(201).send("Subscribed!");
       } else {
-        const subscription_id = req.body.season === 'fall' ? 2 : 1;
+        const subscription_id = req.body.season === "fall" ? 2 : 1;
         await addSubscription(subscription_id);
-        res.status(201).send('Subscribed!');
->>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
+        res.status(201).send("Subscribed!");
       }
     } catch (err) {
       res.status(500).json(err);
@@ -268,15 +265,10 @@ app.post(
 );
 
 app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
-<<<<<<< HEAD
   console.log("LINE 238 || SERVER INDEX", req.params); // user id
-  Orders.findAll({ where: { subscription_id: req.params.id } })
-=======
-  console.log('LINE 238 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
   Orders.findAll({ where: { subscription_entry_id: req.params.id } })
->>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
     .then((data: any) => {
       console.log("LINE 241 || SERVER INDEX", Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
       res.json(data);
@@ -297,22 +289,14 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
 });
 
 // Home page routes
-app.get('/api/farms', (req: Request, res: Response) => {
+app.get("/api/farms", (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-<<<<<<< HEAD
-      console.log("this is the data from the farm api call", data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
-=======
       // console.log('this is the data from the farm api call', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
->>>>>>> 9a77f5efae794f49c9c221fa283e8f505b58db9f
+      console.error("OH NOOOOO", err);
     });
 });
 

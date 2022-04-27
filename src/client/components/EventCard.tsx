@@ -35,6 +35,9 @@ const EventCard = () => {
         <h1 className="nav-event">Spring Season Events</h1>
       </nav>
       <h2 className="title-card">Events for this month</h2>
+      <br></br>
+      <br></br>
+
       <div className="card">
         {Array.isArray(eventArray) &&
           eventArray.map(
@@ -43,8 +46,9 @@ const EventCard = () => {
               description: string;
               thumbnail: React.ImgHTMLAttributes<string>;
               eventType: string;
-              id: number;
+              eventId: number;
               eventDate: string;
+              id: number;
             }) => {
               return (
                 <Event
@@ -53,7 +57,8 @@ const EventCard = () => {
                   thumbnail={event.thumbnail}
                   description={event.description}
                   eventDate={event.eventDate}
-                  key={event.id}
+                  key={event.eventName}
+                  eventId={event.id}
                 />
               );
             }
