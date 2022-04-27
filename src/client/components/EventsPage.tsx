@@ -72,13 +72,7 @@ const EventsPage = () => {
   };
   console.log("LINE 77777774", user);
 
-<<<<<<< HEAD
   // useEffect(() => {}, [event.thumbnail]);
-=======
-  //{ event: string; info: { url: string } })
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => {}, [event.thumbnail]);
->>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
   // console.log(event);
   const { eventName, description, thumbnail, eventDate, eventType } = event;
   return (

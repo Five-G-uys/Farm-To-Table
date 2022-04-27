@@ -23,21 +23,27 @@ const RSVPS = () => {
     eventsToAttend: [],
   });
   const getAllRSVPSEvents = () => {
-    console.log("LINE 25 RSVP", rsvpEvents);
     axios
       .get(`/api/user/rsvps/${userId}`)
       .then((data) => {
-        console.log("LINE 12 FrontEND request", data);
+        console.log("LINE 12 FrontEND request", data.data);
+        const newArr = data.data
+          .map((eventObj: any) => {
+            return eventObj.value;
+          })
+          .map((eventArr: any) => {
+            return eventArr[0];
+          });
+        console.log(newArr);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setRsvpEvents((state: any) => {
-          return { ...state, eventsToAttend: data.data[0].value };
+          return { ...state, eventsToAttend: newArr };
         });
       })
       .catch((err) => {
         console.log("LINE 15 FAILED", err);
       });
   };
-
   console.log("LINE 25", rsvpEvents);
   useEffect(() => {
     getAllRSVPSEvents();
@@ -46,7 +52,7 @@ const RSVPS = () => {
 
   return (
     <div>
-      <div>RSVPS GO HERE</div>
+      <h1>My Events to Attend</h1>
       {rsvpEvents.eventsToAttend.length > 0 &&
         rsvpEvents.eventsToAttend.map(
           (event: {

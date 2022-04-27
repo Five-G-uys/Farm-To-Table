@@ -73,23 +73,10 @@ AppProps) => {
   console.log(description);
   return (
     <div>
-      <h1 className="event-name">{eventName}</h1>
-      {thumbnail && (
-        <>
-          <div>{/* <div>{userId}</div> */}</div>
-          <section className="sect-event">
-            <img src={thumbnail} className="event-img" />
-            <div className="text-card">
-              <h3 className="event-desc">{description}</h3>
-              <h3 className="event-category">{eventType}</h3>
-              <h4 className="event-date">{eventDate}</h4>
-              <h4>{eventId}</h4>
-              {/* <button onClick={handleEventResponse}>RSVP to this event</button> */}
-            </div>
-          </section>
-          <div>{/* <RSVPS /> */}</div>
-        </>
-      )}
+      <section>
+        <h1 className="event-name">{eventName}</h1>
+        <h4 className="event-date">{eventDate}</h4>
+      </section>
     </div>
   );
 };

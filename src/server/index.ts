@@ -5,21 +5,13 @@
 // Import Dependencies
 import express, { Express, Request, Response } from "express";
 //import dotenv from "dotenv";
-<<<<<<< HEAD
 require("dotenv").config();
 const path = require("path");
 const passport = require("passport");
 const session = require("express-session");
 const axios = require("axios");
-=======
-require('dotenv').config();
-const path = require('path');
-const passport = require('passport');
-const session = require('express-session');
-const axios = require('axios');
 // require Op object from sequelize to modify where clause in options object
-const { Op } = require('sequelize');
->>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
+const { Op } = require("sequelize");
 
 // Import database and models
 require("./db/database.ts");
@@ -38,13 +30,6 @@ import {
 } from "./db/models";
 import Events from "./db/models/Events";
 import UserInterface from "../types/UserInterface";
-import RSVPS from "src/client/components/RSVPS";
-//import { postEvent } from "./routes/EventRoutes";
-
-// // Needs to stay until used elsewhere (initializing models)
-// console.log(Farms, Roles, Events, Orders, DeliveryZones,Products, RSVP, Subscriptions, Users, Vendors);
-
-//dotenv.config();
 
 const app: Express = express();
 const port = process.env.LOCAL_PORT;
@@ -83,19 +68,11 @@ const errorLoginUrl = "http://localhost:5555/login/error";
 // all backend routes should start at a common place that dont exist on the front end
 
 passport.serializeUser((user: any, done: any) => {
-<<<<<<< HEAD
-  console.log("Serializing User:", user);
-  done(null, user);
-});
-passport.deserializeUser((user: any, done: any) => {
-  console.log("Deserializing User:", user);
-=======
   // console.log('Serializing User:', user);
   done(null, user);
 });
 passport.deserializeUser((user: any, done: any) => {
   // console.log('Deserializing User:', user);
->>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
   done(null, user);
 });
 
@@ -134,13 +111,8 @@ app.delete("/api/logout", (req: Request, res: Response) => {
 });
 
 // Get current user route
-<<<<<<< HEAD
 app.get("/api/userProfile", (req, res) => {
-  console.log(`Body: `, req);
-=======
-app.get('/api/userProfile', (req, res) => {
   // console.log(`Body: `, req);
->>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
   // console.log(`Params: `, req.);
   Users.findOne()
     .then((data: any) => {
@@ -185,11 +157,7 @@ app.get("/events", (req: Request, res: Response) => {
       res.status(200).send(response);
     })
     .catch((err: object) => {
-<<<<<<< HEAD
       console.log("Something went wrong", err);
-=======
-      // console.log('Something went wrong', err);
->>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
       res.sendStatus(404);
     });
 });
@@ -223,22 +191,17 @@ app.get("/api/user/rsvps/:userId", (req: Request, res: Response) => {
       try {
         console.log("LINE 199", posts);
         const promises = posts.map((rsvp: any) => {
-          //console.log("LINE 197", rsvp);
+          console.log("LINE 197", rsvp.event_id);
           return Events.findAll({ where: { id: rsvp.event_id } });
         });
         Promise.allSettled(promises).then(async (event: any) => {
-          console.log("LINE 200, EVENTS FOR USER", event[0][0]);
+          console.log("LINE 200, EVENTS FOR USER", event[0].value);
           res.status(200).send(event);
         });
       } catch {
         console.log("Failed to promisify");
       }
     })
-    // RSVP.findAll({ where: { user_id: req.params.userId } })
-    //   .then((data: any) => {
-    //     console.log("LINE 193", data);
-
-    //   })
     .catch((err: any) => {
       console.log("ERROR FAILED REQ", err);
     });
@@ -272,11 +235,7 @@ app.post(
         subscription_id: id,
       })
         .then((data: any) => {
-<<<<<<< HEAD
-          console.log("LINE 196 || SERVER ||", data.dataValues.id);
-=======
           // console.log('LINE 196 || SERVER ||', data.dataValues.id);
->>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
 
           const today: Date = new Date();
           // iterate over number of orders
@@ -329,16 +288,6 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
   console.log("LINE 238 || SERVER INDEX", req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
-<<<<<<< HEAD
-  Orders.findAll({ where: { subscription_entry_id: req.params.id } })
-    .then((data: any) => {
-      console.log("LINE 241 || SERVER INDEX", Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
-      res.json(data);
-    })
-    .catch((err: any) => {
-      console.log("LINE 244 || SERVER INDEX", err);
-      res.send(err);
-=======
   SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
     .then((data: Array<object>) => {
       const dataObj: Array<object> = [];
@@ -370,13 +319,12 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
           res.json(data);
         })
         .catch((err: any) => {
-          console.error('LINE 244 || SERVER INDEX', err);
+          console.error("LINE 244 || SERVER INDEX", err);
           res.send(err);
         });
     })
     .catch((err: any) => {
-      console.error('LINE 254', err);
->>>>>>> 0c7ec287891b8564417e92efb5cbe54ff76433bc
+      console.error("LINE 254", err);
     });
 
   // console.log('LINE 263 ||', dataObj);
