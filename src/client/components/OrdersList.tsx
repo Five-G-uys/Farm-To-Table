@@ -4,7 +4,7 @@ import OrderCard from './OrderCard';
 const OrdersList = ({ orders }: any) => {
   console.log(
     'LINE 4 || ORDERSLIST ',
-    orders.sort((a: any, b: any) => a.id - b.id)
+    orders.sort((a: any, b: any) => a.delivery_date - b.delivery_date)
   );
 
   return (
