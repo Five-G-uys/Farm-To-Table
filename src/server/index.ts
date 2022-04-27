@@ -59,8 +59,13 @@ app.use(passport.session());
 
 // Middleware
 const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
+<<<<<<< HEAD
   if (!req.user || req.user.role_id !== 3) {
     return next(new Error("User is Unauthorized!"));
+=======
+  if (!req.user || req.user.role_id !== 4) {
+    return next(new Error('User is Unauthorized!'));
+>>>>>>> 4300d1b529d262546face6e408404d4a43fba284
   } else {
     next();
   }
@@ -98,9 +103,14 @@ app.get(
     failureRedirect: errorLoginUrl,
     successRedirect: successLoginUrl,
   }),
+<<<<<<< HEAD
   (req, res) => {
     // console.log('User: ', req.user);
     res.send("thank you for signing in!");
+=======
+  (req: any, res: any) => {
+    res.redirect('/profile-page');
+>>>>>>> 4300d1b529d262546face6e408404d4a43fba284
   }
 );
 
@@ -116,7 +126,13 @@ app.delete("/api/logout", (req: Request, res: Response) => {
 });
 
 // Get current user route
+<<<<<<< HEAD
 app.get("/api/userProfile", (req, res) => {
+=======
+app.get('/api/userProfile', (req, res) => {
+  console.log(`Body: `, req);
+  // console.log(`Params: `, req.);
+>>>>>>> 4300d1b529d262546face6e408404d4a43fba284
   Users.findOne()
     .then((data: any) => {
       console.log("122 data", data);
