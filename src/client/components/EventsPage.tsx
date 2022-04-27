@@ -27,7 +27,7 @@ const EventsPage = () => {
         [name]: type === "checkbox" ? checked : value,
       };
     });
-    console.log(event);
+    // console.log(event);
   };
 
   const postEvent = () => {
@@ -42,10 +42,10 @@ const EventsPage = () => {
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .then((data) => console.log("saved!", data))
+      // .then((data) => console.log("saved!", data))
       .catch((err) => console.error(err));
   };
-  console.log(process.env.CLOUD_PRESET2);
+  // console.log(process.env.CLOUD_PRESET2);
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
@@ -56,14 +56,14 @@ const EventsPage = () => {
       },
       (error: any, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === "success") {
-          console.log("LINE 56", result.info.url);
+          // console.log("LINE 56", result.info.url);
           setEvent((state) => {
             return {
               ...state,
               thumbnail: result.info.url,
             };
           });
-          console.log("LINE 63", result.info.url);
+          // console.log("LINE 63", result.info.url);
         }
       }
     );
@@ -73,7 +73,7 @@ const EventsPage = () => {
   //{ event: string; info: { url: string } })
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [event.thumbnail]);
-  console.log(event);
+  // console.log(event);
   const { eventName, description, thumbnail, eventDate, eventType } = event;
   return (
     <div className="event">
