@@ -30,7 +30,7 @@ const SubscriptionCard = ({
         </h2>
         <h3>{description}</h3>
         <h4>
-          Seasonal Dates: {start_date} / {end_date}
+          Seasonal Dates: {start_date} - {end_date}
         </h4>
       </div>
     </div>

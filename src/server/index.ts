@@ -168,15 +168,10 @@ app.get('/events', (req: Request, res: Response) => {
     });
 });
 
-////////SUBSCRIPTION REQUESTS////////////
+////////////////////////SUBSCRIPTION REQUESTS////////////////////////////////////////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
   Users.update(req.body, { where: { id: req.params.id }, returning: true })
     .then((response: any) => {
-      // console.log('Subscription Route', response[1]);
-      // res.redirect(
-      //   200,
-      //   'https://localhost:5555/subscriptions-page/confirmation-page'
-      // );
       res.send(203);
     })
     .catch((err: unknown) => {
@@ -252,22 +247,22 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
   SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
     .then((data: Array<object>) => {
       const dataObj: Array<object> = [];
-      // console.log(
-      //   'LINE 253',
-      //   data.forEach((subscriptionEntry: any) => {
-      //     console.log('LINE 255', subscriptionEntry.dataValues);
-      //     if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
-      //       dataObj.push(subscriptionEntry.dataValues.id);
-      //     }
-      //   })
-      // );
-      // console.log(
-      //   'LINE 261',
-      //   dataObj.map((subscriptionEntryId: any) => {
-      //     return { subscription_entry_id: subscriptionEntryId };
-      //   })
-      // );
-      // Orders.findAll({ where: { subscription_entry_id: req.params.id } })
+      console.log(
+        'LINE 253',
+        data.forEach((subscriptionEntry: any) => {
+          console.log('LINE 255', subscriptionEntry.dataValues);
+          if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
+            dataObj.push(subscriptionEntry.dataValues.id);
+          }
+        })
+      );
+      console.log(
+        'LINE 261',
+        dataObj.map((subscriptionEntryId: any) => {
+          return { subscription_entry_id: subscriptionEntryId };
+        })
+      );
+      Orders.findAll({ where: { subscription_entry_id: req.params.id } });
       Orders.findAll({
         where: {
           [Op.or]: dataObj.map((subscriptionEntryId: any) => ({
@@ -300,10 +295,25 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
     });
 });
 
-//Subscription ADMIN Creation/Edit/Delete Routes//
+//Subscription PUT request:
+app.put(`/api/subscriptions/`, (req: Request, res: Response) => {
+  console.log('LINE 305 Subscription PUT req', req.params.id);
+  Subscriptions.update(req.params, {
+    where: {
+      id: req.params.id,
+    },
+    returning: true,
+  })
+    .then((response: any) => {
+      res.send(203);
+    })
+    .catch((err: unknown) => {
+      console.error('SUBSCRIPTION UPDATES:', err);
+    });
+});
 
+//Subscription ADMIN Creation/Edit/Delete Routes//
 app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
-  console.log('LINE 272 ****', req.body.event);
   const {
     season,
     year,
@@ -314,7 +324,6 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     end_date,
   } = req.body.event;
 
-  console.log('283 Request object postSubscription', req.body);
   Subscriptions.create({
     season,
     year,
@@ -326,7 +335,7 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     farm_id: 1,
   })
     .then((data: any) => {
-      console.log('294 Return Subscriptions Route || Post Request', data);
+      // console.log('294 Return Subscriptions Route || Post Request', data);
       res.status(201);
     })
     .catch((err: string) => {

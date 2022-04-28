@@ -14,6 +14,7 @@ const SubscriptionsAdmin = () => {
     description: '',
     start_date: '',
     end_date: '',
+    thumbnail: '',
   });
 
   const handleInputEvent = (
@@ -41,6 +42,7 @@ const SubscriptionsAdmin = () => {
           description: subscription.description,
           start_date: subscription.start_date,
           end_date: subscription.end_date,
+          thumbnail: subscription.thumbnail,
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -60,7 +62,7 @@ const SubscriptionsAdmin = () => {
       (error: any, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
           // console.log("LINE 56", result.info.url);
-          setEvent((state) => {
+          setSubscription((state) => {
             return {
               ...state,
               thumbnail: result.info.url,
@@ -85,6 +87,7 @@ const SubscriptionsAdmin = () => {
     description,
     start_date,
     end_date,
+    thumbnail,
   } = subscription;
 
   return (
@@ -94,6 +97,9 @@ const SubscriptionsAdmin = () => {
       <button onClick={showWidget} className='input-btn'>
         Add image
       </button>
+      <br></br>
+      {thumbnail && <img src={thumbnail} />}
+      <br></br>
       <div>
         <form onSubmit={postSubscription} className='form-event'>
           <fieldset>

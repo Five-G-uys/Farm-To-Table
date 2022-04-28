@@ -248,7 +248,7 @@ syncModels(true)
     //     start_date: 'September 5th',
     //     end_date: 'December 16th',
     //     farm_id: 1,
-    //   }, did it work????
+    //   },
     // });
   })
   .catch((err) => {

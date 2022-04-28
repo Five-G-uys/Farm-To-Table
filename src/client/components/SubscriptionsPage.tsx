@@ -16,7 +16,10 @@ const SubscriptionsPage = () => {
     season: '',
     year: 0,
     flat_price: 0,
+    weekly_price: 0,
     description: '',
+    start_date: '',
+    end_date: '',
     subArray: [],
   });
 
@@ -64,6 +67,16 @@ const SubscriptionsPage = () => {
     }
   };
 
+  // const handleSeasonEdits = () => {
+  //   if (season) {
+  //     axios
+  //     .put('/api/subscriptions/', {
+  //       farm_id: 1,
+  //       season: season,
+  //     })
+  //   }
+  // };
+
   const { subArray } = subscription;
 
   return (
@@ -95,8 +108,6 @@ const SubscriptionsPage = () => {
             );
           }
         )}
-        Choose a seasonal package for 12 weeks of home deliveries. Or select the
-        whole year!
       </div>
       <br />
       <input
