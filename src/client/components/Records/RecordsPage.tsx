@@ -3,7 +3,7 @@ import axios from "axios";
 import ProductsRecords from './ProductsRecords';
 
 const RecordsPage = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   const [deliveryZones, setDeliveryZones] = useState({ deliveryZonesArray: {} });
   const [dietaryRestrictions, setDietaryRestrictions] = useState({ dietaryRestrictionsArray: {} });
@@ -53,15 +53,16 @@ const RecordsPage = () => {
               vendor_id: number;
               quantity: string;
             }) => {
+              const { name, description, img_url, available, id, vendor_id, quantity } = product
               return (
                 <ProductsRecords
-                name={product.name} 
-                description={product.description} 
-                img_url={product.img_url} 
-                available={product.available} 
-                id={product.id} 
-                vendor_id={product.vendor_id}
-                quantity={product.quantity} 
+                  name={name}
+                  description={description}
+                  img_url={img_url}
+                  available={available}
+                  id={id}
+                  vendor_id={vendor_id}
+                  quantity={quantity}
                 />
               );
             }
