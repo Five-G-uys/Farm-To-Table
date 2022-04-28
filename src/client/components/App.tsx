@@ -7,22 +7,23 @@ import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import EventCard from './EventCard';
 import SubscriptionsPage from './SubscriptionsPage';
 import Confirmation from './Confirmation';
+import SubscriptionsAdmin from './SubscriptionsAdmin';
 import OrdersPage from './OrdersPage';
 import EventsPage from './EventsPage';
 import ProfilePage from './ProfilePage';
 import AboutUsPage from './AboutUsPage';
 import Login from './Login';
 import NewNavBar from './NewNavBar';
-import { UserContext } from './UserContext'
+import { UserContext } from './UserContext';
 
 const App = () => {
-  const [user, setUser] = useState('User context value')
-  const value = useMemo(() => ({user, setUser}), [user, setUser])
+  const [user, setUser] = useState('User context value');
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>("/api/userProfile")
+      .get<AxiosResponse>('auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         // console.log(data);
         setUser(data);
@@ -40,7 +41,6 @@ const App = () => {
       <NewNavBar />
       <div>
         <UserContext.Provider value={value} >
-          <div>User Logged In: {`${isLoggedIn(user)}`}</div>
           <Routes>
             <Route path='/' element={<HomePage />} />
             {/* Login/Logout Routes */}
@@ -76,6 +76,10 @@ const App = () => {
             <Route 
               path='/events-page' 
               element={isAdmin(user) ? <EventsPage /> : <Navigate to='/event-card'/> } />
+            <Route
+              path='subscriptions-admin'
+              element={<SubscriptionsAdmin />}
+            />
           </Routes>
         </UserContext.Provider>
       </div>

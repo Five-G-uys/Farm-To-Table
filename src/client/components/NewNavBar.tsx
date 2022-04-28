@@ -23,7 +23,7 @@ const settings = [
   { name: 'Logout', path: '/logout'},
   { name: 'Profile', path: '/profile-page' },
   { name: 'Orders', path: '/orders-page' },
-  { name: 'Add Season', path: '/edit-seasons' },
+  { name: 'Add Season', path: '/subscriptions-admin' },
   { name: 'Add Event', path: '/events-page' },
   { name: 'Add Product ', path: '/edit-products' },
   

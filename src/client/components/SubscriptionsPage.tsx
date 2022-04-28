@@ -2,12 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SubscriptionCard from './SubscriptionCard';
 
 const SubscriptionsPage = () => {
   const navigate = useNavigate();
-  const [checkedOne, setCheckedOne] = useState(false);
   const [id, setId] = useState(0);
   const [season, setSeason] = useState('');
 
@@ -24,7 +23,7 @@ const SubscriptionsPage = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>('/api/userProfile')
+      .get<AxiosResponse>('auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         const { id }: { id: number } = data;
         setId(id);
@@ -46,15 +45,6 @@ const SubscriptionsPage = () => {
   // console.log('LINE 45', subscription.subArray);
 
   const handleSubscribed = () => {
-    // axios
-    //   .put(`/api/subscribed/${id}`, { subscribed: checkedOne })
-    //   .then((response) => {
-    //     console.log('LINE 36', response);
-    //   })
-    //   .catch((err) => {
-    //     console.log('SubscriptionsPage.tsx error', err);
-    //   });
-
     if (season) {
       axios
         .post(`/api/add_subscription_entry/${id}`, {
@@ -81,18 +71,25 @@ const SubscriptionsPage = () => {
       <div>
         {subArray.map(
           (sub: {
+            id: number;
             season: string;
             year: number;
             flat_price: number;
+            weekly_price: number;
             description: string;
-            id: number;
+            start_date: string;
+            end_date: string;
+            farm_id: 1;
           }) => {
             return (
               <SubscriptionCard
                 season={sub.season}
                 year={sub.year}
                 flat_price={sub.flat_price}
+                weekly_price={sub.weekly_price}
                 description={sub.description}
+                start_date={sub.start_date}
+                end_date={sub.end_date}
                 key={sub.id}
               />
             );
@@ -122,12 +119,12 @@ const SubscriptionsPage = () => {
       <br />
       <input
         name='season'
-        value='whole year'
+        value='winter'
         type='radio'
         className='form-event'
         onChange={(e) => setSeason(e.target.value)}
       />
-      <label htmlFor='season'> Whole Year </label>
+      <label htmlFor='season'> Winter 2022 </label>
       <br />
       <button className='form--submit' onClick={handleSubscribed}>
         {/* <Link to={`/confirmation-page`}>Subscribe!</Link> */}Subscribe!

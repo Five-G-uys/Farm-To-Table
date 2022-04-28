@@ -17,9 +17,9 @@ const OrdersPage = () => {
     // TAKE THIS AXIOS CALL TO GET USER
     // NO!!! NEED TO MAKE GET REQUEST TO GET SUBSCRIPTION ENTRY ID
     axios
-      .get<AxiosResponse>('/api/userProfile')
+      .get<AxiosResponse>('auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
-        // console.log('LINE 22 || ORDERSPAGE', data);
+        console.log('LINE 22 || ORDERSPAGE', data);
         const { id }: { id: number } = data;
         setId(id);
       })

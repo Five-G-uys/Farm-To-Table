@@ -41,7 +41,7 @@ const Subscriptions = db.define('subscriptions', {
   },
   farm_id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: { model: Farms, key: 'id' },
   },
 });
