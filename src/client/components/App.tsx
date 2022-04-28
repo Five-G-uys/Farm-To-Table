@@ -23,7 +23,7 @@ const App = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>('/api/userProfile')
+      .get<AxiosResponse>('auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         // console.log(data);
         setUser(data);
@@ -40,44 +40,42 @@ const App = () => {
     <>
       <NewNavBar />
       <div>
-        <UserContext.Provider value={value}>
-          {/* <h1>{'User Logged In: ${loggedIn(user)}'}</h1> */}
+        <UserContext.Provider value={value} >
           <Routes>
             <Route path='/' element={<HomePage />} />
             {/* Login/Logout Routes */}
-            <Route
-              path='login'
-              element={
-                isLoggedIn(user) ? (
-                  <Navigate to='/login/profile-page' />
-                ) : (
-                  <Login />
-                )
-              }
-            />
+            <Route 
+              path='/login' 
+              element={isLoggedIn(user) ? <Navigate to='/profile-page' /> : <Login />} />
 
             {/* General Routes */}
-            <Route path='about-us-page' element={<AboutUsPage />} />
-            <Route path='subscriptions-page' element={<SubscriptionsPage />} />
-            <Route path='event-card' element={<EventCard />} />
+            <Route 
+              path='/about-us-page' 
+              element={<AboutUsPage />} />
+            <Route 
+              path='/subscriptions-page' 
+              element={<SubscriptionsPage />} />
+            <Route 
+              path='/event-card' 
+              element={<EventCard />} />
 
             {/* User Routes */}
-            <Route path='login/profile-page' element={<ProfilePage />} />
+            <Route 
+              path='/profile-page' 
+              element={<ProfilePage />} />
             <Route
-              path='subscriptions-page/confirmation-page'
-              element={<Confirmation />}
-            />
-            <Route
-              path='orders-page'
-              element={
-                isLoggedIn(user) ? <OrdersPage /> : <Navigate to='login' />
-              }
-            />
+              path='/subscriptions-page/confirmation-page'
+              element={<Confirmation />} />
+            <Route 
+              path='/orders-page' 
+              element={isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />} />
 
             {/* Employ Routes */}
 
             {/* Admin Routes */}
-            <Route path='events-page' element={<EventsPage />} />
+            <Route 
+              path='/events-page' 
+              element={isAdmin(user) ? <EventsPage /> : <Navigate to='/event-card'/> } />
             <Route
               path='subscriptions-admin'
               element={<SubscriptionsAdmin />}
