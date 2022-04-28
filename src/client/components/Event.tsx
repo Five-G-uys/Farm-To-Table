@@ -11,9 +11,7 @@ interface AppProps {
   eventType: string;
   eventDate: string;
   eventId: number;
-  getAllEvents: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void;
+  getAllEvents: () => void;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
@@ -31,6 +29,8 @@ AppProps) => {
   const [userId, setUserId] = useState(0);
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
+    console.log("IS THIS FUNCTION RUNNING?");
+    getAllEvents();
     axios
       .get<AxiosResponse>("/api/userProfile")
       .then(({ data }: AxiosResponse) => {

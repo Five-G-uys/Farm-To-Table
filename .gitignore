@@ -1,6 +1,5 @@
 # Dependency directories
 node_modules
 .env
-package-lock.json
 # Public compiled directory
 dist

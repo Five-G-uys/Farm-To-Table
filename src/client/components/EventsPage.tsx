@@ -33,7 +33,7 @@ const EventsPage = () => {
 
   const postEvent = () => {
     axios
-      .post("/api/event", {
+      .post("/events/api/event", {
         event: {
           eventName: event.eventName,
           description: event.description,

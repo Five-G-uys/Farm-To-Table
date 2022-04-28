@@ -5,18 +5,18 @@ import axios from "axios";
 
 const EventCard = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [events, setEvents] = useState({ eventArray: {} });
+  const [events, setEvents] = useState({ eventArray: [] });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getAllEvents = () => {
     axios
-      .get("/events")
-      .then((data) => {
-        //console.log("SUCESSFULLY FECTHED DATA", data.data);
+      .get("/events/api/event")
+      .then(({ data }) => {
+        console.log("SUCESSFULLY FECTHED DATA", data);
         setEvents((state) => {
           return {
             ...state,
-            eventArray: [...data.data],
+            eventArray: data,
           };
         });
       })
@@ -25,12 +25,12 @@ const EventCard = () => {
       });
   };
 
-  // useEffect(() => {
-  //   getAllEvents();
-  // }, []);
+  useEffect(() => {
+    getAllEvents();
+  }, []);
 
   const { eventArray } = events;
-  // console.log("line 28", eventArray);
+  //console.log("line 28", eventArray);
 
   return (
     <div className="events">
@@ -51,7 +51,6 @@ const EventCard = () => {
               eventId: number;
               eventDate: string;
               id: number;
-              getAllEvents: () => void;
             }) => {
               const {
                 eventName,
@@ -60,7 +59,6 @@ const EventCard = () => {
                 description,
                 eventDate,
                 id,
-                getAllEvents,
               } = event;
               return (
                 <Event
