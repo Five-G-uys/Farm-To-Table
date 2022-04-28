@@ -13,6 +13,7 @@ const SubscriptionsPage = () => {
   // change checkboxes to radio buttons
 
   const [subscription, setSubscription] = useState({
+    id: 0,
     season: '',
     year: 0,
     flat_price: 0,
@@ -45,8 +46,7 @@ const SubscriptionsPage = () => {
       });
   }, []);
 
-  // console.log('LINE 45', subscription.subArray);
-
+  //SUBSCRIPTION CREATE
   const handleSubscribed = () => {
     if (season) {
       axios
@@ -67,15 +67,32 @@ const SubscriptionsPage = () => {
     }
   };
 
-  // const handleSeasonEdits = () => {
-  //   if (season) {
-  //     axios
-  //     .put('/api/subscriptions/', {
-  //       farm_id: 1,
-  //       season: season,
-  //     })
-  //   }
-  // };
+  //SUBSCRIPTION EDITS
+  const handleSeasonEdits = () => {
+    if (subscription) {
+      axios.post(`/api/subscriptions/${id}`, {
+        farm_id: 1,
+        season: subscription.season,
+        year: subscription.year,
+        flat_price: subscription.flat_price,
+        weekly_price: subscription.weekly_price,
+        description: subscription.description,
+        start_date: subscription.start_date,
+        end_date: subscription.end_date,
+      });
+    }
+  };
+
+  //SUBSCRIPTION DELETE
+  // make a DELETE request to handle delete
+  const handleDeleteSubscription = () => {
+    axios
+      .delete(`/api/subscriptions/${subscription.id}`)
+      .then(() => {
+        console.log('Subscription DELETE Success!');
+      })
+      .catch((err) => console.error(err));
+  };
 
   const { subArray } = subscription;
 
@@ -104,6 +121,8 @@ const SubscriptionsPage = () => {
                 start_date={sub.start_date}
                 end_date={sub.end_date}
                 key={sub.id}
+                handleSeasonEdits={handleSeasonEdits}
+                handleDeleteSubscription={handleDeleteSubscription}
               />
             );
           }

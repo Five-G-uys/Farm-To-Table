@@ -1,6 +1,9 @@
 import React from 'react';
 import { start } from 'repl';
-// import axios from 'axios';
+import {
+  handleSeasonEdits,
+  handleDeleteSubscription,
+} from './SubscriptionsPage';
 interface aProps {
   season: string;
   year: number;
@@ -32,6 +35,15 @@ const SubscriptionCard = ({
         <h4>
           Seasonal Dates: {start_date} - {end_date}
         </h4>
+        <button className='form--submit' onClick={() => handleSeasonEdits}>
+          Edit
+        </button>
+        <button
+          className='form--submit'
+          onClick={() => handleDeleteSubscription}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

@@ -262,7 +262,7 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
           return { subscription_entry_id: subscriptionEntryId };
         })
       );
-      Orders.findAll({ where: { subscription_entry_id: req.params.id } });
+      // Orders.findAll({ where: { subscription_entry_id: req.params.id } });
       Orders.findAll({
         where: {
           [Op.or]: dataObj.map((subscriptionEntryId: any) => ({
@@ -295,24 +295,7 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
     });
 });
 
-//Subscription PUT request:
-app.put(`/api/subscriptions/`, (req: Request, res: Response) => {
-  console.log('LINE 305 Subscription PUT req', req.params.id);
-  Subscriptions.update(req.params, {
-    where: {
-      id: req.params.id,
-    },
-    returning: true,
-  })
-    .then((response: any) => {
-      res.send(203);
-    })
-    .catch((err: unknown) => {
-      console.error('SUBSCRIPTION UPDATES:', err);
-    });
-});
-
-//Subscription ADMIN Creation/Edit/Delete Routes//
+//Subscription ADMIN Create Route//
 app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
   const {
     season,
@@ -339,8 +322,41 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
       res.status(201);
     })
     .catch((err: string) => {
-      console.error('Post Request Failed', err);
+      console.error('SUBSCRIPTION CREATE REQUEST', err);
       res.sendStatus(500);
+    });
+});
+
+//Subscription Admin PUT request:
+app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
+  console.log('LINE 305 Subscription PUT req', req.params.id);
+  Subscriptions.update(req.params, {
+    where: {
+      id: req.params.id,
+    },
+    returning: true,
+  })
+    .then((response: any) => {
+      res.send(203);
+    })
+    .catch((err: unknown) => {
+      console.error('SUBSCRIPTION UPDATE REQUEST:', err);
+    });
+});
+
+//SUBSCRIPTION Admin DELETE req:
+app.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
+  console.log('Subscription DELETE req:', req.body);
+  Subscriptions.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then(() => {
+      res.send(200);
+    })
+    .catch((err: unknown) => {
+      console.error('SUBSCRIPTION DELETE REQUEST:', err);
     });
 });
 
