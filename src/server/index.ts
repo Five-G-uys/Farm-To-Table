@@ -62,11 +62,14 @@ app.use(passport.session());
 // Middleware
 const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
   if (!req.user || req.user.role_id !== 4) {
-    return next(new Error('User is Unauthorized!'));
+    // res.redirect('/'); // Whats is the use case?
+    res.status(404); // What is the use case?
   } else {
     next();
   }
 };
+
+
 
 const successLoginUrl = process.env.CALLBACK_URI;
 const errorLoginUrl = 'http://localhost:5555/login/error';
@@ -95,11 +98,7 @@ app.get('/auth/google/error', (req: Request, res: Response) =>
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', {
-    failureMessage: 'cannot login to Google',
-    failureRedirect: errorLoginUrl,
-    successRedirect: successLoginUrl,
-  }),
+  passport.authenticate('google'),
   (req: any, res: any) => {
     res.redirect('/profile-page');
   }
@@ -107,7 +106,7 @@ app.get(
 
 // Check if a user is logged in
 app.get('/api/isLoggedIn', (req: Request, res: Response) => {
-  req.cookies.crushers ? res.send(true) : res.send(false);
+  req.cookies ? res.send(true) : res.send(false);
 });
 
 // Logout route
@@ -132,7 +131,7 @@ app.get('/api/userProfile', (req, res) => {
 });
 
 //Events requests
-app.post('/api/event', (req: Request, res: Response) => {
+app.post('/api/event', isAdmin, (req: Request, res: Response) => {
   const { eventName, description, thumbnail, category, eventDate, eventType } =
     req.body.event;
 
