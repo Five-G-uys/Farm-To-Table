@@ -110,6 +110,8 @@ const SubscriptionsPage = () => {
             start_date: string;
             end_date: string;
             farm_id: 1;
+            handleSeasonEdits: () => void;
+            handleDeleteSubscription: () => void;
           }) => {
             return (
               <SubscriptionCard
