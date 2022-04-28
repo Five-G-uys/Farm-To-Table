@@ -77,7 +77,7 @@ const EventsPage = () => {
   const { eventName, description, thumbnail, eventDate, eventType } = event;
   return (
     <div className="event">
-      <h1>{`${user}`}</h1>
+      {/* <h1>{`${user}`}</h1> */}
       <h3 className="create-event">Create event</h3>
       <br></br>
       <div>

@@ -7,6 +7,7 @@ const EventCard = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [events, setEvents] = useState({ eventArray: {} });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getAllEvents = () => {
     axios
       .get("/events")
@@ -23,9 +24,10 @@ const EventCard = () => {
         console.log("sorry, request failed", error);
       });
   };
-  useEffect(() => {
-    getAllEvents();
-  }, []);
+
+  // useEffect(() => {
+  //   getAllEvents();
+  // }, []);
 
   const { eventArray } = events;
   // console.log("line 28", eventArray);
@@ -49,16 +51,27 @@ const EventCard = () => {
               eventId: number;
               eventDate: string;
               id: number;
+              getAllEvents: () => void;
             }) => {
+              const {
+                eventName,
+                eventType,
+                thumbnail,
+                description,
+                eventDate,
+                id,
+                getAllEvents,
+              } = event;
               return (
                 <Event
-                  eventName={event.eventName}
-                  eventType={event.eventType}
-                  thumbnail={event.thumbnail}
-                  description={event.description}
-                  eventDate={event.eventDate}
-                  key={event.eventName}
-                  eventId={event.id}
+                  eventName={eventName}
+                  eventType={eventType}
+                  thumbnail={thumbnail}
+                  description={description}
+                  eventDate={eventDate}
+                  getAllEvents={getAllEvents}
+                  key={eventName}
+                  eventId={id}
                 />
               );
             }

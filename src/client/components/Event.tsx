@@ -11,6 +11,9 @@ interface AppProps {
   eventType: string;
   eventDate: string;
   eventId: number;
+  getAllEvents: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
@@ -20,10 +23,11 @@ const Event = ({
   eventType,
   eventDate,
   eventId,
+  getAllEvents,
 }: //getAllRSVPSEvents,
 AppProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [events, setEvents] = useState({});
+  //const [events, setEvents] = useState({});
   const [userId, setUserId] = useState(0);
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
@@ -37,29 +41,29 @@ AppProps) => {
       .catch((err) => console.warn("Sorry it failed", err));
   }, []);
 
-  const getAllEvents = () => {
-    axios
-      .get("/events")
-      .then((data) => {
-        //console.log("SUCESSFULLY FECTHED DATA", data.data);
-        setEvents((state) => {
-          return {
-            ...state,
-            eventArray: [...data.data],
-          };
-        });
-      })
-      .catch((error: unknown) => {
-        console.log("sorry, request failed", error);
-      });
-  };
-  useEffect(() => {
-    getAllEvents();
-    // getAllRSVPSEvents();
-  }, []);
+  // const getAllEvents = () => {
+  //   axios
+  //     .get("/events")
+  //     .then((data) => {
+  //       //console.log("SUCESSFULLY FECTHED DATA", data.data);
+  //       setEvents((state) => {
+  //         return {
+  //           ...state,
+  //           eventArray: [...data.data],
+  //         };
+  //       });
+  //     })
+  //     .catch((error: unknown) => {
+  //       console.log("sorry, request failed", error);
+  //     });
+  // };
+  // useEffect(() => {
+  //   getAllEvents();
+  //   // getAllRSVPSEvents();
+  // }, []);
 
   //console.log("Line 58", userId + "Event Id", eventId);
-  const handleEventResponse = () => {
+  const handRSVPosts = () => {
     console.log("LINE 63", userId, " and ", eventId);
     axios
       .post(`/api/Rsvp/`, {
@@ -109,9 +113,7 @@ AppProps) => {
               {userId > 3 ? (
                 <button onClick={deleteEvent}>Click to delete event</button>
               ) : (
-                <button onClick={handleEventResponse}>
-                  RSVP to this event
-                </button>
+                <button onClick={handRSVPosts}>RSVP to this event</button>
               )}
             </div>
           </section>

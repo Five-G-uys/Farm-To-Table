@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
 interface AppProps {
   eventName: string;
   description: string;
@@ -7,6 +7,7 @@ interface AppProps {
   eventType: string;
   eventDate: string;
   eventId: number;
+  role_id: number;
   //getAllRSVPSEvents: () => void;
 }
 
@@ -17,10 +18,11 @@ const RSVPLIST = ({
   eventType,
   eventDate,
   eventId,
+  role_id,
 }: //getAllRSVPSEvents,
 AppProps) => {
-  // const [events, setEvents] = useState({});
-  // const [userId, setUserId] = useState(0);
+  //const [events, setEvents] = useState({});
+  //const [user, setUserId] = useState(0);
 
   // useEffect((): void => {
   //   // TAKE THIS AXIOS CALL TO GET USER
@@ -28,8 +30,8 @@ AppProps) => {
   //     .get<AxiosResponse>("/api/userProfile")
   //     .then(({ data }: AxiosResponse) => {
   //       console.log("userId", data);
-  //       const { id } = data;
-  //       setUserId(id);
+  //       const { role_id } = data;
+  //       setUserId(role_id);
   //     })
   //     .catch((err) => console.warn("Sorry it failed", err));
   // }, []);
@@ -70,13 +72,17 @@ AppProps) => {
   //       console.error("68 REQUEST FAILED", err);
   //     });
   // };
-  console.log(description);
+  console.log(role_id);
   return (
     <div>
-      <section>
-        <h1 className="event-name">{eventName}</h1>
-        <h4 className="event-date">{eventDate}</h4>
-      </section>
+      {role_id > 3 ? (
+        <div>TOTAL RSVP RESPONSES</div>
+      ) : (
+        <section>
+          <h1 className="event-name">{eventName}</h1>
+          <h4 className="event-date">{eventDate}</h4>
+        </section>
+      )}
     </div>
   );
 };

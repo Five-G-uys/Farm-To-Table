@@ -221,6 +221,20 @@ app.delete("/api/event/delete", (req: Request, res: Response) => {
   });
 });
 
+//Get all from RSVP table
+app.get("/api/rsvps", (req: Request, res: Response) => {
+  RSVP.findAll()
+    .then((data: any) => {
+      console.log("LINE 228 ALL THE RESPONSES FROM RSVP", data);
+    })
+    .catch((err: any) => {
+      console.log("FAILED REQUEST", err);
+    });
+});
+
+
+
+
 ////////SUBSCRIPTION REQUEST////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
   Users.update(req.body, { where: { id: req.params.id }, returning: true })
