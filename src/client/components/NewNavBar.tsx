@@ -16,15 +16,17 @@ import MenuItem from '@mui/material/MenuItem';
 const pages = [
   { name: 'Home', path: '/' },
   { name: 'Sign Up!', path: 'subscriptions-page' },
-  { name: 'About Us', path: 'about-us-page' },
+  { name: 'About Us', path: '/about-us-page'},
 ];
 const settings = [
-  { name: 'Login', path: 'login' },
-  { name: 'Profile', path: 'login/profile-page' },
-  { name: 'Orders', path: 'login/orders-page' },
-  { name: 'Add Season', path: 'subscriptions-admin' },
-  { name: 'Add Event', path: 'events-page' },
-  { name: 'Add Product ', path: 'admin/edit-products' },
+  { name: 'Login', path: '/login'},
+  { name: 'Logout', path: '/logout'},
+  { name: 'Profile', path: '/profile-page' },
+  { name: 'Orders', path: '/orders-page' },
+  { name: 'Add Season', path: '/subscriptions-admin' },
+  { name: 'Add Event', path: '/events-page' },
+  { name: 'Add Product ', path: '/edit-products' },
+  { name: 'Records', path: '/records'},
 ];
 
 const NewNavBar = () => {

@@ -27,7 +27,7 @@ const SubscriptionsPage = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>('/api/userProfile')
+      .get<AxiosResponse>('auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         const { id }: { id: number } = data;
         setId(id);

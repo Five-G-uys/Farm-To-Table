@@ -27,8 +27,13 @@ import {
   Users,
   Vendors,
   SubscriptionEntries,
+  DietaryRestrictions,
+  Events,
 } from './db/models';
-import Events from './db/models/Events';
+const authRouter = require('./routes/AuthRouter');
+const eventRouter = require('./routes/EventRouter');
+// const subscriptionRouter = require('./routes/SubscriptionsRouter')
+// const farmRouter = require('./routes/FarmRouter')
 import UserInterface from '../types/UserInterface';
 //import { postEvent } from "./routes/EventRoutes";
 
@@ -47,126 +52,118 @@ app.use(express.json());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  session({
-    secret: process.env.PASSPORT_CLIENT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
-  })
-);
-// Sets us req.user
-app.use(passport.initialize());
-app.use(passport.session());
+// // Middleware
+// const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
+//   if (!req.user || req.user.role_id !== 4) {
+//     // res.redirect('/'); // Whats is the use case?
+//     res.status(404); // What is the use case?
+//   } else {
+//     next();
+//   }
+// };
 
-// Middleware
-const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
-  if (!req.user || req.user.role_id !== 4) {
-    return next(new Error('User is Unauthorized!'));
-  } else {
-    next();
-  }
-};
+// const successLoginUrl = process.env.CALLBACK_URI;
+// const errorLoginUrl = 'http://localhost:5555/login/error';
 
-const successLoginUrl = process.env.CALLBACK_URI;
-const errorLoginUrl = 'http://localhost:5555/login/error';
+// // all backend routes should start at a common place that dont exist on the front end
 
-// all backend routes should start at a common place that dont exist on the front end
+// passport.serializeUser((user: any, done: any) => {
+//   // console.log('Serializing User:', user);
+//   done(null, user);
+// });
+// passport.deserializeUser((user: any, done: any) => {
+//   // console.log('Deserializing User:', user);
+//   done(null, user);
+// });
 
-passport.serializeUser((user: any, done: any) => {
-  // console.log('Serializing User:', user);
-  done(null, user);
-});
-passport.deserializeUser((user: any, done: any) => {
-  // console.log('Deserializing User:', user);
-  done(null, user);
-});
+// // Auth Routes
 
-// Auth Routes
+// app.get(
+//   '/auth/google',
+//   passport.authenticate('google', { scope: ['profile', 'email'] })
+// );
 
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
+// app.get('/auth/google/error', (req: Request, res: Response) =>
+//   res.send('Unknown Error')
+// );
 
-app.get('/auth/google/error', (req: Request, res: Response) =>
-  res.send('Unknown Error')
-);
+// app.get(
+//   '/auth/google/callback',
+//   passport.authenticate('google'),
+//   (req: any, res: any) => {
+//     res.redirect('/profile-page');
+//   }
+// );
 
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
-    failureMessage: 'cannot login to Google',
-    failureRedirect: errorLoginUrl,
-    successRedirect: successLoginUrl,
-  }),
-  (req: any, res: any) => {
-    res.redirect('/profile-page');
-  }
-);
+// // Check if a user is logged in
+// app.get('/api/isLoggedIn', (req: Request, res: Response) => {
+//   req.cookies ? res.send(true) : res.send(false);
+// });
 
-// Check if a user is logged in
-app.get('/api/isLoggedIn', (req: Request, res: Response) => {
-  req.cookies.crushers ? res.send(true) : res.send(false);
-});
+// // Logout route
+// app.delete('/api/logout', (req: Request, res: Response) => {
+//   res.clearCookie('crushers');
+//   res.json(false);
+// });
 
-// Logout route
-app.delete('/api/logout', (req: Request, res: Response) => {
-  res.clearCookie('crushers');
-  res.json(false);
-});
+// // Get current user route
+// app.get('/api/userProfile', (req, res) => {
+//   // console.log(`Body: `, req);
+//   // console.log(`Params: `, req.);
+//   Users.findOne()
+//     .then((data: any) => {
+//       // console.log('data', data);
+//       res.send(data).status(200);
+//     })
+//     .catch((err: any) => {
+//       console.error(err);
+//       res.sendStatus(500);
+//     });
+// });
 
-// Get current user route
-app.get('/api/userProfile', (req, res) => {
-  // console.log(`Body: `, req);
-  // console.log(`Params: `, req.);
-  Users.findOne()
-    .then((data: any) => {
-      // console.log('data', data);
-      res.send(data).status(200);
-    })
-    .catch((err: any) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+// //Events requests
+// app.post('/api/event', isAdmin, (req: Request, res: Response) => {
+//   const { eventName, description, thumbnail, category, eventDate, eventType } =
+//     req.body.event;
 
-//Events requests
-app.post('/api/event', (req: Request, res: Response) => {
-  const { eventName, description, thumbnail, category, eventDate, eventType } =
-    req.body.event;
+//   // console.log('162 Request object postEvent', req.body);
+//   Events.create({
+//     eventName,
+//     description,
+//     thumbnail,
+//     category,
+//     eventDate,
+//     eventType,
+//   })
+//     .then((data: any) => {
+//       // console.log('Return Events Route || Post Request', data);
+//       res.status(201);
+//     })
+//     .catch((err: string) => {
+//       console.error('Post Request Failed', err);
+//       res.sendStatus(500);
+//     });
+// });
 
-  // console.log('162 Request object postEvent', req.body);
-  Events.create({
-    eventName,
-    description,
-    thumbnail,
-    category,
-    eventDate,
-    eventType,
-  })
-    .then((data: any) => {
-      // console.log('Return Events Route || Post Request', data);
-      res.status(201);
-    })
-    .catch((err: string) => {
-      console.error('Post Request Failed', err);
-      res.sendStatus(500);
-    });
-});
+// //Events get request
+// app.get('/events', (req: Request, res: Response) => {
+//   Events.findAll()
+//     .then((response: any) => {
+//       // console.log(response, 'This is line 186 events gotten');
+//       res.status(200).send(response);
+//     })
+//     .catch((err: object) => {
+//       // console.log('Something went wrong', err);
+//       res.sendStatus(404);
+//     });
+// });
 
-//Events get request
-app.get('/events', (req: Request, res: Response) => {
-  Events.findAll()
-    .then((response: any) => {
-      // console.log(response, 'This is line 186 events gotten');
-      res.status(200).send(response);
-    })
-    .catch((err: object) => {
-      // console.log('Something went wrong', err);
-      res.sendStatus(404);
-    });
-});
+////////SUBSCRIPTION REQUEST////////////
+//routes
+app.use('/auth', authRouter);
+app.use('/events', eventRouter);
+// app.use('/subscriptions', subscriptionRouter);
+// app.use('/', farmRouter)
 
 ////////////////////////SUBSCRIPTION REQUESTS////////////////////////////////////////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
@@ -262,7 +259,6 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
           return { subscription_entry_id: subscriptionEntryId };
         })
       );
-      // Orders.findAll({ where: { subscription_entry_id: req.params.id } });
       Orders.findAll({
         where: {
           [Op.or]: dataObj.map((subscriptionEntryId: any) => ({
@@ -297,6 +293,7 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
 
 //Subscription ADMIN Create Route//
 app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
+  // console.log('LINE 272 ****', req.body.event);
   const {
     season,
     year,
@@ -364,7 +361,130 @@ app.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
 app.get('/api/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      // console.log('this is the data from the farm api call', data);
+      console.log('this is the data from the farm api call', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+
+//ADMIN RECORDS ROUTES
+
+app.get('/records/deliveryZones', (req: Request, res: Response) => {
+  DeliveryZones.findAll()
+    .then((data: any) => {
+      console.log('delivery data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/dietaryRestrictions', (req: Request, res: Response) => {
+  DietaryRestrictions.findAll()
+    .then((data: any) => {
+      console.log('DietaryRestrictions data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/events', (req: Request, res: Response) => {
+  Events.findAll()
+    .then((data: any) => {
+      console.log('Events data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/farms', (req: Request, res: Response) => {
+  Farms.findAll()
+    .then((data: any) => {
+      console.log('Farms data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/orders', (req: Request, res: Response) => {
+  Orders.findAll()
+    .then((data: any) => {
+      console.log('Orders data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/products', (req: Request, res: Response) => {
+  Products.findAll()
+    .then((data: any) => {
+      console.log('Products data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/roles', (req: Request, res: Response) => {
+  Roles.findAll()
+    .then((data: any) => {
+      console.log('Roles data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/rsvps', (req: Request, res: Response) => {
+  RSVP.findAll()
+    .then((data: any) => {
+      console.log('RSVP data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/subscriptionEntries', (req: Request, res: Response) => {
+  SubscriptionEntries.findAll()
+    .then((data: any) => {
+      console.log('SubscriptionEntries data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/subscriptions', (req: Request, res: Response) => {
+  Subscriptions.findAll()
+    .then((data: any) => {
+      console.log('Subscriptions data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/users', (req: Request, res: Response) => {
+  Users.findAll()
+    .then((data: any) => {
+      console.log('Users data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/vendors', (req: Request, res: Response) => {
+  Vendors.findAll()
+    .then((data: any) => {
+      console.log('Vendors data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {

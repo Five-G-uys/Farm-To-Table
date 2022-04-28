@@ -20,12 +20,10 @@ const HomePage = () => {
   }
   useEffect(() => {
     getFarms();
-  }, []
-  )
+  }, [])
   // console.log("farms", 22, farms)
 
   return (
-
     <div>
       {farms && farms.map((farm: { name: string, description: string, id: number }) => {
         return <Farms name={farm.name} description={farm.description} key={farm.id}></Farms>
