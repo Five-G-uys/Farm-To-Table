@@ -20,7 +20,7 @@ const Profile = (): React.ReactElement => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>("/auth/api/userProfile")
+      .get<AxiosResponse>("auth/api/userProfile")
       .then(({ data }: AxiosResponse) => {
         // console.log(data);
         setUser(data);
