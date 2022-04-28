@@ -237,7 +237,16 @@ app.get('/api/farms', (req: Request, res: Response) => {
 
 //ADMIN ROUTES
  
-
+app.get('/admin/', (req: Request, res: Response) => {
+  Farms.findAll()
+    .then((data: any) => {
+      console.log('this is the data from the farm api call', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
 
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get('*', (req: Request, res: Response) => {
