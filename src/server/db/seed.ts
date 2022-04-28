@@ -109,92 +109,92 @@ syncModels(true)
       },
     });
 
-    // Products Seed Data
-    await Products.findOrCreate({
-      where: { id: 1 },
-      defaults: {
-        id: 1,
-        name: 'Cheddar Cheese',
-        description: 'Organic homestead cheddar cheese',
-        vendor_id: 1,
-        quantity: '6oz',
-        available: true,
-        farm_id: 1,
-      },
-    });
-    await Products.findOrCreate({
-      where: { id: 2 },
-      defaults: {
-        id: 2,
-        name: 'Ground Beef',
-        description: 'Organic grass fed ground beef',
-        vendor_id: 1,
-        quantity: '1 lb',
-        available: true,
-        farm_id: 1,
-      },
-    });
-    await Products.findOrCreate({
-      where: { id: 3 },
-      defaults: {
-        id: 3,
-        name: 'Mushrooms',
-        description: '6oz of organic local Shitiki mushrooms',
-        vendor_id: 2,
-        quantity: '6oz',
-        available: false,
-        farm_id: 1,
-      },
-    });
-    await Products.findOrCreate({
-      where: { id: 4 },
-      defaults: {
-        id: 4,
-        name: 'Muscadine Wine',
-        description: 'A bottle of Louisians finest Muscadine Wine',
-        vendor_id: 3,
-        quantity: '750 ml',
-        available: true,
-        farm_id: 1,
-      },
-    });
-    await Products.findOrCreate({
-      where: { id: 5 },
-      defaults: {
-        id: 5,
-        name: 'Wheat Grass Shots',
-        description: '4oz of fresh grown organic wheat grass shots',
-        vendor_id: 4,
-        quantity: '6oz',
-        available: true,
-        farm_id: 1,
-      },
-    });
-    await Products.findOrCreate({
-      where: { id: 6 },
-      defaults: {
-        id: 6,
-        name: 'Honey Quart with Comb',
-        description: 'Quart of Louisian honey with the comb',
-        vendor_id: 5,
-        quantity: '1 qt',
-        available: true,
-        farm_id: 1,
-      },
-    });
-    await Products.findOrCreate({
-      where: { id: 7 },
-      defaults: {
-        id: 7,
-        name: 'Scoobie Snack Cookie Box',
-        description:
-          'A mix of some of the worlds finest snicker-doodle cookies',
-        vendor_id: 6,
-        quantity: '6oz',
-        available: true,
-        farm_id: 1,
-      },
-    });
+    // // Products Seed Data
+    // await Products.findOrCreate({
+    //   where: { id: 1 },
+    //   defaults: {
+    //     id: 1,
+    //     name: 'Cheddar Cheese',
+    //     description: 'Organic homestead cheddar cheese',
+    //     // vendor_id: 1,
+    //     quantity: '6oz',
+    //     available: true,
+    //     farm_id: 1,
+    //   },
+    // });
+    // await Products.findOrCreate({
+    //   where: { id: 2 },
+    //   defaults: {
+    //     id: 2,
+    //     name: 'Ground Beef',
+    //     description: 'Organic grass fed ground beef',
+    //     // vendor_id: 1,
+    //     quantity: '1 lb',
+    //     available: true,
+    //     farm_id: 1,
+    //   },
+    // });
+    // await Products.findOrCreate({
+    //   where: { id: 3 },
+    //   defaults: {
+    //     id: 3,
+    //     name: 'Mushrooms',
+    //     description: '6oz of organic local Shitiki mushrooms',
+    //     // vendor_id: 2,
+    //     quantity: '6oz',
+    //     available: false,
+    //     farm_id: 1,
+    //   },
+    // });
+    // await Products.findOrCreate({
+    //   where: { id: 4 },
+    //   defaults: {
+    //     id: 4,
+    //     name: 'Muscadine Wine',
+    //     description: 'A bottle of Louisians finest Muscadine Wine',
+    //     // vendor_id: 3,
+    //     quantity: '750 ml',
+    //     available: true,
+    //     farm_id: 1,
+    //   },
+    // });
+    // await Products.findOrCreate({
+    //   where: { id: 5 },
+    //   defaults: {
+    //     id: 5,
+    //     name: 'Wheat Grass Shots',
+    //     description: '4oz of fresh grown organic wheat grass shots',
+    //     // vendor_id: 4,
+    //     quantity: '6oz',
+    //     available: true,
+    //     farm_id: 1,
+    //   },
+    // });
+    // await Products.findOrCreate({
+    //   where: { id: 6 },
+    //   defaults: {
+    //     id: 6,
+    //     name: 'Honey Quart with Comb',
+    //     description: 'Quart of Louisian honey with the comb',
+    //     // vendor_id: 5,
+    //     quantity: '1 qt',
+    //     available: true,
+    //     farm_id: 1,
+    //   },
+    // });
+    // await Products.findOrCreate({
+    //   where: { id: 7 },
+    //   defaults: {
+    //     id: 7,
+    //     name: 'Scoobie Snack Cookie Box',
+    //     description:
+    //       'A mix of some of the worlds finest snicker-doodle cookies',
+    //     // vendor_id: 6,
+    //     quantity: '6oz',
+    //     available: true,
+    //     farm_id: 1,
+    //   },
+    // });
 
     // Delivery Zones Seed Data
     await DeliveryZones.findOrCreate({

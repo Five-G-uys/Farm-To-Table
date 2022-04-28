@@ -19,26 +19,35 @@ const Products = db.define('products', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  vendor_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: Vendors, key: 'id' },
-  },
-  quantity: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  // vendor_id: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: false,
+  //   references: { model: Vendors, key: 'id' },
+  // },
+  // quantity: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false,
+  // },
   img_url: {
     type: DataTypes.STRING,
   },
-  available: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
+  // available: {
+  //   type: DataTypes.BOOLEAN,
+  //   allowNull: false,
+  // },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: false,
+  //   references: { model: Farms, key: 'id' },
+  // },
+  plant_date: {
+    type: DataTypes.STRING,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: Farms, key: 'id' },
+  harvest_date: {
+    type: DataTypes.STRING,
+  },
+  season: {
+    type: DataTypes.STRING,
   },
 });
 

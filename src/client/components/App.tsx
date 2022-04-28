@@ -50,11 +50,7 @@ const App = () => {
             <Route
               path='login'
               element={
-                isLoggedIn(user) ? (
-                  <Navigate to='/login/profile-page' />
-                ) : (
-                  <Login />
-                )
+                isLoggedIn(user) ? <Navigate to='profile-page' /> : <Login />
               }
             />
 
@@ -64,14 +60,14 @@ const App = () => {
             <Route path='event-card' element={<EventCard />} />
 
             {/* User Routes */}
-            <Route path='login/profile-page' element={<ProfilePage />} />
+            <Route path='profile-page' element={<ProfilePage />} />
             <Route
               path='subscriptions-page/confirmation-page'
               element={<Confirmation />}
             />
             <Route path='admin/edit-products' element={<ProductsPage />} />
             <Route
-              path='orders-page'
+              path='login/orders-page'
               element={
                 isLoggedIn(user) ? <OrdersPage /> : <Navigate to='login' />
               }
