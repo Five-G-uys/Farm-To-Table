@@ -15,6 +15,7 @@ import AboutUsPage from './AboutUsPage';
 import Login from './Login';
 import NewNavBar from './NewNavBar';
 import { UserContext } from './UserContext';
+import RecordsPage from './Records/RecordsPage';
 
 const App = () => {
   const [user, setUser] = useState('User context value');
@@ -79,6 +80,10 @@ const App = () => {
             <Route
               path='subscriptions-admin'
               element={<SubscriptionsAdmin />}
+            />
+            <Route
+              path='/records'
+              element={<RecordsPage/>}
             />
           </Routes>
         </UserContext.Provider>

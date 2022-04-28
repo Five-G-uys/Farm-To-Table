@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 const pages = [
   { name: 'Home', path: '/' },
   { name: 'Sign Up!', path: 'subscriptions-page' },
-  { name: 'About Us', path: '/about-us-page'}
+  { name: 'About Us', path: '/about-us-page'},
 ];
 const settings = [
   { name: 'Login', path: '/login'},
@@ -26,7 +26,7 @@ const settings = [
   { name: 'Add Season', path: '/subscriptions-admin' },
   { name: 'Add Event', path: '/events-page' },
   { name: 'Add Product ', path: '/edit-products' },
-  
+  { name: 'Records', path: '/records'},
 ];
 
 const NewNavBar = () => {
