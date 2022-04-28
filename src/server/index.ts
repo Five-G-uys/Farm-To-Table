@@ -182,8 +182,6 @@ app.post("/api/Rsvp/", (req: Request, res: Response) => {
 
 //Get request For the RSVP
 app.get("/api/user/rsvps/:userId", (req: Request, res: Response) => {
-  //console.log("REQUEST BODY FROM LINE 189", req.params);
-
   RSVP.findAll({
     where: { user_id: req.params.userId },
   })
@@ -205,6 +203,22 @@ app.get("/api/user/rsvps/:userId", (req: Request, res: Response) => {
     .catch((err: any) => {
       console.log("ERROR FAILED REQ", err);
     });
+});
+
+//patch request for deleting an event in the DB
+app.delete("/api/event/delete", (req: Request, res: Response) => {
+  console.log("line 210", req.query);
+  RSVP.destroy({
+    where: { event_id: req.query.id },
+  }).then((data: any) => {
+    Events.destroy({ where: { id: req.query.id } })
+      .then((data: any) => {
+        console.log("deletion was successful!", data);
+      })
+      .catch((err: any) => {
+        console.error("Deletion was not successful", err);
+      });
+  });
 });
 
 ////////SUBSCRIPTION REQUEST////////////

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
-import Event from "./Event";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import RSVPLIST from "./RSVPLIST";
 
@@ -26,7 +25,7 @@ const RSVPS = () => {
     axios
       .get(`/api/user/rsvps/${userId}`)
       .then((data) => {
-        console.log("LINE 12 FrontEND request", data.data);
+        console.log("LINE 28 FrontEND request", data.data);
         const newArr = data.data
           .map((eventObj: any) => {
             return eventObj.value;

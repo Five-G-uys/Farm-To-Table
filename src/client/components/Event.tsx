@@ -11,7 +11,6 @@ interface AppProps {
   eventType: string;
   eventDate: string;
   eventId: number;
-  //getAllRSVPSEvents: () => void;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
@@ -23,7 +22,6 @@ const Event = ({
   eventId,
 }: //getAllRSVPSEvents,
 AppProps) => {
-  //console.log("LINE 37", eventName, description, thumbnail);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [events, setEvents] = useState({});
   const [userId, setUserId] = useState(0);
@@ -33,8 +31,8 @@ AppProps) => {
       .get<AxiosResponse>("/api/userProfile")
       .then(({ data }: AxiosResponse) => {
         console.log("userId", data);
-        const { id } = data;
-        setUserId(id);
+        const { role_id } = data;
+        setUserId(role_id);
       })
       .catch((err) => console.warn("Sorry it failed", err));
   }, []);
@@ -76,8 +74,26 @@ AppProps) => {
       });
   };
 
+  //patch request for deleteting an event in the database
+  const deleteEvent = () => {
+    console.log("LINE 81", userId, " and ", eventId);
+    axios
+      .delete("/api/event/delete", {
+        params: { id: eventId },
+      })
+      .then((data) => {
+        console.log("87 LINE ", data);
+        getAllEvents();
+      })
+      .catch((err) => {
+        console.error("91 REQUEST FAILED", err);
+      });
+  };
+
+  console.log("LINE 78", userId);
   return (
     <div>
+      <div></div>
       {thumbnail && (
         <>
           <div>
@@ -90,8 +106,13 @@ AppProps) => {
               <h3 className="event-desc">{description}</h3>
               <h3 className="event-category">{eventType}</h3>
               <h4 className="event-date">{eventDate}</h4>
-              <h4>{eventId}</h4>
-              <button onClick={handleEventResponse}>RSVP to this event</button>
+              {userId > 3 ? (
+                <button onClick={deleteEvent}>Click to delete event</button>
+              ) : (
+                <button onClick={handleEventResponse}>
+                  RSVP to this event
+                </button>
+              )}
             </div>
           </section>
           <div>{/* <RSVPS /> */}</div>
