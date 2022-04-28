@@ -28,7 +28,10 @@ import {
   Vendors,
   SubscriptionEntries,
 } from './db/models';
-import Events from './db/models/Events';
+const authRouter = require('./routes/AuthRouter')
+const eventRouter = require('./routes/EventRouter')
+// const subscriptionRouter = require('./routes/SubscriptionsRouter')
+// const farmRouter = require('./routes/FarmRouter')
 import UserInterface from '../types/UserInterface';
 //import { postEvent } from "./routes/EventRoutes";
 
@@ -47,126 +50,12 @@ app.use(express.json());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  session({
-    secret: process.env.PASSPORT_CLIENT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
-  })
-);
-// Sets us req.user
-app.use(passport.initialize());
-app.use(passport.session());
 
-// Middleware
-const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
-  if (!req.user || req.user.role_id !== 4) {
-    return next(new Error('User is Unauthorized!'));
-  } else {
-    next();
-  }
-};
-
-const successLoginUrl = process.env.CALLBACK_URI;
-const errorLoginUrl = 'http://localhost:5555/login/error';
-
-// all backend routes should start at a common place that dont exist on the front end
-
-passport.serializeUser((user: any, done: any) => {
-  // console.log('Serializing User:', user);
-  done(null, user);
-});
-passport.deserializeUser((user: any, done: any) => {
-  // console.log('Deserializing User:', user);
-  done(null, user);
-});
-
-// Auth Routes
-
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-
-app.get('/auth/google/error', (req: Request, res: Response) =>
-  res.send('Unknown Error')
-);
-
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
-    failureMessage: 'cannot login to Google',
-    failureRedirect: errorLoginUrl,
-    successRedirect: successLoginUrl,
-  }),
-  (req: any, res: any) => {
-    res.redirect('/profile-page');
-  }
-);
-
-// Check if a user is logged in
-app.get('/api/isLoggedIn', (req: Request, res: Response) => {
-  req.cookies.crushers ? res.send(true) : res.send(false);
-});
-
-// Logout route
-app.delete('/api/logout', (req: Request, res: Response) => {
-  res.clearCookie('crushers');
-  res.json(false);
-});
-
-// Get current user route
-app.get('/api/userProfile', (req, res) => {
-  // console.log(`Body: `, req);
-  // console.log(`Params: `, req.);
-  Users.findOne()
-    .then((data: any) => {
-      // console.log('data', data);
-      res.send(data).status(200);
-    })
-    .catch((err: any) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
-
-//Events requests
-app.post('/api/event', (req: Request, res: Response) => {
-  const { eventName, description, thumbnail, category, eventDate, eventType } =
-    req.body.event;
-
-  // console.log('162 Request object postEvent', req.body);
-  Events.create({
-    eventName,
-    description,
-    thumbnail,
-    category,
-    eventDate,
-    eventType,
-  })
-    .then((data: any) => {
-      // console.log('Return Events Route || Post Request', data);
-      res.status(201);
-    })
-    .catch((err: string) => {
-      console.error('Post Request Failed', err);
-      res.sendStatus(500);
-    });
-});
-
-//Events get request
-app.get('/events', (req: Request, res: Response) => {
-  Events.findAll()
-    .then((response: any) => {
-      // console.log(response, 'This is line 186 events gotten');
-      res.status(200).send(response);
-    })
-    .catch((err: object) => {
-      // console.log('Something went wrong', err);
-      res.sendStatus(404);
-    });
-});
+//routes
+app.use('/auth', authRouter);
+app.use('/events', eventRouter);
+// app.use('/subscriptions', subscriptionRouter);
+// app.use('/', farmRouter)
 
 ////////SUBSCRIPTION REQUESTS////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
@@ -335,17 +224,20 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     });
 });
 
-// Home page routes
 app.get('/api/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      // console.log('this is the data from the farm api call', data);
+      console.log('this is the data from the farm api call', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
       console.error('OH NOOOOO', err);
     });
 });
+
+//ADMIN ROUTES
+ 
+
 
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get('*', (req: Request, res: Response) => {
