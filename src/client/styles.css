@@ -8,8 +8,8 @@
   font-family: "Inter", sans-serif;
 } */
 body {
-  background-image: url("/src/BackGROUND.jpg");
-  background-color: #e2cece34;
+  /* background-image: url("/src/BackGROUND.jpg"); */
+  background-color: #c8bebe34;
 }
 
 .event {
@@ -53,14 +53,14 @@ body {
   font-weight: 700px;
 }
 .text-card {
-  align-items: baseline;
+  align-items: flex-start;
 }
 .form-input {
   width: 100%;
   height: 30px;
   margin-bottom: 20px;
   height: 40px;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 1px solid gray;
   padding: 15px;
   font-family: "Inter", sans-serif;

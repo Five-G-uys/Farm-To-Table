@@ -4,10 +4,8 @@ import axios from "axios";
 //import RSVPS from "./RSVPS";
 
 const EventCard = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [events, setEvents] = useState({ eventArray: [] });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getAllEvents = () => {
     axios
       .get("/events/api/event")
@@ -38,7 +36,7 @@ const EventCard = () => {
       <nav className="nav">
         <h1 className="nav-event">Spring Season Events</h1>
       </nav>
-      <h2 className="title-card">Events for this month</h2>
+      <h1 className="title-card">Events for this month</h1>
       <br></br>
       <br></br>
       <div className="card">

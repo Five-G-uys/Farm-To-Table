@@ -79,7 +79,7 @@ AppProps) => {
         <>
           <div>
             <h1 className="event-name">{eventName}</h1>
-            <div>{userId}</div>
+            <div></div>
           </div>
           <section className="sect-event">
             <img src={thumbnail} className="event-img" />
@@ -88,9 +88,9 @@ AppProps) => {
               <h3 className="event-category">{eventType}</h3>
               <h4 className="event-date">{eventDate}</h4>
               {userRole > 3 ? (
-                <button onClick={deleteEvent}>Click to delete event</button>
+                <button onClick={deleteEvent}>Delete Event</button>
               ) : (
-                <button onClick={handRSVPosts}>RSVP to this event</button>
+                <button onClick={handRSVPosts}>Click to Attend</button>
               )}
             </div>
           </section>

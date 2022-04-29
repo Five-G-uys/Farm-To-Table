@@ -82,13 +82,14 @@ const EventsPage = () => {
       <br></br>
       <div>
         <button onClick={showWidget} className="input-btn">
-          Add image to Event
+          Add event image
         </button>
         <br></br>
         {thumbnail && <img src={thumbnail} />}
         <br></br>
         <br></br>
         <form onSubmit={postEvent} className="form-event">
+          Name of event
           <input
             type="text"
             placeholder="Name of event"
@@ -99,6 +100,7 @@ const EventsPage = () => {
           />
           <br></br>
           <br></br>
+          Description
           <textarea
             className="text-form"
             placeholder="Description"
@@ -108,15 +110,15 @@ const EventsPage = () => {
           ></textarea>
           <br></br>
           <br></br>
+          Date of Event
           <input
             type="text"
-            placeholder="DD/MM/YEAR"
+            placeholder=" 05 / 30 / 2022"
             value={eventDate}
             name="eventDate"
             onChange={handleInputEvent}
             className="form-input"
           />
-
           <fieldset>
             <legend className="radio-title">Type of event</legend>
             <input
