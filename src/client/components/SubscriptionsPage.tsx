@@ -27,7 +27,7 @@ const SubscriptionsPage = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>('auth/api/userProfile')
+      .get<AxiosResponse>('/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         const { id }: { id: number } = data;
         setId(id);
@@ -54,7 +54,7 @@ const SubscriptionsPage = () => {
           farm_id: 1,
           season: season, // change season to number season id on server side
         })
-        .then((response) => {
+        .then(() => {
           // console.log('LINE 56 || SUBSCRIPTIONSPAGE.TSX ||', response);
           //NAVIGATE REDIRECTS TO CONFIRMATION PAGE SO NO NEED FOR LINK TAG IN JSX
           navigate('/subscriptions-page/confirmation-page');
@@ -67,23 +67,33 @@ const SubscriptionsPage = () => {
     }
   };
 
-  //SUBSCRIPTION EDITS
-  const handleSeasonEdits = () => {
-    if (subscription) {
-      axios.post(`/api/subscriptions/${id}`, {
-        farm_id: 1,
-        season: subscription.season,
-        year: subscription.year,
-        flat_price: subscription.flat_price,
-        weekly_price: subscription.weekly_price,
-        description: subscription.description,
-        start_date: subscription.start_date,
-        end_date: subscription.end_date,
-      });
-    }
-  };
+  // SUBSCRIPTION EDITS
+  const { subArray } = subscription;
 
-  //SUBSCRIPTION DELETE
+  // const handleSeasonEdits = () => {
+  //   if (subArray) {
+  //     console.log('LINE 75', subArray);
+  //     axios
+  //       .put(`/api/subscriptions/${id}`, {
+  //         farm_id: 1,
+  //         season: subArray.season,
+  //         year: subArray.year,
+  //         flat_price: subArray.flat_price,
+  //         weekly_price: subArray.weekly_price,
+  //         description: subArray.description,
+  //         start_date: subArray.start_date,
+  //         end_date: subArray.end_date,
+  //       })
+  //       .then((data) => {
+  //         console.log('SUCCESS EDIT', data);
+  //       })
+  //       .catch((err) => {
+  //         console.error('SUBSCRIPTION EDIT ERROR', err);
+  //       });
+  //   }
+  // };
+
+  // SUBSCRIPTION DELETE
   // make a DELETE request to handle delete
   const handleDeleteSubscription = () => {
     axios
@@ -93,8 +103,6 @@ const SubscriptionsPage = () => {
       })
       .catch((err) => console.error(err));
   };
-
-  const { subArray } = subscription;
 
   return (
     <div>
@@ -110,8 +118,8 @@ const SubscriptionsPage = () => {
             start_date: string;
             end_date: string;
             farm_id: 1;
-            handleSeasonEdits: () => void;
-            handleDeleteSubscription: () => void;
+            // handleSeasonEdits: () => void;
+            // handleDeleteSubscription: () => void;
           }) => {
             return (
               <SubscriptionCard
@@ -123,7 +131,7 @@ const SubscriptionsPage = () => {
                 start_date={sub.start_date}
                 end_date={sub.end_date}
                 key={sub.id}
-                handleSeasonEdits={handleSeasonEdits}
+                // handleSeasonEdits={handleSeasonEdits}
                 handleDeleteSubscription={handleDeleteSubscription}
               />
             );

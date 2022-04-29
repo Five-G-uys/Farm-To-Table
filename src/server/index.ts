@@ -30,6 +30,7 @@ import {
   DietaryRestrictions,
   Events,
 } from './db/models';
+
 const authRouter = require('./routes/AuthRouter');
 const eventRouter = require('./routes/EventRouter');
 // const subscriptionRouter = require('./routes/SubscriptionsRouter')
@@ -325,32 +326,34 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
 });
 
 //Subscription Admin PUT request:
-app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
-  console.log('LINE 305 Subscription PUT req', req.params.id);
-  Subscriptions.update(req.params, {
-    where: {
-      id: req.params.id,
-    },
-    returning: true,
-  })
-    .then((response: any) => {
-      res.send(203);
-    })
-    .catch((err: unknown) => {
-      console.error('SUBSCRIPTION UPDATE REQUEST:', err);
-    });
-});
+// app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
+//   console.log('LINE 305 Subscription PUT req', req.params.id);
+//   Subscriptions.update(req.body, {
+//     where: {
+//       id: req.params.id,
+//     },
+//     returning: true,
+//   })
+//     .then((response: any) => {
+//       res.json(response).status(204);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('SUBSCRIPTION UPDATE REQUEST:', err);
+//     });
+// });
 
 //SUBSCRIPTION Admin DELETE req:
 app.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
-  console.log('Subscription DELETE req:', req.body);
+  // console.log('Subscription DELETE req:', req.params); //returns { id: '2' }
   Subscriptions.destroy({
     where: {
       id: req.params.id,
     },
+    return: true,
   })
-    .then(() => {
-      res.send(200);
+    .then((data: any) => {
+      // console.log('LINE 355', data); //returns 0
+      res.json(data).status(204);
     })
     .catch((err: unknown) => {
       console.error('SUBSCRIPTION DELETE REQUEST:', err);

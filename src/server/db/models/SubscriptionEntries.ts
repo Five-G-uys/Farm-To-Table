@@ -17,6 +17,7 @@ const SubscriptionEntries = db.define('subscription_entries', {
     unique: false,
     allowNull: false,
     references: { model: Farms, key: 'id' },
+    defaultValue: 1,
   },
   user_id: {
     type: DataTypes.INTEGER,

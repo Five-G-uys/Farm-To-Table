@@ -1,18 +1,18 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 //import cloudinary from "cloudinary";
 //window.cloudinary = cloudinary;
 const EventsPage = () => {
   const [event, setEvent] = useState({
-    eventName: "",
-    description: "",
-    thumbnail: "",
-    category: "",
-    eventDate: "",
-    eventType: "",
+    eventName: '',
+    description: '',
+    thumbnail: '',
+    category: '',
+    eventDate: '',
+    eventType: '',
   });
 
   const handleInputEvent = (
@@ -24,7 +24,7 @@ const EventsPage = () => {
     setEvent((state) => {
       return {
         ...state,
-        [name]: type === "checkbox" ? checked : value,
+        [name]: type === 'checkbox' ? checked : value,
       };
     });
     // console.log(event);
@@ -32,7 +32,7 @@ const EventsPage = () => {
 
   const postEvent = () => {
     axios
-      .post("/api/event", {
+      .post('/api/event', {
         event: {
           eventName: event.eventName,
           description: event.description,
@@ -55,7 +55,7 @@ const EventsPage = () => {
         uploadPreset: CLOUD_PRESET2,
       },
       (error: any, result: { event: string; info: { url: string } }) => {
-        if (!error && result && result.event === "success") {
+        if (!error && result && result.event === 'success') {
           // console.log("LINE 56", result.info.url);
           setEvent((state) => {
             return {
@@ -76,83 +76,83 @@ const EventsPage = () => {
   // console.log(event);
   const { eventName, description, thumbnail, eventDate, eventType } = event;
   return (
-    <div className="event">
-      <h3 className="create-event">Create event</h3>
+    <div className='event'>
+      <h3 className='create-event'>Create event</h3>
       <br></br>
       <div>
-        <button onClick={showWidget} className="input-btn">
+        <button onClick={showWidget} className='input-btn'>
           Add image to Event
         </button>
         <br></br>
         {thumbnail && <img src={thumbnail} />}
         <br></br>
         <br></br>
-        <form onSubmit={postEvent} className="form-event">
+        <form onSubmit={postEvent} className='form-event'>
           <input
-            type="text"
-            placeholder="Name of event"
+            type='text'
+            placeholder='Name of event'
             value={eventName}
-            name="eventName"
+            name='eventName'
             onChange={handleInputEvent}
-            className="input"
+            className='input'
           />
           <br></br>
           <br></br>
           <textarea
-            className="text-form"
-            placeholder="Description"
+            className='text-form'
+            placeholder='Description'
             value={description}
-            name="description"
+            name='description'
             onChange={handleInputEvent}
           ></textarea>
           <br></br>
           <br></br>
           <input
-            type="text"
-            placeholder="DD/MM/YEAR"
+            type='text'
+            placeholder='DD/MM/YEAR'
             value={eventDate}
-            name="eventDate"
+            name='eventDate'
             onChange={handleInputEvent}
-            className="form-input"
+            className='form-input'
           />
 
           <fieldset>
-            <legend className="radio-title">Type of event</legend>
+            <legend className='radio-title'>Type of event</legend>
             <input
-              type="radio"
-              id="Farmers Market"
-              name="eventType"
-              value="Farmers Market"
-              checked={eventType === "Farmers Market"}
+              type='radio'
+              id='Farmers Market'
+              name='eventType'
+              value='Farmers Market'
+              checked={eventType === 'Farmers Market'}
               onChange={handleInputEvent}
             />
-            <label htmlFor="Farmers Market">Farmers Market</label>
+            <label htmlFor='Farmers Market'>Farmers Market</label>
             <br />
             <input
-              type="radio"
-              id="Customer Day"
-              name="eventType"
-              value="Customer Day"
-              checked={eventType === "Customer Day"}
+              type='radio'
+              id='Customer Day'
+              name='eventType'
+              value='Customer Day'
+              checked={eventType === 'Customer Day'}
               onChange={handleInputEvent}
             />
-            <label htmlFor="customerDay">Customer Day</label>
+            <label htmlFor='customerDay'>Customer Day</label>
             <br />
 
             <input
-              type="radio"
-              id="Community Volunteering"
-              name="eventType"
-              value="Community Volunteering"
-              checked={eventType === "Community Volunteering"}
+              type='radio'
+              id='Community Volunteering'
+              name='eventType'
+              value='Community Volunteering'
+              checked={eventType === 'Community Volunteering'}
               onChange={handleInputEvent}
             />
-            <label htmlFor="Farmers-Market">Community volunteering</label>
+            <label htmlFor='Farmers-Market'>Community volunteering</label>
             <br />
           </fieldset>
           <br></br>
           <br></br>
-          <button type="submit" className="form--submit">
+          <button type='submit' className='form--submit'>
             Save event
           </button>
         </form>

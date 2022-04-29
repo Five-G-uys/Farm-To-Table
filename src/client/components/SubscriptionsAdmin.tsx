@@ -22,11 +22,11 @@ const SubscriptionsAdmin = () => {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    const { name, value, type, checked } = event.target;
+    const { name, value, type } = event.target;
     setSubscription((state) => {
       return {
         ...state,
-        [name]: type === 'checkbox' ? checked : value,
+        [name]: value,
       };
     });
   };
@@ -59,7 +59,7 @@ const SubscriptionsAdmin = () => {
         cloudName: CLOUD_NAME,
         uploadPreset: CLOUD_PRESET2,
       },
-      (error: any, result: { event: string; info: { url: string } }) => {
+      (error: unknown, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
           // console.log("LINE 56", result.info.url);
           setSubscription((state) => {
@@ -78,7 +78,7 @@ const SubscriptionsAdmin = () => {
   //{ event: string; info: { url: string } })
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [subscription.description]);
-  console.log(subscription);
+
   const {
     season,
     year,

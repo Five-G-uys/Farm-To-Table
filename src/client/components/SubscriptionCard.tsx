@@ -1,9 +1,6 @@
 import React from 'react';
 import { start } from 'repl';
-import {
-  handleSeasonEdits,
-  handleDeleteSubscription,
-} from './SubscriptionsPage';
+
 interface aProps {
   season: string;
   year: number;
@@ -12,6 +9,8 @@ interface aProps {
   description: string;
   start_date: string;
   end_date: string;
+  // handleSeasonEdits: () => void;
+  handleDeleteSubscription: () => void;
 }
 const SubscriptionCard = ({
   season,
@@ -21,6 +20,8 @@ const SubscriptionCard = ({
   description,
   start_date,
   end_date,
+  // handleSeasonEdits,
+  handleDeleteSubscription,
 }: aProps) => {
   return (
     <div className='card'>
@@ -35,15 +36,8 @@ const SubscriptionCard = ({
         <h4>
           Seasonal Dates: {start_date} - {end_date}
         </h4>
-        <button className='form--submit' onClick={() => handleSeasonEdits}>
-          Edit
-        </button>
-        <button
-          className='form--submit'
-          onClick={() => handleDeleteSubscription}
-        >
-          Delete
-        </button>
+        <button>Edit</button>
+        <button onClick={handleDeleteSubscription}>Delete</button>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { DataTypes } from 'sequelize';
+// import { SubscriptionEntries } from '.';
 import { db } from '../database';
 import Farms from './Farms';
 // import Users from './Users';
@@ -43,7 +44,18 @@ const Subscriptions = db.define('subscriptions', {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: { model: Farms, key: 'id' },
+    defaultValue: 1,
   },
 });
+// Subscriptions.hasMany(SubscriptionEntries, {
+//   as: 'subscription_entries',
+//   foreignKey: 'subscription_id',
+//   onDelete: 'CASCADE',
+//   onUpdate: 'CASCADE',
+// });
+
+// SubscriptionEntries.belongsTo(Subscriptions, {
+//   foreignKey: 'subscription_id',
+// });
 
 export default Subscriptions;
