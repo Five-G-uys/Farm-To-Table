@@ -1,6 +1,5 @@
 import React from 'react';
-// import { start } from 'repl';
-
+import axios from 'axios';
 interface aProps {
   season: string;
   year: number;
@@ -9,9 +8,9 @@ interface aProps {
   description: string;
   start_date: string;
   end_date: string;
-  // handleSeasonEdits: () => void;
-  handleDeleteSubscription: () => void;
+  subscription_id: number;
 }
+
 const SubscriptionCard = ({
   season,
   year,
@@ -20,9 +19,21 @@ const SubscriptionCard = ({
   description,
   start_date,
   end_date,
-  // handleSeasonEdits,
-  handleDeleteSubscription,
+  subscription_id,
 }: aProps) => {
+  // SUBSCRIPTION DELETE
+  // make a DELETE request to handle delete
+  const handleDeleteSubscription = () => {
+    axios
+      .delete(`/api/subscriptions/delete`, {
+        params: { subscription_id: subscription_id },
+      })
+      .then((data: any) => {
+        console.log('Subscription DELETE Success!', data);
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div className='card'>
       <div className='form-event'>

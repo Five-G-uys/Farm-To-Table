@@ -36,6 +36,7 @@ const eventRouter = require('./routes/EventRouter');
 // const farmRouter = require('./routes/FarmRouter')
 import UserInterface from '../types/UserInterface';
 import Profile from 'src/client/components/ProfilePage';
+import { send } from 'node:process';
 //import { postEvent } from "./routes/EventRoutes";
 
 // // Needs to stay until used elsewhere (initializing models)
@@ -465,20 +466,28 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
 // });
 
 //SUBSCRIPTION Admin DELETE req:
-app.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
-  console.log('Subscription DELETE req:', req.params.id); //returns { id: '2' }
-  Subscriptions.destroy({
+app.delete('/api/subscriptions/delete', (req: Request, res: Response) => {
+  console.log('Subscription DELETE req:', req.query); //returns { id: '2' }
+  SubscriptionEntries.destroy({
     where: {
-      id: req.params.id,
+      subscription_id: req.query.subscription_id,
     },
     return: true,
   })
     .then((data: any) => {
-      console.log('LINE 355', data); //returns 0
-      res.json(data).status(204);
+      Subscriptions.destroy({ where: { id: req.query.subscription_id } })
+        .then((data: any) => {
+          console.log('Server-side Delete Req SUCCESS', data);
+          res.sendStatus(200);
+        })
+        .catch((err: unknown) => {
+          console.log('Subscription DELETE', err);
+          res.sendStatus(404);
+        });
     })
     .catch((err: unknown) => {
-      console.error('SUBSCRIPTION DELETE REQUEST:', err);
+      console.error('Server-side Delete Req FAIL', err);
+      res.sendStatus(404);
     });
 });
 

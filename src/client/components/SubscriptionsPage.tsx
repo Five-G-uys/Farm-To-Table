@@ -102,17 +102,6 @@ const SubscriptionsPage = () => {
   //   }
   // };
 
-  // SUBSCRIPTION DELETE
-  // make a DELETE request to handle delete
-  const handleDeleteSubscription = () => {
-    axios
-      .delete(`/api/subscriptions/${subscription.id}`)
-      .then(() => {
-        console.log('Subscription DELETE Success!');
-      })
-      .catch((err) => console.error(err));
-  };
-
   return (
     <div>
       <div>
@@ -127,8 +116,6 @@ const SubscriptionsPage = () => {
             start_date: string;
             end_date: string;
             farm_id: 1;
-            // handleSeasonEdits: () => void;
-            handleDeleteSubscription: () => void;
           }) => {
             return (
               <SubscriptionCard
@@ -139,9 +126,8 @@ const SubscriptionsPage = () => {
                 description={sub.description}
                 start_date={sub.start_date}
                 end_date={sub.end_date}
-                key={sub.id}
-                // handleSeasonEdits={handleSeasonEdits}
-                handleDeleteSubscription={handleDeleteSubscription}
+                // key={sub.id}
+                subscription_id={sub.id}
               />
             );
           }
