@@ -12,6 +12,7 @@
 
 import React, { useContext, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
+import RSVPS from "./RSVPS";
 import { UserContext } from "./UserContext";
 
 const Profile = (): React.ReactElement => {
@@ -37,6 +38,7 @@ const Profile = (): React.ReactElement => {
       <h3>Name: {user.name}</h3>
       <h3>Email: {user.email}</h3>
       <h3>Address: {user.address}</h3>
+      <RSVPS />
     </div>
   );
 };
