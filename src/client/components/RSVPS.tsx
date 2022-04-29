@@ -118,7 +118,7 @@ const RSVPS = () => {
                 thumbnail={thumbnail}
                 description={description}
                 eventDate={eventDate}
-                key={id | 7 | 12 | 5 | 19 | 17 | 20 | 90 | 17}
+                key={id | event.eventId}
                 eventId={id}
                 userRole={role_id}
                 location={location}
