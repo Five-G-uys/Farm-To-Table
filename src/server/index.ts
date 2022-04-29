@@ -30,12 +30,12 @@ import {
   DietaryRestrictions,
   Events,
 } from './db/models';
-
 const authRouter = require('./routes/AuthRouter');
 const eventRouter = require('./routes/EventRouter');
 // const subscriptionRouter = require('./routes/SubscriptionsRouter')
 // const farmRouter = require('./routes/FarmRouter')
 import UserInterface from '../types/UserInterface';
+import Profile from 'src/client/components/ProfilePage';
 //import { postEvent } from "./routes/EventRoutes";
 
 // // Needs to stay until used elsewhere (initializing models)
@@ -166,7 +166,101 @@ app.use('/events', eventRouter);
 // app.use('/subscriptions', subscriptionRouter);
 // app.use('/', farmRouter)
 
-////////////////////////SUBSCRIPTION REQUESTS////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
+app.post('/api/product', (req: Request, res: Response) => {
+  const {
+    img_url,
+    name,
+    description,
+    plant_date,
+    harvest_date,
+    subscription_id,
+  } = req.body.product;
+
+  console.log('162 Request object postEvent', req.body);
+  Products.create({
+    name,
+    description,
+    img_url,
+    plant_date,
+    harvest_date,
+    subscription_id,
+  })
+    .then((data: any) => {
+      console.log('LINE 187 || Product Post Request', data);
+      res.status(201);
+    })
+    .catch((err: string) => {
+      console.error('Product Post Request Failed', err);
+      res.sendStatus(500);
+    });
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////// GET ALL PRODUCT ROUTE
+app.get('/get_all_products', (req: Request, res: Response) => {
+  // findAll products in the current season for users. find ALL products (organized by season) for admin
+  // NEED TO GIVE ALL SEASONS A CURRENT SEASON BOOLEAN. WILL MAKE REQUEST EASIER??
+  // CHECK SEASON START DATE PROPERTY
+
+  // IMPLEMENTING SIMPLE GETALL REQUEST FOR MVP
+  Products.findAll({ where: {} })
+    .then((data: any) => {
+      console.log('LINE 200 || INDEX GET ALL PRODUCTS', data);
+      res.json(data);
+    })
+    .catch((err: any) => {
+      console.error('LINE 203 || INDEX GET ALL PRODUCTS ERROR', err);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////// ORDERS GET ROUTE
+app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
+  // console.log('LINE 238 || SERVER INDEX', req.params); // user id
+  // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
+  // QUERY USER TABLE THEN JOIN
+  SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
+    .then((data: Array<object>) => {
+      const dataObj: Array<object> = [];
+      console.log(
+        'LINE 253',
+        data.forEach((subscriptionEntry: any) => {
+          // console.log('LINE 255', subscriptionEntry.dataValues);
+          if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
+            dataObj.push(subscriptionEntry.dataValues.id);
+          }
+        })
+      );
+      console.log(
+        'LINE 261',
+        dataObj.map((subscriptionEntryId: any) => {
+          return { subscription_entry_id: subscriptionEntryId };
+        })
+      );
+      // Orders.findAll({ where: { subscription_entry_id: req.params.id } })
+      Orders.findAll({
+        where: {
+          [Op.or]: dataObj.map((subscriptionEntryId: any) => ({
+            subscription_entry_id: subscriptionEntryId,
+          })),
+        },
+      })
+        .then((data: any) => {
+          // console.log('LINE 241 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
+          res.json(data);
+        })
+        .catch((err: any) => {
+          console.error('LINE 244 || SERVER INDEX', err);
+          res.send(err);
+        });
+    })
+    .catch((err: any) => {
+      console.error('LINE 254', err);
+    });
+
+  // console.log('LINE 263 ||', dataObj);
+});
+
+////////////////////////////////////////////////////////////////////////////// SUBSCRIPTION REQUESTS ////////////
 app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
   Users.update(req.body, { where: { id: req.params.id }, returning: true })
     .then((response: any) => {
@@ -238,50 +332,51 @@ app.post(
   }
 );
 
-app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
-  // console.log('LINE 238 || SERVER INDEX', req.params); // user id
-  // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
-  // QUERY USER TABLE THEN JOIN
-  SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
-    .then((data: Array<object>) => {
-      const dataObj: Array<object> = [];
-      console.log(
-        'LINE 253',
-        data.forEach((subscriptionEntry: any) => {
-          console.log('LINE 255', subscriptionEntry.dataValues);
-          if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
-            dataObj.push(subscriptionEntry.dataValues.id);
-          }
-        })
-      );
-      console.log(
-        'LINE 261',
-        dataObj.map((subscriptionEntryId: any) => {
-          return { subscription_entry_id: subscriptionEntryId };
-        })
-      );
-      Orders.findAll({
-        where: {
-          [Op.or]: dataObj.map((subscriptionEntryId: any) => ({
-            subscription_entry_id: subscriptionEntryId,
-          })),
-        },
-      })
-        .then((data: any) => {
-          // console.log('LINE 241 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
-          res.json(data);
-        })
-        .catch((err: any) => {
-          console.error('LINE 244 || SERVER INDEX', err);
-          res.send(err);
-        });
-    })
-    .catch((err: any) => {
-      console.error('LINE 254', err);
-    });
+// app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
+//   // console.log('LINE 238 || SERVER INDEX', req.params); // user id
+//   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
+//   // QUERY USER TABLE THEN JOIN
+//   SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
+//     .then((data: Array<object>) => {
+//       const dataObj: Array<object> = [];
+//       console.log(
+//         'LINE 253',
+//         data.forEach((subscriptionEntry: any) => {
+//           console.log('LINE 255', subscriptionEntry.dataValues);
+//           if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
+//             dataObj.push(subscriptionEntry.dataValues.id);
+//           }
+//         })
+//       );
+//       console.log(
+//         'LINE 261',
+//         dataObj.map((subscriptionEntryId: any) => {
+//           return { subscription_entry_id: subscriptionEntryId };
+//         })
+//       );
+//       Orders.findAll({
+//         where: {
+//           [Op.or]: dataObj.map((subscriptionEntryId: any) => ({
+//             subscription_entry_id: subscriptionEntryId,
+//           })),
+//         },
+//       })
+//         .then((data: any) => {
+//           // console.log('LINE 241 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
+//           res.json(data);
+//         })
+//         .catch((err: any) => {
+//           console.error('LINE 244 || SERVER INDEX', err);
+//           res.send(err);
+//         });
+//     })
+//     .catch((err: any) => {
+//       console.error('LINE 254', err);
+//     });
 
-  // console.log('LINE 263 ||', dataObj);
-});
+//   // console.log('LINE 263 ||', dataObj);
+// });
+
 app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
   Subscriptions.findAll()
     .then((data: any) => {
@@ -292,7 +387,8 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
     });
 });
 
-//Subscription ADMIN Create Route//
+//////////////////////////////////////////////////////////////Subscription ADMIN Creation/Edit/Delete Routes//
+
 app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
   // console.log('LINE 272 ****', req.body.event);
   const {
@@ -344,7 +440,7 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
 
 //SUBSCRIPTION Admin DELETE req:
 app.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
-  console.log('Subscription DELETE req:', req.params); //returns { id: '2' }
+  console.log('Subscription DELETE req:', req.params.id); //returns { id: '2' }
   Subscriptions.destroy({
     where: {
       id: req.params.id,
