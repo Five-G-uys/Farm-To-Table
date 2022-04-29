@@ -20,17 +20,45 @@ const RSVPS = () => {
       })
       .catch((err) => console.warn("Sorry it failed", err));
   }, []);
+
   const { role_id, userId } = user;
   const [rsvpEvents, setRsvpEvents] = useState({
     eventsToAttend: [],
   });
 
+  console.log("LINE 28", role_id);
+  
+
   const getAllRSVPSEvents = () => {
-    if (role_id !== undefined && role_id < 4) {
+    // if (role_id === 4) {
+
+    axios
+      .get("/events/api/rsvps")
+      .then((data) => {
+        console.log("LINE 55 FrontEND request", data.data);
+        const newArr = data.data;
+        // .map((eventObj: any) => {
+        //   return eventObj.value;
+        // })
+        // .map((eventArr: any) => {
+        //   return eventArr[0];
+        // });
+        console.log("What's new Arr here", newArr);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setRsvpEvents((state: any) => {
+          return { ...state, eventsToAttend: newArr };
+        });
+      })
+      .catch((err) => {
+        console.log("LINE 15 FAILED", err);
+      });
+    // }
+
+    if (role_id < 4) {
       axios
         .get(`/events/api/user/rsvps/${userId}`)
         .then((data) => {
-          console.log("LINE 28 FrontEND request", data.data);
+          console.log("LINE 33 FrontEND request", data.data);
           const newArr = data.data
             .map((eventObj: any) => {
               return eventObj.value;
@@ -47,28 +75,8 @@ const RSVPS = () => {
         .catch((err) => {
           console.log("LINE 48 FAILED", err);
         });
-    }
-    if (role_id > 3) {
-      axios
-        .get(`/events/api/rsvps`)
-        .then((data) => {
-          console.log("LINE 28 FrontEND request", data.data);
-          const newArr = data.data;
-          // .map((eventObj: any) => {
-          //   return eventObj.value;
-          // })
-          // .map((eventArr: any) => {
-          //   return eventArr[0];
-          // });
-          console.log("What's new Arr here", newArr);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          setRsvpEvents((state: any) => {
-            return { ...state, eventsToAttend: newArr };
-          });
-        })
-        .catch((err) => {
-          console.log("LINE 15 FAILED", err);
-        });
+    } else {
+      console.log("YOUR ROLE IS NOT AN ADMIN");
     }
   };
   console.log("LINE 25", rsvpEvents.eventsToAttend);
@@ -79,7 +87,7 @@ const RSVPS = () => {
 
   return (
     <div>
-      {role_id > 3 ? (
+      {role_id >= 4 ? (
         <h1>ALL RSVPS {role_id}</h1>
       ) : (
         <h1>My Events to Attend</h1> &&
@@ -105,6 +113,7 @@ const RSVPS = () => {
                 key={event.id | 7}
                 eventId={event.id}
                 userRole={role_id}
+                getAllRSVPSEvents={getAllRSVPSEvents}
               />
             );
           }

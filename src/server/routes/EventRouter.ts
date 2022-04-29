@@ -19,7 +19,7 @@ eventRouter.post("/api/event", (req, res) => {
   const { eventName, description, thumbnail, eventDate, eventType } =
     req.body.event;
 
-   console.log('162 Request object postEvent', req.body);
+  console.log("162 Request object postEvent", req.body);
   Events.create({
     eventName,
     description,
@@ -114,9 +114,11 @@ eventRouter.get("/api/rsvps", (req: Request, res: Response) => {
   RSVP.findAll()
     .then((data: any) => {
       console.log("LINE 228 ALL THE RESPONSES FROM RSVP", data);
+      res.status(200).send(data);
     })
     .catch((err: any) => {
       console.log("FAILED REQUEST", err);
+      res.sendStatus(500);
     });
 });
 

@@ -13,7 +13,7 @@ const EventCard = () => {
       .get("/events/api/event")
 
       .then(({ data }) => {
-        //console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
+        console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
         setEvents((state) => {
           return {
             ...state,

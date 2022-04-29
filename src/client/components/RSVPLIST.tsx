@@ -8,6 +8,7 @@ interface AppProps {
   eventDate: string;
   eventId: number;
   userRole: number;
+  getAllRSVPSEvents(): void;
   //getAllRSVPSEvents: () => void;
 }
 
@@ -19,6 +20,7 @@ const RSVPLIST = ({
   eventDate,
   eventId,
   userRole,
+  getAllRSVPSEvents,
 }: //getAllRSVPSEvents,
 AppProps) => {
   //const [events, setEvents] = useState({});
@@ -73,6 +75,9 @@ AppProps) => {
   //     });
   // };
   console.log(userRole);
+  useEffect(() => {
+    getAllRSVPSEvents();
+  }, []);
   return (
     <div>
       {userRole > 3 ? (
@@ -80,6 +85,7 @@ AppProps) => {
       ) : (
         <section>
           <h1 className="event-name">{eventName}</h1>
+          <h1 className="event-name">{eventType}</h1>
           <h4 className="event-date">{eventDate}</h4>
         </section>
       )}
