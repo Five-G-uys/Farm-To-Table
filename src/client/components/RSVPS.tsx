@@ -24,10 +24,10 @@ const RSVPS = () => {
   const { role_id, userId } = user;
   const [rsvpEvents, setRsvpEvents] = useState({
     eventsToAttend: [],
+    rsvpsTotal: 0,
   });
 
   console.log("LINE 28", role_id);
-  
 
   const getAllRSVPSEvents = () => {
     // if (role_id === 4) {
@@ -37,16 +37,9 @@ const RSVPS = () => {
       .then((data) => {
         console.log("LINE 55 FrontEND request", data.data);
         const newArr = data.data;
-        // .map((eventObj: any) => {
-        //   return eventObj.value;
-        // })
-        // .map((eventArr: any) => {
-        //   return eventArr[0];
-        // });
-        console.log("What's new Arr here", newArr);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
         setRsvpEvents((state: any) => {
-          return { ...state, eventsToAttend: newArr };
+          return { ...state, rsvpsTotal: newArr.length };
         });
       })
       .catch((err) => {
@@ -66,8 +59,6 @@ const RSVPS = () => {
             .map((eventArr: any) => {
               return eventArr[0];
             });
-          console.log(newArr);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           setRsvpEvents((state: any) => {
             return { ...state, eventsToAttend: newArr };
           });
@@ -79,20 +70,28 @@ const RSVPS = () => {
       console.log("YOUR ROLE IS NOT AN ADMIN");
     }
   };
-  console.log("LINE 25", rsvpEvents.eventsToAttend);
+  console.log(
+    "LINE 75 ",
+    rsvpEvents.eventsToAttend + "and" + rsvpEvents.rsvpsTotal + "number"
+  );
   useEffect(() => {
     getAllRSVPSEvents();
   }, []);
   console.log("LINE 45", rsvpEvents.eventsToAttend);
 
+  const { rsvpsTotal, eventsToAttend } = rsvpEvents;
   return (
     <div>
       {role_id >= 4 ? (
-        <h1>ALL RSVPS {role_id}</h1>
+        <h1>
+          Total RSVPS
+          <br></br>
+          <h3>{rsvpsTotal}</h3>
+        </h1>
       ) : (
         <h1>My Events to Attend</h1> &&
-        rsvpEvents.eventsToAttend.length > 0 &&
-        rsvpEvents.eventsToAttend.map(
+        eventsToAttend.length > 0 &&
+        eventsToAttend.map(
           (event: {
             eventName: string;
             description: string;
