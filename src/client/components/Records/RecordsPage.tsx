@@ -1,21 +1,21 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {Routes, Route, Link, Navigate} from 'react-router-dom' 
 import ProductsRecords from './Products/ProductsRecords';
-import DietaryRestrictionsRecords from "./DietaryRestrictions/DietaryRestrictionsRecords";
-import DeliveryZones from "./DileveryZones/DeliveryZonesRecords";
-import Events from "./Events/EventsRecords";
-import Farms from "./Farms/FarmsRecords";
-import Orders from "./Orders/OrdersRecords";
-import Products from "./Products/ProductsRecords";
-import Roles from "./Roles/RolesRecords";
-import SubscriptionEntries from "./SubscriptionEntries/SubscriitionEntriesRecords";
-import Subscriptions from "./Subscriptions/SubscriptionsRecords";
-import Users from "./Users/UsersRecords";
-import Vendors from "./Vendors/VendorsRecords";
+// import DietaryRestrictionsRecords from "./DietaryRestrictions/DietaryRestrictionsRecords";
+// import DeliveryZones from "./DileveryZones/DeliveryZonesRecords";
+// import Events from "./Events/EventsRecords";
+// import Farms from "./Farms/FarmsRecords";
+// import Orders from "./Orders/OrdersRecords";
+// import Products from "./Products/ProductsRecords";
+// import Roles from "./Roles/RolesRecords";
+// import SubscriptionEntries from "./SubscriptionEntries/SubscriitionEntriesRecords";
+// import Subscriptions from "./Subscriptions/SubscriptionsRecords";
+// import Users from "./Users/UsersRecords";
+// import Vendors from "./Vendors/VendorsRecords";
 
 const RecordsPage = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   // const [deliveryZones, setDeliveryZones] = useState({ deliveryZonesArray: {} });
   // const [dietaryRestrictions, setDietaryRestrictions] = useState({ dietaryRestrictionsArray: {} });
@@ -33,7 +33,7 @@ const RecordsPage = () => {
   return (
     <div>
       <Routes>
-        <Route path="products" element={<ProductsRecords/>} />
+        <Route path="/products-record" element={<ProductsRecords/>} />
       </Routes>
       <button>get deliveryZones</button>
       <button>get dietaryRestrictions</button>

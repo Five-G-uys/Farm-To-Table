@@ -16,6 +16,7 @@ import Login from './Login';
 import NewNavBar from './NewNavBar';
 import { UserContext } from './UserContext';
 import RecordsPage from './Records/RecordsPage';
+import ProductsRecords from '../components/Records/Products/ProductsRecords'
 
 const App = () => {
   const [user, setUser] = useState('User context value');
@@ -84,6 +85,10 @@ const App = () => {
             <Route
               path='/records/*'
               element={<RecordsPage/>}
+            />
+            <Route 
+              path='/test'
+              element={<ProductsRecords/>}
             />
           </Routes>
         </UserContext.Provider>
