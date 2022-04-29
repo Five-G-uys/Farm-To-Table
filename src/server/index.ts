@@ -27,6 +27,8 @@ import {
   Users,
   Vendors,
   SubscriptionEntries,
+  DietaryRestrictions,
+  Events,
 } from './db/models';
 const authRouter = require('./routes/AuthRouter');
 const eventRouter = require('./routes/EventRouter');
@@ -436,7 +438,128 @@ app.get('/api/farms', (req: Request, res: Response) => {
     });
 });
 
-//ADMIN ROUTES
+//ADMIN RECORDS ROUTES
+
+app.get('/records/deliveryZones', (req: Request, res: Response) => {
+  DeliveryZones.findAll()
+    .then((data: any) => {
+      console.log('delivery data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/dietaryRestrictions', (req: Request, res: Response) => {
+  DietaryRestrictions.findAll()
+    .then((data: any) => {
+      console.log('DietaryRestrictions data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/events', (req: Request, res: Response) => {
+  Events.findAll()
+    .then((data: any) => {
+      console.log('Events data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/farms', (req: Request, res: Response) => {
+  Farms.findAll()
+    .then((data: any) => {
+      console.log('Farms data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/orders', (req: Request, res: Response) => {
+  Orders.findAll()
+    .then((data: any) => {
+      console.log('Orders data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/products', (req: Request, res: Response) => {
+  Products.findAll()
+    .then((data: any) => {
+      console.log('Products data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/roles', (req: Request, res: Response) => {
+  Roles.findAll()
+    .then((data: any) => {
+      console.log('Roles data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/rsvps', (req: Request, res: Response) => {
+  RSVP.findAll()
+    .then((data: any) => {
+      console.log('RSVP data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/subscriptionEntries', (req: Request, res: Response) => {
+  SubscriptionEntries.findAll()
+    .then((data: any) => {
+      console.log('SubscriptionEntries data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/subscriptions', (req: Request, res: Response) => {
+  Subscriptions.findAll()
+    .then((data: any) => {
+      console.log('Subscriptions data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/users', (req: Request, res: Response) => {
+  Users.findAll()
+    .then((data: any) => {
+      console.log('Users data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
+app.get('/records/vendors', (req: Request, res: Response) => {
+  Vendors.findAll()
+    .then((data: any) => {
+      console.log('Vendors data', data);
+      res.status(200).send(data);
+    })
+    .catch((err: unknown) => {
+      console.error('OH NOOOOO', err);
+    });
+});
 
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get('*', (req: Request, res: Response) => {

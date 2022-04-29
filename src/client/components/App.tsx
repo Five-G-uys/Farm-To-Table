@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+// React Imports
 import React, { useState, useEffect, useMemo } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { UserContext } from './UserContext';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 
+// MUI Imports
 import HomePage from './HomePage';
 import EventCard from './EventCard';
 import SubscriptionsPage from './SubscriptionsPage';
@@ -17,6 +19,7 @@ import AboutUsPage from './AboutUsPage';
 import Login from './Login';
 import NewNavBar from './NewNavBar';
 import ProductsPage from './ProductsPage';
+import RecordsPage from './Records/RecordsPage';
 
 const App = () => {
   const [user, setUser] = useState('User context value');
@@ -85,6 +88,7 @@ const App = () => {
               element={<SubscriptionsAdmin />}
             />
             <Route path='/edit-products' element={<ProductsPage />} />
+            <Route path='/records' element={<RecordsPage />} />
           </Routes>
         </UserContext.Provider>
       </div>

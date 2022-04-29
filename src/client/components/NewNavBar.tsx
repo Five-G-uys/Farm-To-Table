@@ -27,6 +27,7 @@ const settings = [
   { name: 'Add Season', path: '/subscriptions-admin' },
   { name: 'Add Event', path: '/events-page' },
   { name: 'Add Product ', path: '/edit-products' },
+  { name: 'Records', path: '/records' },
 ];
 
 const NewNavBar = ({ user }: any) => {
