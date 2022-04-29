@@ -9,9 +9,6 @@ const SubscriptionsPage = () => {
   const navigate = useNavigate();
   const [id, setId] = useState(0);
   const [season, setSeason] = useState('');
-
-  // change checkboxes to radio buttons
-
   const [subscription, setSubscription] = useState({
     id: 0,
     season: '',
@@ -46,6 +43,20 @@ const SubscriptionsPage = () => {
       });
   }, []);
 
+  // const getAllSubscriptions = () => {
+  //   axios
+  //     .get(`/api/subscriptions/`)
+  //     .then((response) => {
+  //       setSubscription((state) => {
+  //         return { ...state, subArray: response.data };
+  //       });
+  //       // console.log('LINE 46 SubscriptionPage.tsx', response);
+  //     })
+  //     .catch((err) => {
+  //       console.error('Line 49 subPage.tsx', err);
+  //     });
+  // };
+
   //SUBSCRIPTION CREATE
   const handleSubscribed = () => {
     if (season) {
@@ -55,8 +66,6 @@ const SubscriptionsPage = () => {
           season: season, // change season to number season id on server side
         })
         .then(() => {
-          // console.log('LINE 56 || SUBSCRIPTIONSPAGE.TSX ||', response);
-          //NAVIGATE REDIRECTS TO CONFIRMATION PAGE SO NO NEED FOR LINK TAG IN JSX
           navigate('/subscriptions-page/confirmation-page');
         })
         .catch((err) => {
@@ -119,7 +128,7 @@ const SubscriptionsPage = () => {
             end_date: string;
             farm_id: 1;
             // handleSeasonEdits: () => void;
-            // handleDeleteSubscription: () => void;
+            handleDeleteSubscription: () => void;
           }) => {
             return (
               <SubscriptionCard
@@ -167,10 +176,9 @@ const SubscriptionsPage = () => {
       <label htmlFor='season'> Winter 2022 </label>
       <br />
       <button className='form--submit' onClick={handleSubscribed}>
-        {/* <Link to={`/confirmation-page`}>Subscribe!</Link> */}Subscribe!
+        Subscribe!
       </button>
     </div>
-    // </div>
   );
 };
 

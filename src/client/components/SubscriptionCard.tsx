@@ -1,5 +1,5 @@
 import React from 'react';
-import { start } from 'repl';
+// import { start } from 'repl';
 
 interface aProps {
   season: string;
@@ -30,7 +30,7 @@ const SubscriptionCard = ({
           {season} {year}
         </h1>
         <h2>
-          Flat Price: $ {flat_price}.00 / Weekly Price: {weekly_price}
+          Flat Price: $ {flat_price}.00 / Weekly Price: $ {weekly_price}
         </h2>
         <h3>{description}</h3>
         <h4>

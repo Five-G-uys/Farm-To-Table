@@ -22,7 +22,7 @@ const SubscriptionsAdmin = () => {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    const { name, value, type } = event.target;
+    const { name, value } = event.target;
     setSubscription((state) => {
       return {
         ...state,
@@ -45,12 +45,10 @@ const SubscriptionsAdmin = () => {
           thumbnail: subscription.thumbnail,
         },
       })
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((data) => console.log('saved!', data))
       .catch((err) => console.error(err));
   };
 
-  // console.log(process.env.CLOUD_PRESET2);
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
@@ -61,14 +59,13 @@ const SubscriptionsAdmin = () => {
       },
       (error: unknown, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
-          // console.log("LINE 56", result.info.url);
+          // console.log("LINE 62", result.info.url);
           setSubscription((state) => {
             return {
               ...state,
               thumbnail: result.info.url,
             };
           });
-          // console.log("LINE 63", result.info.url);
         }
       }
     );
@@ -124,7 +121,6 @@ const SubscriptionsAdmin = () => {
             />
             <label htmlFor='Season'>Autumn</label>
             <br />
-
             <input
               type='radio'
               id='Season'

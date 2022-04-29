@@ -344,7 +344,7 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
 
 //SUBSCRIPTION Admin DELETE req:
 app.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
-  // console.log('Subscription DELETE req:', req.params); //returns { id: '2' }
+  console.log('Subscription DELETE req:', req.params); //returns { id: '2' }
   Subscriptions.destroy({
     where: {
       id: req.params.id,
@@ -352,7 +352,7 @@ app.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
     return: true,
   })
     .then((data: any) => {
-      // console.log('LINE 355', data); //returns 0
+      console.log('LINE 355', data); //returns 0
       res.json(data).status(204);
     })
     .catch((err: unknown) => {
@@ -364,7 +364,7 @@ app.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
 app.get('/api/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      console.log('this is the data from the farm api call', data);
+      // console.log('this is the data from the farm api call', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {

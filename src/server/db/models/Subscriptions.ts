@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-// import { SubscriptionEntries } from '.';
+import { SubscriptionEntries } from '.';
 import { db } from '../database';
 import Farms from './Farms';
 // import Users from './Users';
@@ -47,15 +47,15 @@ const Subscriptions = db.define('subscriptions', {
     defaultValue: 1,
   },
 });
-// Subscriptions.hasMany(SubscriptionEntries, {
-//   as: 'subscription_entries',
-//   foreignKey: 'subscription_id',
-//   onDelete: 'CASCADE',
-//   onUpdate: 'CASCADE',
-// });
+Subscriptions.hasMany(SubscriptionEntries, {
+  as: 'subscription_entries',
+  foreignKey: 'subscription_id',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 
-// SubscriptionEntries.belongsTo(Subscriptions, {
-//   foreignKey: 'subscription_id',
-// });
+SubscriptionEntries.belongsTo(Subscriptions, {
+  foreignKey: 'subscription_id',
+});
 
 export default Subscriptions;

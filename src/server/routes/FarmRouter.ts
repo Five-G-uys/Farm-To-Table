@@ -10,7 +10,7 @@ const farmRouter: Router = Router();
 farmRouter.get('/farms', (req, res) => {
   Farms.findAll()
     .then((data: any) => {
-      console.log('this is the data from the farm api call', data);
+      // console.log('this is the data from the farm api call', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
