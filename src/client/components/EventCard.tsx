@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Event from "./Event";
 import axios from "axios";
+//import RSVPS from "./RSVPS";
 
 const EventCard = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [events, setEvents] = useState({ eventArray: {} });
+  const [events, setEvents] = useState({ eventArray: [] });
 
   const getAllEvents = () => {
     axios
-      .get("/events")
-      .then((data) => {
-        // console.log("SUCESSFULLY FECTHED DATA", data.data);
+      .get("/events/api/event")
+
+      .then(({ data }) => {
+        console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
         setEvents((state) => {
           return {
             ...state,
-            eventArray: [...data.data],
+            eventArray: data,
           };
         });
       })
@@ -22,19 +23,22 @@ const EventCard = () => {
         console.log("sorry, request failed", error);
       });
   };
+
   useEffect(() => {
     getAllEvents();
   }, []);
 
   const { eventArray } = events;
-  // console.log("line 28", eventArray);
+  //console.log("line 28", eventArray);
 
   return (
     <div className="events">
       <nav className="nav">
         <h1 className="nav-event">Spring Season Events</h1>
       </nav>
-      <h2 className="title-card">Events for this month</h2>
+      <h1 className="title-card">Events for this month</h1>
+      <br></br>
+      <br></br>
       <div className="card">
         {Array.isArray(eventArray) &&
           eventArray.map(
@@ -43,17 +47,34 @@ const EventCard = () => {
               description: string;
               thumbnail: React.ImgHTMLAttributes<string>;
               eventType: string;
-              id: number;
+              eventId: number;
               eventDate: string;
+              id: number;
+              location: string;
+              season: string;
             }) => {
+              const {
+                eventName,
+                eventType,
+                thumbnail,
+                description,
+                eventDate,
+                id,
+                season,
+                location,
+              } = event;
               return (
                 <Event
-                  eventName={event.eventName}
-                  eventType={event.eventType}
-                  thumbnail={event.thumbnail}
-                  description={event.description}
-                  eventDate={event.eventDate}
-                  key={event.id}
+                  eventName={eventName}
+                  eventType={eventType}
+                  thumbnail={thumbnail}
+                  description={description}
+                  eventDate={eventDate}
+                  getAllEvents={getAllEvents}
+                  key={eventName}
+                  eventId={id}
+                  location={location}
+                  season={season}
                 />
               );
             }

@@ -28,7 +28,7 @@ const App = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>('auth/api/userProfile')
+      .get<AxiosResponse>('/auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
@@ -84,7 +84,7 @@ const App = () => {
               }
             />
             <Route
-              path='subscriptions-admin'
+              path='/subscriptions-admin'
               element={<SubscriptionsAdmin />}
             />
             <Route path='/edit-products' element={<ProductsPage />} />

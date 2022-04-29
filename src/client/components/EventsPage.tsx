@@ -1,11 +1,12 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from './UserContext';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-//import cloudinary from "cloudinary";
-//window.cloudinary = cloudinary;
+
 const EventsPage = () => {
+  const { user, setUser } = useContext(UserContext);
   const [event, setEvent] = useState({
     eventName: '',
     description: '',
@@ -13,6 +14,8 @@ const EventsPage = () => {
     category: '',
     eventDate: '',
     eventType: '',
+    season: '',
+    location: '',
   });
 
   const handleInputEvent = (
@@ -32,13 +35,15 @@ const EventsPage = () => {
 
   const postEvent = () => {
     axios
-      .post('/api/event', {
+      .post('/events/api/event', {
         event: {
           eventName: event.eventName,
           description: event.description,
           thumbnail: event.thumbnail,
           eventDate: event.eventDate,
           eventType: event.eventType,
+          season: event.season,
+          location: event.location,
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -54,7 +59,7 @@ const EventsPage = () => {
         cloudName: CLOUD_NAME,
         uploadPreset: CLOUD_PRESET2,
       },
-      (error: any, result: { event: string; info: { url: string } }) => {
+      (error: unknown, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
           // console.log("LINE 56", result.info.url);
           setEvent((state) => {
@@ -69,25 +74,43 @@ const EventsPage = () => {
     );
     widget.open();
   };
+  console.log('LINE 77777774', user);
 
-  //{ event: string; info: { url: string } })
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => {}, [event.thumbnail]);
+  // useEffect(() => {}, [event.thumbnail]);
   // console.log(event);
-  const { eventName, description, thumbnail, eventDate, eventType } = event;
+  const {
+    eventName,
+    description,
+    thumbnail,
+    eventDate,
+    eventType,
+    season,
+    location,
+  } = event;
   return (
     <div className='event'>
+      {/* <h1>{`${user}`}</h1> */}
       <h3 className='create-event'>Create event</h3>
       <br></br>
       <div>
         <button onClick={showWidget} className='input-btn'>
-          Add image to Event
+          Add event image
         </button>
         <br></br>
         {thumbnail && <img src={thumbnail} />}
         <br></br>
         <br></br>
         <form onSubmit={postEvent} className='form-event'>
+          Season
+          <input
+            type='text'
+            placeholder='Event season'
+            value={season}
+            name='season'
+            onChange={handleInputEvent}
+            className='input'
+          />
+          Name of Event
           <input
             type='text'
             placeholder='Name of event'
@@ -98,6 +121,7 @@ const EventsPage = () => {
           />
           <br></br>
           <br></br>
+          Description
           <textarea
             className='text-form'
             placeholder='Description'
@@ -107,15 +131,24 @@ const EventsPage = () => {
           ></textarea>
           <br></br>
           <br></br>
+          Date of Event
           <input
             type='text'
-            placeholder='DD/MM/YEAR'
+            placeholder=' 05 / 30 / 2022'
             value={eventDate}
             name='eventDate'
             onChange={handleInputEvent}
             className='form-input'
           />
-
+          Location
+          <input
+            type='text'
+            placeholder='Location'
+            value={location}
+            name='location'
+            onChange={handleInputEvent}
+            className='form-input'
+          />
           <fieldset>
             <legend className='radio-title'>Type of event</legend>
             <input

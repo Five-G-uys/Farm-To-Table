@@ -16,7 +16,8 @@ import Paper from '@mui/material/Paper';
 
 const pages = [
   { name: 'Home', path: '/' },
-  { name: 'Sign Up!', path: 'subscriptions-page' },
+  { name: 'Sign Up!', path: '/subscriptions-page' },
+  { name: "Farm events", path: "/event-card" },
   { name: 'About Us', path: '/about-us-page' },
 ];
 const settings = [
