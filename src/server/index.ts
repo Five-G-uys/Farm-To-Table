@@ -52,6 +52,12 @@ app.use(express.json());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
 
+// Stripe Setup
+const stripe = require('stripe')(process.env.STRIPE_KEY)
+
+const storeItems = new Map([
+  [1, { priceInCents: 10000, name: 'Season Subscription'}],
+])
 
 // // Middleware
 // const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
