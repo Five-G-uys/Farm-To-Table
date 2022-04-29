@@ -13,21 +13,22 @@
 import React, { useContext, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import RSVPS from "./RSVPS";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./App";
 
 const Profile = (): React.ReactElement => {
-  const { user, setUser } = useContext(UserContext);
+  const user: any = useContext(UserContext);
+  console.log('THIS IS WORKING', user);
 
-  useEffect((): void => {
-    // TAKE THIS AXIOS CALL TO GET USER
-    axios
-      .get<AxiosResponse>("auth/api/userProfile")
-      .then(({ data }: AxiosResponse) => {
-        // console.log(data);
-        setUser(data);
-      })
-      .catch((err) => console.warn(err));
-  }, []);
+  // useEffect((): void => {
+  //   // TAKE THIS AXIOS CALL TO GET USER
+  //   axios
+  //     .get<AxiosResponse>("auth/api/userProfile")
+  //     .then(({ data }: AxiosResponse) => {
+  //       // console.log(data);
+  //       setUser(data);
+  //     })
+  //     .catch((err) => console.warn(err));
+  // }, []);
 
   return (
     <div className="page-wrap">

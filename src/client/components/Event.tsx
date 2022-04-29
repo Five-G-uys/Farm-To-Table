@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UrlWithStringQuery } from "node:url";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
+import { UserContext } from "./App";
 //import RSVPS from "./RSVPS";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface AppProps {
@@ -27,21 +30,24 @@ const Event = ({
   location,
 }: //getAllRSVPSEvents,
 AppProps) => {
-  const [userId, setUserId] = useState(0);
-  const [userRole, setUserRole] = useState(0);
-  useEffect((): void => {
-    // TAKE THIS AXIOS CALL TO GET USER
-    console.log("IS THIS FUNCTION RUNNING?");
-    axios
-      .get<AxiosResponse>("/auth/api/userProfile")
-      .then(({ data }: any) => {
-        console.log("LINE 37 EVENT COMPONENT userId", data);
-        const { id, role_id } = data;
-        setUserId(id);
-        setUserRole(role_id);
-      })
-      .catch((err) => console.warn("Sorry it failed", err));
-  }, []);
+  const user: any = useContext(UserContext);
+  console.log('THIS IS WORKING', user);
+  const userId = user.id;
+  const userRole = user.role_id;
+
+  // useEffect((): void => {
+  //   // TAKE THIS AXIOS CALL TO GET USER
+  //   console.log("IS THIS FUNCTION RUNNING?");
+  //   axios
+  //     .get<AxiosResponse>("/auth/api/userProfile")
+  //     .then(({ data }: any) => {
+  //       console.log("LINE 37 EVENT COMPONENT userId", data);
+  //       const { id, role_id } = data;
+  //       setUserId(id);
+  //       setUserRole(role_id);
+  //     })
+  //     .catch((err) => console.warn("Sorry it failed", err));
+  // }, []);
 
   const handRSVPosts = () => {
     console.log("LINE 63", userId, " and ", eventId);

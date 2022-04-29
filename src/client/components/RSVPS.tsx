@@ -28,7 +28,7 @@ const RSVPS = () => {
     rsvpsTotal: 0,
   });
 
-  console.log("LINE 28", role_id);
+  // console.log("LINE 28", role_id);
 
   const getAllRSVPSEvents = () => {
     // if (role_id < 4) {

@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useContext } from 'react';
-import { UserContext } from './UserContext';
+import React from 'react';
 
 const Login = () => {
-  const { user, setUser } = useContext(UserContext);
 
   return (
     <div className='profile-card'>
