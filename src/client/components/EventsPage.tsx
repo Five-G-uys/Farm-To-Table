@@ -11,6 +11,8 @@ const EventsPage = () => {
     description: "",
     thumbnail: "",
     category: "",
+    eventDate: "",
+    eventType: "",
   });
 
   const handleInputEvent = (
@@ -18,14 +20,14 @@ const EventsPage = () => {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
     setEvent((state) => {
       return {
         ...state,
-        [name]: value,
+        [name]: type === "checkbox" ? checked : value,
       };
     });
-    console.log(event);
+    // console.log(event);
   };
 
   const postEvent = () => {
@@ -35,14 +37,15 @@ const EventsPage = () => {
           eventName: event.eventName,
           description: event.description,
           thumbnail: event.thumbnail,
-          category: event.category,
+          eventDate: event.eventDate,
+          eventType: event.eventType,
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .then((data) => console.log("saved!", data))
+      // .then((data) => console.log("saved!", data))
       .catch((err) => console.error(err));
   };
-  console.log(process.env.CLOUD_PRESET2);
+  // console.log(process.env.CLOUD_PRESET2);
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
@@ -53,14 +56,14 @@ const EventsPage = () => {
       },
       (error: any, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === "success") {
-          console.log("LINE 56", result.info.url);
+          // console.log("LINE 56", result.info.url);
           setEvent((state) => {
             return {
               ...state,
               thumbnail: result.info.url,
             };
           });
-          console.log("LINE 63", result.info.url);
+          // console.log("LINE 63", result.info.url);
         }
       }
     );
@@ -70,15 +73,15 @@ const EventsPage = () => {
   //{ event: string; info: { url: string } })
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [event.thumbnail]);
-  console.log(event);
-  const { eventName, description, thumbnail, category } = event;
+  // console.log(event);
+  const { eventName, description, thumbnail, eventDate, eventType } = event;
   return (
     <div className="event">
       <h3 className="create-event">Create event</h3>
       <br></br>
       <div>
         <button onClick={showWidget} className="input-btn">
-          Upload event image
+          Add image to Event
         </button>
         <br></br>
         {thumbnail && <img src={thumbnail} />}
@@ -87,7 +90,7 @@ const EventsPage = () => {
         <form onSubmit={postEvent} className="form-event">
           <input
             type="text"
-            placeholder="eventName"
+            placeholder="Name of event"
             value={eventName}
             name="eventName"
             onChange={handleInputEvent}
@@ -97,7 +100,7 @@ const EventsPage = () => {
           <br></br>
           <textarea
             className="text-form"
-            placeholder="description"
+            placeholder="Description"
             value={description}
             name="description"
             onChange={handleInputEvent}
@@ -106,12 +109,47 @@ const EventsPage = () => {
           <br></br>
           <input
             type="text"
-            placeholder="category"
-            value={category}
-            name="category"
+            placeholder="DD/MM/YEAR"
+            value={eventDate}
+            name="eventDate"
             onChange={handleInputEvent}
             className="form-input"
           />
+
+          <fieldset>
+            <legend className="radio-title">Type of event</legend>
+            <input
+              type="radio"
+              id="Farmers Market"
+              name="eventType"
+              value="Farmers Market"
+              checked={eventType === "Farmers Market"}
+              onChange={handleInputEvent}
+            />
+            <label htmlFor="Farmers Market">Farmers Market</label>
+            <br />
+            <input
+              type="radio"
+              id="Customer Day"
+              name="eventType"
+              value="Customer Day"
+              checked={eventType === "Customer Day"}
+              onChange={handleInputEvent}
+            />
+            <label htmlFor="customerDay">Customer Day</label>
+            <br />
+
+            <input
+              type="radio"
+              id="Community Volunteering"
+              name="eventType"
+              value="Community Volunteering"
+              checked={eventType === "Community Volunteering"}
+              onChange={handleInputEvent}
+            />
+            <label htmlFor="Farmers-Market">Community volunteering</label>
+            <br />
+          </fieldset>
           <br></br>
           <br></br>
           <button type="submit" className="form--submit">

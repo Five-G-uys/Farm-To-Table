@@ -1,41 +1,136 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import { useNavigate } from 'react-router-dom';
+import SubscriptionCard from './SubscriptionCard';
 
 const SubscriptionsPage = () => {
-  const [checkedOne, setCheckedOne] = useState(false);
+  const navigate = useNavigate();
+  const [id, setId] = useState(0);
+  const [season, setSeason] = useState('');
 
-  const handleChangeOne = () => {
-    console.log('Line 11 SubPage', checkedOne);
-    setCheckedOne(!checkedOne);
-    console.log('Line 13 SubPage', checkedOne);
-  };
+  // change checkboxes to radio buttons
 
-  const user = {
-    id: 2,
-    name: 'Guido Fruchter',
-    address: '230 Del Mar Point',
-    subscribed: false,
-    delivery_zone: 'Rovira',
-  };
+  const [subscription, setSubscription] = useState({
+    season: '',
+    year: 0,
+    flat_price: 0,
+    description: '',
+    subArray: [],
+  });
 
-  const handleSubscribed = () => {
+  useEffect((): void => {
+    // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .put(`/subscribed/${user.name}`, { subscribed: checkedOne })
+      .get<AxiosResponse>('auth/api/userProfile')
+      .then(({ data }: AxiosResponse) => {
+        const { id }: { id: number } = data;
+        setId(id);
+      })
+      .catch((err) => console.warn(err));
+    axios
+      .get(`/api/subscriptions/`)
       .then((response) => {
-        console.log('Line 16 SubscriptionsPage', response);
+        setSubscription((state) => {
+          return { ...state, subArray: response.data };
+        });
+        // console.log('LINE 46 SubscriptionPage.tsx', response);
       })
       .catch((err) => {
-        console.log('Line 19 SubscriptionsPage', err);
+        console.error('Line 49 subPage.tsx', err);
       });
+  }, []);
+
+  // console.log('LINE 45', subscription.subArray);
+
+  const handleSubscribed = () => {
+    if (season) {
+      axios
+        .post(`/api/add_subscription_entry/${id}`, {
+          farm_id: 1,
+          season: season, // change season to number season id on server side
+        })
+        .then((response) => {
+          // console.log('LINE 56 || SUBSCRIPTIONSPAGE.TSX ||', response);
+          //NAVIGATE REDIRECTS TO CONFIRMATION PAGE SO NO NEED FOR LINK TAG IN JSX
+          navigate('/subscriptions-page/confirmation-page');
+        })
+        .catch((err) => {
+          console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
+        });
+    } else {
+      alert('You must select one');
+    }
   };
+
+  const { subArray } = subscription;
 
   return (
     <div>
-      <input type='checkbox' onChange={() => setCheckedOne(!checkedOne)} />
-      <button onClick={handleSubscribed}>Submit</button>
+      <div>
+        {subArray.map(
+          (sub: {
+            id: number;
+            season: string;
+            year: number;
+            flat_price: number;
+            weekly_price: number;
+            description: string;
+            start_date: string;
+            end_date: string;
+            farm_id: 1;
+          }) => {
+            return (
+              <SubscriptionCard
+                season={sub.season}
+                year={sub.year}
+                flat_price={sub.flat_price}
+                weekly_price={sub.weekly_price}
+                description={sub.description}
+                start_date={sub.start_date}
+                end_date={sub.end_date}
+                key={sub.id}
+              />
+            );
+          }
+        )}
+        Choose a seasonal package for 12 weeks of home deliveries. Or select the
+        whole year!
+      </div>
+      <br />
+      <input
+        name='season'
+        value='spring'
+        type='radio'
+        className='form-event'
+        onChange={(e) => setSeason(e.target.value)}
+      />
+      <label htmlFor='season'> Spring 2022 </label>
+      <br />
+      <input
+        name='season'
+        value='fall'
+        type='radio'
+        className='form-event'
+        onChange={(e) => setSeason(e.target.value)}
+      />
+      <label htmlFor='season'> Fall 2022 </label>
+      <br />
+      <input
+        name='season'
+        value='winter'
+        type='radio'
+        className='form-event'
+        onChange={(e) => setSeason(e.target.value)}
+      />
+      <label htmlFor='season'> Winter 2022 </label>
+      <br />
+      <button className='form--submit' onClick={handleSubscribed}>
+        {/* <Link to={`/confirmation-page`}>Subscribe!</Link> */}Subscribe!
+      </button>
     </div>
+    // </div>
   );
 };
 

@@ -1,9 +1,10 @@
-import { DataTypes } from 'sequelize';
 import { db } from '../database';
+import { DataTypes } from 'sequelize';
 import Farms from './Farms';
-import SubscriptionEntries from './SubscriptionEntries';
+import Users from './Users';
+import Subscriptions from './Subscriptions';
 
-const Orders = db.define('orders', {
+const SubscriptionEntries = db.define('subscription_entries', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -17,17 +18,18 @@ const Orders = db.define('orders', {
     allowNull: false,
     references: { model: Farms, key: 'id' },
   },
-  subscription_entry_id: {
+  user_id: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
-    references: { model: SubscriptionEntries, key: 'id' },
+    references: { model: Users, key: 'id' },
   },
-  delivery_date: {
-    type: DataTypes.DATE,
+  subscription_id: {
+    type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,
+    references: { model: Subscriptions, key: 'id' },
   },
 });
 
-export default Orders;
+export default SubscriptionEntries;
