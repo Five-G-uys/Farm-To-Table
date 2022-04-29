@@ -102,15 +102,23 @@ const RSVPS = () => {
             id: number;
             role_id: number;
           }) => {
+            const {
+              eventName,
+              eventDate,
+              eventType,
+              description,
+              id,
+              thumbnail,
+            } = event;
             return (
               <RSVPLIST
-                eventName={event.eventName}
-                eventType={event.eventType}
-                thumbnail={event.thumbnail}
-                description={event.description}
-                eventDate={event.eventDate}
-                key={event.id | 7}
-                eventId={event.id}
+                eventName={eventName}
+                eventType={eventType}
+                thumbnail={thumbnail}
+                description={description}
+                eventDate={eventDate}
+                key={id | 7}
+                eventId={id}
                 userRole={role_id}
                 getAllRSVPSEvents={getAllRSVPSEvents}
               />
