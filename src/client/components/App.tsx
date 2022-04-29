@@ -82,7 +82,7 @@ const App = () => {
               element={<SubscriptionsAdmin />}
             />
             <Route
-              path='/records'
+              path='/records/*'
               element={<RecordsPage/>}
             />
           </Routes>
