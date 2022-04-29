@@ -31,7 +31,7 @@ const OrdersPage = () => {
             setOrders(data.data);
           })
           .catch((error: any) => {
-            // console.log('LINE 29 || ORDERSPAGE', error);
+            console.log('LINE 29 || ORDERSPAGE', error);
           });
       })
       .catch((err) => console.warn(err));

@@ -1,5 +1,7 @@
+// React Imports
 import React, { useState } from 'react';
 
+// MUI Import
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -15,6 +17,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
+
 // import * as dayjs from 'dayjs';
 import dayjs from 'dayjs';
 
@@ -41,6 +44,8 @@ const OrderCard = ({ order }: any) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  // MAP OVER ALL PRODUCTS IN EACH ORDER INSIDE OF THE COLLAPSE
 
   return (
     <Card sx={{ maxWidth: 345 }}>
