@@ -109,7 +109,11 @@ syncModels(true)
       },
     });
 
-    // // Products Seed Data
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    // Products Seed Data
     // await Products.findOrCreate({
     //   where: { id: 1 },
     //   defaults: {
@@ -117,9 +121,11 @@ syncModels(true)
     //     name: 'Cheddar Cheese',
     //     description: 'Organic homestead cheddar cheese',
     //     // vendor_id: 1,
-    //     quantity: '6oz',
-    //     available: true,
-    //     farm_id: 1,
+    //     img_url:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg',
+    //     plant_date: '01/01/22',
+    //     harvest_date: '03/03/22',
+    //     subscription_id: 1,
     //   },
     // });
     // await Products.findOrCreate({
@@ -129,9 +135,11 @@ syncModels(true)
     //     name: 'Ground Beef',
     //     description: 'Organic grass fed ground beef',
     //     // vendor_id: 1,
-    //     quantity: '1 lb',
-    //     available: true,
-    //     farm_id: 1,
+    //     img_url:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg',
+    //     plant_date: '01/01/22',
+    //     harvest_date: '03/03/22',
+    //     subscription_id: 1,
     //   },
     // });
     // await Products.findOrCreate({
@@ -141,9 +149,11 @@ syncModels(true)
     //     name: 'Mushrooms',
     //     description: '6oz of organic local Shitiki mushrooms',
     //     // vendor_id: 2,
-    //     quantity: '6oz',
-    //     available: false,
-    //     farm_id: 1,
+    //     img_url:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg',
+    //     plant_date: '01/01/22',
+    //     harvest_date: '03/03/22',
+    //     subscription_id: 1,
     //   },
     // });
     // await Products.findOrCreate({
@@ -153,9 +163,11 @@ syncModels(true)
     //     name: 'Muscadine Wine',
     //     description: 'A bottle of Louisians finest Muscadine Wine',
     //     // vendor_id: 3,
-    //     quantity: '750 ml',
-    //     available: true,
-    //     farm_id: 1,
+    //     img_url:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg',
+    //     plant_date: '01/01/22',
+    //     harvest_date: '03/03/22',
+    //     subscription_id: 1,
     //   },
     // });
     // await Products.findOrCreate({
@@ -165,9 +177,11 @@ syncModels(true)
     //     name: 'Wheat Grass Shots',
     //     description: '4oz of fresh grown organic wheat grass shots',
     //     // vendor_id: 4,
-    //     quantity: '6oz',
-    //     available: true,
-    //     farm_id: 1,
+    //     img_url:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg',
+    //     plant_date: '01/01/22',
+    //     harvest_date: '03/03/22',
+    //     subscription_id: 1,
     //   },
     // });
     // await Products.findOrCreate({
@@ -177,9 +191,11 @@ syncModels(true)
     //     name: 'Honey Quart with Comb',
     //     description: 'Quart of Louisian honey with the comb',
     //     // vendor_id: 5,
-    //     quantity: '1 qt',
-    //     available: true,
-    //     farm_id: 1,
+    //     img_url:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg',
+    //     plant_date: '01/01/22',
+    //     harvest_date: '03/03/22',
+    //     subscription_id: 1,
     //   },
     // });
     // await Products.findOrCreate({
@@ -190,11 +206,17 @@ syncModels(true)
     //     description:
     //       'A mix of some of the worlds finest snicker-doodle cookies',
     //     // vendor_id: 6,
-    //     quantity: '6oz',
-    //     available: true,
-    //     farm_id: 1,
+    //     img_url:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg',
+    //     plant_date: '01/01/22',
+    //     harvest_date: '03/03/22',
+    //     subscription_id: 1,
     //   },
     // });
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
 
     // Delivery Zones Seed Data
     await DeliveryZones.findOrCreate({
