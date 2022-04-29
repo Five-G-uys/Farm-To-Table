@@ -85,21 +85,11 @@ const App = () => {
               }
             />
             <Route
-<<<<<<< HEAD
-              path='/records/*'
-              element={<RecordsPage/>}
-            />
-            <Route 
-              path='/test'
-              element={<ProductsRecords/>}
-            />
-=======
               path='subscriptions-admin'
               element={<SubscriptionsAdmin />}
             />
             <Route path='/edit-products' element={<ProductsPage />} />
             <Route path='/records' element={<RecordsPage />} />
->>>>>>> e989ce6f46bef4a14e8d14844c085e042fc15014
           </Routes>
         </UserContext.Provider>
       </div>
