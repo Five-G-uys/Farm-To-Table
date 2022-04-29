@@ -16,8 +16,15 @@ const axios = require("axios");
 const eventRouter: Router = Router();
 
 eventRouter.post("/api/event", (req, res) => {
-  const { eventName, description, thumbnail, eventDate, eventType } =
-    req.body.event;
+  const {
+    eventName,
+    description,
+    thumbnail,
+    eventDate,
+    eventType,
+    location,
+    season,
+  } = req.body.event;
 
   console.log("162 Request object postEvent", req.body);
   Events.create({
@@ -26,6 +33,8 @@ eventRouter.post("/api/event", (req, res) => {
     thumbnail,
     eventDate,
     eventType,
+    season,
+    location,
   })
     .then((data: any) => {
       console.log("Return Events Route || Post Request", data);
@@ -93,7 +102,7 @@ eventRouter.get("/api/user/rsvps/:userId", (req: Request, res: Response) => {
     });
 });
 
-//patch request for deleting an event in the DB
+//delete request for deleting an event in the DB
 eventRouter.delete("/api/event/delete", (req: Request, res: Response) => {
   console.log("line 210", req.query);
   RSVP.destroy({
@@ -107,6 +116,18 @@ eventRouter.delete("/api/event/delete", (req: Request, res: Response) => {
         console.error("Deletion was not successful", err);
       });
   });
+});
+eventRouter.delete("/api/user/rsvps/delete", (req: Request, res: Response) => {
+  console.log("line 221", req);
+  RSVP.destroy({
+    where: { user_id: req.query.id, event_id: req.query.event_id },
+  })
+    .then((data: any) => {
+      console.log("125 deletion was successful!", data);
+    })
+    .catch((err: any) => {
+      console.error("129 Deletion was not successful", err);
+    });
 });
 
 //Get all from RSVP table

@@ -12,6 +12,8 @@ interface AppProps {
   eventDate: string;
   eventId: number;
   getAllEvents: () => void;
+  location: string;
+  season: string;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
@@ -22,6 +24,7 @@ const Event = ({
   eventDate,
   eventId,
   getAllEvents,
+  location,
 }: //getAllRSVPSEvents,
 AppProps) => {
   const [userId, setUserId] = useState(0);
@@ -55,7 +58,7 @@ AppProps) => {
       });
   };
 
-  //patch request for deleteting an event in the database
+  //delete request for deleteting an event in the database
   const deleteEvent = () => {
     console.log("LINE 81", userId, " and ", eventId);
     axios
@@ -84,9 +87,10 @@ AppProps) => {
           <section className="sect-event">
             <img src={thumbnail} className="event-img" />
             <div className="text-card">
-              <h3 className="event-desc">{description}</h3>
-              <h3 className="event-category">{eventType}</h3>
-              <h4 className="event-date">{eventDate}</h4>
+              <h3 className="event-desc">Description: {description}</h3>
+              <h3 className="event-category">Type of event: {eventType}</h3>
+              <h4 className="event-date">Date: {eventDate}</h4>
+              <h4 className="event-date">Location: {location}</h4>
               {userRole > 3 ? (
                 <button onClick={deleteEvent}>Delete Event</button>
               ) : (

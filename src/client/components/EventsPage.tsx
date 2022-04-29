@@ -14,6 +14,8 @@ const EventsPage = () => {
     category: "",
     eventDate: "",
     eventType: "",
+    season: "",
+    location: "",
   });
 
   const handleInputEvent = (
@@ -40,6 +42,8 @@ const EventsPage = () => {
           thumbnail: event.thumbnail,
           eventDate: event.eventDate,
           eventType: event.eventType,
+          season: event.season,
+          location: event.location,
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -74,7 +78,15 @@ const EventsPage = () => {
 
   // useEffect(() => {}, [event.thumbnail]);
   // console.log(event);
-  const { eventName, description, thumbnail, eventDate, eventType } = event;
+  const {
+    eventName,
+    description,
+    thumbnail,
+    eventDate,
+    eventType,
+    season,
+    location,
+  } = event;
   return (
     <div className="event">
       {/* <h1>{`${user}`}</h1> */}
@@ -89,7 +101,16 @@ const EventsPage = () => {
         <br></br>
         <br></br>
         <form onSubmit={postEvent} className="form-event">
-          Name of event
+          Season
+          <input
+            type="text"
+            placeholder="Event season"
+            value={season}
+            name="season"
+            onChange={handleInputEvent}
+            className="input"
+          />
+          Name of Event
           <input
             type="text"
             placeholder="Name of event"
@@ -116,6 +137,15 @@ const EventsPage = () => {
             placeholder=" 05 / 30 / 2022"
             value={eventDate}
             name="eventDate"
+            onChange={handleInputEvent}
+            className="form-input"
+          />
+          Location
+          <input
+            type="text"
+            placeholder="Location"
+            value={location}
+            name="location"
             onChange={handleInputEvent}
             className="form-input"
           />

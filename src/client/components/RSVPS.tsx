@@ -22,6 +22,7 @@ const RSVPS = () => {
   }, []);
 
   const { role_id, userId } = user;
+
   const [rsvpEvents, setRsvpEvents] = useState({
     eventsToAttend: [],
     rsvpsTotal: 0,
@@ -30,50 +31,48 @@ const RSVPS = () => {
   console.log("LINE 28", role_id);
 
   const getAllRSVPSEvents = () => {
-    // if (role_id === 4) {
-
+    // if (role_id < 4) {
     axios
-      .get("/events/api/rsvps")
+      .get(`/events/api/user/rsvps/${userId}`)
       .then((data) => {
-        console.log("LINE 55 FrontEND request", data.data);
-        const newArr = data.data;
-
+        console.log("LINE 33 FrontEND request", data.data);
+        const newArr = data.data
+          .map((eventObj: any) => {
+            return eventObj.value;
+          })
+          .map((eventArr: any) => {
+            return eventArr[0];
+          });
         setRsvpEvents((state: any) => {
-          return { ...state, rsvpsTotal: newArr.length };
+          return { ...state, eventsToAttend: newArr };
         });
       })
       .catch((err) => {
-        console.log("LINE 15 FAILED", err);
+        console.log("LINE 48 FAILED", err);
       });
     // }
 
-    if (role_id < 4) {
+    if (role_id === 4) {
       axios
-        .get(`/events/api/user/rsvps/${userId}`)
+        .get("/events/api/rsvps")
         .then((data) => {
-          console.log("LINE 33 FrontEND request", data.data);
-          const newArr = data.data
-            .map((eventObj: any) => {
-              return eventObj.value;
-            })
-            .map((eventArr: any) => {
-              return eventArr[0];
-            });
+          console.log("LINE 55 FrontEND request", data.data);
+          const newArr = data.data;
+
           setRsvpEvents((state: any) => {
-            return { ...state, eventsToAttend: newArr };
+            return { ...state, rsvpsTotal: newArr.length };
           });
         })
         .catch((err) => {
-          console.log("LINE 48 FAILED", err);
+          console.log("LINE 15 FAILED", err);
         });
-    } else {
-      console.log("YOUR ROLE IS NOT AN ADMIN");
     }
   };
   console.log(
     "LINE 75 ",
     rsvpEvents.eventsToAttend + "and" + rsvpEvents.rsvpsTotal + "number"
   );
+
   useEffect(() => {
     getAllRSVPSEvents();
   }, []);
@@ -82,14 +81,14 @@ const RSVPS = () => {
   const { rsvpsTotal, eventsToAttend } = rsvpEvents;
   return (
     <div>
+      {role_id < 4 && <h1>My Events to Attend</h1>}
       {role_id >= 4 ? (
         <h1>
           Total RSVPS
           <br></br>
-          <h3>{rsvpsTotal}</h3>
+          <p>{rsvpsTotal}</p>
         </h1>
       ) : (
-        <h1>My Events to Attend</h1> &&
         eventsToAttend.length > 0 &&
         eventsToAttend.map(
           (event: {
@@ -101,6 +100,7 @@ const RSVPS = () => {
             eventDate: string;
             id: number;
             role_id: number;
+            location: string;
           }) => {
             const {
               eventName,
@@ -109,6 +109,7 @@ const RSVPS = () => {
               description,
               id,
               thumbnail,
+              location,
             } = event;
             return (
               <RSVPLIST
@@ -117,9 +118,10 @@ const RSVPS = () => {
                 thumbnail={thumbnail}
                 description={description}
                 eventDate={eventDate}
-                key={id | 7}
+                key={id | 7 | 12 | 5 | 19 | 17 | 20 | 90 | 17}
                 eventId={id}
                 userRole={role_id}
+                location={location}
                 getAllRSVPSEvents={getAllRSVPSEvents}
               />
             );

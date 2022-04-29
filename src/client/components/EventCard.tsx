@@ -50,6 +50,8 @@ const EventCard = () => {
               eventId: number;
               eventDate: string;
               id: number;
+              location: string;
+              season: string;
             }) => {
               const {
                 eventName,
@@ -58,6 +60,8 @@ const EventCard = () => {
                 description,
                 eventDate,
                 id,
+                season,
+                location,
               } = event;
               return (
                 <Event
@@ -69,6 +73,8 @@ const EventCard = () => {
                   getAllEvents={getAllEvents}
                   key={eventName}
                   eventId={id}
+                  location={location}
+                  season={season}
                 />
               );
             }

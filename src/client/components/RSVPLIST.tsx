@@ -8,6 +8,7 @@ interface AppProps {
   eventDate: string;
   eventId: number;
   userRole: number;
+  location: string;
   getAllRSVPSEvents(): void;
   //getAllRSVPSEvents: () => void;
 }
@@ -21,22 +22,23 @@ const RSVPLIST = ({
   eventId,
   userRole,
   getAllRSVPSEvents,
+  location,
 }: //getAllRSVPSEvents,
 AppProps) => {
   //const [events, setEvents] = useState({});
-  //const [user, setUserId] = useState(0);
+  const [userId, setUserId] = useState(1);
 
-  // useEffect((): void => {
-  //   // TAKE THIS AXIOS CALL TO GET USER
-  //   axios
-  //     .get<AxiosResponse>("/api/userProfile")
-  //     .then(({ data }: AxiosResponse) => {
-  //       console.log("userId", data);
-  //       const { userRole } = data;
-  //       setUserId(userRole);
-  //     })
-  //     .catch((err) => console.warn("Sorry it failed", err));
-  // }, []);
+  useEffect((): void => {
+    // TAKE THIS AXIOS CALL TO GET USER
+    axios
+      .get<AxiosResponse>("/api/userProfile")
+      .then(({ data }: AxiosResponse) => {
+        console.log("userId", data);
+        const { id } = data;
+        setUserId(id);
+      })
+      .catch((err) => console.warn("Sorry it failed", err));
+  }, []);
 
   // const getAllEvents = () => {
   //   axios
@@ -54,10 +56,10 @@ AppProps) => {
   //       console.log("sorry, request failed", error);
   //     });
   // };
-  // useEffect(() => {
-  //   getAllEvents();
-  //   // getAllRSVPSEvents();
-  // }, []);
+  useEffect(() => {
+    //getAllEvents();
+    getAllRSVPSEvents();
+  }, []);
 
   // //console.log("Line 58", userId + "Event Id", eventId);
   // const handleEventResponse = () => {
@@ -74,6 +76,22 @@ AppProps) => {
   //       console.error("68 REQUEST FAILED", err);
   //     });
   // };
+  //patch request for deleteting an event in the database
+  const deleteRsvpsEvent = () => {
+    console.log("LINE 81", userId, " and ", eventId);
+    axios
+      .delete("/events/api/user/rsvps/delete", {
+        params: { id: 1, event_id: eventId },
+      })
+      .then((data) => {
+        console.log("87 LINE ", data);
+        //getAllEvents();
+      })
+      .catch((err) => {
+        console.error("91 REQUEST FAILED", err);
+      });
+  };
+
   console.log(userRole);
   useEffect(() => {
     getAllRSVPSEvents();
@@ -83,10 +101,14 @@ AppProps) => {
       {userRole > 3 ? (
         <div>TOTAL RSVP RESPONSES</div>
       ) : (
-        <section>
-          <h1 className="event-name">{eventName}</h1>
-          <h1 className="event-name">{eventType}</h1>
-          <h4 className="event-date">{eventDate}</h4>
+        <section className="user-rsvps">
+          <h1 className="user-event-name">{eventName}</h1>
+          <h1 className="user-event-type">{eventType}</h1>
+          <h4 className="user-event-date">{eventDate}</h4>
+          <h4 className="user-event-loc">{location}</h4>
+          <button onClick={deleteRsvpsEvent}>
+            Can't attend smthing came up
+          </button>
         </section>
       )}
     </div>
