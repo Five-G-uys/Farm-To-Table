@@ -7,7 +7,7 @@ interface AppProps {
   eventType: string;
   eventDate: string;
   eventId: number;
-  role_id: number;
+  userRole: number;
   //getAllRSVPSEvents: () => void;
 }
 
@@ -18,7 +18,7 @@ const RSVPLIST = ({
   eventType,
   eventDate,
   eventId,
-  role_id,
+  userRole,
 }: //getAllRSVPSEvents,
 AppProps) => {
   //const [events, setEvents] = useState({});
@@ -30,8 +30,8 @@ AppProps) => {
   //     .get<AxiosResponse>("/api/userProfile")
   //     .then(({ data }: AxiosResponse) => {
   //       console.log("userId", data);
-  //       const { role_id } = data;
-  //       setUserId(role_id);
+  //       const { userRole } = data;
+  //       setUserId(userRole);
   //     })
   //     .catch((err) => console.warn("Sorry it failed", err));
   // }, []);
@@ -72,10 +72,10 @@ AppProps) => {
   //       console.error("68 REQUEST FAILED", err);
   //     });
   // };
-  console.log(role_id);
+  console.log(userRole);
   return (
     <div>
-      {role_id > 3 ? (
+      {userRole > 3 ? (
         <div>TOTAL RSVP RESPONSES</div>
       ) : (
         <section>

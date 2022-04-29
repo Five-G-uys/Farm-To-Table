@@ -27,16 +27,18 @@ AppProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   //const [events, setEvents] = useState({});
   const [userId, setUserId] = useState(0);
+  const [userRole, setUserRole] = useState(0);
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     console.log("IS THIS FUNCTION RUNNING?");
     getAllEvents();
     axios
-      .get<AxiosResponse>("/api/userProfile")
-      .then(({ data }: AxiosResponse) => {
-        console.log("userId", data);
-        const { role_id } = data;
-        setUserId(role_id);
+      .get<AxiosResponse>("/auth/api/userProfile")
+      .then(({ data }: any) => {
+        console.log("LINE 37 EVENT COMPONENT userId", data);
+        const { id, role_id } = data;
+        setUserId(id);
+        setUserRole(role_id);
       })
       .catch((err) => console.warn("Sorry it failed", err));
   }, []);
@@ -66,7 +68,7 @@ AppProps) => {
   const handRSVPosts = () => {
     console.log("LINE 63", userId, " and ", eventId);
     axios
-      .post(`/api/Rsvp/`, {
+      .post("/events/api/Rsvp/", {
         userId: userId,
         eventId: eventId,
       })
@@ -82,7 +84,7 @@ AppProps) => {
   const deleteEvent = () => {
     console.log("LINE 81", userId, " and ", eventId);
     axios
-      .delete("/api/event/delete", {
+      .delete("events/api/event/delete", {
         params: { id: eventId },
       })
       .then((data) => {
@@ -94,7 +96,7 @@ AppProps) => {
       });
   };
 
-  console.log("LINE 78", userId);
+  console.log("LINE 78", userId + "AND USER ROLE ", userRole);
   return (
     <div>
       <div></div>

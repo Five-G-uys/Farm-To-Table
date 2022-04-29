@@ -21,7 +21,7 @@ const pages = [
 ];
 const settings = [
   { name: "Login", path: "login" },
-  { name: "Profile", path: "login/profile-page" },
+  { name: "Profile", path: "/profile-page" },
   { name: "Orders", path: "login/orders-page" },
   { name: "Add Season", path: "admin/edit-seasons" },
   { name: "Add Event", path: "events-page" },

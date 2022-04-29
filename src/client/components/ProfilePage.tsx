@@ -12,8 +12,8 @@
 
 import React, { useContext, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
-import { UserContext } from "./UserContext";
 import RSVPS from "./RSVPS";
+import { UserContext } from "./UserContext";
 
 const Profile = (): React.ReactElement => {
   const { user, setUser } = useContext(UserContext);

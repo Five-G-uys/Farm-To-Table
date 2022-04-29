@@ -24,7 +24,7 @@ const App = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>('auth/api/userProfile')
+      .get<AxiosResponse>('/auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         // console.log(data);
         setUser(data);
@@ -78,7 +78,7 @@ const App = () => {
               path='/events-page' 
               element={isAdmin(user) ? <EventsPage /> : <Navigate to='/event-card'/> } />
             <Route
-              path='subscriptions-admin'
+              path='/subscriptions-admin'
               element={<SubscriptionsAdmin />}
             />
             <Route

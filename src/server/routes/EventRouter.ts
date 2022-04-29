@@ -16,15 +16,14 @@ const axios = require("axios");
 const eventRouter: Router = Router();
 
 eventRouter.post("/api/event", (req, res) => {
-  const { eventName, description, thumbnail, category, eventDate, eventType } =
+  const { eventName, description, thumbnail, eventDate, eventType } =
     req.body.event;
 
-  // console.log('162 Request object postEvent', req.body);
+   console.log('162 Request object postEvent', req.body);
   Events.create({
     eventName,
     description,
     thumbnail,
-    category,
     eventDate,
     eventType,
   })

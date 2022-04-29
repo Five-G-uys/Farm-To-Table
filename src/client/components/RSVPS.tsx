@@ -9,9 +9,9 @@ const RSVPS = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>("/api/userProfile")
+      .get<AxiosResponse>("/auth/api/userProfile")
       .then(({ data }: AxiosResponse) => {
-        //console.log("userId Role", data);
+        console.log("userId Role", data);
         const { role_id, id } = data;
 
         setUserId((state) => {
@@ -26,30 +26,31 @@ const RSVPS = () => {
   });
 
   const getAllRSVPSEvents = () => {
-    // if (role_id !== undefined && role_id < 4) {
-    //   axios
-    //     .get(`/api/user/rsvps/${userId}`)
-    //     .then((data) => {
-    //       console.log("LINE 28 FrontEND request", data.data);
-    //       const newArr = data.data
-    //         .map((eventObj: any) => {
-    //           return eventObj.value;
-    //         })
-    //         .map((eventArr: any) => {
-    //           return eventArr[0];
-    //         });
-    //       console.log(newArr);
-    //       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    //       setRsvpEvents((state: any) => {
-    //         return { ...state, eventsToAttend: newArr };
-    //       });
-    //     })
-    //     .catch((err) => {
-    //       console.log("LINE 48 FAILED", err);
-    //     });
+    if (role_id !== undefined && role_id < 4) {
+      axios
+        .get(`/events/api/user/rsvps/${userId}`)
+        .then((data) => {
+          console.log("LINE 28 FrontEND request", data.data);
+          const newArr = data.data
+            .map((eventObj: any) => {
+              return eventObj.value;
+            })
+            .map((eventArr: any) => {
+              return eventArr[0];
+            });
+          console.log(newArr);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          setRsvpEvents((state: any) => {
+            return { ...state, eventsToAttend: newArr };
+          });
+        })
+        .catch((err) => {
+          console.log("LINE 48 FAILED", err);
+        });
+    }
     if (role_id > 3) {
       axios
-        .get(`/api/rsvps`)
+        .get(`/events/api/rsvps`)
         .then((data) => {
           console.log("LINE 28 FrontEND request", data.data);
           const newArr = data.data;
@@ -101,9 +102,9 @@ const RSVPS = () => {
                 thumbnail={event.thumbnail}
                 description={event.description}
                 eventDate={event.eventDate}
-                key={event.eventName}
+                key={event.id | 7}
                 eventId={event.id}
-                role_id={role_id}
+                userRole={role_id}
               />
             );
           }
