@@ -1,37 +1,37 @@
-import React, { useState, MouseEvent } from "react";
-import { Link } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import React, { useState, MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
 
 const pages = [
-  { name: "Home", path: "/" },
-  { name: "Sign Up!", path: "subscriptions-page" },
+  { name: 'Home', path: '/' },
+  { name: 'Sign Up!', path: '/subscriptions-page' },
   { name: "Farm events", path: "/event-card" },
-  { name: "About Us", path: "about-us-page" },
+  { name: 'About Us', path: '/about-us-page' },
 ];
 const settings = [
-  { name: "Login", path: "login" },
-  { name: "Profile", path: "/profile-page" },
-  { name: "Orders", path: "login/orders-page" },
-  { name: "Add Season", path: "admin/edit-seasons" },
-  { name: "Add Event", path: "events-page" },
-  { name: "Add Product ", path: "admin/edit-products" },
-  { name: "Home", path: "/" },
-  { name: "Sign Up!", path: "subscriptions-page" },
-  { name: "About Us", path: "/about-us-page" },
+  { name: 'Login', path: '/login' },
+  { name: 'Logout', path: '/logout' },
+  { name: 'Profile', path: '/profile-page' },
+  { name: 'Orders', path: '/orders-page' },
+  { name: 'Add Season', path: '/subscriptions-admin' },
+  { name: 'Add Event', path: '/events-page' },
+  { name: 'Add Product ', path: '/edit-products' },
+  { name: 'Records', path: '/records' },
 ];
 
-const NewNavBar = () => {
+const NewNavBar = ({ user }: any) => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -51,111 +51,124 @@ const NewNavBar = () => {
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            Bumpkin' Box
-          </Typography>
+    <Container>
+      <AppBar
+        position='sticky'
+        style={{ backgroundColor: 'green', margin: '.4rem' }}
+      >
+        <Container>
+          <Toolbar disableGutters>
+            <Typography
+              variant='h6'
+              noWrap
+              component='div'
+              sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            >
+              Bumpkin' Box
+            </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  {/* // link tags are anchor tags under the hood */}
-                  <Link to={page.path}>
-                    <Typography textAlign="center">{page.name}</Typography>
-                  </Link>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size='large'
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleOpenNavMenu}
+                color='inherit'
               >
-                <Link to={page.path}>{page.name}</Link>
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <MenuIcon />
               </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    {/* // link tags are anchor tags under the hood */}
+                    <Link to={page.path}>
+                      <Typography textAlign='center'>{page.name}</Typography>
+                    </Link>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Typography
+              variant='h6'
+              noWrap
+              component='div'
+              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                  <Link to={setting.path}>
-                    <Typography textAlign="center">{setting.name}</Typography>
-                  </Link>
-                </MenuItem>
+              Bumpkin' Box
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page.name}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  <Link to={page.path}>{page.name}</Link>
+                </Button>
               ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title='Open settings'>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    alt='Rene M'
+                    src={user.picture}
+                    style={{
+                      border: '2px solid lightgray',
+                    }}
+                    component={Paper}
+                    elevation={2}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id='menu-appbar'
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                    <Link to={setting.path}>
+                      <Typography textAlign='center'>{setting.name}</Typography>
+                    </Link>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </Container>
   );
 };
 export default NewNavBar;
