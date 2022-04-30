@@ -80,7 +80,7 @@ authRouter.get('/api/isLoggedIn', (req, res) => {
 
 // Logout route
 authRouter.delete('/api/logout', (req, res) => {
-  res.clearCookie('crushers');
+  res.clearCookie('google');
   res.json(false);
 });
 

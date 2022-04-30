@@ -42,13 +42,13 @@ const NewNavBar = ({ user }: any) => {
       { name: 'Packing List', path: '/packing-lists'},
       { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Profile', path: '/profile-page' },
-      { name: 'Logout', path: '/logout' },
+      { name: 'Logout', path: '/auth/logout' },
     ];
   } else if (user.role_id === 2 || user.role_id === 1 ) {
     const settings = [
       { name: 'Orders', path: '/orders-page' },
       { name: 'Profile', path: '/profile-page' },
-      { name: 'Logout', path: '/logout' },
+      { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else {
     const settings = [

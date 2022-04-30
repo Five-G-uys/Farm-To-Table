@@ -11,6 +11,7 @@ import Users from "../db/models/Users";
 // import UserInterface from "../../types/UserInterface";
 
 passport.use(
+  'google',
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID || "",

@@ -17,7 +17,15 @@ import { UserContext } from "./App";
 
 const Profile = (): React.ReactElement => {
   const user: any = useContext(UserContext);
-  console.log('THIS IS WORKING', user);
+  // console.log('THIS IS WORKING', user);
+
+  const handleLogout = () => {
+    axios.delete<AxiosResponse>('/auth/api/logout')
+      .then(({ response }: AxiosResponse) => {
+        console.log('Logout Button', response);
+      })
+      .catch((err) => console.warn(err));
+  };
 
   return (
     <div className="page-wrap">
@@ -28,6 +36,7 @@ const Profile = (): React.ReactElement => {
       <h3>Name: {user.name}</h3>
       <h3>Email: {user.email}</h3>
       <h3>Address: {user.address}</h3>
+      <button onClick={handleLogout}>Logout</button>
       <RSVPS />
     </div>
   );

@@ -4,9 +4,9 @@
 
 // Import Dependencies
 import express, { Express, Request, Response } from 'express';
-//import dotenv from "dotenv";
 require('dotenv').config();
-const path = require('path');
+import path from 'path';
+// const path = require('path');
 const passport = require('passport');
 const session = require('express-session');
 const axios = require('axios');
@@ -30,18 +30,13 @@ import {
   DietaryRestrictions,
   Events,
 } from './db/models';
-const authRouter = require('./routes/AuthRouter');
+const authRouter = require('./routes/authRouter');
 const eventRouter = require('./routes/EventRouter');
 // const subscriptionRouter = require('./routes/SubscriptionsRouter')
 // const farmRouter = require('./routes/FarmRouter')
 import UserInterface from '../types/UserInterface';
 import Profile from 'src/client/components/ProfilePage';
 //import { postEvent } from "./routes/EventRoutes";
-
-// // Needs to stay until used elsewhere (initializing models)
-// console.log(Farms, Roles, Events, Orders, DeliveryZones,Products, RSVP, Subscriptions, Users, Vendors);
-
-//dotenv.config();
 
 const app: Express = express();
 const port = process.env.LOCAL_PORT;
@@ -66,24 +61,43 @@ app.use('/events', eventRouter);
 // app.use('/subscriptions', subscriptionRouter);
 // app.use('/', farmRouter)
 
-// // Middleware
-// const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
-//   if (!req.user || req.user.role_id !== 4) {
-//     // res.redirect('/'); // Whats is the use case?
-//     res.status(404); // What is the use case?
-//   } else {
-//     next();
-//   }
-// };
+
 
 // Create a post request for /create-checkout-session
 app.post('/create-checkout-session', async (req, res) => {
   try {
-    res.json({ url: '/orders-page' });
+    console.log('Stripe Session req', req)
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment', // subscriptions would be added here
+      line_iteams: req.body.items.map((item: { id: number; quantity: any; }) => {
+        const storeItem: any = storeItems.get(item.id)
+        return {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: storeItem.name
+            },
+            unit_amount: storeItem.priceInCents
+          },
+          quantity: item.quantity
+        }
+      }),
+      success_url: `${process.env.SERVER_URL}/success.html`,
+      cancel_url:  `${process.env.SERVER_URL}/cancel.html`
+
+    })
+    res.json({ url: 'session.url' });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 }),
+
+
+
+
+
+
   ////////SUBSCRIPTION REQUEST////////////
 
   ///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
