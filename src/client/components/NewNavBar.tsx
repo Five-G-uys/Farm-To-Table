@@ -16,42 +16,39 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 
-
 const NewNavBar = ({ user }: any) => {
-
   const pages = [
     { name: 'Home', path: '/' },
     { name: 'Sign Up!', path: '/subscriptions-page' },
-    { name: "Farm events", path: "/event-card" },
+    { name: 'Farm events', path: '/event-card' },
     { name: 'About Us', path: '/about-us-page' },
   ];
- 
-  if (user.role_id === 4) { 
-     const settings = [
+
+  if (user.role_id === 4) {
+    const settings = [
       { name: 'Add Season', path: '/subscriptions-admin' },
       { name: 'Add Event', path: '/events-page' },
       { name: 'Add Product ', path: '/edit-products' },
+      { name: 'Orders', path: '/orders-page' },
       { name: 'Records', path: '/records' },
       { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/logout' },
     ];
   } else if (user.role_id === 3) {
     const settings = [
-      { name: 'Packing List', path: '/packing-list'},
+      { name: 'Packing List', path: '/packing-list' },
       { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/logout' },
     ];
-  } else if (user.role_id === 2 || user.role_id === 1 ) {
+  } else if (user.role_id === 2 || user.role_id === 1) {
     const settings = [
       { name: 'Orders', path: '/orders-page' },
       { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/logout' },
     ];
   } else {
-    const settings = [
-      { name: 'Login', path: '/login' },
-    ];
+    const settings = [{ name: 'Login', path: '/login' }];
   }
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
