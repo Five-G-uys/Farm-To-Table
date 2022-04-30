@@ -10,20 +10,20 @@
 
 // export default ProfilePage;
 
-import React, { useContext, useEffect } from "react";
-import axios, { AxiosResponse } from "axios";
-import RSVPS from "./RSVPS";
-import { UserContext } from "./App";
+import React, { useContext, useEffect } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import RSVPS from './RSVPS';
+import { UserContext } from './App';
 
 const Profile = (): React.ReactElement => {
   const user: any = useContext(UserContext);
-  console.log('THIS IS WORKING', user);
+  // console.log('THIS IS WORKING', user);
 
   return (
-    <div className="page-wrap">
+    <div className='page-wrap'>
       <h1>My Profile</h1>
-      <div className="profileDiv">
-        <img className="profilePic" src={user.picture} />
+      <div className='profileDiv'>
+        <img className='profilePic' src={user.picture} />
       </div>
       <h3>Name: {user.name}</h3>
       <h3>Email: {user.email}</h3>

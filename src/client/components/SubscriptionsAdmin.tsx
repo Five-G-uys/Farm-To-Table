@@ -1,11 +1,14 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import SubscriptionCard from './SubscriptionCard';
+import { UserContext } from './App';
 
 const SubscriptionsAdmin = () => {
+  const user: any = useContext(UserContext);
+  console.log('THIS IS WORKING', user);
   const [subscription, setSubscription] = useState({
     season: '',
     year: '',

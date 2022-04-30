@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SubscriptionCard from './SubscriptionCard';
+import { UserContext } from './App';
 
 const SubscriptionsPage = () => {
+  const user: any = useContext(UserContext);
+  // console.log('THIS IS WORKING', user);
   const navigate = useNavigate();
   const [id, setId] = useState(0);
   const [season, setSeason] = useState('');
@@ -58,7 +61,7 @@ const SubscriptionsPage = () => {
   // };
   // console.log('LINE 45', subscription.subArray);
   const handleCheckout = () => {
-    console.log('CHeckout');
+    console.log('Checkout');
     fetch('/create-checkout-session', {
       method: 'POST',
       headers: {
@@ -138,7 +141,7 @@ const SubscriptionsPage = () => {
                 description={sub.description}
                 start_date={sub.start_date}
                 end_date={sub.end_date}
-                // key={sub.id}
+                key={sub.id}
                 subscription_id={sub.id}
               />
             );

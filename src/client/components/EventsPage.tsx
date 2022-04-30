@@ -8,7 +8,7 @@ import { UserContext } from './App';
 
 const EventsPage = () => {
   const user: any = useContext(UserContext);
-  console.log('THIS IS WORKING', user);
+  // console.log('THIS IS WORKING', user);
   const [event, setEvent] = useState({
     eventName: '',
     description: '',

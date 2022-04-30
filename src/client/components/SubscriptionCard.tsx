@@ -21,31 +21,31 @@ const SubscriptionCard = ({
   end_date,
   subscription_id,
 }: aProps) => {
-  const [subscription, setSubscription] = useState({
-    id: 0,
-    season: '',
-    year: 0,
-    flat_price: 0,
-    weekly_price: 0,
-    description: '',
-    start_date: '',
-    end_date: '',
-    subArray: [],
-  });
+  // const [subscription, setSubscription] = useState({
+  //   id: 0,
+  //   season: '',
+  //   year: 0,
+  //   flat_price: 0,
+  //   weekly_price: 0,
+  //   description: '',
+  //   start_date: '',
+  //   end_date: '',
+  //   subArray: [],
+  // });
 
-  const getAllSubscriptions = () => {
-    axios
-      .get(`/api/subscriptions/`)
-      .then((response) => {
-        setSubscription((state) => {
-          return { ...state, subArray: response.data };
-        });
-        // console.log('LINE 46 SubscriptionPage.tsx', response);
-      })
-      .catch((err) => {
-        console.error('Line 49 subPage.tsx', err);
-      });
-  };
+  // const getAllSubscriptions = () => {
+  //   axios
+  //     .get(`/api/subscriptions/`)
+  //     .then((response) => {
+  //       setSubscription((state) => {
+  //         return { ...state, subArray: response.data };
+  //       });
+  //       // console.log('LINE 46 SubscriptionPage.tsx', response);
+  //     })
+  //     .catch((err) => {
+  //       console.error('Line 49 subPage.tsx', err);
+  //     });
+  // };
 
   // SUBSCRIPTION DELETE
   // make a DELETE request to handle delete
