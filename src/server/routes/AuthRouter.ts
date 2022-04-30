@@ -58,13 +58,13 @@ const errorLoginUrl = 'http://localhost:5555/login/error';
 // all backend routes should start at a common place that dont exist on the front end
 
 passport.serializeUser((user: any, done: any) => {
-  console.log('Serializing User:', user);
+  // console.log('Serializing User:', user);
 
   done(null, user.id);
 });
 
 passport.deserializeUser((id: any, done: any) => {
-  console.log('Deserializing User:', id);
+  // console.log('Deserializing User:', id);
 
   Users.findOne({ where: {id} })
     .then((data: any) => {

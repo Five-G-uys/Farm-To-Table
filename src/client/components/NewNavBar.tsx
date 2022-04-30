@@ -33,8 +33,9 @@ const NewNavBar = ({ user }: any) => {
       { name: 'Add Season', path: '/subscriptions-admin' },
       { name: 'Add Event', path: '/events-page' },
       { name: 'Add Product ', path: '/edit-products' },
+      { name: 'Edit User Role', path: '/edit-users'},
       { name: 'Profile', path: '/profile-page' },
-      // { name: 'Logout', path: '/auth/api/logout' },
+      // { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
     ];
   } else if (user.role_id === 3) {
     const settings = [
