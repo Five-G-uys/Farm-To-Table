@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // React Imports
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { UserContext } from './UserContext';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 
 // MUI Imports
@@ -21,9 +20,11 @@ import NewNavBar from './NewNavBar';
 import ProductsPage from './ProductsPage';
 import RecordsPage from './Records/RecordsPage';
 
+export const UserContext: any = createContext(null)
+
 const App = () => {
-  const [user, setUser] = useState('User context value');
-  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+  const [user, setUser] = useState({});
+
 
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
@@ -45,7 +46,8 @@ const App = () => {
     <>
       <NewNavBar user={user} />
       <div>
-        <UserContext.Provider value={value}>
+        <h1>{user.role_id}</h1>
+        <UserContext.Provider value={user}>
           <Routes>
             <Route path='/' element={<HomePage />} />
             {/* Login/Logout Routes */}
