@@ -40,42 +40,11 @@ AppProps) => {
       .catch((err) => console.warn("Sorry it failed", err));
   }, []);
 
-  // const getAllEvents = () => {
-  //   axios
-  //     .get("/events")
-  //     .then((data) => {
-  //       //console.log("SUCESSFULLY FECTHED DATA", data.data);
-  //       setEvents((state) => {
-  //         return {
-  //           ...state,
-  //           eventArray: [...data.data],
-  //         };
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log("sorry, request failed", error);
-  //     });
-  // };
   useEffect(() => {
     //getAllEvents();
     getAllRSVPSEvents();
   }, []);
 
-  // //console.log("Line 58", userId + "Event Id", eventId);
-  // const handleEventResponse = () => {
-  //   console.log("LINE 63", userId, " and ", eventId);
-  //   axios
-  //     .post(`/api/Rsvp/`, {
-  //       userId: userId,
-  //       eventId: eventId,
-  //     })
-  //     .then((data) => {
-  //       console.log("66 LINE ", data);
-  //     })
-  //     .catch((err) => {
-  //       console.error("68 REQUEST FAILED", err);
-  //     });
-  // };
   //patch request for deleteting an event in the database
   const deleteRsvpsEvent = () => {
     console.log("LINE 81", userId, " and ", eventId);

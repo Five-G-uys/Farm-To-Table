@@ -4,26 +4,10 @@ import axios, { AxiosResponse } from "axios";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import RSVPLIST from "./RSVPLIST";
 import { UserContext } from "./App";
+//import Profile ""
 
 const RSVPS = () => {
-  const user: any = useContext(UserContext)
-  console.log('THIS IS WORKING 10', user);
-  // const [user, setUserId] = useState({ role_id: 0, userId: 1 });
-
-  // useEffect((): void => {
-  //   // TAKE THIS AXIOS CALL TO GET USER
-  //   axios
-  //     .get<AxiosResponse>("/auth/api/userProfile")
-  //     .then(({ data }: AxiosResponse) => {
-  //       console.log("userId Role", data);
-  //       const { role_id, id } = data;
-
-  //       setUserId((state) => {
-  //         return { ...state, userId: id, role_id: role_id };
-  //       });
-  //     })
-  //     .catch((err) => console.warn("Sorry it failed", err));
-  // }, []);
+  const user: any = useContext(UserContext);
 
   const { role_id, id } = user;
 
@@ -33,29 +17,27 @@ const RSVPS = () => {
     user_rsvps: 0,
   });
 
-  // console.log("LINE 28", role_id);
-
   const getAllRSVPSEvents = () => {
-    // if (role_id < 4) {
-    axios
-      .get(`/events/api/user/rsvps/${id}`)
-      .then((data) => {
-        console.log("LINE 33 FrontEND request", data.data);
-        const newArr = data.data
-          .map((eventObj: any) => {
-            return eventObj.value;
-          })
-          .map((eventArr: any) => {
-            return eventArr[0];
+    if (role_id < 4) {
+      axios
+        .get(`/events/api/user/rsvps/${id}`)
+        .then((data) => {
+          console.log("LINE 33 FrontEND request", data.data);
+          const newArr = data.data
+            .map((eventObj: any) => {
+              return eventObj.value;
+            })
+            .map((eventArr: any) => {
+              return eventArr[0];
+            });
+          setRsvpEvents((state: any) => {
+            return { ...state, eventsToAttend: newArr };
           });
-        setRsvpEvents((state: any) => {
-          return { ...state, eventsToAttend: newArr };
+        })
+        .catch((err) => {
+          console.log("LINE 48 FAILED", err);
         });
-      })
-      .catch((err) => {
-        console.log("LINE 48 FAILED", err);
-      });
-    // }
+    }
 
     if (role_id === 4) {
       axios
@@ -79,19 +61,9 @@ const RSVPS = () => {
   );
 
   const { rsvpsTotal, eventsToAttend } = rsvpEvents;
+
   useEffect(() => {
     getAllRSVPSEvents();
-    if (role_id >= 4) {
-      if (rsvpsTotal > 0) {
-        getAllRSVPSEvents();
-      } else return;
-    } else if (role_id <= 3) {
-      if (eventsToAttend.length > 0) {
-        getAllRSVPSEvents();
-      } else {
-        return;
-      }
-    }
   }, []);
   console.log("LINE 45", rsvpEvents.eventsToAttend);
 
@@ -115,7 +87,6 @@ const RSVPS = () => {
             eventId: number;
             eventDate: string;
             id: number;
-            role_id: number;
             location: string;
           }) => {
             const {
@@ -134,7 +105,7 @@ const RSVPS = () => {
                 thumbnail={thumbnail}
                 description={description}
                 eventDate={eventDate}
-                key={id | 7 | 12 | 5 | 19 | 17 | 20 | 90 | 17}
+                key={id | role_id}
                 eventId={id}
                 userRole={role_id}
                 location={location}
