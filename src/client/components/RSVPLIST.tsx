@@ -28,18 +28,38 @@ AppProps) => {
   //const [events, setEvents] = useState({});
   const [userId, setUserId] = useState(1);
 
-  useEffect((): void => {
-    // TAKE THIS AXIOS CALL TO GET USER
-    axios
-      .get<AxiosResponse>("/api/userProfile")
-      .then(({ data }: AxiosResponse) => {
-        console.log("userId", data);
-        const { id } = data;
-        setUserId(id);
-      })
-      .catch((err) => console.warn("Sorry it failed", err));
-  }, []);
+  // useEffect((): void => {
+  //   // TAKE THIS AXIOS CALL TO GET USER
+  //   axios
+  //     .get<AxiosResponse>("/api/userProfile")
+  //     .then(({ data }: AxiosResponse) => {
+  //       console.log("userId", data);
+  //       const { id } = data;
+  //       setUserId(id);
+  //     })
+  //     .catch((err) => console.warn("Sorry it failed", err));
+  // }, []);
 
+<<<<<<< HEAD
+=======
+  // const getAllEvents = () => {
+  //   axios
+  //     .get("/events")
+  //     .then((data) => {
+  //       //console.log("SUCESSFULLY FECTHED DATA", data.data);
+  //       setEvents((state) => {
+  //         return {
+  //           ...state,
+  //           eventArray: [...data.data],
+  //         };
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log("sorry, request failed", error);
+  //     });
+  // };
+
+>>>>>>> 7367daa68bb515f51f6e47e5ad1745e9db0e2600
   useEffect(() => {
     //getAllEvents();
     getAllRSVPSEvents();

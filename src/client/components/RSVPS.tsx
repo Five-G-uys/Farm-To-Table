@@ -20,6 +20,7 @@ const RSVPS = () => {
 
   
   const getAllRSVPSEvents = () => {
+<<<<<<< HEAD
     if (role_id < 4) {
       axios
         .get(`/events/api/user/rsvps/${id}`)
@@ -34,11 +35,31 @@ const RSVPS = () => {
             });
           setRsvpEvents((state: any) => {
             return { ...state, eventsToAttend: newArr };
+=======
+    if (user && role_id < 4) {
+    axios
+      .get(`/events/api/user/rsvps/${id}`)
+      .then((data) => {
+        console.log("LINE 33 FrontEND request", data.data);
+        const newArr = data.data
+          .map((eventObj: any) => {
+            return eventObj.value;
+          })
+          .map((eventArr: any) => {
+            return eventArr[0];
+>>>>>>> 7367daa68bb515f51f6e47e5ad1745e9db0e2600
           });
         })
         .catch((err) => {
           console.log("LINE 48 FAILED", err);
         });
+<<<<<<< HEAD
+=======
+      })
+      .catch((err) => {
+        console.log("LINE 48 FAILED", err);
+      });
+>>>>>>> 7367daa68bb515f51f6e47e5ad1745e9db0e2600
     }
 
     if (role_id === 4) {

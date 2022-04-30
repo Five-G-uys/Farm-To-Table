@@ -21,32 +21,41 @@ const NewNavBar = ({ user }: any) => {
   const pages = [
     { name: 'Home', path: '/' },
     { name: 'Sign Up!', path: '/subscriptions-page' },
+    { name: 'Products ', path: '/edit-products' },
     { name: 'Farm events', path: '/event-card' },
     { name: 'About Us', path: '/about-us-page' },
   ];
-
-  if (user.role_id === 4) {
-    const settings = [
-      { name: 'Add Season', path: '/subscriptions-admin' },
-      { name: 'Add Event', path: '/events-page' },
-      { name: 'Add Product ', path: '/edit-products' },
+ 
+  if (user.role_id === 4) { 
+     const settings = [
       { name: 'Orders', path: '/orders-page' },
       { name: 'Records', path: '/records' },
+      { name: 'Packing List', path: '/packing-lists'},
+      { name: 'Delivery Routes', path: '/delivery-routes' },
+      { name: 'Add Season', path: '/subscriptions-admin' },
+      { name: 'Add Event', path: '/events-page' },
+      { name: 'Edit User Role', path: '/edit-users'},
       { name: 'Profile', path: '/profile-page' },
-      { name: 'Logout', path: '/logout' },
+      // { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
     ];
   } else if (user.role_id === 3) {
     const settings = [
-      { name: 'Packing List', path: '/packing-list' },
+      { name: 'Packing List', path: '/packing-lists'},
       { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Profile', path: '/profile-page' },
-      { name: 'Logout', path: '/logout' },
+      // { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else if (user.role_id === 2 || user.role_id === 1) {
     const settings = [
+<<<<<<< HEAD
       { name: "Orders", path: "/orders-page" },
       { name: "Profile", path: "/profile-page" },
       { name: "Logout", path: "/logout" },
+=======
+      { name: 'Orders', path: '/orders-page' },
+      { name: 'Profile', path: '/profile-page' },
+      // { name: 'Logout', path: '/auth/api/logout' },
+>>>>>>> 7367daa68bb515f51f6e47e5ad1745e9db0e2600
     ];
   } else {
     const settings = [{ name: 'Login', path: '/login' }];
