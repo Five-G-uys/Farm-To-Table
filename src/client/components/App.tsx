@@ -21,6 +21,7 @@ import ProductsPage from './ProductsPage';
 import RecordsPage from './Records/RecordsPage';
 import DeliveryRoutesPage from './DeliveryRoutesPage';
 import PackingListPage from './PackingListPage';
+// import UserRecordsPage from './UserRecordsPagge'
 
 
 export const UserContext: any = createContext(null)
@@ -37,7 +38,7 @@ const App = () => {
         console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
       })
-      .catch((err) => console.warn(err));
+      .catch((err) => console.warn(err)); //
   }, []);
 
   const isLoggedIn = (user: any) => user.role_id > 0;
@@ -90,6 +91,9 @@ const App = () => {
                 isAdmin(user) ? <EventsPage /> : <Navigate to='/event-card' />
               }
             />
+            {/* <Route 
+              path='/user-records',
+              element={isAdmin ? <UserRecordsPage /> : <Navigate to='/profile-page'} /> */}
             <Route
               path='/subscriptions-admin'
               element={<SubscriptionsAdmin />}

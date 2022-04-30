@@ -8,7 +8,9 @@ require('dotenv').config();
 import path from 'path';
 // const path = require('path');
 const passport = require('passport');
-const session = require('express-session');
+const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
+
 const axios = require('axios');
 // require Op object from sequelize to modify where clause in options object
 const { Op } = require('sequelize');
@@ -44,19 +46,40 @@ const port = process.env.LOCAL_PORT;
 const dist = path.resolve(__dirname, '..', '..', 'dist');
 // console.log('LINE 37 || INDEX.TSX', __dirname);
 
+
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, //one day
+    keys: [process.env.PASSPORT_CLIENT_SECRET],
+    httpOnly: true,
+    signed: true,
+    secure: process.env.NODE_ENV==='production',
+  })
+);
+
+// Sets us req.user
+app.use(cookieParser());
+
 app.use(express.json());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
 
 // Stripe Setup
-const stripe = require('stripe')(process.env.STRIPE_KEY);
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 const storeItems = new Map([
   [1, { priceInCents: 10000, name: 'Season Subscription' }],
   [2, { priceInCents: 20000, name: 'Annual Subscription' }],
 ]);
 //routes
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/auth', authRouter);
+// app.use(passport.authenticate());
+
 app.use('/events', eventRouter);
 // app.use('/subscriptions', subscriptionRouter);
 // app.use('/', farmRouter)
@@ -135,6 +158,7 @@ app.patch('/api/product/:id', async (req: Request, res: Response) => {
   console.log('LINE 271 || UPDATE PRODUCT', req.body);
 
   try {
+    // update product model with async query and assign the result of that promise to a variable to res.send back
     const updatedProduct = await Products.update(req.body, {
       where: { id: req.params.id },
       returning: true,
@@ -347,126 +371,126 @@ app.get('/api/farms', (req: Request, res: Response) => {
 
 //ADMIN RECORDS ROUTES
 
-app.get('/records/deliveryZones', (req: Request, res: Response) => {
-  DeliveryZones.findAll()
-    .then((data: any) => {
-      console.log('delivery data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/dietaryRestrictions', (req: Request, res: Response) => {
-  DietaryRestrictions.findAll()
-    .then((data: any) => {
-      console.log('DietaryRestrictions data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/events', (req: Request, res: Response) => {
-  Events.findAll()
-    .then((data: any) => {
-      console.log('Events data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/farms', (req: Request, res: Response) => {
-  Farms.findAll()
-    .then((data: any) => {
-      console.log('Farms data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/orders', (req: Request, res: Response) => {
-  Orders.findAll()
-    .then((data: any) => {
-      console.log('Orders data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/products', (req: Request, res: Response) => {
-  Products.findAll()
-    .then((data: any) => {
-      console.log('Products data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/roles', (req: Request, res: Response) => {
-  Roles.findAll()
-    .then((data: any) => {
-      console.log('Roles data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/rsvps', (req: Request, res: Response) => {
-  RSVP.findAll()
-    .then((data: any) => {
-      console.log('RSVP data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/subscriptionEntries', (req: Request, res: Response) => {
-  SubscriptionEntries.findAll()
-    .then((data: any) => {
-      console.log('SubscriptionEntries data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/subscriptions', (req: Request, res: Response) => {
-  Subscriptions.findAll()
-    .then((data: any) => {
-      console.log('Subscriptions data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/users', (req: Request, res: Response) => {
-  Users.findAll()
-    .then((data: any) => {
-      console.log('Users data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/vendors', (req: Request, res: Response) => {
-  Vendors.findAll()
-    .then((data: any) => {
-      console.log('Vendors data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
+// app.get('/records/deliveryZones', (req: Request, res: Response) => {
+//   DeliveryZones.findAll()
+//     .then((data: any) => {
+//       console.log('delivery data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/dietaryRestrictions', (req: Request, res: Response) => {
+//   DietaryRestrictions.findAll()
+//     .then((data: any) => {
+//       console.log('DietaryRestrictions data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/events', (req: Request, res: Response) => {
+//   Events.findAll()
+//     .then((data: any) => {
+//       console.log('Events data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/farms', (req: Request, res: Response) => {
+//   Farms.findAll()
+//     .then((data: any) => {
+//       console.log('Farms data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/orders', (req: Request, res: Response) => {
+//   Orders.findAll()
+//     .then((data: any) => {
+//       console.log('Orders data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/products', (req: Request, res: Response) => {
+//   Products.findAll()
+//     .then((data: any) => {
+//       console.log('Products data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/roles', (req: Request, res: Response) => {
+//   Roles.findAll()
+//     .then((data: any) => {
+//       console.log('Roles data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/rsvps', (req: Request, res: Response) => {
+//   RSVP.findAll()
+//     .then((data: any) => {
+//       console.log('RSVP data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/subscriptionEntries', (req: Request, res: Response) => {
+//   SubscriptionEntries.findAll()
+//     .then((data: any) => {
+//       console.log('SubscriptionEntries data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/subscriptions', (req: Request, res: Response) => {
+//   Subscriptions.findAll()
+//     .then((data: any) => {
+//       console.log('Subscriptions data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/users', (req: Request, res: Response) => {
+//   Users.findAll()
+//     .then((data: any) => {
+//       console.log('Users data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
+// app.get('/records/vendors', (req: Request, res: Response) => {
+//   Vendors.findAll()
+//     .then((data: any) => {
+//       console.log('Vendors data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
 
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get('*', (req: Request, res: Response) => {

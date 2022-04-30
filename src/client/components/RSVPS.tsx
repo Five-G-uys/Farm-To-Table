@@ -35,7 +35,7 @@ const RSVPS = () => {
   // console.log("LINE 28", role_id);
 
   const getAllRSVPSEvents = () => {
-    // if (role_id < 4) {
+    if (user && role_id < 4) {
     axios
       .get(`/events/api/user/rsvps/${id}`)
       .then((data) => {
@@ -54,7 +54,7 @@ const RSVPS = () => {
       .catch((err) => {
         console.log("LINE 48 FAILED", err);
       });
-    // }
+    }
 
     if (role_id === 4) {
       axios

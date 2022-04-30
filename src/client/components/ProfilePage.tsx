@@ -20,11 +20,7 @@ const Profile = (): React.ReactElement => {
   // console.log('THIS IS WORKING', user);
 
   const handleLogout = () => {
-    axios.delete<AxiosResponse>('/auth/api/logout')
-      .then(({ response }: AxiosResponse) => {
-        console.log('Logout Button', response);
-      })
-      .catch((err) => console.warn(err));
+    window.location.href='/auth/api/logout'
   };
 
   return (
