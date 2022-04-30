@@ -19,17 +19,6 @@ const Profile = (): React.ReactElement => {
   const user: any = useContext(UserContext);
   console.log('THIS IS WORKING', user);
 
-  // useEffect((): void => {
-  //   // TAKE THIS AXIOS CALL TO GET USER
-  //   axios
-  //     .get<AxiosResponse>("auth/api/userProfile")
-  //     .then(({ data }: AxiosResponse) => {
-  //       // console.log(data);
-  //       setUser(data);
-  //     })
-  //     .catch((err) => console.warn(err));
-  // }, []);
-
   return (
     <div className="page-wrap">
       <h1>My Profile</h1>

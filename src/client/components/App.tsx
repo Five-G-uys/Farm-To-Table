@@ -24,7 +24,6 @@ export const UserContext: any = createContext(null)
 
 const App = () => {
   const [user, setUser] = useState({});
-  // const [userRole, setUserRole] = useState(0));
 
 
   useEffect((): void => {
