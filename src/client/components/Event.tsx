@@ -30,7 +30,7 @@ const Event = ({
 }: //getAllRSVPSEvents,
 AppProps) => {
   const user: any = useContext(UserContext);
-  console.log('THIS IS WORKING', user);
+  console.log("THIS IS WORKING", user);
 
   const handRSVPosts = () => {
     console.log("LINE 63", user.id, " and ", eventId);

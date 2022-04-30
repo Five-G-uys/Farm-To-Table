@@ -20,6 +20,7 @@ import NewNavBar from "./NewNavBar";
 import ProductsPage from "./ProductsPage";
 import RecordsPage from "./Records/RecordsPage";
 import RSVPS from "../components/RSVPS";
+import { ThemeProvider, createTheme, Card, Paper, IconButton } from "@mui/material";
 
 export const UserContext: any = createContext(null);
 
@@ -37,61 +38,21 @@ const App = () => {
       .catch((err) => console.warn(err));
   }, []);
 
-  const [rsvpEvents, setRsvpEvents] = useState({
-    eventsToAttend: [],
-    rsvpsTotal: 0,
-    user_rsvps: 0,
-  });
-  console.log("44, What's user", user);
-  const getAllRSVPSEvents = () => {
-    if (user.role_id < 4) {
-      axios
-        .get(`/events/api/user/rsvps/${user.id}`)
-        .then((data) => {
-          console.log("LINE 33 FrontEND request", data.data);
-          const newArr = data.data
-            .map((eventObj: any) => {
-              return eventObj.value;
-            })
-            .map((eventArr: any) => {
-              return eventArr[0];
-            });
-          setRsvpEvents((state: any) => {
-            return { ...state, eventsToAttend: newArr };
-          });
-        })
-        .catch((err) => {
-          console.log("LINE 48 FAILED", err);
-        });
-    }
+  const [darkMode, setDarkMode] = useState(false);
+  const theme = createTheme({ palette: { mode: darkMode ? "dark" : "light" } });
 
-    if (user.role_id === 4) {
-      axios
-        .get("/events/api/rsvps")
-        .then((data) => {
-          console.log("LINE 55 FrontEND request", data.data);
-          const newArr = data.data;
-
-          setRsvpEvents((state: any) => {
-            return { ...state, rsvpsTotal: newArr.length };
-          });
-        })
-        .catch((err) => {
-          console.log("LINE 15 FAILED", err);
-        });
-    }
-  };
-  console.log(
-    "LINE 75 ",
-    rsvpEvents.eventsToAttend + "and" + rsvpEvents.rsvpsTotal + "number"
-  );
-
-  const { rsvpsTotal, eventsToAttend } = rsvpEvents;
-
-  useEffect(() => {
-    getAllRSVPSEvents();
-  }, []);
-  console.log("LINE 45", rsvpEvents.eventsToAttend);
+  // <ThemeProvider theme={theme}>
+  //   <Paper>
+  //     <div className="App">
+  //       <IconButton id="dark-mode"  onClick={() => {
+  //         setDarkMode(!darkMode);
+  //       }} {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />} 
+  //       </IconButton>
+  //       <Card name="Max" image={dog1} />
+  //       <Card name="Holly" image={dog2} />
+  //     </div>
+  //   </Paper>
+  // </ThemeProvider>; 
 
   const isLoggedIn = (user: any) => user.role_id > 0;
   const isSubscriber = (user: any) => user.role_id > 1;
