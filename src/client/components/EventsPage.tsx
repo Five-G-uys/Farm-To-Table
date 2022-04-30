@@ -20,6 +20,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Fade from "@mui/material/Fade";
+import EventCard from "./EventCard";
 import {
   RadioGroup,
   FormLabel,
@@ -39,7 +40,7 @@ const EventsPage = () => {
 
   const [updateCounter, setUpdateCounter] = useState(0);
   // cerate state var Products array (set to result of get req)
-  const [dbEvents, setDBEvents] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
@@ -191,12 +192,7 @@ const EventsPage = () => {
 
       .then(({ data }) => {
         console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
-        setEvent((state) => {
-          return {
-            ...state,
-            eventArray: data,
-          };
-        });
+        setAllEvents(data);
       })
       .catch((error) => {
         console.log("sorry, request failed", error);
@@ -211,7 +207,7 @@ const EventsPage = () => {
   const handleEditClick = (idEvent: any) => {
     console.log("LINE 185 || PRODUCTS PAGE CLICKED", idEvent);
 
-    const clickedEvent: any = dbEvents.find(
+    const clickedEvent: any = allEvents.find(
       // find mutates original array values
       (event: any) => event.id === eventId
     );
@@ -243,112 +239,114 @@ const EventsPage = () => {
   }, [updateCounter]);
 
   return (
-    <div>
-      {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        sx={{
-          color: "#fff",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          borderRadius: "2.5rem",
-          boxShadow: 24,
-        }}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 750,
-        }}
-        className="add_x_form_modal"
-      >
-        <Fade in={open}>
-          {
-            <div>
+    <>
+      <EventCard getAllEvents={getAllEvents} allEvents={allEvents} />
+      <div>
+        {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          sx={{
+            color: "#fff",
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            borderRadius: "2.5rem",
+            boxShadow: 24,
+          }}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 750,
+          }}
+          className="add_x_form_modal"
+        >
+          <Fade in={open}>
+            {
               <div>
-                <Box
-                  sx={{
-                    ...commonStyles,
-                    // flexWrap: 'wrap',
-                    // display: 'flex',
-                    // justifyContent: 'center',
-                    // borderRadius: '16px',
-                  }}
-                >
-                  <form
-                    onSubmit={
-                      inEditMode ? handleEventUpdateSubmit : postProduct
-                    }
+                <div>
+                  <Box
+                    sx={{
+                      ...commonStyles,
+                      // flexWrap: 'wrap',
+                      // display: 'flex',
+                      // justifyContent: 'center',
+                      // borderRadius: '16px',
+                    }}
                   >
-                    <Button
-                      variant="contained"
-                      size="large"
-                      onClick={showWidget}
+                    <form
+                      onSubmit={
+                        inEditMode ? handleEventUpdateSubmit : postProduct
+                      }
                     >
-                      Add Event Image
-                    </Button>
-                    <br></br>
-                    {thumbnail && <img width={300} src={thumbnail} />}
-                    <br></br>
-                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                      <InputLabel htmlFor="standard-adornment-amount">
-                        Name of Event
-                      </InputLabel>
-                      <Input
-                        name="eventName"
-                        value={eventName}
-                        id="Event Name"
+                      <Button
+                        variant="contained"
+                        size="large"
+                        onClick={showWidget}
+                      >
+                        Add Event Image
+                      </Button>
+                      <br></br>
+                      {thumbnail && <img width={300} src={thumbnail} />}
+                      <br></br>
+                      <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                        <InputLabel htmlFor="standard-adornment-amount">
+                          Name of Event
+                        </InputLabel>
+                        <Input
+                          name="eventName"
+                          value={eventName}
+                          id="Event Name"
+                          // id='fullWidth'
+                          placeholder="Name of Event"
+                          onChange={handelTextInput}
+                          startAdornment={
+                            <InputAdornment position="start"></InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                      <TextField
+                        // width='75%'
+                        // type={{ width: '75%' }}
+                        id="filled-basic"
+                        variant="filled"
+                        // label='Filled'
+                        value={description}
+                        name="description"
+                        label="Event Description"
                         // id='fullWidth'
-                        placeholder="Name of Event"
+                        placeholder="Event Description"
                         onChange={handelTextInput}
-                        startAdornment={
-                          <InputAdornment position="start"></InputAdornment>
-                        }
                       />
-                    </FormControl>
-                    <TextField
-                      // width='75%'
-                      // type={{ width: '75%' }}
-                      id="filled-basic"
-                      variant="filled"
-                      // label='Filled'
-                      value={description}
-                      name="description"
-                      label="Event Description"
-                      // id='fullWidth'
-                      placeholder="Event Description"
-                      onChange={handelTextInput}
-                    />
-                    <br></br>
-                    <br></br>
-                    <TextField
-                      fullWidth
-                      id="filled-basic"
-                      variant="filled"
-                      value={location}
-                      name="location"
-                      label="location"
-                      // id='fullWidth'
-                      placeholder="location of event"
-                      onChange={handelTextInput}
-                    />
-                    <br></br>
-                    <br></br>
-                    <TextField
-                      fullWidth
-                      id="filled-basic"
-                      variant="filled"
-                      value={eventDate}
-                      name="eventDate"
-                      label="Event Date"
-                      // id='fullWidth'
-                      placeholder="Date of event"
-                      onChange={handelTextInput}
-                    />
-                    <br></br>
-                    <br></br>
-                    {/* <fieldset>
+                      <br></br>
+                      <br></br>
+                      <TextField
+                        fullWidth
+                        id="filled-basic"
+                        variant="filled"
+                        value={location}
+                        name="location"
+                        label="location"
+                        // id='fullWidth'
+                        placeholder="location of event"
+                        onChange={handelTextInput}
+                      />
+                      <br></br>
+                      <br></br>
+                      <TextField
+                        fullWidth
+                        id="filled-basic"
+                        variant="filled"
+                        value={eventDate}
+                        name="eventDate"
+                        label="Event Date"
+                        // id='fullWidth'
+                        placeholder="Date of event"
+                        onChange={handelTextInput}
+                      />
+                      <br></br>
+                      <br></br>
+                      {/* <fieldset>
                       <legend className="radio-title">Type of event</legend>
                       <input
                         type="radio"
@@ -384,7 +382,7 @@ const EventsPage = () => {
                       </label>
                       <br />
                     </fieldset> */}
-                    {/* <FormControl>
+                      {/* <FormControl>
                       <FormLabel id="demo-radio-buttons-group-label">
                         Type of Event
                       </FormLabel>
@@ -413,58 +411,59 @@ const EventsPage = () => {
                         />
                       </RadioGroup>
                     </FormControl> */}
-                    <fieldset>
-                      <FormControlLabel
-                        value="Customer Day"
-                        control={<Radio disabled={handelTextInput} />}
-                        label="Customer Day"
-                        disabled={handelTextInput}
-                      />
-                      <FormControlLabel
-                        value="Farmers-Market"
-                        control={<Radio disabled={handelTextInput} />}
-                        label="Farmers-Market"
-                        disabled={handelTextInput}
-                      />
-                      <FormControlLabel
-                        value="none"
-                        control={<Radio disabled={handelTextInput} />}
-                        label="Community volunteering"
-                        disabled
-                      />
-                    </fieldset>
-                    <br></br>
-                    <br></br>
-                    <Button variant="contained" size="large" type="submit">
-                      {inEditMode ? "UPDATE" : "SAVE"}
-                    </Button>
-                    <br></br>
-                    <br></br>
-                    {/* <button type='submit' className='form--submit'>
+                      <fieldset>
+                        <FormControlLabel
+                          value="Customer Day"
+                          control={<Radio disabled={handelTextInput} />}
+                          label="Customer Day"
+                          disabled={handelTextInput}
+                        />
+                        <FormControlLabel
+                          value="Farmers-Market"
+                          control={<Radio disabled={handelTextInput} />}
+                          label="Farmers-Market"
+                          disabled={handelTextInput}
+                        />
+                        <FormControlLabel
+                          value="none"
+                          control={<Radio disabled={handelTextInput} />}
+                          label="Community volunteering"
+                          disabled
+                        />
+                      </fieldset>
+                      <br></br>
+                      <br></br>
+                      <Button variant="contained" size="large" type="submit">
+                        {inEditMode ? "UPDATE" : "SAVE"}
+                      </Button>
+                      <br></br>
+                      <br></br>
+                      {/* <button type='submit' className='form--submit'>
                   Save Product
                 </button> */}
-                  </form>
-                </Box>
+                    </form>
+                  </Box>
+                </div>
               </div>
-            </div>
-          }
-        </Fade>
-      </Modal>
-      <Fab
-        onClick={handleCreateForm}
-        size="small"
-        // color='secondary'
-        aria-label="add"
-        style={{ transform: "scale(2.5)", backgroundColor: "#80D55F" }}
-        sx={{
-          position: "fixed",
-          bottom: (theme) => theme.spacing(8),
-          right: (theme) => theme.spacing(8),
-        }}
-      >
-        <AddIcon style={{ color: "#FFFFFF" }} />
-      </Fab>
-    </div>
+            }
+          </Fade>
+        </Modal>
+        <Fab
+          onClick={handleCreateForm}
+          size="small"
+          // color='secondary'
+          aria-label="add"
+          style={{ transform: "scale(2.5)", backgroundColor: "#80D55F" }}
+          sx={{
+            position: "fixed",
+            bottom: (theme) => theme.spacing(8),
+            right: (theme) => theme.spacing(8),
+          }}
+        >
+          <AddIcon style={{ color: "#FFFFFF" }} />
+        </Fab>
+      </div>
+    </>
   );
 };
 

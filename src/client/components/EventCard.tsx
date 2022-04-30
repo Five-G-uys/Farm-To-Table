@@ -1,43 +1,35 @@
-import React, { useState, useEffect } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { useState, useEffect, useContext } from "react";
 import Event from "./Event";
 import axios from "axios";
+import { UserContext } from "./App";
 //import RSVPS from "./RSVPS";
+interface AppProps {
+  eventName: string;
+  description: string;
+  thumbnail: React.ImgHTMLAttributes<string>;
+  eventType: string;
+  eventDate: string;
+  eventId: number;
+  getAllEvents: () => void;
+  location: string;
+}
 
-const EventCard = () => {
-  const [events, setEvents] = useState({ eventArray: [] });
-  const [counter, setCounter] = useState(0);
-  const getAllEvents = () => {
-    axios
-      .get("/events/api/event")
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EventCard = ({ getAllEvents, allEvents }: AppProps | any) => {
+  const user: unknown = useContext(UserContext);
 
-      .then(({ data }) => {
-        console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
-        setEvents((state) => {
-          return {
-            ...state,
-            eventArray: data,
-          };
-        });
-        setCounter((counter: number) => {
-          if (counter === 20) {
-            counter = 0;
-          } else {
-            counter + 1;
-          }
-          return counter;
-        });
-      })
-      .catch((error) => {
-        console.log("sorry, request failed", error);
-      });
-  };
+  console.log("THIS IS WORKING", user);
+  const { role_id, id } = user;
+  //const [events, setEvents] = useState({ allEvents: [] });
+  //const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     getAllEvents();
-  }, [counter]);
+  }, []);
 
-  const { eventArray } = events;
-  //console.log("line 28", eventArray);
+  //const { allEvents } = events;
+  console.log("line 28", allEvents);
 
   return (
     <div className="events">
@@ -48,8 +40,8 @@ const EventCard = () => {
       <br></br>
       <br></br>
       <div className="card">
-        {Array.isArray(eventArray) &&
-          eventArray.map(
+        {Array.isArray(allEvents) &&
+          allEvents.map(
             (event: {
               eventName: string;
               description: string;
@@ -91,3 +83,6 @@ const EventCard = () => {
 };
 
 export default EventCard;
+function userContext(UserContext: any): any {
+  throw new Error("Function not implemented.");
+}

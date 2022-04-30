@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useContext } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import axios, { AxiosResponse } from "axios";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import RSVPLIST from "./RSVPLIST";
@@ -17,6 +18,7 @@ const RSVPS = () => {
     user_rsvps: 0,
   });
 
+  
   const getAllRSVPSEvents = () => {
     if (role_id < 4) {
       axios
