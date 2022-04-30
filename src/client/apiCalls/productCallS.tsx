@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// export function to product pages component
 export const updateProduct = async (productId: number, updatedProduct: any) => {
   try {
     // axios always has data property available on response obj so can destructure here

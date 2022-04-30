@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+<<<<<<< HEAD
 import React, { useState, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
@@ -22,10 +23,35 @@ const NewNavBar = ({ user }: any) => {
     { name: "Sign Up!", path: "/subscriptions-page" },
     { name: "Farm events", path: "/event-card" },
     { name: "About Us", path: "/about-us-page" },
+=======
+import React, { useState, MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
+
+const NewNavBar = ({ user }: any) => {
+  const pages = [
+    { name: 'Home', path: '/' },
+    { name: 'Sign Up!', path: '/subscriptions-page' },
+    { name: 'Farm events', path: '/event-card' },
+    { name: 'About Us', path: '/about-us-page' },
+>>>>>>> d684a2ba3c7a5eea768ea4719b3e5048e58ed193
   ];
 
   if (user.role_id === 4) {
     const settings = [
+<<<<<<< HEAD
       { name: "Add Season", path: "/subscriptions-admin" },
       { name: "Add Event", path: "/events-page" },
       { name: "Add Product ", path: "/edit-products" },
@@ -39,6 +65,22 @@ const NewNavBar = ({ user }: any) => {
       { name: "Delivery Routes", path: "/delivery-routes" },
       { name: "Profile", path: "/profile-page" },
       { name: "Logout", path: "/logout" },
+=======
+      { name: 'Add Season', path: '/subscriptions-admin' },
+      { name: 'Add Event', path: '/events-page' },
+      { name: 'Add Product ', path: '/edit-products' },
+      { name: 'Orders', path: '/orders-page' },
+      { name: 'Records', path: '/records' },
+      { name: 'Profile', path: '/profile-page' },
+      { name: 'Logout', path: '/logout' },
+    ];
+  } else if (user.role_id === 3) {
+    const settings = [
+      { name: 'Packing List', path: '/packing-list' },
+      { name: 'Delivery Routes', path: '/delivery-routes' },
+      { name: 'Profile', path: '/profile-page' },
+      { name: 'Logout', path: '/logout' },
+>>>>>>> d684a2ba3c7a5eea768ea4719b3e5048e58ed193
     ];
   } else if (user.role_id === 2 || user.role_id === 1) {
     const settings = [
@@ -47,7 +89,11 @@ const NewNavBar = ({ user }: any) => {
       { name: "Logout", path: "/logout" },
     ];
   } else {
+<<<<<<< HEAD
     const settings = [{ name: "Login", path: "/login" }];
+=======
+    const settings = [{ name: 'Login', path: '/login' }];
+>>>>>>> d684a2ba3c7a5eea768ea4719b3e5048e58ed193
   }
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);

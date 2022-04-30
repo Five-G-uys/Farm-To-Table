@@ -121,6 +121,7 @@ app.patch('/api/product/:id', async (req: Request, res: Response) => {
   console.log('LINE 271 || UPDATE PRODUCT', req.body);
 
   try {
+    // update product model with async query and assign the result of that promise to a variable to res.send back
     const updatedProduct = await Products.update(req.body, {
       where: { id: req.params.id },
       returning: true,
