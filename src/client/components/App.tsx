@@ -31,7 +31,7 @@ const App = () => {
     axios
       .get<AxiosResponse>('/auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
-        console.log('LINE 30 || APP COMPONENT', data);
+        // console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
       })
       .catch((err) => console.warn(err));
@@ -47,52 +47,53 @@ const App = () => {
       <NewNavBar user={user} />
       <div>
         <UserContext.Provider value={value}>
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            {/* Login/Logout Routes */}
-            <Route
-              path='/login'
-              element={
-                isLoggedIn(user) ? <Navigate to='/profile-page' /> : <Login />
-              }
-            />
 
-            {/* General Routes */}
-            <Route path='/about-us-page' element={<AboutUsPage />} />
-            <Route path='/subscriptions-page' element={<SubscriptionsPage />} />
-            <Route path='/event-card' element={<EventCard />} />
+            <Routes>
+              <Route path='/' element={<HomePage />} />
+              {/* Login/Logout Routes */}
+              <Route
+                path='/login'
+                element={
+                  isLoggedIn(user) ? <Navigate to='/profile-page' /> : <Login />
+                }
+              />
 
-            {/* User Routes */}
-            <Route path='/profile-page' element={<ProfilePage />} />
-            <Route
-              path='/subscriptions-page/confirmation-page'
-              element={<Confirmation />}
-            />
-            <Route
-              path='/orders-page'
-              element={
-                isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
-              }
-            />
+              {/* General Routes */}
+              <Route path='/about-us-page' element={<AboutUsPage />} />
+              <Route path='/subscriptions-page' element={<SubscriptionsPage />} />
+              <Route path='/event-card' element={<EventCard />} />
 
-            {/* Employ Routes */}
+              {/* User Routes */}
+              <Route path='/profile-page' element={<ProfilePage />} />
+              <Route
+                path='/subscriptions-page/confirmation-page'
+                element={<Confirmation />}
+              />
+              <Route
+                path='/orders-page'
+                element={
+                  isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
+                }
+              />
 
-            {/* Admin Routes */}
-            <Route
-              path='/events-page'
-              element={
-                isAdmin(user) ? <EventsPage /> : <Navigate to='/event-card' />
-              }
-            />
-            <Route
-              path='/subscriptions-admin'
-              element={<SubscriptionsAdmin />}
-            />
-            <Route path='/edit-products' element={<ProductsPage />} />
-            <Route path='/records' element={<RecordsPage />}>
-              <Route path="/products-record" element={<ProductsRecords/>} />
-            </Route>
-          </Routes>
+              {/* Employ Routes */}
+
+              {/* Admin Routes */}
+              <Route
+                path='/events-page'
+                element={
+                  isAdmin(user) ? <EventsPage /> : <Navigate to='/event-card' />
+                }
+              />
+              <Route
+                path='/subscriptions-admin'
+                element={<SubscriptionsAdmin />}
+              />
+              <Route path='/edit-products' element={<ProductsPage />} />
+              <Route path='records' element={<RecordsPage />}/>
+              <Route path='products-records' element={<ProductsPage/>}/>
+              
+            </Routes>
         </UserContext.Provider>
       </div>
     </>

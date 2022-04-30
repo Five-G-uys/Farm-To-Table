@@ -12,7 +12,7 @@ const useStyles = makeStyles({
 });
 
 const ProductsContainer = ({ products, handleEditClick }: any) => {
-  console.log('LINE 5 || PRODUCTSCONTAINER', products);
+  // console.log('LINE 5 || PRODUCTSCONTAINER', products);
   const classes = useStyles();
   return (
     <Grid

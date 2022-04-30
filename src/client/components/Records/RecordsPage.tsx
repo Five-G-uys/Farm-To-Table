@@ -32,9 +32,6 @@ const RecordsPage = () => {
 
   return (
     <div>
-      {/* <Routes>
-        <Route path="/*products-record" element={<ProductsRecords/>} />
-      </Routes> */}
       <button>get deliveryZones</button>
       <button>get dietaryRestrictions</button>
       <button>get events</button>

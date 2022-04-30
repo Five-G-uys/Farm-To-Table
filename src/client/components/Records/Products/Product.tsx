@@ -19,6 +19,7 @@ const Product = ({
   vendor_id,
   quantity,
 }: AppProps) => {
+  console.log({name})
   return (
     <div>
       <h1>{name}</h1>
