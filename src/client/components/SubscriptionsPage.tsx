@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SubscriptionCard from './SubscriptionCard';
-import { UserContext } from './App';
+// import { UserContext } from './App';
 
 const SubscriptionsPage = () => {
-  const user: any = useContext(UserContext);
+  // const user: any = useContext(UserContext);
   // console.log('THIS IS WORKING', user);
   const navigate = useNavigate();
   const [id, setId] = useState(0);

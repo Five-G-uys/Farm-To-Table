@@ -40,7 +40,18 @@ import { send } from 'node:process';
 //import { postEvent } from "./routes/EventRoutes";
 
 // // Needs to stay until used elsewhere (initializing models)
-// console.log(Farms, Roles, Events, Orders, DeliveryZones,Products, RSVP, Subscriptions, Users, Vendors);
+// console.log(
+//   Farms,
+//   Roles,
+//   Events,
+//   Orders,
+//   DeliveryZones,
+//   Products,
+//   RSVP,
+//   Subscriptions,
+//   Users,
+//   Vendors
+// );
 
 //dotenv.config();
 

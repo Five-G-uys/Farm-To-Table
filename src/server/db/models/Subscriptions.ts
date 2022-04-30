@@ -44,7 +44,6 @@ const Subscriptions = db.define('subscriptions', {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: { model: Farms, key: 'id' },
-    defaultValue: 1,
   },
 });
 // Subscriptions.hasMany(SubscriptionEntries, {
