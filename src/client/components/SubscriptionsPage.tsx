@@ -4,12 +4,32 @@ import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SubscriptionsContainer from './SubscriptionsContainer';
+import SubscriptionsAdmin from './SubscriptionsAdmin';
+
+import { ThemeProvider, createTheme } from '@mui/system';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import { Navigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import Backdrop from '@mui/material/Backdrop';
+import FormControl from '@mui/material/FormControl';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Fade from '@mui/material/Fade';
+
 // import { UserContext } from './App';
 
 const SubscriptionsPage = () => {
   // const user: any = useContext(UserContext);
   // console.log('THIS IS WORKING', user);
   const navigate = useNavigate();
+
+  const [updateCounter, setUpdateCounter] = useState(0);
 
   const [id, setId] = useState(0);
 
@@ -18,37 +38,99 @@ const SubscriptionsPage = () => {
   const [subscriptions, setSubscriptions] = useState([]);
 
   const [subscription, setSubscription] = useState({
-    id: 0,
+    id: '',
     season: '',
-    year: 0,
-    flat_price: 0,
-    weekly_price: 0,
+    year: '',
+    flat_price: '',
+    weekly_price: '',
     description: '',
     start_date: '',
     end_date: '',
+    thumbnail: '',
   });
 
-  // useEffect((): void => {
-  //   // TAKE THIS AXIOS CALL TO GET USER
-  //   axios
-  //     .get<AxiosResponse>('/api/userProfile')
-  //     .then(({ data }: AxiosResponse) => {
-  //       const { id }: { id: number } = data;
-  //       setId(id);
-  //     })
-  //     .catch((err) => console.warn(err));
-  //   axios
-  //     .get(`/api/subscriptions/`)
-  //     .then((response) => {
-  //       setSubscription((state) => {
-  //         return { ...state, subArray: response.data };
-  //       });
-  //       // console.log('LINE 46 SubscriptionPage.tsx', response);
-  //     })
-  //     .catch((err) => {
-  //       console.error('Line 49 subPage.tsx', err);
-  //     });
-  // }, []);
+  // state var for backdrop
+  const [open, setOpen] = useState(false);
+
+  // handle create form
+  const handleCreateForm = () => {
+    setOpen(true);
+  };
+  // Handlers for backdrop control
+  const handleClose = () => {
+    setOpen(false);
+    // setInEditMode(false);
+    setSubscription({
+      id: '',
+      season: '',
+      year: '',
+      flat_price: '',
+      weekly_price: '',
+      description: '',
+      start_date: '',
+      end_date: '',
+      thumbnail: '',
+    });
+  };
+
+  // Box component styles
+  const commonStyles = {
+    bgcolor: 'background.paper',
+    borderColor: 'text.primary',
+    m: 1,
+    // to center elements absolutely inside parent
+    // add event listener to window size to resize only when certain size bounds are crossed
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    border: 1,
+    padding: '20px',
+    borderRadius: '2.5rem',
+    boxShadow: 24,
+    // width: ,
+    // minWidth: 500,
+    // minHeight: 500,
+    // maxWidth: 1800,
+    // maxHeight: 1800,
+    // display: 'flex',
+  };
+
+  const handleInputSubscription = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setSubscription((state) => {
+      return {
+        ...state,
+        [name]: value,
+      };
+    });
+  };
+
+  const postSubscription = () => {
+    axios
+      .post('/api/subscriptions-admin', {
+        event: {
+          season: subscription.season,
+          year: subscription.year,
+          flat_price: subscription.flat_price,
+          weekly_price: subscription.weekly_price,
+          description: subscription.description,
+          start_date: subscription.start_date,
+          end_date: subscription.end_date,
+          thumbnail: subscription.thumbnail,
+        },
+      })
+      .then((data) => {
+        console.log('saved!', data);
+        setUpdateCounter(updateCounter + 1);
+        handleClose();
+      })
+      .catch((err) => console.error(err));
+  };
 
   const getAllSubscriptions = () => {
     axios
@@ -64,7 +146,7 @@ const SubscriptionsPage = () => {
 
   useEffect((): void => {
     getAllSubscriptions();
-  }, []);
+  }, [updateCounter]);
 
   const handleCheckout = () => {
     console.log('Checkout');
@@ -127,6 +209,15 @@ const SubscriptionsPage = () => {
         subscriptions={subscriptions}
         getAllSubscriptions={getAllSubscriptions}
       />
+      <SubscriptionsAdmin
+        handleInputSubscription={handleInputSubscription}
+        getAllSubscriptions={getAllSubscriptions}
+        postSubscription={postSubscription}
+        open={open}
+        handleCreateForm={handleCreateForm}
+        handleClose={handleClose}
+        commonStyles={commonStyles}
+      />
       <input
         name='season'
         value='spring'
@@ -155,11 +246,25 @@ const SubscriptionsPage = () => {
       <label htmlFor='season'> Winter 2022 </label>
       <br />
       <button className='form--submit' onClick={handleCheckout}>
-        {/* <Link to={`/confirmation-page`}>Subscribe!</Link> */}Checkout!
+        Checkout!
       </button>
       <button className='form--submit' onClick={handleSubscribed}>
         Subscribe!
       </button>
+      <Fab
+        onClick={handleCreateForm}
+        size='small'
+        // color='secondary'
+        aria-label='add'
+        style={{ transform: 'scale(2.5)', backgroundColor: '#80D55F' }}
+        sx={{
+          position: 'fixed',
+          bottom: (theme) => theme.spacing(8),
+          right: (theme) => theme.spacing(8),
+        }}
+      >
+        <AddIcon style={{ color: '#FFFFFF' }} />
+      </Fab>
     </div>
   );
 };
