@@ -5,7 +5,7 @@ import axios from "axios";
 
 const EventCard = () => {
   const [events, setEvents] = useState({ eventArray: [] });
-
+  const [counter, setCounter] = useState(0);
   const getAllEvents = () => {
     axios
       .get("/events/api/event")
@@ -18,6 +18,14 @@ const EventCard = () => {
             eventArray: data,
           };
         });
+        setCounter((counter: number) => {
+          if (counter === 20) {
+            counter = 0;
+          } else {
+            counter + 1;
+          }
+          return counter;
+        });
       })
       .catch((error) => {
         console.log("sorry, request failed", error);
@@ -26,7 +34,7 @@ const EventCard = () => {
 
   useEffect(() => {
     getAllEvents();
-  }, []);
+  }, [counter]);
 
   const { eventArray } = events;
   //console.log("line 28", eventArray);

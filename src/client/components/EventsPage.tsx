@@ -48,7 +48,6 @@ const EventsPage = () => {
     eventName: "",
     description: "",
     thumbnail: "",
-    category: "",
     eventDate: "",
     eventType: "",
     location: "",
@@ -70,7 +69,6 @@ const EventsPage = () => {
       eventName: "",
       description: "",
       thumbnail: "",
-      category: "",
       eventDate: "",
       eventType: "",
       location: "",
@@ -115,8 +113,6 @@ const EventsPage = () => {
     bgcolor: "background.paper",
     borderColor: "text.primary",
     m: 1,
-    // to center elements absolutely inside parent
-    // add event listener to window size to resize only when certain size bounds are crossed
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -157,7 +153,6 @@ const EventsPage = () => {
     // console.log(event);
   };
 
-  ///////////////////////////////////////////////// CONSOLIDATE ALL CLOUDINARY HANDLING
   // Cloudinary handling
   // console.log(process.env.CLOUD_PRESET2);
   const CLOUD_NAME = process.env.CLOUD_NAME;
@@ -210,7 +205,7 @@ const EventsPage = () => {
 
   useEffect(() => {
     getAllEvents();
-  }, []);
+  }, [updateCounter]);
 
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (idEvent: any) => {

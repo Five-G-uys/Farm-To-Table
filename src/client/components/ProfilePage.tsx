@@ -9,22 +9,22 @@
 // };
 
 // export default ProfilePage;
-interface AppProps {
-  getAllRSVPSEvents(): void;
-}
+// interface AppProps {
+//   getAllRSVPSEvents(): void;
+// }
 
 import React, { useContext, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import RSVPS from "./RSVPS";
 import { UserContext } from "./App";
 
-const Profile = ({ getAllRSVPSEvents }: AppProps) => {
+const Profile = () => {
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
 
-  useEffect(() => {
-    getAllRSVPSEvents();
-  }, []);
+  // useEffect(() => {
+  //   getAllRSVPSEvents();
+  // }, []);
 
   return (
     <div className="page-wrap">

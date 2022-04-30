@@ -81,10 +81,12 @@ eventRouter.get("/api/user/rsvps/:userId", (req: Request, res: Response) => {
           console.log("LINE 197", rsvp.event_id);
           return Events.findAll({ where: { id: rsvp.event_id } });
         });
-        Promise.allSettled(promises).then(async (event: any) => {
-          console.log("LINE 200, EVENTS FOR USER", event[0].value);
-          res.status(200).send(event);
-        }).catch((err: any) => console.log(err));
+        Promise.allSettled(promises)
+          .then(async (event: any) => {
+            console.log("LINE 200, EVENTS FOR USER", event[0].value);
+            res.status(200).send(event);
+          })
+          .catch((err: any) => console.log(err));
       } catch {
         console.log("Failed to promisify");
       }
@@ -137,4 +139,15 @@ eventRouter.get("/api/rsvps", (req: Request, res: Response) => {
     });
 });
 
+//Update route for events
+eventRouter.patch("/api/event/update", (req: Request, res: Response) => {
+  const { id } = req.body;
+  Events.updateOne({ where: { id: id } })
+    .then((data: any) => {
+      console.log("Line 146 Event update", data);
+    })
+    .catch((err: any) => {
+      console.error("Line 148 Update Failed", err);
+    });
+});
 module.exports = eventRouter;
