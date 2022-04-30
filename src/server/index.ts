@@ -109,15 +109,6 @@ app.post('/create-checkout-session', async (req, res) => {
     })
       .then((data: any) => {
         console.log('LINE 187 || Product Post Request', data);
-<<<<<<< HEAD
-        res.status(201);
-      })
-      .catch((err: string) => {
-        console.error('Product Post Request Failed', err);
-        res.sendStatus(500);
-      });
-  });
-=======
         res.status(201).json(data);
       })
       .catch((err: string) => {
@@ -144,7 +135,6 @@ app.patch('/api/product/:id', async (req: Request, res: Response) => {
     res.status(500).json(err);
   }
 });
->>>>>>> 80178d689c6b5be5d6bb88b079f82a28619eb805
 
 //////////////////////////////////////////////////////////////////////////////////////////// GET ALL PRODUCT ROUTE
 app.get('/get_all_products', (req: Request, res: Response) => {
@@ -318,11 +308,7 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     farm_id: 1,
   })
     .then((data: any) => {
-<<<<<<< HEAD
       // console.log("294 Return Subscriptions Route || Post Request", data);
-=======
-      console.log('294 Return Subscriptions Route || Post Request', data);
->>>>>>> 80178d689c6b5be5d6bb88b079f82a28619eb805
       res.status(201);
     })
     .catch((err: string) => {
@@ -331,7 +317,6 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     });
 });
 
-<<<<<<< HEAD
 //Subscription Admin PUT request:
 app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
   console.log('LINE 305 Subscription PUT req', req.params.id);
@@ -374,8 +359,6 @@ app.delete('/api/subscriptions/delete', (req: Request, res: Response) => {
 });
 
 // Home page routes
-=======
->>>>>>> 80178d689c6b5be5d6bb88b079f82a28619eb805
 app.get('/api/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
