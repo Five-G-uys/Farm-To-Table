@@ -21,7 +21,7 @@ import ProductsPage from './ProductsPage';
 import RecordsPage from './Records/RecordsPage';
 import DeliveryRoutesPage from './DeliveryRoutesPage';
 import PackingListPage from './PackingListPage';
-// import UserRecordsPage from './UserRecordsPagge'
+import UserRecordsPage from './UsersRecordsPage'
 
 
 export const UserContext: any = createContext(null)
@@ -33,7 +33,7 @@ const App = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get<AxiosResponse>('/auth/api/userProfile')
+      .get('/auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
@@ -42,7 +42,6 @@ const App = () => {
   }, []);
 
   const isLoggedIn = (user: any) => user.role_id > 0;
-  const isSubscriber = (user: any) => user.role_id > 1;
   const isEmployee = (user: any) => user.role_id > 2;
   const isAdmin = (user: any) => user.role_id > 3;
 
@@ -53,53 +52,57 @@ const App = () => {
         <h1>{user.role_id}</h1>
         <UserContext.Provider value={user}>
           <Routes>
-            <Route path='/' element={<HomePage />} />
             {/* Login/Logout Routes */}
             <Route
               path='/login'
-              element={
-                isLoggedIn(user) ? <Navigate to='/profile-page' /> : <Login />
-              }
-            />
+              element={isLoggedIn(user) ? <Navigate to='/profile-page' /> : <Login />} />
 
             {/* General Routes */}
-            <Route path='/about-us-page' element={<AboutUsPage />} />
-            <Route path='/subscriptions-page' element={<SubscriptionsPage />} />
-            <Route path='/event-card' element={<EventCard />} />
-
-            {/* User Routes */}
-            <Route path='/profile-page' element={<ProfilePage />} />
+            <Route 
+              path='/' 
+              element={<HomePage />} />
+            <Route 
+              path='/about-us-page' 
+              element={<AboutUsPage />} />
+            <Route 
+              path='/subscriptions-page' 
+              element={<SubscriptionsPage />} />
+            <Route 
+              path='/event-card' 
+              element={<EventCard />} />
+            <Route 
+              path='/edit-products' 
+              element={<ProductsPage />} />
+            {/* Restricted User Routes */}
+            <Route 
+              path='/profile-page' 
+              element={isLoggedIn(user) ? <ProfilePage /> : <Navigate to='/login' />} />
             <Route
               path='/subscriptions-page/confirmation-page'
-              element={<Confirmation />}
-            />
+              element={isLoggedIn(user) ? <Confirmation /> : <Navigate to='/login' />} />
             <Route
               path='/orders-page'
-              element={
-                isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
-              }
-            />
-
-            {/* Employ Routes */}
-            <Route path='/delivery-routes' element={<DeliveryRoutesPage />} />
-            <Route path='/packing-lists' element={<PackingListPage />} />
-
-            {/* Admin Routes */}
+              element={isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />}/>
+            {/* Restricted Employ Routes */}
+            <Route 
+              path='/delivery-routes' 
+              element={isEmployee(user) ? <DeliveryRoutesPage /> : <Navigate to='/login' />}/>
+            <Route 
+              path='/packing-lists'
+              element={isEmployee(user) ? <PackingListPage /> : <Navigate to='/login' />} />
+            {/* Restricted Admin Routes */}
             <Route
               path='/events-page'
-              element={
-                isAdmin(user) ? <EventsPage /> : <Navigate to='/event-card' />
-              }
-            />
-            {/* <Route 
-              path='/user-records',
-              element={isAdmin ? <UserRecordsPage /> : <Navigate to='/profile-page'} /> */}
+              element={isAdmin(user) ? <EventsPage /> : <Navigate to='/event-card' />} />
+            <Route 
+              path='/edit-users'
+              element={isAdmin(user) ? <UserRecordsPage /> : <Navigate to='/profile-page' />} />
             <Route
               path='/subscriptions-admin'
-              element={<SubscriptionsAdmin />}
-            />
-            <Route path='/edit-products' element={<ProductsPage />} />
-            <Route path='/records' element={<RecordsPage />} />
+              element={isAdmin(user) ? <SubscriptionsAdmin /> : <Navigate to='/subscriptions-page' />} />
+            <Route 
+              path='/records' 
+              element={isAdmin(user) ? <RecordsPage /> : <Navigate to='/profile-page' />} />
           </Routes>
         </UserContext.Provider>
       </div>
