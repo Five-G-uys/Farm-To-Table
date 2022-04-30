@@ -8,7 +8,7 @@ const { application } = require("express"); // find name in project
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import Users from "../db/models/Users";
-import UserInterface from "../../types/UserInterface";
+// import UserInterface from "../../types/UserInterface";
 
 passport.use(
   new GoogleStrategy(

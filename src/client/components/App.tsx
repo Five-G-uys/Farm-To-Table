@@ -19,6 +19,9 @@ import Login from './Login';
 import NewNavBar from './NewNavBar';
 import ProductsPage from './ProductsPage';
 import RecordsPage from './Records/RecordsPage';
+import DeliveryRoutesPage from './DeliveryRoutesPage';
+import PackingListPage from './PackingListPage';
+
 
 export const UserContext: any = createContext(null)
 
@@ -77,6 +80,8 @@ const App = () => {
             />
 
             {/* Employ Routes */}
+            <Route path='/delivery-routes' element={<DeliveryRoutesPage />} />
+            <Route path='/packing-lists' element={<PackingListPage />} />
 
             {/* Admin Routes */}
             <Route

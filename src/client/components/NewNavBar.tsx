@@ -28,16 +28,18 @@ const NewNavBar = ({ user }: any) => {
  
   if (user.role_id === 4) { 
      const settings = [
+      { name: 'Records', path: '/records' },
+      { name: 'Packing List', path: '/packing-lists'},
+      { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Add Season', path: '/subscriptions-admin' },
       { name: 'Add Event', path: '/events-page' },
       { name: 'Add Product ', path: '/edit-products' },
-      { name: 'Records', path: '/records' },
       { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/logout' },
     ];
   } else if (user.role_id === 3) {
     const settings = [
-      { name: 'Packing List', path: '/packing-list'},
+      { name: 'Packing List', path: '/packing-lists'},
       { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/logout' },
