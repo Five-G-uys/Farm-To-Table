@@ -1,39 +1,43 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useEffect, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import RSVPLIST from "./RSVPLIST";
+import { UserContext } from "./App";
 
 const RSVPS = () => {
-  const [user, setUserId] = useState({ role_id: 0, userId: 1 });
+  const user: any = useContext(UserContext)
+  console.log('THIS IS WORKING 10', user);
+  // const [user, setUserId] = useState({ role_id: 0, userId: 1 });
 
-  useEffect((): void => {
-    // TAKE THIS AXIOS CALL TO GET USER
-    axios
-      .get<AxiosResponse>("/auth/api/userProfile")
-      .then(({ data }: AxiosResponse) => {
-        console.log("userId Role", data);
-        const { role_id, id } = data;
+  // useEffect((): void => {
+  //   // TAKE THIS AXIOS CALL TO GET USER
+  //   axios
+  //     .get<AxiosResponse>("/auth/api/userProfile")
+  //     .then(({ data }: AxiosResponse) => {
+  //       console.log("userId Role", data);
+  //       const { role_id, id } = data;
 
-        setUserId((state) => {
-          return { ...state, userId: id, role_id: role_id };
-        });
-      })
-      .catch((err) => console.warn("Sorry it failed", err));
-  }, []);
+  //       setUserId((state) => {
+  //         return { ...state, userId: id, role_id: role_id };
+  //       });
+  //     })
+  //     .catch((err) => console.warn("Sorry it failed", err));
+  // }, []);
 
-  const { role_id, userId } = user;
+  const { role_id, id } = user;
 
   const [rsvpEvents, setRsvpEvents] = useState({
     eventsToAttend: [],
     rsvpsTotal: 0,
   });
 
-  console.log("LINE 28", role_id);
+  // console.log("LINE 28", role_id);
 
   const getAllRSVPSEvents = () => {
     // if (role_id < 4) {
     axios
-      .get(`/events/api/user/rsvps/${userId}`)
+      .get(`/events/api/user/rsvps/${id}`)
       .then((data) => {
         console.log("LINE 33 FrontEND request", data.data);
         const newArr = data.data

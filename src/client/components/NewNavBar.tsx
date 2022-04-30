@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
@@ -14,24 +16,44 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 
-const pages = [
-  { name: 'Home', path: '/' },
-  { name: 'Sign Up!', path: '/subscriptions-page' },
-  { name: "Farm events", path: "/event-card" },
-  { name: 'About Us', path: '/about-us-page' },
-];
-const settings = [
-  { name: 'Login', path: '/login' },
-  { name: 'Logout', path: '/logout' },
-  { name: 'Profile', path: '/profile-page' },
-  { name: 'Orders', path: '/orders-page' },
-  { name: 'Add Season', path: '/subscriptions-admin' },
-  { name: 'Add Event', path: '/events-page' },
-  { name: 'Add Product ', path: '/edit-products' },
-  { name: 'Records', path: '/records' },
-];
 
 const NewNavBar = ({ user }: any) => {
+
+  const pages = [
+    { name: 'Home', path: '/' },
+    { name: 'Sign Up!', path: '/subscriptions-page' },
+    { name: "Farm events", path: "/event-card" },
+    { name: 'About Us', path: '/about-us-page' },
+  ];
+ 
+  if (user.role_id === 4) { 
+     const settings = [
+      { name: 'Add Season', path: '/subscriptions-admin' },
+      { name: 'Add Event', path: '/events-page' },
+      { name: 'Add Product ', path: '/edit-products' },
+      { name: 'Records', path: '/records' },
+      { name: 'Profile', path: '/profile-page' },
+      { name: 'Logout', path: '/logout' },
+    ];
+  } else if (user.role_id === 3) {
+    const settings = [
+      { name: 'Packing List', path: '/packing-list'},
+      { name: 'Delivery Routes', path: '/delivery-routes' },
+      { name: 'Profile', path: '/profile-page' },
+      { name: 'Logout', path: '/logout' },
+    ];
+  } else if (user.role_id === 2 || user.role_id === 1 ) {
+    const settings = [
+      { name: 'Orders', path: '/orders-page' },
+      { name: 'Profile', path: '/profile-page' },
+      { name: 'Logout', path: '/logout' },
+    ];
+  } else {
+    const settings = [
+      { name: 'Login', path: '/login' },
+    ];
+  }
+
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
