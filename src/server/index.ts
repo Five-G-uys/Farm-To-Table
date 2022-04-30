@@ -449,25 +449,24 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
 });
 
 //Subscription Admin PUT request:
-// app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
-//   console.log('LINE 305 Subscription PUT req', req.params.id);
-//   Subscriptions.update(req.body, {
-//     where: {
-//       id: req.params.id,
-//     },
-//     returning: true,
-//   })
-//     .then((response: any) => {
-//       res.json(response).status(204);
-//     })
-//     .catch((err: unknown) => {
-//       console.error('SUBSCRIPTION UPDATE REQUEST:', err);
-//     });
-// });
+app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
+  console.log('LINE 305 Subscription PUT req', req.params.id);
+  Subscriptions.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+    returning: true,
+  })
+    .then((response: any) => {
+      res.json(response).status(204);
+    })
+    .catch((err: unknown) => {
+      console.error('SUBSCRIPTION UPDATE REQUEST:', err);
+    });
+});
 
 //SUBSCRIPTION Admin DELETE req:
 app.delete('/api/subscriptions/delete', (req: Request, res: Response) => {
-  console.log('Subscription DELETE req:', req.query); //returns { id: '2' }
   SubscriptionEntries.destroy({
     where: {
       subscription_id: req.query.subscription_id,
@@ -477,7 +476,6 @@ app.delete('/api/subscriptions/delete', (req: Request, res: Response) => {
     .then((data: any) => {
       Subscriptions.destroy({ where: { id: req.query.subscription_id } })
         .then((data: any) => {
-          console.log('Server-side Delete Req SUCCESS', data);
           res.sendStatus(200);
         })
         .catch((err: unknown) => {

@@ -76,31 +76,7 @@ const SubscriptionsPage = () => {
     }
   };
 
-  // SUBSCRIPTION EDITS
   const { subArray } = subscription;
-
-  // const handleSeasonEdits = () => {
-  //   if (subArray) {
-  //     console.log('LINE 75', subArray);
-  //     axios
-  //       .put(`/api/subscriptions/${id}`, {
-  //         farm_id: 1,
-  //         season: subArray.season,
-  //         year: subArray.year,
-  //         flat_price: subArray.flat_price,
-  //         weekly_price: subArray.weekly_price,
-  //         description: subArray.description,
-  //         start_date: subArray.start_date,
-  //         end_date: subArray.end_date,
-  //       })
-  //       .then((data) => {
-  //         console.log('SUCCESS EDIT', data);
-  //       })
-  //       .catch((err) => {
-  //         console.error('SUBSCRIPTION EDIT ERROR', err);
-  //       });
-  //   }
-  // };
 
   return (
     <div>
