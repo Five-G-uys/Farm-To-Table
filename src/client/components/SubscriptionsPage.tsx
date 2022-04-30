@@ -176,7 +176,11 @@ const SubscriptionsPage = () => {
       })
       .then(({ url }) => {
         // On success redirect the customer to the returned URL
-        window.location = url;
+        console.log(url);
+        // window.location = url
+      })
+      .catch((e) => {
+        console.error(e.error);
       })
       .catch((e) => {
         console.error(e.error);

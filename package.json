@@ -40,6 +40,7 @@
     "@types/styled-components": "^5.1.25",
     "axios": "^0.26.1",
     "cloudinary": "^1.29.1",
+    "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
     "dayjs": "^1.11.1",
     "dotenv": "^16.0.0",
