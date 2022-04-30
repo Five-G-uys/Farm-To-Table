@@ -26,6 +26,7 @@ const RSVPS = () => {
   const [rsvpEvents, setRsvpEvents] = useState({
     eventsToAttend: [],
     rsvpsTotal: 0,
+    user_rsvps: 0,
   });
 
   console.log("LINE 28", role_id);
@@ -73,12 +74,23 @@ const RSVPS = () => {
     rsvpEvents.eventsToAttend + "and" + rsvpEvents.rsvpsTotal + "number"
   );
 
+  const { rsvpsTotal, eventsToAttend } = rsvpEvents;
   useEffect(() => {
     getAllRSVPSEvents();
+    if (role_id >= 4) {
+      if (rsvpsTotal > 0) {
+        getAllRSVPSEvents();
+      } else return;
+    } else if (role_id <= 3) {
+      if (eventsToAttend.length > 0) {
+        getAllRSVPSEvents();
+      } else {
+        return;
+      }
+    }
   }, []);
   console.log("LINE 45", rsvpEvents.eventsToAttend);
 
-  const { rsvpsTotal, eventsToAttend } = rsvpEvents;
   return (
     <div>
       {role_id < 4 && <h1>My Events to Attend</h1>}
@@ -118,7 +130,7 @@ const RSVPS = () => {
                 thumbnail={thumbnail}
                 description={description}
                 eventDate={eventDate}
-                key={id | event.eventId}
+                key={id | 7 | 12 | 5 | 19 | 17 | 20 | 90 | 17}
                 eventId={id}
                 userRole={role_id}
                 location={location}

@@ -51,7 +51,6 @@ const EventCard = () => {
               eventDate: string;
               id: number;
               location: string;
-              season: string;
             }) => {
               const {
                 eventName,
@@ -60,7 +59,6 @@ const EventCard = () => {
                 description,
                 eventDate,
                 id,
-                season,
                 location,
               } = event;
               return (
@@ -74,7 +72,6 @@ const EventCard = () => {
                   key={eventName}
                   eventId={id}
                   location={location}
-                  season={season}
                 />
               );
             }

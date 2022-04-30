@@ -13,7 +13,6 @@ interface AppProps {
   eventId: number;
   getAllEvents: () => void;
   location: string;
-  season: string;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({

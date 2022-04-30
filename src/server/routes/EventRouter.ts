@@ -16,15 +16,8 @@ const axios = require("axios");
 const eventRouter: Router = Router();
 
 eventRouter.post("/api/event", (req, res) => {
-  const {
-    eventName,
-    description,
-    thumbnail,
-    eventDate,
-    eventType,
-    location,
-    season,
-  } = req.body.event;
+  const { eventName, description, thumbnail, eventDate, eventType, location } =
+    req.body.event;
 
   console.log("162 Request object postEvent", req.body);
   Events.create({
@@ -33,7 +26,6 @@ eventRouter.post("/api/event", (req, res) => {
     thumbnail,
     eventDate,
     eventType,
-    season,
     location,
   })
     .then((data: any) => {
@@ -105,9 +97,11 @@ eventRouter.get("/api/user/rsvps/:userId", (req: Request, res: Response) => {
 //delete request for deleting an event in the DB
 eventRouter.delete("/api/event/delete", (req: Request, res: Response) => {
   console.log("line 210", req.query);
+  //first delete the rsvps associated with a given event_id
   RSVP.destroy({
     where: { event_id: req.query.id },
   }).then((data: any) => {
+    //then delete the event with that id.
     Events.destroy({ where: { id: req.query.id } })
       .then((data: any) => {
         console.log("deletion was successful!", data);

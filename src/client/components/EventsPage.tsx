@@ -14,7 +14,6 @@ const EventsPage = () => {
     category: "",
     eventDate: "",
     eventType: "",
-    season: "",
     location: "",
   });
 
@@ -42,12 +41,11 @@ const EventsPage = () => {
           thumbnail: event.thumbnail,
           eventDate: event.eventDate,
           eventType: event.eventType,
-          season: event.season,
           location: event.location,
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      // .then((data) => console.log("saved!", data))
+      .then((data) => console.log("saved!", data))
       .catch((err) => console.error(err));
   };
   // console.log(process.env.CLOUD_PRESET2);
@@ -78,15 +76,8 @@ const EventsPage = () => {
 
   // useEffect(() => {}, [event.thumbnail]);
   // console.log(event);
-  const {
-    eventName,
-    description,
-    thumbnail,
-    eventDate,
-    eventType,
-    season,
-    location,
-  } = event;
+  const { eventName, description, thumbnail, eventDate, eventType, location } =
+    event;
   return (
     <div className="event">
       {/* <h1>{`${user}`}</h1> */}
@@ -101,15 +92,6 @@ const EventsPage = () => {
         <br></br>
         <br></br>
         <form onSubmit={postEvent} className="form-event">
-          Season
-          <input
-            type="text"
-            placeholder="Event season"
-            value={season}
-            name="season"
-            onChange={handleInputEvent}
-            className="input"
-          />
           Name of Event
           <input
             type="text"
