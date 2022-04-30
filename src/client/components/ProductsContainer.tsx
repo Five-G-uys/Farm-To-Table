@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ProductsContainer = ({ products, handleEditClick }: any) => {
+const ProductsContainer = ({ products, handleEditClick, inEditMode }: any) => {
   console.log('LINE 5 || PRODUCTSCONTAINER', products);
   const classes = useStyles();
   return (
@@ -36,6 +36,7 @@ const ProductsContainer = ({ products, handleEditClick }: any) => {
               product={product}
               key={product.name + product.id}
               handleEditClick={handleEditClick}
+              inEditMode={inEditMode}
             />
           </Grid>
         );
