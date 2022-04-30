@@ -23,7 +23,7 @@ import Fade from '@mui/material/Fade';
 import ProductsContainer from './ProductsContainer';
 // can import getallproducts after migrating it to apicalls file
 import { updateProduct } from '../apiCalls/productCallS';
-import { cli } from 'webpack';
+// import { cli } from 'webpack';
 
 const ProductsPage = () => {
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -132,6 +132,7 @@ const ProductsPage = () => {
   const handleProductUpdateSubmit = async (e: any) => {
     e.preventDefault();
     try {
+      // call async function that was imported from apiCalls/productCalls
       const result = await updateProduct(product.id, product);
       // keep in try so it doesn't rerender on error
       setUpdateCounter(updateCounter + 1);
