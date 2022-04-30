@@ -23,9 +23,9 @@ export const syncModels = async (dropTables = false) => {
     await EventsModel.sync(options);
     await RolesModel.sync(options);
     await VendorsModel.sync(options);
-    await ProductsModel.sync(options);
     await UsersModel.sync(options);
     await SubscriptionsModel.sync(options);
+    await ProductsModel.sync(options);
     await DietaryRestrictionsModel.sync(options);
     await SubscriptionEntriesModel.sync(options);
     await OrdersModel.sync(options);
