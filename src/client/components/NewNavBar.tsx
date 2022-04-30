@@ -20,6 +20,7 @@ const NewNavBar = ({ user }: any) => {
   const pages = [
     { name: 'Home', path: '/' },
     { name: 'Sign Up!', path: '/subscriptions-page' },
+    { name: 'Products ', path: '/edit-products' },
     { name: 'Farm events', path: '/event-card' },
     { name: 'About Us', path: '/about-us-page' },
   ];
@@ -32,7 +33,6 @@ const NewNavBar = ({ user }: any) => {
       { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Add Season', path: '/subscriptions-admin' },
       { name: 'Add Event', path: '/events-page' },
-      { name: 'Add Product ', path: '/edit-products' },
       { name: 'Edit User Role', path: '/edit-users'},
       { name: 'Profile', path: '/profile-page' },
       // { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
