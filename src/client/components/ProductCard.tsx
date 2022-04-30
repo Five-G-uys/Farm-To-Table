@@ -50,6 +50,7 @@ const ProductCard = ({ product, handleEditClick }: any) => {
   };
 
   const { name, id, description, plant_date, harvest_date, img_url } = product;
+  // console.log('LINE 53 || PRODUCT CARD', id);
   return (
     <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>
       <CardHeader

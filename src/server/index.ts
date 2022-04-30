@@ -109,6 +109,7 @@ app.post('/create-checkout-session', async (req, res) => {
     })
       .then((data: any) => {
         console.log('LINE 187 || Product Post Request', data);
+<<<<<<< HEAD
         res.status(201);
       })
       .catch((err: string) => {
@@ -116,6 +117,34 @@ app.post('/create-checkout-session', async (req, res) => {
         res.sendStatus(500);
       });
   });
+=======
+        res.status(201).json(data);
+      })
+      .catch((err: string) => {
+        console.error('Product Post Request Failed', err);
+        res.status(500).json(err);
+      });
+  });
+
+///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
+app.patch('/api/product/:id', async (req: Request, res: Response) => {
+  console.log('LINE 271 || UPDATE PRODUCT', req.body);
+
+  try {
+    // update product model with async query and assign the result of that promise to a variable to res.send back
+    const updatedProduct = await Products.update(req.body, {
+      where: { id: req.params.id },
+      returning: true,
+    });
+    console.log('LINE 278 || UPDATE PRODUCT', updatedProduct);
+
+    res.status(204).json(updatedProduct);
+  } catch (err) {
+    console.error('LINE 274 || UPDATE PRODUCTS', err);
+    res.status(500).json(err);
+  }
+});
+>>>>>>> 80178d689c6b5be5d6bb88b079f82a28619eb805
 
 //////////////////////////////////////////////////////////////////////////////////////////// GET ALL PRODUCT ROUTE
 app.get('/get_all_products', (req: Request, res: Response) => {
@@ -126,11 +155,11 @@ app.get('/get_all_products', (req: Request, res: Response) => {
   // IMPLEMENTING SIMPLE GETALL REQUEST FOR MVP
   Products.findAll({ where: {} })
     .then((data: any) => {
-      console.log('LINE 200 || INDEX GET ALL PRODUCTS', data);
+      // console.log('LINE 293 || INDEX GET ALL PRODUCTS', data);
       res.json(data);
     })
     .catch((err: any) => {
-      console.error('LINE 203 || INDEX GET ALL PRODUCTS ERROR', err);
+      console.error('LINE 297 || INDEX GET ALL PRODUCTS ERROR', err);
     });
 });
 
@@ -289,7 +318,11 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     farm_id: 1,
   })
     .then((data: any) => {
+<<<<<<< HEAD
       // console.log("294 Return Subscriptions Route || Post Request", data);
+=======
+      console.log('294 Return Subscriptions Route || Post Request', data);
+>>>>>>> 80178d689c6b5be5d6bb88b079f82a28619eb805
       res.status(201);
     })
     .catch((err: string) => {
@@ -298,6 +331,7 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     });
 });
 
+<<<<<<< HEAD
 //Subscription Admin PUT request:
 app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
   console.log('LINE 305 Subscription PUT req', req.params.id);
@@ -340,6 +374,8 @@ app.delete('/api/subscriptions/delete', (req: Request, res: Response) => {
 });
 
 // Home page routes
+=======
+>>>>>>> 80178d689c6b5be5d6bb88b079f82a28619eb805
 app.get('/api/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
