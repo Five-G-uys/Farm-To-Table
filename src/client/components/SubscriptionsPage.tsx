@@ -56,9 +56,45 @@ const SubscriptionsPage = () => {
   //       console.error('Line 49 subPage.tsx', err);
   //     });
   // };
+  // console.log('LINE 45', subscription.subArray);
+  const handleCheckout = () => {
+    console.log('CHeckout');
+    fetch('/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Send along all the information about the items
+      body: JSON.stringify({
+        items: [
+          {
+            id: 1,
+            quantity: 2,
+          },
+          {
+            id: 2,
+            quantity: 1,
+          },
+        ],
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        // If there is an error then make sure we catch that
+        return res.json().then((e) => Promise.reject(e));
+      })
+      .then(({ url }) => {
+        // On success redirect the customer to the returned URL
+        window.location = url;
+      })
+      .catch((e) => {
+        console.error(e.error);
+      });
+  };
 
   //SUBSCRIPTION CREATE
   const handleSubscribed = () => {
+    // Insert Stripe Functionality Here
     if (season) {
       axios
         .post(`/api/add_subscription_entry/${id}`, {
@@ -137,6 +173,9 @@ const SubscriptionsPage = () => {
       />
       <label htmlFor='season'> Winter 2022 </label>
       <br />
+      <button className='form--submit' onClick={handleCheckout}>
+        {/* <Link to={`/confirmation-page`}>Subscribe!</Link> */}Checkout!
+      </button>
       <button className='form--submit' onClick={handleSubscribed}>
         Subscribe!
       </button>

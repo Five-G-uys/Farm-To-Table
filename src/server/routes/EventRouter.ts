@@ -50,7 +50,7 @@ eventRouter.post("/api/event", (req, res) => {
 eventRouter.get("/api/event", (req, res) => {
   Events.findAll()
     .then((response: any) => {
-      console.log(response, "This is line 186 events gotten");
+      // console.log(response, "This is line 186 events gotten");
       res.status(200).send(response);
     })
     .catch((err: object) => {
@@ -92,7 +92,7 @@ eventRouter.get("/api/user/rsvps/:userId", (req: Request, res: Response) => {
         Promise.allSettled(promises).then(async (event: any) => {
           console.log("LINE 200, EVENTS FOR USER", event[0].value);
           res.status(200).send(event);
-        });
+        }).catch((err: any) => console.log(err));
       } catch {
         console.log("Failed to promisify");
       }
