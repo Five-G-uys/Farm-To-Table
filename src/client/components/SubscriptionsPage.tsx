@@ -3,15 +3,20 @@
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import SubscriptionCard from './SubscriptionCard';
+import SubscriptionsContainer from './SubscriptionsContainer';
 // import { UserContext } from './App';
 
 const SubscriptionsPage = () => {
   // const user: any = useContext(UserContext);
   // console.log('THIS IS WORKING', user);
   const navigate = useNavigate();
+
   const [id, setId] = useState(0);
+
   const [season, setSeason] = useState('');
+
+  const [subscriptions, setSubscriptions] = useState([]);
+
   const [subscription, setSubscription] = useState({
     id: 0,
     season: '',
@@ -21,32 +26,17 @@ const SubscriptionsPage = () => {
     description: '',
     start_date: '',
     end_date: '',
-    subArray: [],
   });
 
-  useEffect((): void => {
-    // TAKE THIS AXIOS CALL TO GET USER
-    axios
-      .get<AxiosResponse>('/api/userProfile')
-      .then(({ data }: AxiosResponse) => {
-        const { id }: { id: number } = data;
-        setId(id);
-      })
-      .catch((err) => console.warn(err));
-    axios
-      .get(`/api/subscriptions/`)
-      .then((response) => {
-        setSubscription((state) => {
-          return { ...state, subArray: response.data };
-        });
-        // console.log('LINE 46 SubscriptionPage.tsx', response);
-      })
-      .catch((err) => {
-        console.error('Line 49 subPage.tsx', err);
-      });
-  }, []);
-
-  // const getAllSubscriptions = () => {
+  // useEffect((): void => {
+  //   // TAKE THIS AXIOS CALL TO GET USER
+  //   axios
+  //     .get<AxiosResponse>('/api/userProfile')
+  //     .then(({ data }: AxiosResponse) => {
+  //       const { id }: { id: number } = data;
+  //       setId(id);
+  //     })
+  //     .catch((err) => console.warn(err));
   //   axios
   //     .get(`/api/subscriptions/`)
   //     .then((response) => {
@@ -58,8 +48,24 @@ const SubscriptionsPage = () => {
   //     .catch((err) => {
   //       console.error('Line 49 subPage.tsx', err);
   //     });
-  // };
-  // console.log('LINE 45', subscription.subArray);
+  // }, []);
+
+  const getAllSubscriptions = () => {
+    axios
+      .get(`/api/subscriptions/`)
+      .then((data) => {
+        console.log(data.data);
+        setSubscriptions(data.data);
+      })
+      .catch((err) => {
+        console.error('Line 59 subPage.tsx', err);
+      });
+  };
+
+  useEffect((): void => {
+    getAllSubscriptions();
+  }, []);
+
   const handleCheckout = () => {
     console.log('Checkout');
     fetch('/create-checkout-session', {
@@ -115,40 +121,12 @@ const SubscriptionsPage = () => {
     }
   };
 
-  const { subArray } = subscription;
-
   return (
     <div>
-      <div>
-        {subArray.map(
-          (sub: {
-            id: number;
-            season: string;
-            year: number;
-            flat_price: number;
-            weekly_price: number;
-            description: string;
-            start_date: string;
-            end_date: string;
-            farm_id: 1;
-          }) => {
-            return (
-              <SubscriptionCard
-                season={sub.season}
-                year={sub.year}
-                flat_price={sub.flat_price}
-                weekly_price={sub.weekly_price}
-                description={sub.description}
-                start_date={sub.start_date}
-                end_date={sub.end_date}
-                key={sub.id}
-                subscription_id={sub.id}
-              />
-            );
-          }
-        )}
-      </div>
-      <br />
+      <SubscriptionsContainer
+        subscriptions={subscriptions}
+        getAllSubscriptions={getAllSubscriptions}
+      />
       <input
         name='season'
         value='spring'

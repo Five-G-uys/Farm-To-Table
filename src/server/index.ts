@@ -212,14 +212,22 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////// SUBSCRIPTION REQUESTS ////////////
-app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
-  Users.update(req.body, { where: { id: req.params.id }, returning: true })
-    .then((response: any) => {
-      res.send(203);
-    })
-    .catch((err: unknown) => {
-      console.error('SUBSCRIPTION ROUTES:', err);
+app.patch('/api/subscribed/:id', async (req: Request, res: Response) => {
+  // console.log('LINE 216 || UPDATE SEASON', req.body);
+
+  try {
+    // update subscription model with async query and assign the result of that promise to a variable to res.send back
+    const updatedSubscription = await Subscriptions.update(req.body, {
+      where: { id: req.params.id },
+      returning: true,
     });
+    // console.log('LINE 224 || UPDATE SEASON', updatedSubscription);
+
+    res.status(204).json(updatedSubscription);
+  } catch (err) {
+    console.error('LINE 228 || UPDATE SEASONS', err);
+    res.status(500).json(err);
+  }
 });
 
 app.post(
