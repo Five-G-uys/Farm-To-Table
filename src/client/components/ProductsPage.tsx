@@ -18,6 +18,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
+import { Slide, Stack } from '@mui/material';
+import Divider from '@mui/material/Divider';
 
 // Component Imports
 import ProductsContainer from './ProductsContainer';
@@ -269,7 +271,7 @@ const ProductsPage = () => {
         }}
         className='add_x_form_modal'
       >
-        <Fade in={open}>
+        <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
           {
             <div>
               <div>
@@ -287,15 +289,9 @@ const ProductsPage = () => {
                       inEditMode ? handleProductUpdateSubmit : postProduct
                     }
                   >
-                    <Button
-                      variant='contained'
-                      size='large'
-                      onClick={showWidget}
-                    >
-                      Add Product Image
-                    </Button>
-                    <br></br>
-                    {img_url && <img width={300} src={img_url} />}
+                    {img_url && (
+                      <img width={'100%'} src={img_url} border-radius='2rem' />
+                    )}
                     <br></br>
                     <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
                       <InputLabel htmlFor='standard-adornment-amount'>
@@ -316,6 +312,7 @@ const ProductsPage = () => {
                     <TextField
                       // width='75%'
                       // type={{ width: '75%' }}
+                      border-radius='1rem'
                       id='filled-basic'
                       variant='filled'
                       // label='Filled'
@@ -380,10 +377,35 @@ const ProductsPage = () => {
                     />
                     <br></br>
                     <br></br>
-                    <Button variant='contained' size='large' type='submit'>
-                      {inEditMode ? 'UPDATE' : 'SAVE'}
-                    </Button>
-                    <br></br>
+                    <Stack
+                      direction='row'
+                      // divider={
+                      //   <Divider
+                      //     orientation='vertical'
+                      //     variant='middle'
+                      //     flexItem
+                      //     light
+                      //   />
+                      // }
+                      justifyContent='space-between'
+                    >
+                      <Button
+                        variant='text'
+                        size='medium'
+                        onClick={showWidget}
+                        sx={{ color: 'green' }}
+                      >
+                        Add Product Image
+                      </Button>
+                      <Button
+                        variant='text'
+                        size='large'
+                        type='submit'
+                        sx={{ color: 'green' }}
+                      >
+                        {inEditMode ? 'UPDATE' : 'SAVE'}
+                      </Button>
+                    </Stack>
                     <br></br>
                     {/* <button type='submit' className='form--submit'>
                 Save Product
@@ -397,10 +419,13 @@ const ProductsPage = () => {
       </Modal>
       <Fab
         onClick={handleCreateForm}
-        size='small'
+        size='large'
         // color='secondary'
         aria-label='add'
-        style={{ transform: 'scale(2.5)', backgroundColor: '#80D55F' }}
+        style={{
+          transform: 'scale(1.5)',
+          backgroundColor: 'lightgreen',
+        }}
         sx={{
           position: 'fixed',
           bottom: (theme) => theme.spacing(8),

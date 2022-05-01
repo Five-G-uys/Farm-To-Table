@@ -6,6 +6,7 @@ import axios, { AxiosResponse } from "axios";
 import { Routes, Route, Navigate, Link } from "react-router-dom";
 
 // MUI Imports
+<<<<<<< HEAD
 import HomePage from "./HomePage";
 import EventCard from "./EventCard";
 import SubscriptionsPage from "./Subscriptions/SubscriptionsPage";
@@ -33,6 +34,34 @@ import PackingListPage from "./PackingListPage";
 import UserRecordsPage from "./Users/UsersRecordsPage";
 import Weather from "./Weather";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+=======
+import HomePage from './HomePage';
+import EventCard from './EventCard';
+import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
+import Confirmation from './Confirmation';
+import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
+import OrdersPage from './OrdersPage';
+import EventsPage from './EventsPage';
+import ProfilePage from './ProfilePage';
+import AboutUsPage from './AboutUsPage';
+import Login from './Login';
+import NewNavBar from './NewNavBar';
+import ProductsPage from './ProductsPage';
+import RecordsPage from './Records/RecordsPage';
+import DileveryZonesRecords from '../components/Records/Products/ProductsRecords';
+import EventsRecords from '../components/Records/Products/ProductsRecords';
+import FarmsRecords from '../components/Records/Products/ProductsRecords';
+import OrdersRecords from '../components/Records/Orders/OrdersRecords';
+import ProductsRecords from '../components/Records/Products/ProductsRecords';
+import SubscriptionEntries from '../components/Records/Products/ProductsRecords';
+import SubscriptionsRecords from '../components/Records/Products/ProductsRecords';
+import UsersRecords from '../components/Records/Products/ProductsRecords';
+import VendorsRecords from '../components/Records/Products/ProductsRecords';
+import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
+import PackingListPage from './PackingListPage';
+import UserRecordsPage from './Users/UsersRecordsPage';
+import Weather from './Weather';
+>>>>>>> e7f5a413ede412ffca41d22cbf24046ab6a358ef
 
 import { createTheme } from "@mui/material";
 //material UI IMPORTS
@@ -131,10 +160,17 @@ const App = () => {
                       path="/subscriptions-page"
                       element={<SubscriptionsPage />}
                     />
+<<<<<<< HEAD
                     <Route path="/events-page" element={<EventsPage />} />
                     <Route path="/edit-products" element={<ProductsPage />} />
                     <Route
                       path="/weather-page"
+=======
+                    <Route path='/events-page' element={<EventsPage />} />
+                    <Route path='/edit-products' element={<ProductsPage />} />
+                    <Route
+                      path='/weather-page'
+>>>>>>> e7f5a413ede412ffca41d22cbf24046ab6a358ef
                       element={<Weather lat={lat} lon={lon} />}
                     />
 
@@ -174,7 +210,7 @@ const App = () => {
                       path="/delivery-routes"
                       element={
                         isEmployee(user) ? (
-                          <DeliveryRoutesPage />
+                          <DeliveryRoutesPage lat={lat} lon={lon} />
                         ) : (
                           <Navigate to="/login" />
                         )
