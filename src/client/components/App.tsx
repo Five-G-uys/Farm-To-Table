@@ -28,9 +28,10 @@ import SubscriptionEntries from '../components/Records/Products/ProductsRecords'
 import SubscriptionsRecords from '../components/Records/Products/ProductsRecords';
 import UsersRecords from '../components/Records/Products/ProductsRecords';
 import VendorsRecords from '../components/Records/Products/ProductsRecords';
-import DeliveryRoutesPage from './DeliveryRoutesPage';
+import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
 import PackingListPage from './PackingListPage';
-import UserRecordsPage from './UsersRecordsPage';
+import UserRecordsPage from './Users/UsersRecordsPage'
+import Weather from './Weather'
 
 import { createTheme } from '@mui/material';
 //material UI IMPORTS
@@ -54,6 +55,14 @@ export const UserContext: any = createContext(null);
 
 const App = () => {
   const [user, setUser] = useState({});
+  const [lat, setLat] = useState(0);
+  const [lon, setLon] = useState(0);
+
+  navigator.geolocation.getCurrentPosition(function (position) {
+    //returns lat/lon based on user location
+    setLat(position.coords.latitude + 0.000001);
+    setLon(position.coords.longitude + 0.000001);
+  });
   //const [theme, setTheme] = React.useState("light");
 
   const [mode, setMode] = useState(false);
@@ -102,6 +111,7 @@ const App = () => {
                 <h1>{user.role_id}</h1>
                 <UserContext.Provider value={user}>
                   <Routes>
+
                     {/* Login/Logout Routes */}
                     <Route
                       path='/login'
@@ -121,11 +131,12 @@ const App = () => {
                       path='/subscriptions-page'
                       element={<SubscriptionsPage />}
                     />
-                    <Route path='/events-page' element={<EventsPage />} />
-                    {/* <Route 
-              path='/event-card' 
-              element={<EventCard />} /> */}
-                    <Route path='/edit-products' element={<ProductsPage />} />
+                    <Route path="/events-page" element={<EventsPage />} />
+                    <Route path="/edit-products" element={<ProductsPage />} />
+                    <Route 
+                      path='/weather-page'
+                      element={<Weather lat={lat} lon={lon} />} />
+
                     {/* Restricted User Routes */}
                     <Route
                       path='/profile-page'
