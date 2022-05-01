@@ -14,7 +14,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Backdrop from "@mui/material/Backdrop";
-import FormControl from "@mui/material/FormControl";
+//import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -47,13 +47,20 @@ const EventsPage = () => {
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
+  const [value, setValue] = React.useState("Farmers Market");
+  console.log("LINE 265 VALUE", value);
+  const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("LINE 267 VALUE", value);
+    setValue(event.target.value);
+  };
+
   const [event, setEvent] = useState({
     id: 0,
     eventName: "",
     description: "",
     thumbnail: "",
     eventDate: "",
-    eventType: "",
+    eventType: value,
     location: "",
   });
 
@@ -99,7 +106,7 @@ const EventsPage = () => {
           description: description,
           thumbnail: thumbnail,
           eventDate: eventDate,
-          eventType: value,
+          eventType: eventType,
           location: location,
         },
       })
@@ -221,14 +228,9 @@ const EventsPage = () => {
 
   ////////////////Radio Button handle function///////////////////////////
 
-  const [value, setValue] = React.useState("Farmers Market");
-  const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
-
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (idEvent: any) => {
-    console.log("LINE 185 || PRODUCTS PAGE CLICKED", idEvent);
+    //console.log("LINE 185 || PRODUCTS PAGE CLICKED", idEvent);
 
     const clickedEvent: any = allEvents.find(
       // find mutates original array values
@@ -380,40 +382,39 @@ const EventsPage = () => {
                       />
                       <br></br>
                       <br></br>
-                      <FormControl>
-                        <FormLabel id="demo-controlled-radio-buttons-group">
-                          Event Type
-                        </FormLabel>
-                        <RadioGroup
-                          font-color="black"
-                          aria-labelledby="demo-controlled-radio-buttons-group"
-                          name="controlled-radio-buttons-group"
-                          value={eventType}
-                          onChange={handleRadioBtn}
-                        >
-                          <FormControlLabel
-                            value="Famers Market"
-                            control={<Radio />}
-                            checked={eventType === "Famers Market"}
-                            label="Farmers Market"
-                            // variant="filled"
-                          />
-                          <FormControlLabel
-                            value="Community Volunteering"
-                            control={<Radio />}
-                            checked={eventType === "Community Volunteering"}
-                            label="Community Volunteering"
-                            // variant="filled"
-                          />
-                          <FormControlLabel
-                            control={<Radio />}
-                            value="Customers Day"
-                            checked={eventType === "Customers Day"}
-                            label="Customers Day"
-                            // variant="filled"
-                          />
-                        </RadioGroup>
-                      </FormControl>
+                      <Box>
+                        <FormControl>
+                          <FormLabel id="demo-controlled-radio-buttons-group">
+                            Event Type
+                          </FormLabel>
+                          <RadioGroup
+                            aria-labelledby="demo-controlled-radio-buttons-group"
+                            name="controlled-radio-buttons-group"
+                            value={value}
+                            // onChange={handelTextInput}
+                            onChange={handleRadioBtn}
+                          >
+                            <FormControlLabel
+                              control={<Radio />}
+                              label="Farmers Market"
+                              value="Customers Day"
+                              // variant="filled"
+                            />
+                            <FormControlLabel
+                              control={<Radio size="small" />}
+                              value="Customers Day"
+                              label="Customers Day"
+                              // variant="filled"
+                            />
+                            <FormControlLabel
+                              control={<Radio />}
+                              value="Community Volunteering"
+                              label="Community Volunteering"
+                              // variant="filled"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </Box>
                       {/* <fieldset>
                         <legend className="radio-title">Type of event</legend>
                         <input
