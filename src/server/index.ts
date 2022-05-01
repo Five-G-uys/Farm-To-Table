@@ -117,7 +117,41 @@ app.post('/create-checkout-session', async (req, res) => {
 }),
 
 
+//////////////////////////////////////////////////////////////////////////////////////////// GET ALL USERS ROUTE
+app.get('/get_all_users', (req: Request, res: Response) => {
+  // findAll products in the current season for users. find ALL products (organized by season) for admin
+  // NEED TO GIVE ALL SEASONS A CURRENT SEASON BOOLEAN. WILL MAKE REQUEST EASIER??
+  // CHECK SEASON START DATE PROPERTY
 
+  // IMPLEMENTING SIMPLE GET ALL REQUEST FOR MVP
+  Users.findAll({ where: {} })
+    .then((data: any) => {
+      console.log('LINE 129 || INDEX GET ALL USERS', data);
+      res.json(data);
+    })
+    .catch((err: any) => {
+      console.error('LINE 133 || INDEX GET ALL USERS ERROR', err);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////// POST USER ROUTE
+app.patch('/api/product/:id', async (req: Request, res: Response) => {
+  console.log('LINE 271 || UPDATE PRODUCT', req.body);
+
+  try {
+    // update product model with async query and assign the result of that promise to a variable to res.send back
+    const updatedUser = await Users.update(req.body, {
+      where: { id: req.params.id },
+      returning: true,
+    });
+    console.log('LINE 147 || UPDATE USER', updatedUser);
+
+    res.status(204).json(updatedUser);
+  } catch (err) {
+    console.error('LINE 151 || UPDATE USERS', err);
+    res.status(500).json(err);
+  }
+});
 
 
 

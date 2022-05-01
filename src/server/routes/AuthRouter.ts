@@ -5,13 +5,9 @@
 import { Router } from 'express';
 import passport from 'passport';
 require('dotenv').config();
-require('../middleware/passport');
-const session = require('express-session');
 const authRouter: Router = Router();
 import { Users } from '../db/models';
-const { application } = require("express"); // find name in project
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-// import UserInterface from "../../types/UserInterface";
 import { isLoggedIn } from '../middleware/auth'
 
 
