@@ -84,7 +84,6 @@ app.use('/events', eventRouter);
 // app.use('/', farmRouter)
 app.use('/weather', weatherRouter);
 
-
 // Create a post request for /create-checkout-session
 app.post('/create-checkout-session', async (req, res) => {
   try {
@@ -113,24 +112,22 @@ app.post('/create-checkout-session', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 }),
+  //////////////////////////////////////////////////////////////////////////////////////////// GET ALL USERS ROUTE
+  app.get('/get_all_users', (req: Request, res: Response) => {
+    // findAll products in the current season for users. find ALL products (organized by season) for admin
+    // NEED TO GIVE ALL SEASONS A CURRENT SEASON BOOLEAN. WILL MAKE REQUEST EASIER??
+    // CHECK SEASON START DATE PROPERTY
 
-
-//////////////////////////////////////////////////////////////////////////////////////////// GET ALL USERS ROUTE
-app.get('/get_all_users', (req: Request, res: Response) => {
-  // findAll products in the current season for users. find ALL products (organized by season) for admin
-  // NEED TO GIVE ALL SEASONS A CURRENT SEASON BOOLEAN. WILL MAKE REQUEST EASIER??
-  // CHECK SEASON START DATE PROPERTY
-
-  // IMPLEMENTING SIMPLE GET ALL REQUEST FOR MVP
-  Users.findAll({ where: {} })
-    .then((data: any) => {
-      console.log('LINE 129 || INDEX GET ALL USERS', data);
-      res.json(data);
-    })
-    .catch((err: any) => {
-      console.error('LINE 133 || INDEX GET ALL USERS ERROR', err);
-    });
-});
+    // IMPLEMENTING SIMPLE GET ALL REQUEST FOR MVP
+    Users.findAll({ where: {} })
+      .then((data: any) => {
+        console.log('LINE 129 || INDEX GET ALL USERS', data);
+        res.json(data);
+      })
+      .catch((err: any) => {
+        console.error('LINE 133 || INDEX GET ALL USERS ERROR', err);
+      });
+  });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// POST USER ROUTE
 app.patch('/api/user/:id', async (req: Request, res: Response) => {
@@ -151,39 +148,37 @@ app.patch('/api/user/:id', async (req: Request, res: Response) => {
   }
 });
 
+////////SUBSCRIPTION REQUEST////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
+app.post('/api/product', (req: Request, res: Response) => {
+  const {
+    img_url,
+    name,
+    description,
+    plant_date,
+    harvest_date,
+    subscription_id,
+  } = req.body.product;
 
-  ////////SUBSCRIPTION REQUEST////////////
-
-  ///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
-  app.post('/api/product', (req: Request, res: Response) => {
-    const {
-      img_url,
-      name,
-      description,
-      plant_date,
-      harvest_date,
-      subscription_id,
-    } = req.body.product;
-
-    console.log('162 Request object postEvent', req.body);
-    Products.create({
-      name,
-      description,
-      img_url,
-      plant_date,
-      harvest_date,
-      subscription_id,
+  console.log('162 Request object postEvent', req.body);
+  Products.create({
+    name,
+    description,
+    img_url,
+    plant_date,
+    harvest_date,
+    subscription_id,
+  })
+    .then((data: any) => {
+      console.log('LINE 187 || Product Post Request', data);
+      res.status(201).json(data);
     })
-      .then((data: any) => {
-        console.log('LINE 187 || Product Post Request', data);
-        res.status(201).json(data);
-      })
-      .catch((err: string) => {
-        console.error('Product Post Request Failed', err);
-        res.status(500).json(err);
-      });
-  });
+    .catch((err: string) => {
+      console.error('Product Post Request Failed', err);
+      res.status(500).json(err);
+    });
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
 app.patch('/api/product/:id', async (req: Request, res: Response) => {
@@ -223,23 +218,23 @@ app.get('/get_all_products', (req: Request, res: Response) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// ORDERS GET ROUTE
 app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
-  // console.log('LINE 238 || SERVER INDEX', req.params); // user id
+  console.log('LINE 184 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
-  SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
+  SubscriptionEntries.findAll({ where: { user_id: Number(req.params.id) } })
     .then((data: Array<object>) => {
       const dataObj: Array<object> = [];
       console.log(
-        'LINE 253',
+        'LINE 191',
         data.forEach((subscriptionEntry: any) => {
-          // console.log('LINE 255', subscriptionEntry.dataValues);
+          console.log('LINE 230', subscriptionEntry.dataValues);
           if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
             dataObj.push(subscriptionEntry.dataValues.id);
           }
         })
       );
       console.log(
-        'LINE 261',
+        'LINE 237',
         dataObj.map((subscriptionEntryId: any) => {
           return { subscription_entry_id: subscriptionEntryId };
         })
@@ -289,16 +284,21 @@ app.patch('/api/subscribed/:id', async (req: Request, res: Response) => {
 app.post(
   `/api/add_subscription_entry/:id`,
   async (req: Request, res: Response) => {
-    // console.log('LINE 200 || SERVER INDEX.TS', req.body);
+    console.log('LINE 287 || SERVER INDEX.TS', req.body, req.params);
 
     const addSubscription = (id: number) => {
+      console.log(
+        'LINE 291 || INDEXSERVER || SUBSCRIPTION ENTRY POST ROUTE',
+        id
+      );
       SubscriptionEntries.create({
-        user_id: req.params.id,
+        // CHANGED REQ.PARMS.ID TO NUMBER, USED TO BE STRING
+        user_id: Number(req.params.id),
         farm_id: 1,
         subscription_id: id,
       })
         .then((data: any) => {
-          // console.log('LINE 196 || SERVER ||', data.dataValues.id);
+          console.log('LINE 301 || SERVER ||', data.dataValues.id);
 
           const today: Date = new Date();
           // iterate over number of orders
@@ -320,15 +320,15 @@ app.post(
               farm_id: 1,
             })
               .then((data: any) => {
-                // console.log('LINE 224 || SERVER INDEX ||', data);
+                // console.log('LINE 318 || SERVER INDEX ||', data);
               })
               .catch((err: any) => {
-                console.log('LINE 228 || SERVER INDEX || ERROR', err);
+                console.log('LINE 326 || SERVER INDEX || ERROR', err);
               });
           }
         })
         .catch((err: any) => {
-          console.error(err);
+          console.error('LINE 331', err);
         });
     };
     try {

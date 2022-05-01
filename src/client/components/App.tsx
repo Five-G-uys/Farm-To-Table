@@ -30,8 +30,8 @@ import UsersRecords from '../components/Records/Products/ProductsRecords';
 import VendorsRecords from '../components/Records/Products/ProductsRecords';
 import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
 import PackingListPage from './PackingListPage';
-import UserRecordsPage from './Users/UsersRecordsPage'
-import Weather from './Weather'
+import UserRecordsPage from './Users/UsersRecordsPage';
+import Weather from './Weather';
 
 import { createTheme } from '@mui/material';
 //material UI IMPORTS
@@ -111,7 +111,6 @@ const App = () => {
                 <h1>{user.role_id}</h1>
                 <UserContext.Provider value={user}>
                   <Routes>
-
                     {/* Login/Logout Routes */}
                     <Route
                       path='/login'
@@ -131,11 +130,12 @@ const App = () => {
                       path='/subscriptions-page'
                       element={<SubscriptionsPage />}
                     />
-                    <Route path="/events-page" element={<EventsPage />} />
-                    <Route path="/edit-products" element={<ProductsPage />} />
-                    <Route 
+                    <Route path='/events-page' element={<EventsPage />} />
+                    <Route path='/edit-products' element={<ProductsPage />} />
+                    <Route
                       path='/weather-page'
-                      element={<Weather lat={lat} lon={lon} />} />
+                      element={<Weather lat={lat} lon={lon} />}
+                    />
 
                     {/* Restricted User Routes */}
                     <Route
@@ -173,7 +173,7 @@ const App = () => {
                       path='/delivery-routes'
                       element={
                         isEmployee(user) ? (
-                          <DeliveryRoutesPage />
+                          <DeliveryRoutesPage lat={lat} lon={lon} />
                         ) : (
                           <Navigate to='/login' />
                         )
