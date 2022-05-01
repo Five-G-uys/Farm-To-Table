@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { UrlWithStringQuery } from 'node:url';
-import React, { useState, useEffect, useContext } from 'react';
-import axios, { AxiosResponse } from 'axios';
-import { UserContext } from './App';
+import { UrlWithStringQuery } from "node:url";
+import React, { useState, useEffect, useContext } from "react";
+import axios, { AxiosResponse } from "axios";
+import { UserContext } from "./App";
 
 //////////////////////MATERIAL UI/////////////////////////////////
 // MUI Imports
@@ -44,9 +44,9 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
   }),
 }));
@@ -65,7 +65,7 @@ const Event = ({
   handleEditClick,
 }: any) => {
   const user: any = useContext(UserContext);
-  console.log('THIS IS WORKING', user);
+  console.log("THIS IS WORKING", user);
 
   const [expanded, setExpanded] = useState(false);
 
@@ -75,33 +75,33 @@ const Event = ({
   };
 
   const handRSVPosts = () => {
-    console.log('LINE 63', user.id, ' and ', eventId);
+    console.log("LINE 63", user.id, " and ", eventId);
     axios
-      .post('/events/api/Rsvp/', {
+      .post("/events/api/Rsvp/", {
         userId: user.id,
         eventId: eventId,
       })
       .then((data) => {
-        console.log('66 LINE ', data);
+        console.log("66 LINE ", data);
       })
       .catch((err) => {
-        console.error('68 REQUEST FAILED', err);
+        console.error("68 REQUEST FAILED", err);
       });
   };
 
   //delete request for deleting an event in the database
   const deleteEvent = () => {
-    console.log('LINE 81', user.id, ' and ', eventId);
+    console.log("LINE 81", user.id, " and ", eventId);
     axios
-      .delete('/events/api/event/delete', {
+      .delete("/events/api/event/delete", {
         params: { id: eventId },
       })
       .then((data) => {
-        console.log('87 LINE ', data);
+        console.log("87 LINE ", data);
         getAllEvents();
       })
       .catch((err) => {
-        console.error('91 REQUEST FAILED', err);
+        console.error("91 REQUEST FAILED", err);
       });
   };
   const hover = () => {
@@ -113,7 +113,7 @@ const Event = ({
       sx={{
         minWidth: 300,
         minHeight: 200,
-        borderRadius: '2.5rem',
+        borderRadius: "2.5rem",
         boxShadow: 24,
       }}
     >
@@ -121,8 +121,8 @@ const Event = ({
         avatar={
           <Avatar
             sx={{ bgcolor: red[500] }}
-            aria-label='recipe'
-            font-size='20px'
+            aria-label="recipe"
+            font-size="20px"
           >
             {eventName[0]}
           </Avatar>
@@ -132,9 +132,9 @@ const Event = ({
         title={eventName}
       />
       {thumbnail ? (
-        <CardMedia component='img' height='300' image={thumbnail} />
+        <CardMedia component="img" height="300" image={thumbnail} />
       ) : (
-        ''
+        ""
       )}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
@@ -146,11 +146,14 @@ const Event = ({
           {`Type of event ${eventType}`}
         </Typography>
       </CardContent>
-
-      <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
-        <Stack spacing={5} direction='row' id='product_card_stack'>
-          <ExpandMore sx={{ color: 'green' }} expand={expanded}>
-            <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
+      <CardContent>
+        {/* // setup map that returns all product info */}
+        <Typography paragraph> {description}</Typography>
+      </CardContent>
+      <CardActions disableSpacing sx={{ justifyContent: "center" }}>
+        <Stack spacing={5} direction="row" id="product_card_stack">
+          <ExpandMore sx={{ color: "green" }} expand={expanded}>
+            <DeleteIcon sx={{ color: "green" }} onClick={deleteEvent} />
           </ExpandMore>
           <ExpandMore sx={{ color: "green" }} expand={expanded}>
             <Icon
@@ -170,23 +173,18 @@ const Event = ({
             <EditIcon sx={{ color: "green" }} />
           </ExpandMore>
           <ExpandMore
-            sx={{ color: 'green' }}
+            sx={{ color: "green" }}
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
-            aria-label='show more'
+            aria-label="show more"
           >
             <ExpandMoreIcon />
           </ExpandMore>
         </Stack>
       </CardActions>
 
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
-        <CardContent>
-          {/* // setup map that returns all product info */}
-          <Typography paragraph> {description}</Typography>
-        </CardContent>
-      </Collapse>
+      <Collapse in={expanded} timeout="auto" unmountOnExit></Collapse>
 
       {/* <div>product: {product.id}</div> */}
     </Card>
@@ -221,9 +219,9 @@ const Event = ({
 
 export default Event;
 function handleEditClick(id: any) {
-  throw new Error('Function not implemented.');
+  throw new Error("Function not implemented.");
 }
 
 function id(id: any) {
-  throw new Error('Function not implemented.');
+  throw new Error("Function not implemented.");
 }
