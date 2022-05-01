@@ -177,16 +177,16 @@ const ProductsPage = () => {
       },
       (error: any, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
-          console.log('LINE 56', result.info.url);
+          // console.log('LINE 56', result.info.url);
           setProduct((state) => {
             return {
               ...state,
               img_url: result.info.url,
             };
           });
-          console.log('LINE 63', result.info.url);
+          // console.log('LINE 63', result.info.url);
         }
-        console.log('LINE 135 || CLOUDINARY', error);
+        // console.log('LINE 135 || CLOUDINARY', error);
       }
     );
     widget.open();

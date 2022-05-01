@@ -15,16 +15,9 @@ const axios = require('axios');
 
 const eventRouter: Router = Router();
 
-eventRouter.post('/api/event', (req, res) => {
-  const {
-    eventName,
-    description,
-    thumbnail,
-    eventDate,
-    eventType,
-    location,
-    season,
-  } = req.body.event;
+eventRouter.post("/api/event", (req, res) => {
+  const { eventName, description, thumbnail, eventDate, eventType, location } =
+    req.body.event;
 
   console.log('162 Request object postEvent', req.body);
   Events.create({
@@ -33,7 +26,6 @@ eventRouter.post('/api/event', (req, res) => {
     thumbnail,
     eventDate,
     eventType,
-    season,
     location,
   })
     .then((data: any) => {
@@ -91,7 +83,7 @@ eventRouter.get('/api/user/rsvps/:userId', (req: Request, res: Response) => {
         });
         Promise.allSettled(promises)
           .then(async (event: any) => {
-            console.log('LINE 200, EVENTS FOR USER', event[0].value);
+            console.log("LINE 200, EVENTS FOR USER", event[0].value);
             res.status(200).send(event);
           })
           .catch((err: any) => console.log(err));
@@ -105,11 +97,13 @@ eventRouter.get('/api/user/rsvps/:userId', (req: Request, res: Response) => {
 });
 
 //delete request for deleting an event in the DB
-eventRouter.delete('/api/event/delete', (req: Request, res: Response) => {
-  console.log('line 210', req.query);
+eventRouter.delete("/api/event/delete", (req: Request, res: Response) => {
+  console.log("line 210", req.query);
+  //first delete the rsvps associated with a given event_id
   RSVP.destroy({
     where: { event_id: req.query.id },
   }).then((data: any) => {
+    //then delete the event with that id.
     Events.destroy({ where: { id: req.query.id } })
       .then((data: any) => {
         console.log('deletion was successful!', data);
@@ -145,4 +139,15 @@ eventRouter.get('/api/rsvps', (req: Request, res: Response) => {
     });
 });
 
+//Update route for events
+eventRouter.patch("/api/event/update", (req: Request, res: Response) => {
+  const { id } = req.body;
+  Events.updateOne({ where: { id: id } })
+    .then((data: any) => {
+      console.log("Line 146 Event update", data);
+    })
+    .catch((err: any) => {
+      console.error("Line 148 Update Failed", err);
+    });
+});
 module.exports = eventRouter;
