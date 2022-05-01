@@ -38,6 +38,6 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
   },
-  "include": ["src/**/*.ts", "src/server/db/seed.ts", "src/client/index.tsx"],
+  "include": ["src/**/*.ts", "src/server/db/seed.ts", "src/client/index.tsx", "src/client/themes.tsx"],
   "exclude": ["node_modules"]
 }

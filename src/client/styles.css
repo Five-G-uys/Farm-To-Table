@@ -79,8 +79,7 @@ body {
   margin-top: 80px;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 40px;
+  gap: 80px;
 }
 .title-card {
   font-size: 30px;
