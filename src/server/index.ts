@@ -32,13 +32,12 @@ import {
   DietaryRestrictions,
   Events,
 } from './db/models';
-const authRouter = require('./routes/authRouter');
+const authRouter = require('./routes/AuthRouter');
 const eventRouter = require('./routes/EventRouter');
 // const subscriptionRouter = require('./routes/SubscriptionsRouter')
 // const farmRouter = require('./routes/FarmRouter')
 import UserInterface from '../types/UserInterface';
 import Profile from 'src/client/components/ProfilePage';
-import { send } from 'node:process';
 //import { postEvent } from "./routes/EventRoutes";
 
 const app: Express = express();
@@ -230,7 +229,6 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
 ////////////////////////////////////////////////////////////////////////////// SUBSCRIPTION REQUESTS ////////////
 app.patch('/api/subscribed/:id', async (req: Request, res: Response) => {
   // console.log('LINE 216 || UPDATE SEASON', req.body);
-
   try {
     // update subscription model with async query and assign the result of that promise to a variable to res.send back
     const updatedSubscription = await Subscriptions.update(req.body, {

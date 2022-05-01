@@ -27,7 +27,6 @@ const Events = db.define("events", {
   },
   eventDate: { type: DataTypes.STRING, allowNull: false },
   location: { type: DataTypes.STRING, allowNull: false },
-  season: { type: DataTypes.STRING, allowNull: false },
   eventType: { type: DataTypes.STRING, allowNull: false },
 });
 

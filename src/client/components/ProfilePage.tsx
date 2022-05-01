@@ -9,13 +9,16 @@
 // };
 
 // export default ProfilePage;
+// interface AppProps {
+//   getAllRSVPSEvents(): void;
+// }
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import RSVPS from './RSVPS';
 import { UserContext } from './App';
 
-const Profile = (): React.ReactElement => {
+const Profile = () => {
   const user: any = useContext(UserContext);
   // console.log('THIS IS WORKING', user);
 

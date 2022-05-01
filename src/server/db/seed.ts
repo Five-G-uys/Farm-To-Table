@@ -24,6 +24,7 @@ syncModels(true)
       },
     });
 
+<<<<<<< HEAD
     //Events Seed Data
     // await Events.findOrCreate({
     //   where: { id: 1 },
@@ -34,6 +35,67 @@ syncModels(true)
     //     thumbnail: 'null',
     //   },
     // });
+=======
+    // Events Seed Data
+    await Events.findOrCreate({
+      where: { id: 1 },
+      defaults: {
+        id: 1,
+        eventName: "Saturday Farmers market",
+        description: "Local farmer's market",
+        thumbnail:
+          "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651209018/buob8clyoxyiyuu9satm.jpg",
+        eventDate: "13/ 05/ 2022",
+        eventType: "Farmers market",
+        location: "2456 Exposicao Feira St",
+      },
+    });
+    // Events Seed Data
+    await Events.findOrCreate({
+      where: { id: 2 },
+      defaults: {
+        id: 2,
+        eventName: "First harvest of the season",
+        description:
+          "Our first event of the season. Come and get your favorite produce for little money.",
+        thumbnail:
+          "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651209018/buob8clyoxyiyuu9satm.jpg",
+        eventDate: "20/ 05/ 2022",
+        eventType: "Customer's Day",
+        location: "2309 Berry Hills St",
+      },
+    });
+
+    // Events Seed Data
+    await Events.findOrCreate({
+      where: { id: 3 },
+      defaults: {
+        id: 3,
+        eventName: "Compost",
+        description:
+          "Promote the usage of fresh food scrapes for compost. Share your compost with the farm",
+        thumbnail:
+          "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651209018/buob8clyoxyiyuu9satm.jpg",
+        eventDate: "27/ 05/ 2022",
+        eventType: "Farmers market",
+        location: "9032 Ops Park St",
+      },
+    });
+    // Events Seed Data
+    await Events.findOrCreate({
+      where: { id: 4 },
+      defaults: {
+        id: 4,
+        eventName: "Cook out",
+        description: "Come join us for a meal and music and other activities",
+        thumbnail:
+          "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651209018/buob8clyoxyiyuu9satm.jpg",
+        eventDate: "27/ 05/ 2022",
+        eventType: "Community volunteering",
+        location: "9032 Ops Park St",
+      },
+    });
+>>>>>>> 37faefaa8809e6e68b43b35d201c7f0ba2163d67
 
     // Roles Seed Data
     await Roles.findOrCreate({
