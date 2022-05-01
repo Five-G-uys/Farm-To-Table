@@ -133,7 +133,7 @@ app.get('/get_all_users', (req: Request, res: Response) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// POST USER ROUTE
-app.patch('/api/product/:id', async (req: Request, res: Response) => {
+app.patch('/api/user/:id', async (req: Request, res: Response) => {
   console.log('LINE 271 || UPDATE PRODUCT', req.body);
 
   try {
