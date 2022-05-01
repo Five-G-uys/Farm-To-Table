@@ -34,6 +34,8 @@ import {
 } from './db/models';
 const authRouter = require('./routes/authRouter');
 const eventRouter = require('./routes/EventRouter');
+const weatherRouter = require('./routes/WeatherRouter');
+
 // const subscriptionRouter = require('./routes/SubscriptionsRouter')
 // const farmRouter = require('./routes/FarmRouter')
 import UserInterface from '../types/UserInterface';
@@ -78,11 +80,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', authRouter);
-// app.use(passport.authenticate());
-
 app.use('/events', eventRouter);
 // app.use('/subscriptions', subscriptionRouter);
 // app.use('/', farmRouter)
+app.use('/weather', weatherRouter);
+
 
 
 

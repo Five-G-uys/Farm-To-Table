@@ -19,16 +19,24 @@ import Login from './Login';
 import NewNavBar from './NewNavBar';
 import ProductsPage from './ProductsPage';
 import RecordsPage from './Records/RecordsPage';
-import DeliveryRoutesPage from './DeliveryRoutesPage';
+import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
 import PackingListPage from './PackingListPage';
 import UserRecordsPage from './Users/UsersRecordsPage'
+import Weather from './Weather'
 
 
 export const UserContext: any = createContext(null)
 
 const App = () => {
   const [user, setUser] = useState({});
+  const [lat, setLat] = useState(0);
+  const [lon, setLon] = useState(0);
 
+  navigator.geolocation.getCurrentPosition(function (position) {
+    //returns lat/lon based on user location
+    setLat(position.coords.latitude + 0.000001);
+    setLon(position.coords.longitude + 0.000001);
+  });
 
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
@@ -52,27 +60,32 @@ const App = () => {
         <h1>{user.role_id}</h1>
         <UserContext.Provider value={user}>
           <Routes>
+
             {/* Login/Logout Routes */}
             <Route
               path='/login'
               element={isLoggedIn(user) ? <Navigate to='/profile-page' /> : <Login />} />
 
             {/* General Routes */}
-            <Route 
-              path='/' 
+            <Route
+              path='/'
               element={<HomePage />} />
-            <Route 
-              path='/about-us-page' 
+            <Route
+              path='/about-us-page'
               element={<AboutUsPage />} />
             <Route 
-              path='/subscriptions-page' 
+              path='/subscriptions-page'
               element={<SubscriptionsPage />} />
             <Route 
-              path='/event-card' 
+              path='/event-card'
               element={<EventCard />} />
             <Route 
-              path='/edit-products' 
+              path='/edit-products'
               element={<ProductsPage />} />
+            <Route 
+              path='/weather-page'
+              element={<Weather lat={lat} lon={lon} />} />
+
             {/* Restricted User Routes */}
             <Route 
               path='/profile-page' 
@@ -83,13 +96,15 @@ const App = () => {
             <Route
               path='/orders-page'
               element={isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />}/>
+
             {/* Restricted Employ Routes */}
             <Route 
               path='/delivery-routes' 
-              element={isEmployee(user) ? <DeliveryRoutesPage /> : <Navigate to='/login' />}/>
+              element={isEmployee(user) ? <DeliveryRoutesPage lat={lat} lon={lon} /> : <Navigate to='/login' />}/>
             <Route 
               path='/packing-lists'
               element={isEmployee(user) ? <PackingListPage /> : <Navigate to='/login' />} />
+
             {/* Restricted Admin Routes */}
             <Route
               path='/events-page'
