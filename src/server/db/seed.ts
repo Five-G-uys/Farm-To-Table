@@ -284,6 +284,22 @@ syncModels(true)
         farm_id: 1,
       },
     });
+
+    await Subscriptions.findOrCreate({
+      where: { id: 3 },
+      defaults: {
+        id: 3,
+        season: 'Winter',
+        year: 2022,
+        flat_price: 520,
+        weekly_price: 40,
+        description:
+          'All your Winter favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of specialty fall crops as well.  Citrus and and other seasonal goodies will make their usual Late Fall appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly',
+        start_date: 'December 19th',
+        end_date: 'March 10th',
+        farm_id: 1,
+      },
+    });
   })
   .catch((err) => {
     console.log(err);

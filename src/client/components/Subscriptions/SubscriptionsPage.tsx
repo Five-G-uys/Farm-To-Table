@@ -253,6 +253,7 @@ const SubscriptionsPage = () => {
         postSubscription={postSubscription}
         open={open}
         subscription={subscription}
+        setSubscription={setSubscription}
         handleCreateForm={handleCreateForm}
         handleClose={handleClose}
         commonStyles={commonStyles}

@@ -33,6 +33,7 @@ const SubscriptionsAdmin = ({
   postSubscription,
   open,
   subscription,
+  setSubscription,
   handleCreateForm,
   handleClose,
   commonStyles,
