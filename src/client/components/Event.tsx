@@ -142,12 +142,11 @@ const Event = ({
           <ExpandMore sx={{ color: "green" }} expand={expanded}>
             <DeleteIcon sx={{ color: "green" }} onClick={deleteEvent} />
           </ExpandMore>
-          <ExpandMore
-            sx={{ color: "green" }}
-            expand={expanded}
-            onClick={() => handleEditClick(id)}
-          >
-            <EditIcon sx={{ color: "green" }} />
+          <ExpandMore sx={{ color: "green" }} expand={expanded}>
+            <EditIcon
+              sx={{ color: "green" }}
+              onClick={() => handleEditClick(id)}
+            />
           </ExpandMore>
           <ExpandMore
             sx={{ color: "green" }}

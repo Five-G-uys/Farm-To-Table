@@ -20,13 +20,13 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
+
 import Fade from "@mui/material/Fade";
-import {
-  RadioGroup,
-  FormLabel,
-  FormControlLabel,
-  Radio,
-} from "@material-ui/core";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
 //Component import
 import EventCard from "./EventCard";
@@ -99,12 +99,12 @@ const EventsPage = () => {
           description: description,
           thumbnail: thumbnail,
           eventDate: eventDate,
-          eventType: eventType,
+          eventType: value,
           location: location,
         },
       })
       .then((data) => {
-        console.log("saved!", data);
+        console.log("LINE 107 saved!", data);
         setUpdateCounter(updateCounter + 1);
         handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
@@ -114,10 +114,10 @@ const EventsPage = () => {
 
   //delete request for deleteting an event in the database
   const deleteEvent = () => {
-    console.log("LINE 81", user.id, " and ", eventId);
+    console.log("LINE 81", user.id, " and ", id);
     axios
       .delete("/events/api/event/delete", {
-        params: { id: eventId },
+        params: { id: id },
       })
       .then((data) => {
         console.log("87 LINE ", data);
@@ -219,9 +219,12 @@ const EventsPage = () => {
       });
   };
 
-  useEffect(() => {
-    getAllEvents();
-  }, [updateCounter]);
+  ////////////////Radio Button handle function///////////////////////////
+
+  const [value, setValue] = React.useState("Farmers Market");
+  const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue((event.target as HTMLInputElement).value);
+  };
 
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (idEvent: any) => {
@@ -256,6 +259,7 @@ const EventsPage = () => {
 
   useEffect((): void => {
     getAllEvents();
+    deleteEvent();
   }, [updateCounter]);
 
   console.log("line 244 in EventsPage", event);
@@ -383,25 +387,25 @@ const EventsPage = () => {
                           aria-labelledby="demo-controlled-radio-buttons-group"
                           name="controlled-radio-buttons-group"
                           value={eventType}
-                          onChange={(e) => handelTextInput(e)}
-                          variant="filled"
+                          onChange={handleRadioBtn}
                         >
                           <FormControlLabel
                             value="Famers Market"
                             control={<Radio />}
-                            label="Farmars Market"
+                            label="Farmers Market"
+                            // variant="filled"
                           />
                           <FormControlLabel
                             value="Community Volunteering"
                             control={<Radio />}
                             label="Community Volunteering"
-                            variant="filled"
+                            // variant="filled"
                           />
                           <FormControlLabel
                             value="Customers Day"
                             control={<Radio />}
                             label="Customers Day"
-                            variant="filled"
+                            // variant="filled"
                           />
                         </RadioGroup>
                       </FormControl>
@@ -522,3 +526,17 @@ const EventsPage = () => {
 };
 
 export default EventsPage;
+function updateEvent(
+  id: number,
+  event: {
+    id: number;
+    eventName: string;
+    description: string;
+    thumbnail: string;
+    eventDate: string;
+    eventType: string;
+    location: string;
+  }
+) {
+  throw new Error("Function not implemented.");
+}
