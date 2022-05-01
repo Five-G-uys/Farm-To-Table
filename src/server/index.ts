@@ -8,8 +8,8 @@ require('dotenv').config();
 import path from 'path';
 // const path = require('path');
 const passport = require('passport');
-const cookieSession = require("cookie-session");
-const cookieParser = require("cookie-parser");
+const cookieSession = require('cookie-session');
+const cookieParser = require('cookie-parser');
 
 const axios = require('axios');
 // require Op object from sequelize to modify where clause in options object
@@ -46,14 +46,13 @@ const port = process.env.LOCAL_PORT;
 const dist = path.resolve(__dirname, '..', '..', 'dist');
 // console.log('LINE 37 || INDEX.TSX', __dirname);
 
-
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000, //one day
     keys: [process.env.PASSPORT_CLIENT_SECRET],
     httpOnly: true,
     signed: true,
-    secure: process.env.NODE_ENV==='production',
+    secure: process.env.NODE_ENV === 'production',
   })
 );
 
@@ -84,43 +83,34 @@ app.use('/events', eventRouter);
 // app.use('/subscriptions', subscriptionRouter);
 // app.use('/', farmRouter)
 
-
-
 // Create a post request for /create-checkout-session
 app.post('/create-checkout-session', async (req, res) => {
   try {
-    console.log('Stripe Session req', req)
+    console.log('Stripe Session req', req);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment', // subscriptions would be added here
-      line_iteams: req.body.items.map((item: { id: number; quantity: any; }) => {
-        const storeItem: any = storeItems.get(item.id)
+      line_iteams: req.body.items.map((item: { id: number; quantity: any }) => {
+        const storeItem: any = storeItems.get(item.id);
         return {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: storeItem.name
+              name: storeItem.name,
             },
-            unit_amount: storeItem.priceInCents
+            unit_amount: storeItem.priceInCents,
           },
-          quantity: item.quantity
-        }
+          quantity: item.quantity,
+        };
       }),
       success_url: `${process.env.SERVER_URL}/success.html`,
-      cancel_url:  `${process.env.SERVER_URL}/cancel.html`
-
-    })
+      cancel_url: `${process.env.SERVER_URL}/cancel.html`,
+    });
     res.json({ url: 'session.url' });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 }),
-
-
-
-
-
-
   ////////SUBSCRIPTION REQUEST////////////
 
   ///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
@@ -191,23 +181,23 @@ app.get('/get_all_products', (req: Request, res: Response) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// ORDERS GET ROUTE
 app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
-  // console.log('LINE 238 || SERVER INDEX', req.params); // user id
+  console.log('LINE 184 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
   SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
     .then((data: Array<object>) => {
       const dataObj: Array<object> = [];
       console.log(
-        'LINE 253',
+        'LINE 191',
         data.forEach((subscriptionEntry: any) => {
-          // console.log('LINE 255', subscriptionEntry.dataValues);
+          console.log('LINE 193', subscriptionEntry.dataValues);
           if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
             dataObj.push(subscriptionEntry.dataValues.id);
           }
         })
       );
       console.log(
-        'LINE 261',
+        'LINE 200',
         dataObj.map((subscriptionEntryId: any) => {
           return { subscription_entry_id: subscriptionEntryId };
         })
