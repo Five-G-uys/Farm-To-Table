@@ -52,9 +52,17 @@ const ProductCard = ({ product, handleEditClick }: any) => {
   const { name, id, description, plant_date, harvest_date, img_url } = product;
   // console.log('LINE 53 || PRODUCT CARD', id);
   return (
-    <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>
+    <Card
+      sx={{
+        minWidth: '15rem',
+        borderRadius: '2.5rem',
+        // elevation: 2,
+        boxShadow: 1,
+      }}
+    >
       <CardHeader
         avatar={
+          // MAKE AVATAR A SEASON LOGO
           <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
             {name[0]}
           </Avatar>

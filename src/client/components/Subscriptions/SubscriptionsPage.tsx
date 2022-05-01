@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SubscriptionsContainer from './SubscriptionsContainer';
@@ -22,17 +22,20 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
 
-// import { UserContext } from './App';
+import { UserContext } from '../App';
 
 const SubscriptionsPage = () => {
-  // const user: any = useContext(UserContext);
+  const user: any = useContext(UserContext);
   // console.log('THIS IS WORKING', user);
   const navigate = useNavigate();
 
   const [updateCounter, setUpdateCounter] = useState(0);
 
-  const [id, setId] = useState(0);
-
+  // NEED TO SET USER ID TO CURRENT USER ID. RIGHT NOW IT'S ALWAYS GOING TO BE 0
+  // const [id, setId] = useState(0);
+  // user.id);
+  console.log('LINE 37 || SUBSCRIPTION PAGE ', user);
+  const { id } = user;
   const [season, setSeason] = useState('');
 
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
@@ -197,7 +200,8 @@ const SubscriptionsPage = () => {
       axios
         .post(`/api/add_subscription_entry/${id}`, {
           farm_id: 1,
-          season: season, // change season to number season id on server side
+          // this is the subscription id, or at least it needs to be. Check state
+          season: subscription.id, // change season to number season id on server side
         })
         .then(() => {
           navigate('/subscriptions-page/confirmation-page');
@@ -211,7 +215,7 @@ const SubscriptionsPage = () => {
   };
 
   const handleEditClick = (subscription_id: any) => {
-    console.log('LINE 185 || PRODUCTS PAGE CLICKED', subscription_id);
+    console.log('LINE 185 || SUBSCRIPTIONS PAGE CLICKED', subscription_id);
 
     const clickedProduct: any = subscriptions.find(
       // find mutates original array values
@@ -295,10 +299,13 @@ const SubscriptionsPage = () => {
       </button>
       <Fab
         onClick={handleCreateForm}
-        size='small'
+        size='large'
         // color='secondary'
         aria-label='add'
-        style={{ transform: 'scale(2.5)', backgroundColor: '#80D55F' }}
+        style={{
+          transform: 'scale(1.5)',
+          backgroundColor: 'lightgreen',
+        }}
         sx={{
           position: 'fixed',
           bottom: (theme) => theme.spacing(8),

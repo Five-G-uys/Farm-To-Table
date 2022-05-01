@@ -17,7 +17,7 @@ const SubscriptionsContainer = ({
   handleEditClick,
   inEditMode,
 }: any) => {
-  console.log('LINE 5 || PRODUCTSCONTAINER', subscriptions);
+  console.log('LINE 5 || SUBSCRIPTIONSCONTAINER', subscriptions);
   const classes = useStyles();
   return (
     <Grid

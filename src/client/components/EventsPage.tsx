@@ -508,10 +508,13 @@ const EventsPage = () => {
         </Modal>
         <Fab
           onClick={handleCreateForm}
-          size='small'
+          size='large'
           // color='secondary'
           aria-label='add'
-          style={{ transform: 'scale(2.5)', backgroundColor: '#80D55F' }}
+          style={{
+            transform: 'scale(1.5)',
+            backgroundColor: 'lightgreen',
+          }}
           sx={{
             position: 'fixed',
             bottom: (theme) => theme.spacing(8),
