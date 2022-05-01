@@ -1,41 +1,40 @@
 import React from 'react';
-import ProductCard from './ProductCard';
+import UserCard from './UserCard';
 import { Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   gridContainer: {
-    paddingTop: '60px',
-    justifyContent: 'center',
-    paddingLeft: '5vw',
-    paddingRight: '5vw',
+    paddingTop: '40px',
+    paddingLeft: '4rem',
+    paddingRight: '4rem',
   },
 });
 
-const ProductsContainer = ({ products, handleEditClick, inEditMode }: any) => {
-  // console.log('LINE 5 || PRODUCTSCONTAINER', products);
+const UsersContainer = ({ users, handleEditClick, inEditMode }: any) => {
+  console.log('LINE 15 || USERSCONTAINER', users);
   const classes = useStyles();
   return (
     <Grid
       container
-      spacing={6}
+      spacing={4}
       className={classes.gridContainer}
       // justify='center'
     >
-      {products.map((product: any) => {
+      {users.map((user: any) => {
         return (
           <Grid
             item
-            xs={10}
-            sm={5}
+            xs={12}
+            sm={6}
             md={4}
             lg={3}
-            xl={3}
-            key={product.name + product.id}
+            xl={3}f
+            key={user.name + user.id}
           >
-            <ProductCard
-              product={product}
-              key={product.name + product.id}
+            <UserCard
+              user={user}
+              key={user.name + user.id}
               handleEditClick={handleEditClick}
               inEditMode={inEditMode}
             />
@@ -46,4 +45,4 @@ const ProductsContainer = ({ products, handleEditClick, inEditMode }: any) => {
   );
 };
 
-export default ProductsContainer;
+export default UsersContainer;

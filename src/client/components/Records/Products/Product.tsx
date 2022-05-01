@@ -10,7 +10,7 @@ interface AppProps {
   quantity: string;
 }
 
-const ProductsRecords = ({
+const Product = ({
   name,
   description,
   img_url,
@@ -19,7 +19,7 @@ const ProductsRecords = ({
   vendor_id,
   quantity,
 }: AppProps) => {
-  console.log(name)
+  console.log({name})
   return (
     <div>
       <h1>{name}</h1>
@@ -33,4 +33,4 @@ const ProductsRecords = ({
   )
 }
 
-export default ProductsRecords;
+export default Product;

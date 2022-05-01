@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // React Imports
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -18,34 +21,30 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
-import { Slide, Stack } from '@mui/material';
-import Divider from '@mui/material/Divider';
 
 // Component Imports
-import ProductsContainer from './ProductsContainer';
-// can import getallproducts after migrating it to apicalls file
-import { updateProduct } from '../apiCalls/productCallS';
+import UsersContainer from './UsersContainer';
 // import { cli } from 'webpack';
 
-const ProductsPage = () => {
+const UserRecordsPage = () => {
   const [updateCounter, setUpdateCounter] = useState(0);
-
-  // cerate state var Products array (set to result of get req)
-  const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
 
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
   // create state var for product object
-  const [product, setProduct] = useState({
+  const [user, setUser] = useState({
     id: 0,
-    img_url: '',
+    googleId: '',
     name: '',
-    description: '',
-    plant_date: '',
-    harvest_date: '',
-    subscription_id: '',
+    email: '',
+    address: '',
+    picture: '',
+    farm_id: 0,
+    role_id: 0,
   });
+  
   // state var for backdrop
   const [open, setOpen] = useState(false);
 
@@ -58,14 +57,15 @@ const ProductsPage = () => {
   const handleClose = () => {
     setOpen(false);
     setInEditMode(false);
-    setProduct({
+    setUser({
       id: 0,
-      img_url: '',
+      googleId: '',
       name: '',
-      description: '',
-      plant_date: '',
-      harvest_date: '',
-      subscription_id: '',
+      email: '',
+      address: '',
+      picture: '',
+      farm_id: 0,
+      role_id: 0,
     });
   };
   // const handleToggle = () => {
@@ -97,27 +97,29 @@ const ProductsPage = () => {
 
   // Destructure product state obj
   const {
-    img_url,
+    id,
+    googleId,
     name,
-    description,
-    plant_date,
-    harvest_date,
-    subscription_id,
-  } = product;
+    email,
+    address,
+    picture,
+    farm_id,
+    role_id
+  } = user;
 
-  // create post req to send product form data
-  const postProduct = (e: any) => {
+  // create post req to send user form data
+  const postUser = (e: any) => {
     console.log('LINE 108');
     e.preventDefault();
     axios
-      .post('/api/product', {
+      .post('/api/user', {
         product: {
           name: name,
-          description: description,
-          img_url: img_url,
-          plant_date: plant_date,
-          harvest_date: harvest_date,
-          subscription_id: Number(subscription_id),
+          email: email,
+          address: address,
+          picture: picture,
+          farm_id: Number(farm_id),
+          role_id: Number(role_id)
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -130,19 +132,36 @@ const ProductsPage = () => {
       .catch((err) => console.error(err));
   };
 
+
+// export function to product pages component
+const updateUser = async (userId: number, updatedUser: any) => {
+  try {
+    // axios always has data property available on response obj so can destructure here
+    const { data } = await axios.patch(
+      `/api/user/${userId}`,
+      updateUser
+    );
+    console.log('LINE 117 || USER CALLS', data);
+    return data;
+  } catch (err) {
+    console.error('LINE 120 || USER CALLS', err);
+    return { error: err };
+  }
+};
+
   // create function to handle update form submission
-  const handleProductUpdateSubmit = async (e: any) => {
+  const handleUserUpdateSubmit = async (e: any) => {
     e.preventDefault();
     try {
       // call async function that was imported from apiCalls/productCalls
-      const result = await updateProduct(product.id, product);
+      const result = await updateUser(user.id, user);
       // keep in try so it doesn't rerender on error
       setUpdateCounter(updateCounter + 1);
       handleClose();
 
-      console.log('LINE 130 || PRODUCTS PAGE', result);
+      console.log('LINE 135 || USERS PAGE', result);
     } catch (err) {
-      console.error('LINE 132 || PRODUCTS PAGE ', err);
+      console.error('LINE 137 || USERS PAGE ', err);
     }
   };
 
@@ -153,7 +172,7 @@ const ProductsPage = () => {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setProduct((state) => {
+    setUser((state) => {
       return {
         ...state,
         [name]: value,
@@ -161,76 +180,37 @@ const ProductsPage = () => {
     });
   };
 
-  ///////////////////////////////////////////////// CONSOLIDATE ALL CLOUDINARY HANDLING
-  // Cloudinary handling
-  // console.log(process.env.CLOUD_PRESET2);
-  const CLOUD_NAME = process.env.CLOUD_NAME;
-  const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
-  const showWidget = () => {
-    console.log('LINE 115 || CLOUDINARY');
-    const widget = window.cloudinary.createUploadWidget(
-      {
-        cloudName: CLOUD_NAME,
-        uploadPreset: CLOUD_PRESET2,
-        folder: name,
-        // WE NEED TO CONSIDER ADDING A 2 DIGIT YEAR NUMBER AT THE END OF EACH SEASON TO IDENTIFY
-        // AND ACCESS PHOTOS MORE EASILY
-        tags: [subscription_id],
-      },
-      (error: any, result: { event: string; info: { url: string } }) => {
-        if (!error && result && result.event === 'success') {
-          // console.log('LINE 56', result.info.url);
-          setProduct((state) => {
-            return {
-              ...state,
-              img_url: result.info.url,
-            };
-          });
-          // console.log('LINE 63', result.info.url);
-        }
-        // console.log('LINE 135 || CLOUDINARY', error);
-      }
-    );
-    widget.open();
-  };
-
-  // get all products handler
-  const getAllProducts = () => {
+  // get all users handler
+  const getAllUsers = () => {
     axios
-      .get('/get_all_products')
+      .get('/get_all_users')
       .then((data) => {
-        console.log('LINE 165 || GET ALL PRODUCTS', data);
-        // set products state to allProducts array
-        setProducts(data.data);
+        console.log('LINE 161 || GET ALL USERS', data);
+        setUsers(data.data);
       })
       .catch((err) => {
-        console.error('LINE 170 || GET ALL PRODUCTS ERROR');
+        console.error('LINE 165 || GET ALL USERS ERROR');
       });
   };
 
   // handle click + edit form functionality for edit button in Product Card component
-  const handleEditClick = (productId: any) => {
-    console.log('LINE 185 || PRODUCTS PAGE CLICKED', productId);
+  const handleEditClick = (userId: any) => {
+    console.log('LINE 171 || USER PAGE CLICKED', userId);
 
-    const clickedProduct: any = products.find(
+    const clickedUser: any = users.find(
       // find mutates original array values
-      (prod: any) => prod.id === productId
+      (usr: any) => usr.id === userId
     );
-    clickedProduct.img_url = clickedProduct.img_url
-      ? clickedProduct.img_url
-      : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
-    // delete clickedProduct.updatedAt;
-    // delete clickedProduct.createdAt;
-    // delete clickedProduct.id;
 
-    setProduct({
-      id: productId,
-      img_url: clickedProduct.img_url,
-      name: clickedProduct.name,
-      description: clickedProduct.description,
-      plant_date: clickedProduct.plant_date,
-      harvest_date: clickedProduct.harvest_date,
-      subscription_id: clickedProduct.subscription_id,
+    setUser({
+      id: userId,
+      googleId: clickedUser.googleId,
+      name: clickedUser.name,
+      email: clickedUser.email,
+      address: clickedUser.address,
+      picture: clickedUser.picture,
+      farm_id: clickedUser.farm_id,
+      role_id: clickedUser.role_id,
     });
     setInEditMode(true);
     setOpen(true);
@@ -238,17 +218,17 @@ const ProductsPage = () => {
 
   // useEffect((): void => {
   //   // don't prevent default here so it gets on page load and all state updates?
-  //   getAllProducts();
-  // }, [products]);
+  //   getAllUsers();
+  // }, [users]);
   useEffect((): void => {
-    getAllProducts();
+    getAllUsers();
   }, [updateCounter]);
 
   return (
     <div>
-      <ProductsContainer
-        products={products}
-        getAllProducts={getAllProducts}
+      <UsersContainer
+        users={users}
+        getAllUsers={getAllUsers}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
       />
@@ -271,7 +251,7 @@ const ProductsPage = () => {
         }}
         className='add_x_form_modal'
       >
-        <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
+        <Fade in={open}>
           {
             <div>
               <div>
@@ -286,12 +266,11 @@ const ProductsPage = () => {
                 >
                   <form
                     onSubmit={
-                      inEditMode ? handleProductUpdateSubmit : postProduct
+                      inEditMode ? handleUserUpdateSubmit : postUser
                     }
                   >
-                    {img_url && (
-                      <img width={'100%'} src={img_url} border-radius='2rem' />
-                    )}
+                    <br></br>
+                    {picture && <img width={300} src={picture} />}
                     <br></br>
                     <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
                       <InputLabel htmlFor='standard-adornment-amount'>
@@ -300,7 +279,7 @@ const ProductsPage = () => {
                       <Input
                         name='name'
                         value={name}
-                        id='Product Name'
+                        id='User Name'
                         // id='fullWidth'
                         placeholder='Avocado'
                         onChange={handelTextInput}
@@ -312,13 +291,12 @@ const ProductsPage = () => {
                     <TextField
                       // width='75%'
                       // type={{ width: '75%' }}
-                      border-radius='1rem'
                       id='filled-basic'
                       variant='filled'
                       // label='Filled'
                       value={name}
                       name='name'
-                      label='Product Name'
+                      label='User Name'
                       // id='fullWidth'
                       placeholder='Avocado'
                       onChange={handelTextInput}
@@ -329,11 +307,11 @@ const ProductsPage = () => {
                       fullWidth
                       id='filled-basic'
                       variant='filled'
-                      value={description}
-                      name='description'
-                      label='Product Description'
+                      value={email}
+                      name='email'
+                      label='User Email'
                       // id='fullWidth'
-                      placeholder='Description'
+                      placeholder='example@gmail.com'
                       onChange={handelTextInput}
                     />
                     <br></br>
@@ -342,11 +320,11 @@ const ProductsPage = () => {
                       fullWidth
                       id='filled-basic'
                       variant='filled'
-                      value={plant_date}
-                      name='plant_date'
-                      label='Plant Date'
+                      value={address}
+                      name='address'
+                      label='Delivery Adderss'
                       // id='fullWidth'
-                      placeholder='Plant Date'
+                      placeholder='1234 Example Rd / New Orleans / LA / 70117'
                       onChange={handelTextInput}
                     />
                     <br></br>
@@ -355,61 +333,20 @@ const ProductsPage = () => {
                       fullWidth
                       id='filled-basic'
                       variant='filled'
-                      value={harvest_date}
-                      name='harvest_date'
-                      label='Harvest Date'
+                      value={role_id}
+                      name='role_id'
+                      label='Role Id'
                       // id='fullWidth'
-                      placeholder='Projected Harvest Date'
+                      placeholder='1 for User / 3 for Employee / 4 for Admin'
                       onChange={handelTextInput}
                     />
                     <br></br>
                     <br></br>
-                    <TextField
-                      fullWidth
-                      id='filled-basic'
-                      variant='filled'
-                      value={subscription_id}
-                      name='subscription_id'
-                      label='Season'
-                      // id='fullWidth'
-                      placeholder='Season'
-                      onChange={handelTextInput}
-                    />
+                    <Button variant='contained' size='large' type='submit'>
+                      {inEditMode ? 'UPDATE' : 'SAVE'}
+                    </Button>
                     <br></br>
                     <br></br>
-                    <Stack
-                      direction='row'
-                      // divider={
-                      //   <Divider
-                      //     orientation='vertical'
-                      //     variant='middle'
-                      //     flexItem
-                      //     light
-                      //   />
-                      // }
-                      justifyContent='space-between'
-                    >
-                      <Button
-                        variant='text'
-                        size='medium'
-                        onClick={showWidget}
-                        sx={{ color: 'green' }}
-                      >
-                        Add Product Image
-                      </Button>
-                      <Button
-                        variant='text'
-                        size='large'
-                        type='submit'
-                        sx={{ color: 'green' }}
-                      >
-                        {inEditMode ? 'UPDATE' : 'SAVE'}
-                      </Button>
-                    </Stack>
-                    <br></br>
-                    {/* <button type='submit' className='form--submit'>
-                Save Product
-              </button> */}
                   </form>
                 </Box>
               </div>
@@ -417,25 +354,8 @@ const ProductsPage = () => {
           }
         </Fade>
       </Modal>
-      <Fab
-        onClick={handleCreateForm}
-        size='large'
-        // color='secondary'
-        aria-label='add'
-        style={{
-          transform: 'scale(1.5)',
-          backgroundColor: 'lightgreen',
-        }}
-        sx={{
-          position: 'fixed',
-          bottom: (theme) => theme.spacing(8),
-          right: (theme) => theme.spacing(8),
-        }}
-      >
-        <AddIcon style={{ color: '#FFFFFF' }} />
-      </Fab>
     </div>
   );
 };
 
-export default ProductsPage;
+export default UserRecordsPage;

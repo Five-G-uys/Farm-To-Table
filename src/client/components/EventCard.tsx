@@ -1,35 +1,38 @@
-import React, { useState, useEffect } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { useState, useEffect, useContext } from "react";
 import Event from "./Event";
 import axios from "axios";
+import { UserContext } from "./App";
 //import RSVPS from "./RSVPS";
+interface AppProps {
+  eventName: string;
+  description: string;
+  thumbnail: React.ImgHTMLAttributes<string>;
+  eventType: string;
+  eventDate: string;
+  eventId: number;
+  getAllEvents: () => void;
+  location: string;
+  handleEditClick: () => void;
+}
 
-const EventCard = () => {
-  const [events, setEvents] = useState({ eventArray: [] });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EventCard = ({
+  handleEditClick,
+  getAllEvents,
+  allEvents,
+  updateCounter,
+  deleteEvent,
+}: AppProps | any) => {
+  const user: any = useContext(UserContext);
 
-  const getAllEvents = () => {
-    axios
-      .get("/events/api/event")
+  console.log("THIS IS WORKING", user, getAllEvents);
+  const { role_id, id } = user;
+  //const [events, setEvents] = useState({ allEvents: [] });
+  //const [counter, setCounter] = useState(0);
 
-      .then(({ data }) => {
-        console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
-        setEvents((state) => {
-          return {
-            ...state,
-            eventArray: data,
-          };
-        });
-      })
-      .catch((error) => {
-        console.log("sorry, request failed", error);
-      });
-  };
-
-  useEffect(() => {
-    getAllEvents();
-  }, []);
-
-  const { eventArray } = events;
-  //console.log("line 28", eventArray);
+  //const { allEvents } = events;
+  console.log("line 32", allEvents);
 
   return (
     <div className="events">
@@ -40,8 +43,8 @@ const EventCard = () => {
       <br></br>
       <br></br>
       <div className="card">
-        {Array.isArray(eventArray) &&
-          eventArray.map(
+        {Array.isArray(allEvents) &&
+          allEvents.map(
             (event: {
               eventName: string;
               description: string;
@@ -51,7 +54,6 @@ const EventCard = () => {
               eventDate: string;
               id: number;
               location: string;
-              season: string;
             }) => {
               const {
                 eventName,
@@ -60,11 +62,11 @@ const EventCard = () => {
                 description,
                 eventDate,
                 id,
-                season,
                 location,
               } = event;
               return (
                 <Event
+                  event={event}
                   eventName={eventName}
                   eventType={eventType}
                   thumbnail={thumbnail}
@@ -74,7 +76,9 @@ const EventCard = () => {
                   key={eventName}
                   eventId={id}
                   location={location}
-                  season={season}
+                  updateCounter={updateCounter}
+                  handleEditClick={handleEditClick}
+                  deleteEvent={deleteEvent}
                 />
               );
             }
@@ -86,3 +90,7 @@ const EventCard = () => {
 };
 
 export default EventCard;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function userContext(UserContext: any): any {
+  throw new Error("Function not implemented.");
+}

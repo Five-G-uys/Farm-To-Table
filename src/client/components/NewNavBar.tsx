@@ -18,6 +18,7 @@ import Paper from '@mui/material/Paper';
 import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
+import ThemeProvider from './App';
 
 interface Props {
   /**
@@ -49,7 +50,8 @@ const NewNavBar = ({ user }: any, props: Props) => {
     { name: 'Home', path: '/' },
     { name: 'Sign Up!', path: '/subscriptions-page' },
     { name: 'Products ', path: '/edit-products' },
-    { name: 'Farm events', path: '/event-card' },
+    { name: 'Weather', path: '/weather-page' },
+    { name: 'Farm events', path: '/events-page' },
     { name: 'About Us', path: '/about-us-page' },
   ];
 
@@ -59,8 +61,6 @@ const NewNavBar = ({ user }: any, props: Props) => {
       { name: 'Records', path: '/records' },
       { name: 'Packing List', path: '/packing-lists' },
       { name: 'Delivery Routes', path: '/delivery-routes' },
-      { name: 'Add Season', path: '/subscriptions-admin' },
-      { name: 'Add Event', path: '/events-page' },
       { name: 'Edit User Role', path: '/edit-users' },
       { name: 'Profile', path: '/profile-page' },
       // { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
