@@ -5,25 +5,21 @@
 import { Router } from 'express';
 import passport from 'passport';
 require('dotenv').config();
-require('../middleware/passport');
 const session = require('express-session');
 const authRouter: Router = Router();
 import { Users } from '../db/models';
-const { application } = require("express"); // find name in project
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+const { application } = require('express'); // find name in project
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 // import UserInterface from "../../types/UserInterface";
-import { isLoggedIn } from '../middleware/auth'
-
-
-
+import { isLoggedIn } from '../middleware/auth';
 
 passport.use(
   'google',
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-      callbackURL: "http://localhost:5555/auth/google/callback",
+      clientID: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      callbackURL: 'http://localhost:5555/auth/google/callback',
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, done) => {
@@ -66,10 +62,10 @@ passport.serializeUser((user: any, done: any) => {
 passport.deserializeUser((id: any, done: any) => {
   // console.log('Deserializing User:', id);
 
-  Users.findOne({ where: {id} })
+  Users.findOne({ where: { id } })
     .then((data: any) => {
       // console.log('data', data);
-      done(null, data)
+      done(null, data);
     })
     .catch((err: any) => {
       done(err);
@@ -83,19 +79,15 @@ authRouter.get(
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
-authRouter.get('/google/error', (req, res) =>
-  res.send('Unknown Error')
-);
+authRouter.get('/google/error', (req, res) => res.send('Unknown Error'));
 
 authRouter.get(
   '/google/callback',
-  passport.authenticate('google', 
-  {
+  passport.authenticate('google', {
     failureMessage: 'cannot login to Google',
     failureRedirect: errorLoginUrl,
     successRedirect: successLoginUrl,
-  }
-  ),
+  }),
   (req, res) => {
     res.redirect('/profile-page');
   }
@@ -115,7 +107,6 @@ authRouter.get('/api/userProfile', isLoggedIn, (req, res) => {
   // console.log("Gettingg user profile", req.user)
   // console.log(`Body: `, req);
   // console.log(`Params: `, req.);
-
 });
 
 module.exports = authRouter;
