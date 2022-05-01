@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UrlWithStringQuery } from "node:url";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
+import { UserContext } from "./App";
 //import RSVPS from "./RSVPS";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface AppProps {
@@ -27,27 +30,14 @@ const Event = ({
   location,
 }: //getAllRSVPSEvents,
 AppProps) => {
-  const [userId, setUserId] = useState(0);
-  const [userRole, setUserRole] = useState(0);
-  useEffect((): void => {
-    // TAKE THIS AXIOS CALL TO GET USER
-    console.log("IS THIS FUNCTION RUNNING?");
-    axios
-      .get<AxiosResponse>("/auth/api/userProfile")
-      .then(({ data }: any) => {
-        console.log("LINE 37 EVENT COMPONENT userId", data);
-        const { id, role_id } = data;
-        setUserId(id);
-        setUserRole(role_id);
-      })
-      .catch((err) => console.warn("Sorry it failed", err));
-  }, []);
+  const user: any = useContext(UserContext);
+  console.log('THIS IS WORKING', user);
 
   const handRSVPosts = () => {
-    console.log("LINE 63", userId, " and ", eventId);
+    console.log("LINE 63", user.id, " and ", eventId);
     axios
       .post("/events/api/Rsvp/", {
-        userId: userId,
+        userId: user.id,
         eventId: eventId,
       })
       .then((data) => {
@@ -60,7 +50,7 @@ AppProps) => {
 
   //delete request for deleteting an event in the database
   const deleteEvent = () => {
-    console.log("LINE 81", userId, " and ", eventId);
+    console.log("LINE 81", user.id, " and ", eventId);
     axios
       .delete("/events/api/event/delete", {
         params: { id: eventId },
@@ -74,7 +64,7 @@ AppProps) => {
       });
   };
 
-  console.log("LINE 78", userId + "AND USER ROLE ", userRole);
+  console.log("LINE 78", user.id + "AND USER ROLE ", user.role_id);
   return (
     <div>
       <div></div>
@@ -91,7 +81,7 @@ AppProps) => {
               <h3 className="event-category">Type of event: {eventType}</h3>
               <h4 className="event-date">Date: {eventDate}</h4>
               <h4 className="event-date">Location: {location}</h4>
-              {userRole > 3 ? (
+              {user.role_id > 3 ? (
                 <button onClick={deleteEvent}>Delete Event</button>
               ) : (
                 <button onClick={handRSVPosts}>Click to Attend</button>

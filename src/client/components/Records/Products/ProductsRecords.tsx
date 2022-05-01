@@ -4,18 +4,13 @@ import Product from './Product';
 
 const ProductsRecords = () => {
 
-  const [products, setProducts] = useState({ productsArray: {} });
+  const [products, setProducts] = useState([]);
 
   const getProducts = () => {
     axios.get("/records/Products")
       .then((data) => {
         console.log(data);
-        setProducts((state) => {
-          return {
-            ...state,
-            ProductsArray: [...data.data],
-          }
-        })
+        setProducts(data.data)
       })
       .catch((error) => {
         console.log("failed request", error);
@@ -26,14 +21,14 @@ const ProductsRecords = () => {
     getProducts();
   }, []);
 
-
+  console.log(products)
 
   return (
     <div>
       <h1>made it to Products Records</h1>
       <div>
-        {Array.isArray(products.productsArray) &&
-          products.productsArray.map(
+        {Array.isArray(products) &&
+          products.map(
             (product: {
               name: string;
               description: string;
@@ -42,7 +37,7 @@ const ProductsRecords = () => {
               id: number;
               vendor_id: number;
               quantity: string;
-            }) => {
+            }, i) => {
               const { name, description, img_url, available, id, vendor_id, quantity } = product
               return (
                 <Product
@@ -53,6 +48,7 @@ const ProductsRecords = () => {
                   id={id}
                   vendor_id={vendor_id}
                   quantity={quantity}
+                  key={i}
                 />
               );
             }

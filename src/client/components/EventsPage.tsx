@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./App";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 
 const EventsPage = () => {
-  const { user, setUser } = useContext(UserContext);
+  const user: any = useContext(UserContext);
+  console.log('THIS IS WORKING', user);
   const [event, setEvent] = useState({
     eventName: "",
     description: "",
@@ -74,8 +76,6 @@ const EventsPage = () => {
     );
     widget.open();
   };
-  console.log("LINE 77777774", user);
-
   // useEffect(() => {}, [event.thumbnail]);
   // console.log(event);
   const {

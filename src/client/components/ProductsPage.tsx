@@ -21,13 +21,22 @@ import Fade from '@mui/material/Fade';
 
 // Component Imports
 import ProductsContainer from './ProductsContainer';
+// can import getallproducts after migrating it to apicalls file
+import { updateProduct } from '../apiCalls/productCallS';
+// import { cli } from 'webpack';
 
 const ProductsPage = () => {
+  const [updateCounter, setUpdateCounter] = useState(0);
+
   // cerate state var Products array (set to result of get req)
   const [products, setProducts] = useState([]);
 
+  // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
+  const [inEditMode, setInEditMode] = useState(false);
+
   // create state var for product object
   const [product, setProduct] = useState({
+    id: 0,
     img_url: '',
     name: '',
     description: '',
@@ -35,22 +44,20 @@ const ProductsPage = () => {
     harvest_date: '',
     subscription_id: '',
   });
-  // state var for isClicked boolean
-  const [isClicked, setIsClicked] = useState(false);
   // state var for backdrop
   const [open, setOpen] = useState(false);
 
-  // handler for isClicked state boolean
-  const handelIsClicked = () => {
-    setIsClicked(true);
-    setOpen(!open);
+  // handle create form
+  const handleCreateForm = () => {
+    setOpen(true);
   };
 
   // Handlers for backdrop control
   const handleClose = () => {
     setOpen(false);
-    setIsClicked(false);
+    setInEditMode(false);
     setProduct({
+      id: 0,
       img_url: '',
       name: '',
       description: '',
@@ -97,7 +104,9 @@ const ProductsPage = () => {
   } = product;
 
   // create post req to send product form data
-  const postProduct = () => {
+  const postProduct = (e: any) => {
+    console.log('LINE 108');
+    e.preventDefault();
     axios
       .post('/api/product', {
         product: {
@@ -112,9 +121,27 @@ const ProductsPage = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((data) => {
         console.log('saved!', data);
+        setUpdateCounter(updateCounter + 1);
+        handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
       })
       .catch((err) => console.error(err));
+  };
+
+  // create function to handle update form submission
+  const handleProductUpdateSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      // call async function that was imported from apiCalls/productCalls
+      const result = await updateProduct(product.id, product);
+      // keep in try so it doesn't rerender on error
+      setUpdateCounter(updateCounter + 1);
+      handleClose();
+
+      console.log('LINE 130 || PRODUCTS PAGE', result);
+    } catch (err) {
+      console.error('LINE 132 || PRODUCTS PAGE ', err);
+    }
   };
 
   // Create input handler for form text
@@ -181,14 +208,29 @@ const ProductsPage = () => {
 
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (productId: any) => {
-    const clickedProduct: any = products.find(
-      (product: any) => product.id === productId
-    );
-    delete clickedProduct.updatedAt;
-    delete clickedProduct.createdAt;
-    delete clickedProduct.id;
+    console.log('LINE 185 || PRODUCTS PAGE CLICKED', productId);
 
-    setProduct(clickedProduct);
+    const clickedProduct: any = products.find(
+      // find mutates original array values
+      (prod: any) => prod.id === productId
+    );
+    clickedProduct.img_url = clickedProduct.img_url
+      ? clickedProduct.img_url
+      : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+    // delete clickedProduct.updatedAt;
+    // delete clickedProduct.createdAt;
+    // delete clickedProduct.id;
+
+    setProduct({
+      id: productId,
+      img_url: clickedProduct.img_url,
+      name: clickedProduct.name,
+      description: clickedProduct.description,
+      plant_date: clickedProduct.plant_date,
+      harvest_date: clickedProduct.harvest_date,
+      subscription_id: clickedProduct.subscription_id,
+    });
+    setInEditMode(true);
     setOpen(true);
   };
 
@@ -198,7 +240,7 @@ const ProductsPage = () => {
   // }, [products]);
   useEffect((): void => {
     getAllProducts();
-  }, []);
+  }, [updateCounter]);
 
   return (
     <div>
@@ -206,6 +248,7 @@ const ProductsPage = () => {
         products={products}
         getAllProducts={getAllProducts}
         handleEditClick={handleEditClick}
+        inEditMode={inEditMode}
       />
       {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
       <Modal
@@ -239,7 +282,11 @@ const ProductsPage = () => {
                     // borderRadius: '16px',
                   }}
                 >
-                  <form onSubmit={postProduct}>
+                  <form
+                    onSubmit={
+                      inEditMode ? handleProductUpdateSubmit : postProduct
+                    }
+                  >
                     <Button
                       variant='contained'
                       size='large'
@@ -334,7 +381,7 @@ const ProductsPage = () => {
                     <br></br>
                     <br></br>
                     <Button variant='contained' size='large' type='submit'>
-                      Save
+                      {inEditMode ? 'UPDATE' : 'SAVE'}
                     </Button>
                     <br></br>
                     <br></br>
@@ -349,7 +396,7 @@ const ProductsPage = () => {
         </Fade>
       </Modal>
       <Fab
-        onClick={handelIsClicked}
+        onClick={handleCreateForm}
         size='small'
         // color='secondary'
         aria-label='add'

@@ -3,19 +3,19 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 // Import Dependencies
-import express, { Express, Request, Response } from "express";
+import express, { Express, Request, Response } from 'express';
 //import dotenv from "dotenv";
-require("dotenv").config();
-const path = require("path");
-const passport = require("passport");
-const session = require("express-session");
-const axios = require("axios");
+require('dotenv').config();
+const path = require('path');
+const passport = require('passport');
+const session = require('express-session');
+const axios = require('axios');
 // require Op object from sequelize to modify where clause in options object
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 
 // Import database and models
-require("./db/database.ts");
-require("./middleware/auth");
+require('./db/database.ts');
+require('./middleware/auth');
 import {
   Farms,
   Roles,
@@ -46,15 +46,23 @@ import Profile from 'src/client/components/ProfilePage';
 const app: Express = express();
 const port = process.env.LOCAL_PORT;
 
-const dist = path.resolve(__dirname, "..", "..", "dist");
+const dist = path.resolve(__dirname, '..', '..', 'dist');
 // console.log('LINE 37 || INDEX.TSX', __dirname);
 
 app.use(express.json());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
+
+// Stripe Setup
+const stripe = require('stripe')(process.env.STRIPE_KEY);
+
+const storeItems = new Map([
+  [1, { priceInCents: 10000, name: 'Season Subscription' }],
+  [2, { priceInCents: 20000, name: 'Annual Subscription' }],
+]);
 //routes
-app.use("/auth", authRouter);
-app.use("/events", eventRouter);
+app.use('/auth', authRouter);
+app.use('/events', eventRouter);
 // app.use('/subscriptions', subscriptionRouter);
 // app.use('/', farmRouter)
 
@@ -68,202 +76,63 @@ app.use("/events", eventRouter);
 //   }
 // };
 
-// const successLoginUrl = process.env.CALLBACK_URI;
-// const errorLoginUrl = 'http://localhost:5555/login/error';
+// Create a post request for /create-checkout-session
+app.post('/create-checkout-session', async (req, res) => {
+  try {
+    res.json({ url: '/orders-page' });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+}),
+  ////////SUBSCRIPTION REQUEST////////////
 
-// // all backend routes should start at a common place that dont exist on the front end
+  ///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
+  app.post('/api/product', (req: Request, res: Response) => {
+    const {
+      img_url,
+      name,
+      description,
+      plant_date,
+      harvest_date,
+      subscription_id,
+    } = req.body.product;
 
-// passport.serializeUser((user: any, done: any) => {
-//   // console.log('Serializing User:', user);
-//   done(null, user);
-// });
-// passport.deserializeUser((user: any, done: any) => {
-//   // console.log('Deserializing User:', user);
-//   done(null, user);
-// });
-
-// // Auth Routes
-
-// app.get(
-//   '/auth/google',
-//   passport.authenticate('google', { scope: ['profile', 'email'] })
-// );
-
-// app.get('/auth/google/error', (req: Request, res: Response) =>
-//   res.send('Unknown Error')
-// );
-
-// app.get(
-//   '/auth/google/callback',
-//   passport.authenticate('google'),
-//   (req: any, res: any) => {
-//     res.redirect('/profile-page');
-//   }
-// );
-
-// // Check if a user is logged in
-// app.get('/api/isLoggedIn', (req: Request, res: Response) => {
-//   req.cookies ? res.send(true) : res.send(false);
-// });
-
-// // Logout route
-// app.delete('/api/logout', (req: Request, res: Response) => {
-//   res.clearCookie('crushers');
-//   res.json(false);
-// });
-
-// // Get current user route
-// app.get('/api/userProfile', (req, res) => {
-//   // console.log(`Body: `, req);
-//   // console.log(`Params: `, req.);
-//   Users.findOne()
-//     .then((data: any) => {
-//       // console.log('data', data);
-//       res.send(data).status(200);
-//     })
-//     .catch((err: any) => {
-//       console.error(err);
-//       res.sendStatus(500);
-//     });
-// });
-
-// //Events requests
-// app.post('/api/event', isAdmin, (req: Request, res: Response) => {
-//   const { eventName, description, thumbnail, category, eventDate, eventType } =
-//     req.body.event;
-
-//   // console.log('162 Request object postEvent', req.body);
-//   Events.create({
-//     eventName,
-//     description,
-//     thumbnail,
-//     category,
-//     eventDate,
-//     eventType,
-//   })
-//     .then((data: any) => {
-//       // console.log('Return Events Route || Post Request', data);
-//       res.status(201);
-//     })
-//     .catch((err: string) => {
-//       console.error('Post Request Failed', err);
-//       res.sendStatus(500);
-//     });
-// });
-
-// //Events get request
-// app.get('/events', (req: Request, res: Response) => {
-//   Events.findAll()
-//     .then((response: any) => {
-//       // console.log(response, 'This is line 186 events gotten');
-//       res.status(200).send(response);
-//     })
-//     .catch((err: object) => {
-//       // console.log('Something went wrong', err);
-//       res.sendStatus(404);
-//     });
-// });
-
-// //Get request for the Events with a certain type
-// app.post("/api/Rsvp/", (req: Request, res: Response) => {
-//   console.log("Line 170", "user ID", req.body);
-//   //console.log("Line 171", "Event Id", req.body.eventId);
-//   RSVP.create({
-//     event_id: req.body.eventId,
-//     user_id: req.body.userId,
-//     farm_id: 1,
-//   })
-//     .then((data: any) => {
-//       console.log("174 LINE ", data);
-//       res.status(201).send(data);
-//     })
-//     .catch((err: any) => {
-//       console.error("177 REQUEST FAILED", err);
-//     });
-// });
-
-// //Get request For the RSVP
-// app.get("/api/user/rsvps/:userId", (req: Request, res: Response) => {
-//   RSVP.findAll({
-//     where: { user_id: req.params.userId },
-//   })
-//     .then(async (posts: any) => {
-//       try {
-//         console.log("LINE 199", posts);
-//         const promises = posts.map((rsvp: any) => {
-//           console.log("LINE 197", rsvp.event_id);
-//           return Events.findAll({ where: { id: rsvp.event_id } });
-//         });
-//         Promise.allSettled(promises).then(async (event: any) => {
-//           console.log("LINE 200, EVENTS FOR USER", event[0].value);
-//           res.status(200).send(event);
-//         });
-//       } catch {
-//         console.log("Failed to promisify");
-//       }
-//     })
-//     .catch((err: any) => {
-//       console.log("ERROR FAILED REQ", err);
-//     });
-// });
-
-// //patch request for deleting an event in the DB
-// app.delete("/api/event/delete", (req: Request, res: Response) => {
-//   console.log("line 210", req.query);
-//   RSVP.destroy({
-//     where: { event_id: req.query.id },
-//   }).then((data: any) => {
-//     Events.destroy({ where: { id: req.query.id } })
-//       .then((data: any) => {
-//         console.log("deletion was successful!", data);
-//       })
-//       .catch((err: any) => {
-//         console.error("Deletion was not successful", err);
-//       });
-//   });
-// });
-
-// //Get all from RSVP table
-// app.get("/api/rsvps", (req: Request, res: Response) => {
-//   RSVP.findAll()
-//     .then((data: any) => {
-//       console.log("LINE 228 ALL THE RESPONSES FROM RSVP", data);
-//     })
-//     .catch((err: any) => {
-//       console.log("FAILED REQUEST", err);
-//     });
-// });
-
-////////SUBSCRIPTION REQUEST////////////
+    console.log('162 Request object postEvent', req.body);
+    Products.create({
+      name,
+      description,
+      img_url,
+      plant_date,
+      harvest_date,
+      subscription_id,
+    })
+      .then((data: any) => {
+        console.log('LINE 187 || Product Post Request', data);
+        res.status(201).json(data);
+      })
+      .catch((err: string) => {
+        console.error('Product Post Request Failed', err);
+        res.status(500).json(err);
+      });
+  });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
-app.post('/api/product', (req: Request, res: Response) => {
-  const {
-    img_url,
-    name,
-    description,
-    plant_date,
-    harvest_date,
-    subscription_id,
-  } = req.body.product;
+app.patch('/api/product/:id', async (req: Request, res: Response) => {
+  console.log('LINE 271 || UPDATE PRODUCT', req.body);
 
-  console.log('162 Request object postEvent', req.body);
-  Products.create({
-    name,
-    description,
-    img_url,
-    plant_date,
-    harvest_date,
-    subscription_id,
-  })
-    .then((data: any) => {
-      console.log('LINE 187 || Product Post Request', data);
-      res.status(201);
-    })
-    .catch((err: string) => {
-      console.error('Product Post Request Failed', err);
-      res.sendStatus(500);
+  try {
+    // update product model with async query and assign the result of that promise to a variable to res.send back
+    const updatedProduct = await Products.update(req.body, {
+      where: { id: req.params.id },
+      returning: true,
     });
+    console.log('LINE 278 || UPDATE PRODUCT', updatedProduct);
+
+    res.status(204).json(updatedProduct);
+  } catch (err) {
+    console.error('LINE 274 || UPDATE PRODUCTS', err);
+    res.status(500).json(err);
+  }
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////// GET ALL PRODUCT ROUTE
@@ -275,11 +144,11 @@ app.get('/get_all_products', (req: Request, res: Response) => {
   // IMPLEMENTING SIMPLE GETALL REQUEST FOR MVP
   Products.findAll({ where: {} })
     .then((data: any) => {
-      console.log('LINE 200 || INDEX GET ALL PRODUCTS', data);
+      // console.log('LINE 293 || INDEX GET ALL PRODUCTS', data);
       res.json(data);
     })
     .catch((err: any) => {
-      console.error('LINE 203 || INDEX GET ALL PRODUCTS ERROR', err);
+      console.error('LINE 297 || INDEX GET ALL PRODUCTS ERROR', err);
     });
 });
 
@@ -342,7 +211,7 @@ app.put(`/api/subscribed/:id`, (req: Request, res: Response) => {
       res.send(203);
     })
     .catch((err: unknown) => {
-      console.error("SUBSCRIPTION ROUTES:", err);
+      console.error('SUBSCRIPTION ROUTES:', err);
     });
 });
 
@@ -383,7 +252,7 @@ app.post(
                 // console.log('LINE 224 || SERVER INDEX ||', data);
               })
               .catch((err: any) => {
-                console.log("LINE 228 || SERVER INDEX || ERROR", err);
+                console.log('LINE 228 || SERVER INDEX || ERROR', err);
               });
           }
         })
@@ -392,14 +261,14 @@ app.post(
         });
     };
     try {
-      if (req.body.season === "whole year") {
+      if (req.body.season === 'whole year') {
         await addSubscription(1);
         await addSubscription(2);
-        res.status(201).send("Subscribed!");
+        res.status(201).send('Subscribed!');
       } else {
-        const subscription_id = req.body.season === "fall" ? 2 : 1;
+        const subscription_id = req.body.season === 'fall' ? 2 : 1;
         await addSubscription(subscription_id);
-        res.status(201).send("Subscribed!");
+        res.status(201).send('Subscribed!');
       }
     } catch (err) {
       res.status(500).json(err);
@@ -413,13 +282,13 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
       res.status(200).send(data);
     })
     .catch((err: any) => {
-      console.error("Subscription Route ERROR", err);
+      console.error('Subscription Route ERROR', err);
     });
 });
 
 //////////////////////////////////////////////////////////////Subscription ADMIN Creation/Edit/Delete Routes//
 
-app.post("/api/subscriptions-admin", (req: Request, res: Response) => {
+app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
   // console.log('LINE 272 ****', req.body.event);
   const {
     season,
@@ -431,7 +300,7 @@ app.post("/api/subscriptions-admin", (req: Request, res: Response) => {
     end_date,
   } = req.body.event;
 
-  console.log("283 Request object postSubscription", req.body);
+  console.log('283 Request object postSubscription', req.body);
   Subscriptions.create({
     season,
     year,
@@ -443,23 +312,23 @@ app.post("/api/subscriptions-admin", (req: Request, res: Response) => {
     farm_id: 1,
   })
     .then((data: any) => {
-      console.log("294 Return Subscriptions Route || Post Request", data);
+      console.log('294 Return Subscriptions Route || Post Request', data);
       res.status(201);
     })
     .catch((err: string) => {
-      console.error("Post Request Failed", err);
+      console.error('Post Request Failed', err);
       res.sendStatus(500);
     });
 });
 
-app.get("/api/farms", (req: Request, res: Response) => {
+app.get('/api/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      console.log("this is the data from the farm api call", data);
+      // console.log("this is the data from the farm api call", data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
 
@@ -468,127 +337,127 @@ app.get("/api/farms", (req: Request, res: Response) => {
 app.get('/records/deliveryZones', (req: Request, res: Response) => {
   DeliveryZones.findAll()
     .then((data: any) => {
-      console.log("delivery data", data);
+      console.log('delivery data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/dietaryRestrictions", (req: Request, res: Response) => {
+app.get('/records/dietaryRestrictions', (req: Request, res: Response) => {
   DietaryRestrictions.findAll()
     .then((data: any) => {
-      console.log("DietaryRestrictions data", data);
+      console.log('DietaryRestrictions data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/events", (req: Request, res: Response) => {
+app.get('/records/events', (req: Request, res: Response) => {
   Events.findAll()
     .then((data: any) => {
-      console.log("Events data", data);
+      console.log('Events data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/farms", (req: Request, res: Response) => {
+app.get('/records/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      console.log("Farms data", data);
+      console.log('Farms data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/orders", (req: Request, res: Response) => {
+app.get('/records/orders', (req: Request, res: Response) => {
   Orders.findAll()
     .then((data: any) => {
-      console.log("Orders data", data);
+      console.log('Orders data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/products", (req: Request, res: Response) => {
+app.get('/records/products', (req: Request, res: Response) => {
   Products.findAll()
     .then((data: any) => {
-      console.log("Products data", data);
+      console.log('Products data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/roles", (req: Request, res: Response) => {
+app.get('/records/roles', (req: Request, res: Response) => {
   Roles.findAll()
     .then((data: any) => {
-      console.log("Roles data", data);
+      console.log('Roles data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/rsvps", (req: Request, res: Response) => {
+app.get('/records/rsvps', (req: Request, res: Response) => {
   RSVP.findAll()
     .then((data: any) => {
-      console.log("RSVP data", data);
+      console.log('RSVP data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/subscriptionEntries", (req: Request, res: Response) => {
+app.get('/records/subscriptionEntries', (req: Request, res: Response) => {
   SubscriptionEntries.findAll()
     .then((data: any) => {
-      console.log("SubscriptionEntries data", data);
+      console.log('SubscriptionEntries data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/subscriptions", (req: Request, res: Response) => {
+app.get('/records/subscriptions', (req: Request, res: Response) => {
   Subscriptions.findAll()
     .then((data: any) => {
-      console.log("Subscriptions data", data);
+      console.log('Subscriptions data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/users", (req: Request, res: Response) => {
+app.get('/records/users', (req: Request, res: Response) => {
   Users.findAll()
     .then((data: any) => {
-      console.log("Users data", data);
+      console.log('Users data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
-app.get("/records/vendors", (req: Request, res: Response) => {
+app.get('/records/vendors', (req: Request, res: Response) => {
   Vendors.findAll()
     .then((data: any) => {
-      console.log("Vendors data", data);
+      console.log('Vendors data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
-      console.error("OH NOOOOO", err);
+      console.error('OH NOOOOO', err);
     });
 });
 
 // KEEP AT BOTTOM OF GET REQUESTS
-app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.resolve(dist, "index.html"));
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.resolve(dist, 'index.html'));
 });
 
 app.listen(port, () => {
@@ -596,5 +465,5 @@ app.listen(port, () => {
 });
 
 function findUser(crushers: any) {
-  throw new Error("Function not implemented.");
+  throw new Error('Function not implemented.');
 }
