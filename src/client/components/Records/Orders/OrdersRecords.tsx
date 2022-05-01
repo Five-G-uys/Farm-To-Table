@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'farm_id' | 'subscription_entry_id' | 'delivery_date' 
+  id: 'id' | 'farm_id' | 'subscription_entry_id' | 'delivery_date' | 'edit' | 'delete'
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -34,6 +34,18 @@ const columns: readonly Column[] = [
     minWidth: 170,
     align: 'right',
   },
+  {
+    id: 'edit',
+    label: 'Edit',
+    minWidth: 170,
+    align: 'right',
+  },
+  {
+    id: 'delete',
+    label: 'Delete',
+    minWidth: 170,
+    align: 'right',
+  },
 ];
 
 interface Data {
@@ -52,18 +64,6 @@ function createData(
   return { id, farm_id, subscription_entry_id, delivery_date };
 }
 
-// const rows = [
-//   {
-//     "id": 1,
-//     "farm_id": 1,
-//     "subscription_entry_id": 1,
-//     "delivery_date": "2022-05-07T06:00:00.000Z",
-//     "createdAt": "2022-05-01T02:23:04.310Z",
-//     "updatedAt": "2022-05-01T02:23:04.310Z"
-// },
-//   // createData('India', 'IN', 1324171354, '2022-05-13'),
-  
-// ];
 
 const OrdersRecords = () => {
   const [page, setPage] = useState(0);
@@ -114,22 +114,27 @@ const OrdersRecords = () => {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+              .map((row) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === 'number'
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                  <TableCell>
+                    <EditIcon />
+                  </TableCell>
+                  <TableCell>
+                    <DeleteIcon/>
+                  </TableCell>
+                </TableRow>
+
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
