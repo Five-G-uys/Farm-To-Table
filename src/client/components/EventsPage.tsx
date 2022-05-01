@@ -272,6 +272,7 @@ const EventsPage = () => {
         updateCounter={updateCounter}
         handleEditClick={handleEditClick}
         deleteEvent={deleteEvent}
+        inEditMode={inEditMode}
       />
       <div>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
@@ -384,6 +385,7 @@ const EventsPage = () => {
                           Event Type
                         </FormLabel>
                         <RadioGroup
+                          font-color="black"
                           aria-labelledby="demo-controlled-radio-buttons-group"
                           name="controlled-radio-buttons-group"
                           value={eventType}
@@ -392,18 +394,21 @@ const EventsPage = () => {
                           <FormControlLabel
                             value="Famers Market"
                             control={<Radio />}
+                            checked={eventType === "Famers Market"}
                             label="Farmers Market"
                             // variant="filled"
                           />
                           <FormControlLabel
                             value="Community Volunteering"
                             control={<Radio />}
+                            checked={eventType === "Community Volunteering"}
                             label="Community Volunteering"
                             // variant="filled"
                           />
                           <FormControlLabel
-                            value="Customers Day"
                             control={<Radio />}
+                            value="Customers Day"
+                            checked={eventType === "Customers Day"}
                             label="Customers Day"
                             // variant="filled"
                           />

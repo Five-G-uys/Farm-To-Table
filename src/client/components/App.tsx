@@ -59,7 +59,7 @@ const App = () => {
   const [mode, setMode] = useState(false);
   const theme = createTheme({
     palette: {
-      mode: mode ? "light" : "dark",
+      mode: mode ? "dark" : "light",
     },
   });
   // const toggleTheme = () => {

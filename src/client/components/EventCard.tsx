@@ -15,6 +15,13 @@ interface AppProps {
   location: string;
   handleEditClick: () => void;
 }
+// const useStyles = makeStyles({
+//   gridContainer: {
+//     paddingTop: "40px",
+//     paddingLeft: "4rem",
+//     paddingRight: "4rem",
+//   },
+// });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EventCard = ({
@@ -22,6 +29,7 @@ const EventCard = ({
   getAllEvents,
   allEvents,
   updateCounter,
+  inEditMode,
   deleteEvent,
 }: AppProps | any) => {
   const user: any = useContext(UserContext);
@@ -79,6 +87,7 @@ const EventCard = ({
                   updateCounter={updateCounter}
                   handleEditClick={handleEditClick}
                   deleteEvent={deleteEvent}
+                  inEditMode={inEditMode}
                 />
               );
             }

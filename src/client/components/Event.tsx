@@ -7,8 +7,6 @@ import axios, { AxiosResponse } from "axios";
 import { UserContext } from "./App";
 
 //////////////////////MATERIAL UI/////////////////////////////////
-import React, { useState } from "react";
-
 // MUI Imports
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -29,8 +27,13 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { loadCSS } from "fg-loadcss";
+import Box from "@mui/material/Box";
+//import { green } from "@mui/material/colors";
+import Icon from "@mui/material/Icon";
 
 import dayjs from "dayjs";
+import green from "@material-ui/core/colors/green";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -101,7 +104,9 @@ const Event = ({
         console.error("91 REQUEST FAILED", err);
       });
   };
-
+  const hover = () => {
+    return <p>Click to participate</p>;
+  };
   //console.log("LINE 78", user.id + "AND USER ROLE ", user.role_id);
   return (
     <Card
@@ -133,7 +138,12 @@ const Event = ({
       )}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {`Harvested on ${eventDate}`}
+          {`location ${location}`}
+        </Typography>
+      </CardContent>
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          {`Type of event ${eventType}`}
         </Typography>
       </CardContent>
 
@@ -143,10 +153,21 @@ const Event = ({
             <DeleteIcon sx={{ color: "green" }} onClick={deleteEvent} />
           </ExpandMore>
           <ExpandMore sx={{ color: "green" }} expand={expanded}>
-            <EditIcon
-              sx={{ color: "green" }}
-              onClick={() => handleEditClick(id)}
-            />
+            <Icon
+              baseClassName="fas"
+              className="fa-plus-circle"
+              fontSize="small"
+              onClick={handRSVPosts}
+            >
+              +
+            </Icon>
+          </ExpandMore>
+          <ExpandMore
+            sx={{ color: "green" }}
+            expand={expanded}
+            onClick={() => handleEditClick(eventId)}
+          >
+            <EditIcon sx={{ color: "green" }} />
           </ExpandMore>
           <ExpandMore
             sx={{ color: "green" }}
