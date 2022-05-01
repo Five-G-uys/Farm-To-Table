@@ -7,7 +7,6 @@ import axios, { AxiosResponse } from 'axios';
 import { UserContext } from './App';
 
 //////////////////////MATERIAL UI/////////////////////////////////
-import React, { useState } from 'react';
 
 // MUI Imports
 import { styled } from '@mui/material/styles';
