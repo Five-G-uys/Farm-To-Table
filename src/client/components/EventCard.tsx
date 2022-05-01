@@ -13,23 +13,26 @@ interface AppProps {
   eventId: number;
   getAllEvents: () => void;
   location: string;
+  handleEditClick: () => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const EventCard = ({ getAllEvents, allEvents }: AppProps | any) => {
-  const user: unknown = useContext(UserContext);
+const EventCard = ({
+  handleEditClick,
+  getAllEvents,
+  allEvents,
+  updateCounter,
+  deleteEvent,
+}: AppProps | any) => {
+  const user: any = useContext(UserContext);
 
-  console.log("THIS IS WORKING", user);
+  console.log("THIS IS WORKING", user, getAllEvents);
   const { role_id, id } = user;
   //const [events, setEvents] = useState({ allEvents: [] });
   //const [counter, setCounter] = useState(0);
 
-  useEffect(() => {
-    getAllEvents();
-  }, []);
-
   //const { allEvents } = events;
-  console.log("line 28", allEvents);
+  console.log("line 32", allEvents);
 
   return (
     <div className="events">
@@ -63,6 +66,7 @@ const EventCard = ({ getAllEvents, allEvents }: AppProps | any) => {
               } = event;
               return (
                 <Event
+                  event={event}
                   eventName={eventName}
                   eventType={eventType}
                   thumbnail={thumbnail}
@@ -72,6 +76,9 @@ const EventCard = ({ getAllEvents, allEvents }: AppProps | any) => {
                   key={eventName}
                   eventId={id}
                   location={location}
+                  updateCounter={updateCounter}
+                  handleEditClick={handleEditClick}
+                  deleteEvent={deleteEvent}
                 />
               );
             }
@@ -83,6 +90,7 @@ const EventCard = ({ getAllEvents, allEvents }: AppProps | any) => {
 };
 
 export default EventCard;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function userContext(UserContext: any): any {
   throw new Error("Function not implemented.");
 }

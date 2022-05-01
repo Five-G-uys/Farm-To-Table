@@ -20,19 +20,11 @@ import { UserContext } from "./App";
 
 const Profile = () => {
   const user: any = useContext(UserContext);
-<<<<<<< HEAD
-  console.log("THIS IS WORKING", user);
-
-  // useEffect(() => {
-  //   getAllRSVPSEvents();
-  // }, []);
-=======
   // console.log('THIS IS WORKING', user);
 
   const handleLogout = () => {
     window.location.href='/auth/api/logout'
   };
->>>>>>> 7367daa68bb515f51f6e47e5ad1745e9db0e2600
 
   return (
     <div className="page-wrap">

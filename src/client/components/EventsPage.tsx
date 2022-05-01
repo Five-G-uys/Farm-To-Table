@@ -5,6 +5,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "./App";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+//mateiral UI
 import { ThemeProvider, createTheme } from "@mui/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -20,13 +21,15 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Fade from "@mui/material/Fade";
-import EventCard from "./EventCard";
 import {
   RadioGroup,
   FormLabel,
   FormControlLabel,
   Radio,
 } from "@material-ui/core";
+
+//Component import
+import EventCard from "./EventCard";
 
 // Component Imports
 import ProductsContainer from "./ProductsContainer";
@@ -45,7 +48,7 @@ const EventsPage = () => {
   const [inEditMode, setInEditMode] = useState(false);
 
   const [event, setEvent] = useState({
-    eventId: 0,
+    id: 0,
     eventName: "",
     description: "",
     thumbnail: "",
@@ -66,7 +69,7 @@ const EventsPage = () => {
     setOpen(false);
     setInEditMode(false);
     setEvent({
-      eventId: 0,
+      id: 0,
       eventName: "",
       description: "",
       thumbnail: "",
@@ -83,10 +86,10 @@ const EventsPage = () => {
     eventDate,
     eventType,
     location,
-    eventId,
+    id,
   } = event;
 
-  const postProduct = (e: any) => {
+  const postEvent = (e: any) => {
     console.log("LINE 108");
     e.preventDefault();
     axios
@@ -109,6 +112,22 @@ const EventsPage = () => {
       .catch((err) => console.error(err));
   };
 
+  //delete request for deleteting an event in the database
+  const deleteEvent = () => {
+    console.log("LINE 81", user.id, " and ", eventId);
+    axios
+      .delete("/events/api/event/delete", {
+        params: { id: eventId },
+      })
+      .then((data) => {
+        console.log("87 LINE ", data);
+        getAllEvents();
+      })
+      .catch((err) => {
+        console.error("91 REQUEST FAILED", err);
+      });
+  };
+
   // Box component styles
   const commonStyles = {
     bgcolor: "background.paper",
@@ -128,7 +147,7 @@ const EventsPage = () => {
   const handleEventUpdateSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const result = await updateProduct(event.id, event);
+      const result = await updateEvent(event.id, event);
       // keep in try so it doesn't rerender on error
       setUpdateCounter(updateCounter + 1);
       handleClose();
@@ -145,6 +164,7 @@ const EventsPage = () => {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value, type, checked } = event.target;
+    console.log("NAME INSIDE OF HANDELTEXTINPUT", name, +" and " + value);
     setEvent((state) => {
       return {
         ...state,
@@ -167,7 +187,7 @@ const EventsPage = () => {
         folder: name,
         // WE NEED TO CONSIDER ADDING A 2 DIGIT YEAR NUMBER AT THE END OF EACH SEASON TO IDENTIFY
         // AND ACCESS PHOTOS MORE EASILY
-        tags: [eventId],
+        tags: [id],
       },
       (error: any, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === "success") {
@@ -209,7 +229,7 @@ const EventsPage = () => {
 
     const clickedEvent: any = allEvents.find(
       // find mutates original array values
-      (event: any) => event.id === eventId
+      (event: any) => event.id === id
     );
     clickedEvent.thumbnail = clickedEvent.thumbnail
       ? clickedEvent.thumbnail
@@ -221,7 +241,7 @@ const EventsPage = () => {
     setEvent((state) => {
       return {
         ...state,
-        eventId: idEvent,
+        id: idEvent,
         eventName: clickedEvent.eventName,
         description: clickedEvent.description,
         thumbnail: clickedEvent.thumbnail,
@@ -238,9 +258,17 @@ const EventsPage = () => {
     getAllEvents();
   }, [updateCounter]);
 
+  console.log("line 244 in EventsPage", event);
+
   return (
     <>
-      <EventCard getAllEvents={getAllEvents} allEvents={allEvents} />
+      <EventCard
+        getAllEvents={getAllEvents}
+        allEvents={allEvents}
+        updateCounter={updateCounter}
+        handleEditClick={handleEditClick}
+        deleteEvent={deleteEvent}
+      />
       <div>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
         <Modal
@@ -276,9 +304,10 @@ const EventsPage = () => {
                   >
                     <form
                       onSubmit={
-                        inEditMode ? handleEventUpdateSubmit : postProduct
+                        inEditMode ? handleEventUpdateSubmit : postEvent
                       }
                     >
+                      --{" "}
                       <Button
                         variant="contained"
                         size="large"
@@ -346,43 +375,73 @@ const EventsPage = () => {
                       />
                       <br></br>
                       <br></br>
+                      <FormControl>
+                        <FormLabel id="demo-controlled-radio-buttons-group">
+                          Event Type
+                        </FormLabel>
+                        <RadioGroup
+                          aria-labelledby="demo-controlled-radio-buttons-group"
+                          name="controlled-radio-buttons-group"
+                          value={eventType}
+                          onChange={(e) => handelTextInput(e)}
+                          variant="filled"
+                        >
+                          <FormControlLabel
+                            value="Famers Market"
+                            control={<Radio />}
+                            label="Farmars Market"
+                          />
+                          <FormControlLabel
+                            value="Community Volunteering"
+                            control={<Radio />}
+                            label="Community Volunteering"
+                            variant="filled"
+                          />
+                          <FormControlLabel
+                            value="Customers Day"
+                            control={<Radio />}
+                            label="Customers Day"
+                            variant="filled"
+                          />
+                        </RadioGroup>
+                      </FormControl>
                       {/* <fieldset>
-                      <legend className="radio-title">Type of event</legend>
-                      <input
-                        type="radio"
-                        id="Farmers Market"
-                        name="eventType"
-                        value={"Farmers Market"}
-                        checked={eventType === "Farmers Market"}
-                        onChange={handelTextInput}
-                      />
-                      <label htmlFor="Farmers Market">Farmers Market</label>
-                      <br />
-                      <input
-                        type="radio"
-                        id="Customer Day"
-                        name="eventType"
-                        value="Customer Day"
-                        checked={eventType === "Customer Day"}
-                        onChange={handelTextInput}
-                      />
-                      <label htmlFor="customerDay">Customer Day</label>
-                      <br />
+                        <legend className="radio-title">Type of event</legend>
+                        <input
+                          type="radio"
+                          id="Farmers Market"
+                          name="eventType"
+                          value={value}
+                          checked={eventType === "Farmers Market"}
+                          onChange={handelTextInput}
+                        />
+                        <label htmlFor="Farmers Market">Farmers Market</label>
+                        <br />
+                        <input
+                          type="radio"
+                          id="Customer Day"
+                          name="eventType"
+                          value="Customers Day"
+                          checked={eventType === "Customers Day"}
+                          onChange={handelTextInput}
+                        />
+                        <label htmlFor="Customers Day">Customer Day</label>
+                        <br />
 
-                      <input
-                        type="radio"
-                        id="Community Volunteering"
-                        name="eventType"
-                        value="Community Volunteering"
-                        checked={eventType === "Community Volunteering"}
-                        onChange={handelTextInput}
-                      />
-                      <label htmlFor="Farmers-Market">
-                        Community volunteering
-                      </label>
-                      <br />
-                    </fieldset> */}
-                      {/* <FormControl>
+                        <input
+                          type="radio"
+                          id="Community Volunteering"
+                          name="eventType"
+                          value="Community Volunteering"
+                          checked={eventType === "Community Volunteering"}
+                          onChange={handelTextInput}
+                        />
+                        <label htmlFor="Farmers-Market">
+                          Community volunteering
+                        </label>
+                      </fieldset> */}
+                      {/* </fieldset> 
+                       <FormControl>
                       <FormLabel id="demo-radio-buttons-group-label">
                         Type of Event
                       </FormLabel>
@@ -410,7 +469,7 @@ const EventsPage = () => {
                           onChange={handelTextInput}
                         />
                       </RadioGroup>
-                    </FormControl> */}
+                    </FormControl> 
                       <fieldset>
                         <FormControlLabel
                           value="Customer Day"
@@ -430,17 +489,12 @@ const EventsPage = () => {
                           label="Community volunteering"
                           disabled
                         />
-                      </fieldset>
+                      </fieldset> */}
                       <br></br>
                       <br></br>
                       <Button variant="contained" size="large" type="submit">
                         {inEditMode ? "UPDATE" : "SAVE"}
                       </Button>
-                      <br></br>
-                      <br></br>
-                      {/* <button type='submit' className='form--submit'>
-                  Save Product
-                </button> */}
                     </form>
                   </Box>
                 </div>
