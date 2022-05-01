@@ -32,7 +32,7 @@ import {
   DietaryRestrictions,
   Events,
 } from "./db/models";
-const authRouter = require("./routes/authRouter");
+const authRouter = require("./routes/AuthRouter");
 const eventRouter = require("./routes/EventRouter");
 // const subscriptionRouter = require('./routes/SubscriptionsRouter')
 // const farmRouter = require('./routes/FarmRouter')

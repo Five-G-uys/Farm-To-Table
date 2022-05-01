@@ -19,10 +19,18 @@ import Login from "./Login";
 import NewNavBar from "./NewNavBar";
 import ProductsPage from "./ProductsPage";
 import RecordsPage from "./Records/RecordsPage";
+import DileveryZonesRecords from "../components/Records/Products/ProductsRecords";
+import EventsRecords from "../components/Records/Products/ProductsRecords";
+import FarmsRecords from "../components/Records/Products/ProductsRecords";
+import OrdersRecords from "../components/Records/Orders/OrdersRecords";
+import ProductsRecords from "../components/Records/Products/ProductsRecords";
+import SubscriptionEntries from "../components/Records/Products/ProductsRecords";
+import SubscriptionsRecords from "../components/Records/Products/ProductsRecords";
+import UsersRecords from "../components/Records/Products/ProductsRecords";
+import VendorsRecords from "../components/Records/Products/ProductsRecords";
 import DeliveryRoutesPage from "./DeliveryRoutesPage";
 import PackingListPage from "./PackingListPage";
 import UserRecordsPage from "./UsersRecordsPage";
-//import { createContext } from "react";
 
 import { createTheme } from "@mui/material";
 //material UI IMPORTS
@@ -63,7 +71,7 @@ const App = () => {
     axios
       .get("/auth/api/userProfile")
       .then(({ data }: AxiosResponse) => {
-        console.log("LINE 30 || APP COMPONENT", data);
+        // console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
       })
       .catch((err) => console.warn(err)); //
@@ -191,6 +199,40 @@ const App = () => {
                           <Navigate to="/subscriptions-page" />
                         )
                       }
+                    />
+                    <Route path="records" element={<RecordsPage />}>
+                      <Route
+                        path="products-records"
+                        element={<ProductsRecords />}
+                      />
+                    </Route>
+
+                    <Route
+                      path="dileveryZones-records"
+                      element={<ProductsRecords />}
+                    />
+                    <Route
+                      path="events-records"
+                      element={<ProductsRecords />}
+                    />
+                    <Route path="farms-records" element={<ProductsRecords />} />
+                    <Route path="orders-records" element={<OrdersRecords />} />
+                    <Route
+                      path="products-records"
+                      element={<ProductsRecords />}
+                    />
+                    <Route
+                      path="subscriptionEntries-records"
+                      element={<ProductsRecords />}
+                    />
+                    <Route
+                      path="subscriptions-records"
+                      element={<ProductsRecords />}
+                    />
+                    <Route path="users-records" element={<ProductsRecords />} />
+                    <Route
+                      path="vendors-records"
+                      element={<ProductsRecords />}
                     />
                     <Route
                       path="/records"
