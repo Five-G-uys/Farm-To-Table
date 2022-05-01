@@ -35,6 +35,9 @@ const SubscriptionsPage = () => {
 
   const [season, setSeason] = useState('');
 
+  // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
+  const [inEditMode, setInEditMode] = useState(false);
+
   const [subscriptions, setSubscriptions] = useState([]);
 
   const [subscription, setSubscription] = useState({
@@ -136,7 +139,7 @@ const SubscriptionsPage = () => {
     axios
       .get(`/api/subscriptions/`)
       .then((data) => {
-        console.log(data.data);
+        console.log('LINE 139 SubPage', data.data);
         setSubscriptions(data.data);
       })
       .catch((err) => {
@@ -207,20 +210,54 @@ const SubscriptionsPage = () => {
     }
   };
 
+  const handleEditClick = (subscription_id: any) => {
+    console.log('LINE 185 || PRODUCTS PAGE CLICKED', subscription_id);
+
+    const clickedProduct: any = subscriptions.find(
+      // find mutates original array values
+      (sub: any) => sub.id === subscription_id
+    );
+    clickedProduct.thumbnail = clickedProduct.thumbnail
+      ? clickedProduct.thumbnail
+      : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+    // delete clickedProduct.updatedAt;
+    // delete clickedProduct.createdAt;
+    // delete clickedProduct.id;
+
+    setSubscription({
+      id: subscription_id,
+      season: clickedProduct.season,
+      year: clickedProduct.year,
+      flat_price: clickedProduct.flat_price,
+      weekly_price: clickedProduct.weekly_price,
+      description: clickedProduct.description,
+      start_date: clickedProduct.start_date,
+      end_date: clickedProduct.end_date,
+      thumbnail: clickedProduct.thumbnail,
+    });
+    setInEditMode(true);
+    setOpen(true);
+  };
+
   return (
     <div>
       <SubscriptionsContainer
         subscriptions={subscriptions}
         getAllSubscriptions={getAllSubscriptions}
+        handleEditClick={handleEditClick}
+        inEditMode={inEditMode}
       />
       <SubscriptionsAdmin
         handleInputSubscription={handleInputSubscription}
         getAllSubscriptions={getAllSubscriptions}
         postSubscription={postSubscription}
         open={open}
+        subscription={subscription}
         handleCreateForm={handleCreateForm}
         handleClose={handleClose}
         commonStyles={commonStyles}
+        handleEditClick={handleEditClick}
+        inEditMode={inEditMode}
       />
       <input
         name='season'
