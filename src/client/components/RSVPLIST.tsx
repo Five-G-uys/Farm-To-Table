@@ -28,17 +28,17 @@ AppProps) => {
   //const [events, setEvents] = useState({});
   const [userId, setUserId] = useState(1);
 
-  useEffect((): void => {
-    // TAKE THIS AXIOS CALL TO GET USER
-    axios
-      .get<AxiosResponse>("/api/userProfile")
-      .then(({ data }: AxiosResponse) => {
-        console.log("userId", data);
-        const { id } = data;
-        setUserId(id);
-      })
-      .catch((err) => console.warn("Sorry it failed", err));
-  }, []);
+  // useEffect((): void => {
+  //   // TAKE THIS AXIOS CALL TO GET USER
+  //   axios
+  //     .get<AxiosResponse>("/api/userProfile")
+  //     .then(({ data }: AxiosResponse) => {
+  //       console.log("userId", data);
+  //       const { id } = data;
+  //       setUserId(id);
+  //     })
+  //     .catch((err) => console.warn("Sorry it failed", err));
+  // }, []);
 
   // const getAllEvents = () => {
   //   axios
@@ -56,6 +56,7 @@ AppProps) => {
   //       console.log("sorry, request failed", error);
   //     });
   // };
+
   useEffect(() => {
     //getAllEvents();
     getAllRSVPSEvents();

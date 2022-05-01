@@ -4,11 +4,13 @@
 
 // Import Dependencies
 import express, { Express, Request, Response } from 'express';
-//import dotenv from "dotenv";
 require('dotenv').config();
-const path = require('path');
+import path from 'path';
+// const path = require('path');
 const passport = require('passport');
-const session = require('express-session');
+const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
+
 const axios = require('axios');
 // require Op object from sequelize to modify where clause in options object
 const { Op } = require('sequelize');
@@ -38,52 +40,87 @@ import UserInterface from '../types/UserInterface';
 import Profile from 'src/client/components/ProfilePage';
 //import { postEvent } from "./routes/EventRoutes";
 
-// // Needs to stay until used elsewhere (initializing models)
-// console.log(Farms, Roles, Events, Orders, DeliveryZones,Products, RSVP, Subscriptions, Users, Vendors);
-
-//dotenv.config();
-
 const app: Express = express();
 const port = process.env.LOCAL_PORT;
 
 const dist = path.resolve(__dirname, '..', '..', 'dist');
 // console.log('LINE 37 || INDEX.TSX', __dirname);
 
+
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, //one day
+    keys: [process.env.PASSPORT_CLIENT_SECRET],
+    httpOnly: true,
+    signed: true,
+    secure: process.env.NODE_ENV==='production',
+  })
+);
+
+// Sets us req.user
+app.use(cookieParser());
+
 app.use(express.json());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
 
 // Stripe Setup
-const stripe = require('stripe')(process.env.STRIPE_KEY);
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 const storeItems = new Map([
   [1, { priceInCents: 10000, name: 'Season Subscription' }],
   [2, { priceInCents: 20000, name: 'Annual Subscription' }],
 ]);
 //routes
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/auth', authRouter);
+// app.use(passport.authenticate());
+
 app.use('/events', eventRouter);
 // app.use('/subscriptions', subscriptionRouter);
 // app.use('/', farmRouter)
 
-// // Middleware
-// const isAdmin = (req: { user: { role_id: number } }, res: any, next: any) => {
-//   if (!req.user || req.user.role_id !== 4) {
-//     // res.redirect('/'); // Whats is the use case?
-//     res.status(404); // What is the use case?
-//   } else {
-//     next();
-//   }
-// };
+
 
 // Create a post request for /create-checkout-session
 app.post('/create-checkout-session', async (req, res) => {
   try {
-    res.json({ url: '/orders-page' });
+    console.log('Stripe Session req', req)
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment', // subscriptions would be added here
+      line_iteams: req.body.items.map((item: { id: number; quantity: any; }) => {
+        const storeItem: any = storeItems.get(item.id)
+        return {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: storeItem.name
+            },
+            unit_amount: storeItem.priceInCents
+          },
+          quantity: item.quantity
+        }
+      }),
+      success_url: `${process.env.SERVER_URL}/success.html`,
+      cancel_url:  `${process.env.SERVER_URL}/cancel.html`
+
+    })
+    res.json({ url: 'session.url' });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 }),
+
+
+
+
+
+
   ////////SUBSCRIPTION REQUEST////////////
 
   ///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
@@ -332,7 +369,7 @@ app.get('/api/farms', (req: Request, res: Response) => {
     });
 });
 
-//ADMIN RECORDS ROUTES
+// ADMIN RECORDS ROUTES
 
 app.get('/records/deliveryZones', (req: Request, res: Response) => {
   DeliveryZones.findAll()
