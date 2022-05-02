@@ -38,12 +38,12 @@ const columns: readonly Column[] = [
 ];
 
 
-const OrdersRecords = () => {
+const ProductsRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([])
 
-  const getOrders = () => {
+  const getProducts = () => {
     axios.get("/records/products")
       .then((data) => {
         // console.log(data.data);
@@ -60,7 +60,7 @@ const OrdersRecords = () => {
   // }
 
   useEffect(() => {
-    getOrders();
+    getProducts();
   }, [])
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -130,4 +130,4 @@ const OrdersRecords = () => {
   );
 }
 
-export default OrdersRecords;
+export default ProductsRecords;
