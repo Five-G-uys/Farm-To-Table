@@ -19,6 +19,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
 import ThemeProvider from './App';
+import { Grid, Switch } from '@mui/material'
 
 interface Props {
   /**
@@ -45,7 +46,7 @@ function HideOnScroll(props: Props) {
   );
 }
 
-const NewNavBar = ({ user }: any, props: Props) => {
+const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
   const pages = [
     { name: 'Home', path: '/' },
     { name: 'Sign Up!', path: '/subscriptions-page' },
