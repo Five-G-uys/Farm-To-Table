@@ -69,7 +69,7 @@ const Event = ({
 }: any) => {
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
-
+  //window.location.reload(false);
   const [expanded, setExpanded] = useState(false);
 
   // toggle bool
@@ -131,6 +131,7 @@ const Event = ({
         }
         subheader={`Date of Event ${eventDate}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
+        fontSize="20px"
         title={eventName}
       />
       {thumbnail ? (

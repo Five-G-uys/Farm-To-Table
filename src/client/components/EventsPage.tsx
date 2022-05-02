@@ -38,6 +38,7 @@ import { updatedEvent } from "../apiCalls/eventCalls";
 import { cli } from "webpack";
 
 const EventsPage = () => {
+  //window.location.reload(true);
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
 
@@ -60,7 +61,7 @@ const EventsPage = () => {
     description: "",
     thumbnail: "",
     eventDate: "",
-    eventType: value,
+    eventType: "Community Volunteering",
     location: "",
   });
 
@@ -100,9 +101,9 @@ const EventsPage = () => {
     id,
   } = event;
 
-  const postEvent = (e: any) => {
+  const postEvent = () => {
     console.log("LINE 108");
-    e.preventDefault();
+    //e.preventDefault();
     axios
       .post("/events/api/event", {
         event: {
@@ -384,34 +385,62 @@ const EventsPage = () => {
                       <br></br>
                       <br></br>
                       <Box>
-                        <FormControl>
+                        {/* <FormControl className="commonStyles">
                           <FormLabel id="demo-controlled-radio-buttons-group">
                             Event Type
+                          </FormLabel>
+                          <RadioGroup
+                            aria-labelledby="controlled-radio-buttons-group"
+                            name="controlled-radio-buttons-group"
+                            value={value}
+                            // onChange={handelTextInput}
+                            onChange={(event) => setValue(event.target.value)}
+                          >
+                            <FormControlLabel
+                              value="Farmers Market"
+                              control={<Radio size="small" />}
+                              label="Farmers Market"
+                              // variant="filled"
+                            />
+                            <FormControlLabel
+                              value="Customers Day"
+                              control={<Radio size="small" />}
+                              label="Customers Day"
+                              // variant="filled"
+                            />
+                            <FormControlLabel
+                              value="Community Volunteering"
+                              control={<Radio size="small" />}
+                              label="Community Volunteering"
+                              // variant="filled"
+                            />
+                          </RadioGroup>
+                        </FormControl> */}
+                        <FormControl>
+                          <FormLabel id="demo-controlled-radio-buttons-group">
+                            Type of Event
                           </FormLabel>
                           <RadioGroup
                             aria-labelledby="demo-controlled-radio-buttons-group"
                             name="controlled-radio-buttons-group"
                             value={value}
-                            // onChange={handelTextInput}
-                            onChange={handleRadioBtn}
+                            onChange={(e) => setValue(e.target.value)}
                           >
                             <FormControlLabel
-                              control={<Radio />}
-                              label="Farmers Market"
-                              value="Customers Day"
-                              // variant="filled"
-                            />
-                            <FormControlLabel
-                              control={<Radio size="small" />}
-                              value="Customers Day"
-                              label="Customers Day"
-                              // variant="filled"
-                            />
-                            <FormControlLabel
-                              control={<Radio />}
                               value="Community Volunteering"
+                              control={<Radio text-color="success" />}
                               label="Community Volunteering"
-                              // variant="filled"
+                              color="success"
+                            />
+                            <FormControlLabel
+                              value="Customers Day"
+                              control={<Radio color="success" />}
+                              label="Customers Day"
+                            />
+                            <FormControlLabel
+                              value="Farmers Market"
+                              control={<Radio color="success" />}
+                              label="Farmers Market"
                             />
                           </RadioGroup>
                         </FormControl>

@@ -6,7 +6,6 @@ import axios, { AxiosResponse } from "axios";
 import { Routes, Route, Navigate, Link } from "react-router-dom";
 
 // MUI Imports
-<<<<<<< HEAD
 import HomePage from "./HomePage";
 import EventCard from "./EventCard";
 import SubscriptionsPage from "./Subscriptions/SubscriptionsPage";
@@ -20,48 +19,20 @@ import Login from "./Login";
 import NewNavBar from "./NewNavBar";
 import ProductsPage from "./ProductsPage";
 import RecordsPage from "./Records/RecordsPage";
-import DileveryZonesRecords from "../components/Records/Products/ProductsRecords";
-import EventsRecords from "../components/Records/Products/ProductsRecords";
-import FarmsRecords from "../components/Records/Products/ProductsRecords";
+import DileveryZonesRecords from "../components/Records/DileveryZones/DeliveryZonesRecords";
+import EventsRecords from "../components/Records/Events/EventsRecords";
+import FarmsRecords from "../components/Records/Farms/FarmsRecords";
 import OrdersRecords from "../components/Records/Orders/OrdersRecords";
 import ProductsRecords from "../components/Records/Products/ProductsRecords";
-import SubscriptionEntries from "../components/Records/Products/ProductsRecords";
-import SubscriptionsRecords from "../components/Records/Products/ProductsRecords";
-import UsersRecords from "../components/Records/Products/ProductsRecords";
-import VendorsRecords from "../components/Records/Products/ProductsRecords";
+import SubscriptionEntriesRecords from "../components/Records/SubscriptionEntries/SubscriitionEntriesRecords";
+import SubscriptionsRecords from "../components/Records/Subscriptions/SubscriptionsRecords";
+import UsersRecords from "../components/Records/Users/UsersRecords";
+import VendorsRecords from "../components/Records/Vendors/VendorsRecords";
 import DeliveryRoutesPage from "./DeliveryRoutes/DeliveryRoutesPage";
 import PackingListPage from "./PackingListPage";
 import UserRecordsPage from "./Users/UsersRecordsPage";
 import Weather from "./Weather";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
-=======
-import HomePage from './HomePage';
-import EventCard from './EventCard';
-import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
-import Confirmation from './Confirmation';
-import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
-import OrdersPage from './OrdersPage';
-import EventsPage from './EventsPage';
-import ProfilePage from './ProfilePage';
-import AboutUsPage from './AboutUsPage';
-import Login from './Login';
-import NewNavBar from './NewNavBar';
-import ProductsPage from './ProductsPage';
-import RecordsPage from './Records/RecordsPage';
-import DileveryZonesRecords from '../components/Records/DileveryZones/DeliveryZonesRecords';
-import EventsRecords from '../components/Records/Events/EventsRecords';
-import FarmsRecords from '../components/Records/Farms/FarmsRecords';
-import OrdersRecords from '../components/Records/Orders/OrdersRecords';
-import ProductsRecords from '../components/Records/Products/ProductsRecords';
-import SubscriptionEntriesRecords from '../components/Records/SubscriptionEntries/SubscriitionEntriesRecords';
-import SubscriptionsRecords from '../components/Records/Subscriptions/SubscriptionsRecords';
-import UsersRecords from '../components/Records/Users/UsersRecords';
-import VendorsRecords from '../components/Records/Vendors/VendorsRecords';
-import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
-import PackingListPage from './PackingListPage';
-import UserRecordsPage from './Users/UsersRecordsPage';
-import Weather from './Weather';
->>>>>>> 86e53ba1375bcc9a1e3eaf9deb5d16e14e983991
+import IconButton from "@mui/material/IconButton";
 
 import { createTheme } from "@mui/material";
 //material UI IMPORTS
@@ -72,6 +43,16 @@ import { Container, Grid, Paper, Switch } from "@mui/material";
 // import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ThemeProvider } from "@mui/material";
 import { Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+//import { ThemeProvider, useTheme, createTheme } from "@mui/material/styles";
+import {
+  amber,
+  deepOrange,
+  grey,
+  darkBlue,
+  blueGrey,
+} from "@mui/material/colors";
+import { PaletteMode } from "@mui/material";
 
 // const useStyles = makeStyles((theme: any) => ({
 //   root: {
@@ -96,11 +77,36 @@ const App = () => {
   //const [theme, setTheme] = React.useState("light");
 
   const [mode, setMode] = useState(false);
-  const theme = createTheme({
+
+  const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
-      mode: mode ? "dark" : "light",
+      mode,
+      primary: {
+        ...amber,
+        ...(mode === "dark" && {
+          main: amber[300],
+        }),
+      },
+      ...(mode === "dark" && {
+        background: {
+          default: blueGrey[900],
+          paper: blueGrey[900],
+        },
+      }),
+      text: {
+        ...(mode === "light"
+          ? {
+              primary: grey[900],
+              secondary: grey[800],
+            }
+          : {
+              primary: "#fff",
+              secondary: grey[500],
+            }),
+      },
     },
   });
+  const darkModeTheme = createTheme(getDesignTokens("light"));
   // const toggleTheme = () => {
   //   setTheme((curr) => (curr === "light" ? "dark" : "light"));
   // };
@@ -126,7 +132,7 @@ const App = () => {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkModeTheme}>
         <Paper sx={{ height: "100vh" }} variant="outlined" square>
           <Container>
             <Grid item xs={4} spacing={2}>
@@ -247,49 +253,33 @@ const App = () => {
                       />
                     </Route>
 
-<<<<<<< HEAD
                     <Route
                       path="dileveryZones-records"
-                      element={<ProductsRecords />}
+                      element={<DileveryZonesRecords />}
                     />
-                    <Route
-                      path="events-records"
-                      element={<ProductsRecords />}
-                    />
-                    <Route path="farms-records" element={<ProductsRecords />} />
+                    <Route path="events-records" element={<EventsRecords />} />
+                    <Route path="farms-records" element={<FarmsRecords />} />
                     <Route path="orders-records" element={<OrdersRecords />} />
                     <Route
                       path="products-records"
                       element={<ProductsRecords />}
                     />
                     <Route
-                      path="subscriptionEntries-records"
-                      element={<ProductsRecords />}
+                      path="subscription-entries-records"
+                      element={<SubscriptionEntriesRecords />}
                     />
                     <Route
                       path="subscriptions-records"
-                      element={<ProductsRecords />}
+                      element={<SubscriptionsRecords />}
                     />
-                    <Route path="users-records" element={<ProductsRecords />} />
+                    <Route path="users-records" element={<UsersRecords />} />
                     <Route
                       path="vendors-records"
-                      element={<ProductsRecords />}
+                      element={<VendorsRecords />}
                     />
                     <Route
                       path="/records"
                       element={
-=======
-                    <Route path='dileveryZones-records' element={<DileveryZonesRecords />} />
-                    <Route path='events-records' element={<EventsRecords />} />
-                    <Route path='farms-records' element={<FarmsRecords />} />
-                    <Route path='orders-records' element={<OrdersRecords />} />
-                    <Route path='products-records' element={<ProductsRecords />} />
-                    <Route path='subscription-entries-records' element={<SubscriptionEntriesRecords />} />
-                    <Route path='subscriptions-records' element={<SubscriptionsRecords />} />
-                    <Route path='users-records' element={<UsersRecords />} />
-                    <Route path='vendors-records' element={<VendorsRecords />} />
-                    <Route path='/records' element={
->>>>>>> 86e53ba1375bcc9a1e3eaf9deb5d16e14e983991
                         isAdmin(user) ? (
                           <RecordsPage />
                         ) : (

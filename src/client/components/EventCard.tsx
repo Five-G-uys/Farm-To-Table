@@ -3,6 +3,10 @@ import React, { useState, useEffect, useContext } from "react";
 import Event from "./Event";
 import axios from "axios";
 import { UserContext } from "./App";
+
+
+
+
 //import RSVPS from "./RSVPS";
 interface AppProps {
   eventName: string;
@@ -46,9 +50,8 @@ const EventCard = ({
   return (
     <div className="events">
       <nav className="nav">
-        <h1 className="nav-event">Spring Season Events</h1>
+        <h1 className="nav-event">Spring: events for the month of May</h1>
       </nav>
-      <h1 className="title-card">Events for this month</h1>
       <br></br>
       <br></br>
       <div className="card">
@@ -102,6 +105,3 @@ const EventCard = ({
 
 export default EventCard;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function userContext(UserContext: any): any {
-  throw new Error("Function not implemented.");
-}
