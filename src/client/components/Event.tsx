@@ -108,9 +108,7 @@ const Event = ({
         console.error("91 REQUEST FAILED", err);
       });
   };
-  useEffect(() => {
-    updateState();
-  }, []);
+
   //console.log("LINE 78", user.id + "AND USER ROLE ", user.role_id);
   return (
     <Card

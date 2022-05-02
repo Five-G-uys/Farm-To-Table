@@ -236,6 +236,7 @@ const ProductsPage = () => {
     setOpen(true);
   };
 
+
   useEffect((): void => {
     getAllProducts();
   }, [updateCounter]);
