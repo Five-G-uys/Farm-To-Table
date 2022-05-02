@@ -98,7 +98,7 @@ authRouter.get('/api/logout', (req, res) => {
 });
 
 // Get current user route
-authRouter.get('/api/userProfile', isLoggedIn, (req, res) => {
+authRouter.get('/api/userProfile', (req, res) => {
   res.send(req.user);
 
   // console.log("Gettingg user profile", req.user)

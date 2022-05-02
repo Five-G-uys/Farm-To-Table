@@ -195,7 +195,7 @@ const updateUser = async (userId: number, updatedUser: any) => {
 
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (userId: any) => {
-    console.log('LINE 171 || USER PAGE CLICKED', userId);
+    console.log('LINE 198 || USER PAGE CLICKED', userId);
 
     const clickedUser: any = users.find(
       // find mutates original array values

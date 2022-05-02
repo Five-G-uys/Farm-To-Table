@@ -108,7 +108,6 @@ const App = () => {
                 <Switch onClick={() => setMode(!mode)}></Switch>
               </Paper>
               <div>
-                <h1>{user.role_id}</h1>
                 <UserContext.Provider value={user}>
                   <Routes>
                     {/* Login/Logout Routes */}
