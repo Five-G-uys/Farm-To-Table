@@ -374,7 +374,6 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     end_date,
   } = req.body.event;
 
-  console.log('283 Request object postSubscription', req.body);
   Subscriptions.create({
     season,
     year,
