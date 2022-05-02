@@ -34,7 +34,7 @@ import EventCard from "./EventCard";
 // Component Imports
 import ProductsContainer from "./ProductsContainer";
 // can import getallproducts after migrating it to apicalls file
-import { updateProduct } from "../apiCalls/productCallS";
+import { updatedEvent } from "../apiCalls/eventCalls";
 import { cli } from "webpack";
 
 const EventsPage = () => {
@@ -154,14 +154,14 @@ const EventsPage = () => {
   const handleEventUpdateSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const result = await updateEvent(event.id, event);
+      const result = await updatedEvent(event.id, event);
       // keep in try so it doesn't rerender on error
       setUpdateCounter(updateCounter + 1);
       handleClose();
 
-      console.log("LINE 130 || PRODUCTS PAGE", result);
+      console.log("LINE 162 || PRODUCTS PAGE", result);
     } catch (err) {
-      console.error("LINE 132 || PRODUCTS PAGE ", err);
+      console.error("LINE 164 || PRODUCTS PAGE ", err);
     }
   };
 
@@ -229,8 +229,8 @@ const EventsPage = () => {
   ////////////////Radio Button handle function///////////////////////////
 
   // handle click + edit form functionality for edit button in Product Card component
-  const handleEditClick = (idEvent: any) => {
-    //console.log("LINE 185 || PRODUCTS PAGE CLICKED", idEvent);
+  const handleEditClick = (id: any) => {
+    //console.log("LINE 185 || PRODUCTS PAGE CLICKED", id);
 
     const clickedEvent: any = allEvents.find(
       // find mutates original array values
@@ -239,14 +239,11 @@ const EventsPage = () => {
     clickedEvent.thumbnail = clickedEvent.thumbnail
       ? clickedEvent.thumbnail
       : "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg";
-    // delete clickedProduct.updatedAt;
-    // delete clickedProduct.createdAt;
-    // delete clickedProduct.id;
 
     setEvent((state) => {
       return {
         ...state,
-        id: idEvent,
+        id: id,
         eventName: clickedEvent.eventName,
         description: clickedEvent.description,
         thumbnail: clickedEvent.thumbnail,
@@ -261,7 +258,7 @@ const EventsPage = () => {
 
   useEffect((): void => {
     getAllEvents();
-    deleteEvent();
+    // deleteEvent();
   }, [updateCounter]);
 
   console.log("line 244 in EventsPage", event);
@@ -514,20 +511,10 @@ const EventsPage = () => {
         </Modal>
         <Fab
           onClick={handleCreateForm}
-<<<<<<< HEAD
           size="small"
           // color='secondary'
           aria-label="add"
           style={{ transform: "scale(2.5)", backgroundColor: "#80D55F" }}
-=======
-          size='large'
-          // color='secondary'
-          aria-label='add'
-          style={{
-            transform: 'scale(1.5)',
-            backgroundColor: 'lightgreen',
-          }}
->>>>>>> e7f5a413ede412ffca41d22cbf24046ab6a358ef
           sx={{
             position: "fixed",
             bottom: (theme) => theme.spacing(8),

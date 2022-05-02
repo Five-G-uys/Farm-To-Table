@@ -63,6 +63,7 @@ const Event = ({
   location,
   event,
   handleEditClick,
+  inEditMode,
 }: any) => {
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
@@ -168,7 +169,7 @@ const Event = ({
           <ExpandMore
             sx={{ color: "green" }}
             expand={expanded}
-            onClick={() => handleEditClick(eventId)}
+            onClick={() => handleEditClick(event.id)}
           >
             <EditIcon sx={{ color: "green" }} />
           </ExpandMore>
