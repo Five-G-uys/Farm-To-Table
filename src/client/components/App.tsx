@@ -19,20 +19,20 @@ import Login from "./Login";
 import NewNavBar from "./NewNavBar";
 import ProductsPage from "./ProductsPage";
 import RecordsPage from "./Records/RecordsPage";
-import DileveryZonesRecords from "../components/Records/DileveryZones/DeliveryZonesRecords";
-import EventsRecords from "../components/Records/Events/EventsRecords";
-import FarmsRecords from "../components/Records/Farms/FarmsRecords";
+import DileveryZonesRecords from "../components/Records/Products/ProductsRecords";
+import EventsRecords from "../components/Records/Products/ProductsRecords";
+import FarmsRecords from "../components/Records/Products/ProductsRecords";
 import OrdersRecords from "../components/Records/Orders/OrdersRecords";
 import ProductsRecords from "../components/Records/Products/ProductsRecords";
-import SubscriptionEntriesRecords from "../components/Records/SubscriptionEntries/SubscriitionEntriesRecords";
-import SubscriptionsRecords from "../components/Records/Subscriptions/SubscriptionsRecords";
-import UsersRecords from "../components/Records/Users/UsersRecords";
-import VendorsRecords from "../components/Records/Vendors/VendorsRecords";
+import SubscriptionEntries from "../components/Records/Products/ProductsRecords";
+import SubscriptionsRecords from "../components/Records/Products/ProductsRecords";
+import UsersRecords from "../components/Records/Products/ProductsRecords";
+import VendorsRecords from "../components/Records/Products/ProductsRecords";
 import DeliveryRoutesPage from "./DeliveryRoutes/DeliveryRoutesPage";
 import PackingListPage from "./PackingListPage";
 import UserRecordsPage from "./Users/UsersRecordsPage";
 import Weather from "./Weather";
-import IconButton from "@mui/material/IconButton";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 
 import { createTheme } from "@mui/material";
 //material UI IMPORTS
@@ -43,16 +43,6 @@ import { Container, Grid, Paper, Switch } from "@mui/material";
 // import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ThemeProvider } from "@mui/material";
 import { Typography } from "@mui/material";
-import Box from "@mui/material/Box";
-//import { ThemeProvider, useTheme, createTheme } from "@mui/material/styles";
-import {
-  amber,
-  deepOrange,
-  grey,
-  darkBlue,
-  blueGrey,
-} from "@mui/material/colors";
-import { PaletteMode } from "@mui/material";
 
 // const useStyles = makeStyles((theme: any) => ({
 //   root: {
@@ -77,36 +67,11 @@ const App = () => {
   //const [theme, setTheme] = React.useState("light");
 
   const [mode, setMode] = useState(false);
-
-  const getDesignTokens = (mode: PaletteMode) => ({
+  const theme = createTheme({
     palette: {
-      mode,
-      primary: {
-        ...amber,
-        ...(mode === "dark" && {
-          main: amber[300],
-        }),
-      },
-      ...(mode === "dark" && {
-        background: {
-          default: blueGrey[900],
-          paper: blueGrey[900],
-        },
-      }),
-      text: {
-        ...(mode === "light"
-          ? {
-              primary: grey[900],
-              secondary: grey[800],
-            }
-          : {
-              primary: "#fff",
-              secondary: grey[500],
-            }),
-      },
+      mode: mode ? "dark" : "light",
     },
   });
-  const darkModeTheme = createTheme(getDesignTokens("light"));
   // const toggleTheme = () => {
   //   setTheme((curr) => (curr === "light" ? "dark" : "light"));
   // };
@@ -132,16 +97,14 @@ const App = () => {
 
   return (
     <>
-      <ThemeProvider theme={darkModeTheme}>
+      <ThemeProvider theme={theme}>
         <Paper sx={{ height: "100vh" }} variant="outlined" square>
           <Container>
+            <Switch checked={mode} onChange={() => setMode(!mode)}></Switch>
             <Grid item xs={4} spacing={2}>
               <Paper sx={{ padding: "5px" }} elevation={5}>
-                <IconButton>
-                  {" "}
-                  <Switch onClick={() => setMode(!mode)}></Switch>
-                </IconButton>
-                <NewNavBar user={user} />
+                {" "}
+                <NewNavBar user={user} mode={mode} />
               </Paper>
               <div>
                 <UserContext.Provider value={user}>
@@ -255,27 +218,30 @@ const App = () => {
 
                     <Route
                       path="dileveryZones-records"
-                      element={<DileveryZonesRecords />}
+                      element={<ProductsRecords />}
                     />
-                    <Route path="events-records" element={<EventsRecords />} />
-                    <Route path="farms-records" element={<FarmsRecords />} />
+                    <Route
+                      path="events-records"
+                      element={<ProductsRecords />}
+                    />
+                    <Route path="farms-records" element={<ProductsRecords />} />
                     <Route path="orders-records" element={<OrdersRecords />} />
                     <Route
                       path="products-records"
                       element={<ProductsRecords />}
                     />
                     <Route
-                      path="subscription-entries-records"
-                      element={<SubscriptionEntriesRecords />}
+                      path="subscriptionEntries-records"
+                      element={<ProductsRecords />}
                     />
                     <Route
                       path="subscriptions-records"
-                      element={<SubscriptionsRecords />}
+                      element={<ProductsRecords />}
                     />
-                    <Route path="users-records" element={<UsersRecords />} />
+                    <Route path="users-records" element={<ProductsRecords />} />
                     <Route
                       path="vendors-records"
-                      element={<VendorsRecords />}
+                      element={<ProductsRecords />}
                     />
                     <Route
                       path="/records"

@@ -146,7 +146,7 @@ const Event = ({
       </CardContent>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {`Type of event ${eventType}`}
+          {`${eventType}`}
         </Typography>
       </CardContent>
       <CardContent>
