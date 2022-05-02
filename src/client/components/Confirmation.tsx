@@ -23,10 +23,48 @@ const Confirmation = () => {
     });
   };
 
+  const handleCheckout = () => {
+    // console.log('Checkout');
+    fetch('/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Send along all the information about the items
+      body: JSON.stringify({
+        items: [
+          {
+            id: 1,
+            quantity: 2,
+          },
+          {
+            id: 2,
+            quantity: 1,
+          },
+        ],
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        // If there is an error then make sure we catch that
+        return res.json().then((e) => Promise.reject(e));
+      })
+      .then(({ url }) => {
+        // On success redirect the customer to the returned URL
+        // console.log(url);
+        window.location = url
+      })
+      .catch((e) => {
+        console.error(e.error);
+      })
+  };
+
+
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     console.log(formValues);
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <Grid container alignItems='center' justify='center' direction='column'>
@@ -79,10 +117,13 @@ const Confirmation = () => {
               />
             </RadioGroup>
           </FormControl>
+        <button className='form--submit' onClick={handleCheckout}>
+          Pay Now!
+        </button>
         </Grid>
-        <Button variant='contained' color='primary' type='submit'>
+        {/* <Button variant='contained' color='primary' type='submit'>
           Submit
-        </Button>
+        </Button> */}
       </Grid>
     </form>
   );

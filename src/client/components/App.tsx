@@ -96,16 +96,18 @@ const App = () => {
 
   return (
     <>
+      <br></br>
+      <br></br>
+      <br></br>
       <ThemeProvider theme={theme}>
         <Paper sx={{ height: '100vh' }} variant='outlined' square>
           <Container>
-            <Typography variant='h4' component='h5'>
+            {/* <Typography variant='h4' component='h5'>
               Change the Theme
-            </Typography>
+            </Typography> */}
             <Grid item xs={4} spacing={2}>
               <Paper sx={{ padding: '5px' }} elevation={5}>
-                <NewNavBar user={user} />
-                <Switch onClick={() => setMode(!mode)}></Switch>
+                <NewNavBar user={user} mode={mode} setMode={setMode} />
               </Paper>
               <div>
                 <UserContext.Provider value={user}>
