@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -31,14 +32,18 @@ const SubscriptionsAdmin = ({
   handleInputSubscription,
   getAllSubscriptions,
   postSubscription,
+  handleSubscriptionUpdateSubmit,
   open,
+  inEditMode,
   subscription,
   setSubscription,
   handleCreateForm,
   handleClose,
   commonStyles,
+  value,
+  handleRadioBtn,
 }: any) => {
-  console.log('LINE 40 OPEN', open);
+  // console.log('LINE 40 OPEN', open);
 
   // const [subscription, setSubscription] = useState({
   //   id: '',
@@ -63,7 +68,8 @@ const SubscriptionsAdmin = ({
       (error: unknown, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
           // console.log("LINE 62", result.info.url);
-          setSubscription((state) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          setSubscription((state: any) => {
             return {
               ...state,
               thumbnail: result.info.url,
@@ -74,10 +80,6 @@ const SubscriptionsAdmin = ({
     );
     widget.open();
   };
-
-  //{ event: string; info: { url: string } })
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  // useEffect(() => {}, [subscription.description]);
 
   const {
     season,
@@ -90,8 +92,8 @@ const SubscriptionsAdmin = ({
     thumbnail,
   } = subscription;
 
-  console.log('LINE 89', subscription);
-
+  // console.log('LINE 89', subscription);
+  // console.log('LINE 96', value);
   return (
     <Modal
       aria-labelledby='transition-modal-title'
@@ -124,49 +126,48 @@ const SubscriptionsAdmin = ({
                   // borderRadius: '16px',
                 }}
               >
-                <form onSubmit={postSubscription}>
-                  <h3 className='create-subscription'>Create Subscription</h3>
-                  <Button variant='contained' size='large' onClick={showWidget}>
-                    Add Product Image
-                  </Button>
+                <form
+                  onSubmit={
+                    inEditMode
+                      ? handleSubscriptionUpdateSubmit
+                      : postSubscription
+                  }
+                >
                   <br></br>
                   {thumbnail && <img width={300} src={thumbnail} />}
                   <br></br>
-                  <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
-                    {' '}
-                    {/* <InputLabel htmlFor='standard-adornment-amount'>
-                      Season
-                    </InputLabel> */}
-                    <FormLabel id='demo-radio-buttons-group-label'>
-                      Season
-                    </FormLabel>
-                    <RadioGroup
-                      aria-labelledby='demo-radio-buttons-group-label'
-                      defaultValue='spring'
-                      name='controlled-radio-buttons-group'
-                      value={season}
-                      onChange={handleInputSubscription}
-                    >
-                      <FormControlLabel
-                        value='spring'
-                        checked={season === 'spring'}
-                        control={<Radio size='small' />}
-                        label='Spring'
-                      />
-                      <FormControlLabel
-                        value='fall'
-                        checked={season === 'fall'}
-                        control={<Radio size='small' />}
-                        label='Fall'
-                      />
-                      <FormControlLabel
-                        value='winter'
-                        checked={season === 'winter'}
-                        control={<Radio size='small' />}
-                        label='Winter'
-                      />
-                    </RadioGroup>
-                  </FormControl>
+                  <Box>
+                    <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
+                      {' '}
+                      <FormLabel id='demo-radio-buttons-group-label'>
+                        <h3 className='create-subscription'>Create Season</h3>
+                        Season
+                      </FormLabel>
+                      <RadioGroup
+                        aria-labelledby='demo-radio-buttons-group-label'
+                        name='controlled-radio-buttons-group'
+                        defaultValue='Spring'
+                        value={value}
+                        onChange={handleRadioBtn}
+                      >
+                        <FormControlLabel
+                          control={<Radio size='small' />}
+                          value='Spring'
+                          label='Spring'
+                        />
+                        <FormControlLabel
+                          control={<Radio size='small' />}
+                          value='Fall'
+                          label='Fall'
+                        />
+                        <FormControlLabel
+                          control={<Radio size='small' />}
+                          value='Winter'
+                          label='Winter'
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Box>
                   <TextField
                     // width='75%'
                     // type={{ width: '75%' }}
@@ -247,11 +248,14 @@ const SubscriptionsAdmin = ({
                   />
                   <br></br>
                   <br></br>
-                  <Button variant='contained' size='large' type='submit'>
-                    {handleInputSubscription ? 'UPDATE' : 'CREATE'}
+                  <Button variant='contained' size='large' onClick={showWidget}>
+                    Add Subscription Image
                   </Button>
                   <br></br>
                   <br></br>
+                  <Button variant='contained' size='large' type='submit'>
+                    {handleInputSubscription ? 'UPDATE' : 'CREATE'}
+                  </Button>
                 </form>
               </Box>
             </div>

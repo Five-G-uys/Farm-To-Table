@@ -97,14 +97,26 @@ const App = () => {
 
   return (
     <>
+      <br></br>
+      <br></br>
+      <br></br>
       <ThemeProvider theme={theme}>
         <Paper sx={{ height: "100vh" }} variant="outlined" square>
           <Container>
+<<<<<<< HEAD
             <Switch checked={mode} onChange={() => setMode(!mode)}></Switch>
             <Grid item xs={4} spacing={2}>
               <Paper sx={{ padding: "5px" }} elevation={5}>
                 {" "}
                 <NewNavBar user={user} mode={mode} />
+=======
+            {/* <Typography variant='h4' component='h5'>
+              Change the Theme
+            </Typography> */}
+            <Grid item xs={4} spacing={2}>
+              <Paper sx={{ padding: '5px' }} elevation={5}>
+                <NewNavBar user={user} mode={mode} setMode={setMode} />
+>>>>>>> 19540bc202e70ca43423659fcac825a6e45521b3
               </Paper>
               <div>
                 <UserContext.Provider value={user}>
@@ -217,6 +229,7 @@ const App = () => {
                     </Route>
 
                     <Route
+<<<<<<< HEAD
                       path="dileveryZones-records"
                       element={<ProductsRecords />}
                     />
@@ -245,6 +258,33 @@ const App = () => {
                     />
                     <Route
                       path="/records"
+=======
+                      path='dileveryZones-records'
+                      element={<DileveryZonesRecords />}
+                    />
+                    <Route path='events-records' element={<EventsRecords />} />
+                    <Route path='farms-records' element={<FarmsRecords />} />
+                    <Route path='orders-records' element={<OrdersRecords />} />
+                    <Route
+                      path='products-records'
+                      element={<ProductsRecords />}
+                    />
+                    <Route
+                      path='subscription-entries-records'
+                      element={<SubscriptionEntriesRecords />}
+                    />
+                    <Route
+                      path='subscriptions-records'
+                      element={<SubscriptionsRecords />}
+                    />
+                    <Route path='users-records' element={<UsersRecords />} />
+                    <Route
+                      path='vendors-records'
+                      element={<VendorsRecords />}
+                    />
+                    <Route
+                      path='/records'
+>>>>>>> 19540bc202e70ca43423659fcac825a6e45521b3
                       element={
                         isAdmin(user) ? (
                           <RecordsPage />
