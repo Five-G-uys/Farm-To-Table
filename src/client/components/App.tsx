@@ -217,16 +217,33 @@ const App = () => {
                       />
                     </Route>
 
-                    <Route path='dileveryZones-records' element={<DileveryZonesRecords />} />
+                    <Route
+                      path='dileveryZones-records'
+                      element={<DileveryZonesRecords />}
+                    />
                     <Route path='events-records' element={<EventsRecords />} />
                     <Route path='farms-records' element={<FarmsRecords />} />
                     <Route path='orders-records' element={<OrdersRecords />} />
-                    <Route path='products-records' element={<ProductsRecords />} />
-                    <Route path='subscription-entries-records' element={<SubscriptionEntriesRecords />} />
-                    <Route path='subscriptions-records' element={<SubscriptionsRecords />} />
+                    <Route
+                      path='products-records'
+                      element={<ProductsRecords />}
+                    />
+                    <Route
+                      path='subscription-entries-records'
+                      element={<SubscriptionEntriesRecords />}
+                    />
+                    <Route
+                      path='subscriptions-records'
+                      element={<SubscriptionsRecords />}
+                    />
                     <Route path='users-records' element={<UsersRecords />} />
-                    <Route path='vendors-records' element={<VendorsRecords />} />
-                    <Route path='/records' element={
+                    <Route
+                      path='vendors-records'
+                      element={<VendorsRecords />}
+                    />
+                    <Route
+                      path='/records'
+                      element={
                         isAdmin(user) ? (
                           <RecordsPage />
                         ) : (

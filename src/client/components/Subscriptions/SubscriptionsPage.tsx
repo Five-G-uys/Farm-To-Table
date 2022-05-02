@@ -1,28 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import React, { useState, useEffect, useContext } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
-
-import { ThemeProvider, createTheme } from '@mui/system';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import { Navigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import Backdrop from '@mui/material/Backdrop';
-import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
-import Fade from '@mui/material/Fade';
+import AddIcon from '@mui/icons-material/Add';
 
 import { UserContext } from '../App';
+import { updateSubscription, deleteSubscription } from './subscriptionCalls';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
@@ -34,7 +23,7 @@ const SubscriptionsPage = () => {
   // NEED TO SET USER ID TO CURRENT USER ID. RIGHT NOW IT'S ALWAYS GOING TO BE 0
   // const [id, setId] = useState(0);
   // user.id);
-  console.log('LINE 37 || SUBSCRIPTION PAGE ', user);
+  // console.log('LINE 37 || SUBSCRIPTION PAGE ', user);
   const { id } = user;
   const [season, setSeason] = useState('');
 
@@ -43,9 +32,15 @@ const SubscriptionsPage = () => {
 
   const [subscriptions, setSubscriptions] = useState([]);
 
+  const [value, setValue] = React.useState('Season');
+
+  const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
   const [subscription, setSubscription] = useState({
     id: '',
-    season: '',
+    season: value,
     year: '',
     flat_price: '',
     weekly_price: '',
@@ -65,7 +60,7 @@ const SubscriptionsPage = () => {
   // Handlers for backdrop control
   const handleClose = () => {
     setOpen(false);
-    // setInEditMode(false);
+    setInEditMode(false);
     setSubscription({
       id: '',
       season: '',
@@ -131,18 +126,49 @@ const SubscriptionsPage = () => {
         },
       })
       .then((data) => {
-        console.log('saved!', data);
+        // console.log('saved!', data);
         setUpdateCounter(updateCounter + 1);
         handleClose();
       })
       .catch((err) => console.error(err));
   };
 
+  // create function to handle update form submission
+  const handleSubscriptionUpdateSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      // call async function that was imported from apiCalls/productCalls
+      const result = await updateSubscription(subscription.id, subscription);
+      // keep in try so it doesn't rerender on error
+      setUpdateCounter(updateCounter + 1);
+      handleClose();
+
+      console.log('LINE 145 || Subscription Update', result);
+    } catch (err) {
+      console.error('LINE 140 || Subscription Update ', err);
+    }
+  };
+
+  // create function to handle delete season submission
+  const handleSubscriptionDeleteSubmit = async () => {
+    try {
+      // call async function that was imported from apiCalls/productCalls
+      const result = await deleteSubscription(subscription.id);
+      // keep in try so it doesn't rerender on error
+      setUpdateCounter(updateCounter + 1);
+      handleClose();
+
+      console.log('LINE 160 || Subscription Delete', result);
+    } catch (err) {
+      console.error('LINE 162 || Subscription Delete ', err);
+    }
+  };
+
   const getAllSubscriptions = () => {
     axios
       .get(`/api/subscriptions/`)
       .then((data) => {
-        console.log('LINE 139 SubPage', data.data);
+        // console.log('LINE 139 SubPage', data.data);
         setSubscriptions(data.data);
       })
       .catch((err) => {
@@ -155,7 +181,7 @@ const SubscriptionsPage = () => {
   }, [updateCounter]);
 
   const handleCheckout = () => {
-    console.log('Checkout');
+    // console.log('Checkout');
     fetch('/create-checkout-session', {
       method: 'POST',
       headers: {
@@ -215,7 +241,7 @@ const SubscriptionsPage = () => {
   };
 
   const handleEditClick = (subscription_id: any) => {
-    console.log('LINE 185 || SUBSCRIPTIONS PAGE CLICKED', subscription_id);
+    // console.log('LINE 221 || SUBSCRIPTIONS PAGE CLICKED', subscription_id);
 
     const clickedProduct: any = subscriptions.find(
       // find mutates original array values
@@ -250,6 +276,7 @@ const SubscriptionsPage = () => {
         getAllSubscriptions={getAllSubscriptions}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
+        handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
       />
       <SubscriptionsAdmin
         handleInputSubscription={handleInputSubscription}
@@ -263,6 +290,10 @@ const SubscriptionsPage = () => {
         commonStyles={commonStyles}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
+        handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
+        handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
+        value={value}
+        handleRadioBtn={handleRadioBtn}
       />
       <input
         name='season'
@@ -291,12 +322,12 @@ const SubscriptionsPage = () => {
       />
       <label htmlFor='season'> Winter 2022 </label>
       <br />
-      <button className='form--submit' onClick={handleCheckout}>
+      {/* <button className='form--submit' onClick={handleCheckout}>
         Checkout!
-      </button>
-      <button className='form--submit' onClick={handleSubscribed}>
-        Subscribe!
-      </button>
+      </button> */}
+      <Button variant='contained' onClick={handleSubscribed}>
+        Subscribe
+      </Button>
       <Fab
         onClick={handleCreateForm}
         size='large'

@@ -91,7 +91,7 @@ app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment', // subscriptions would be added here
-      line_iteams: req.body.items.map((item: { id: number; quantity: any }) => {
+      line_items: req.body.items.map((item: { id: number; quantity: any }) => {
         const storeItem: any = storeItems.get(item.id);
         return {
           price_data: {
@@ -371,7 +371,6 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     end_date,
   } = req.body.event;
 
-  console.log('283 Request object postSubscription', req.body);
   Subscriptions.create({
     season,
     year,
