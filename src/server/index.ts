@@ -224,21 +224,15 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
   SubscriptionEntries.findAll({ where: { user_id: Number(req.params.id) } })
     .then((data: Array<object>) => {
       const dataObj: Array<object> = [];
-      console.log(
-        'LINE 191',
-        data.forEach((subscriptionEntry: any) => {
-          console.log('LINE 230', subscriptionEntry.dataValues);
-          if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
-            dataObj.push(subscriptionEntry.dataValues.id);
-          }
-        })
-      );
-      console.log(
-        'LINE 237',
-        dataObj.map((subscriptionEntryId: any) => {
-          return { subscription_entry_id: subscriptionEntryId };
-        })
-      );
+      data.forEach((subscriptionEntry: any) => {
+        // console.log('LINE 230', subscriptionEntry.dataValues);
+        if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
+          dataObj.push(subscriptionEntry.dataValues.id);
+        }
+      });
+      dataObj.map((subscriptionEntryId: any) => {
+        return { subscription_entry_id: subscriptionEntryId };
+      });
       // Orders.findAll({ where: { subscription_entry_id: req.params.id } })
       Orders.findAll({
         where: {
