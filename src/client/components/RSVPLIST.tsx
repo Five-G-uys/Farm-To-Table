@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
+import { UserContext } from "./App";
 interface AppProps {
   eventName: string;
   description: string;
@@ -25,29 +26,12 @@ const RSVPLIST = ({
   location,
 }: //getAllRSVPSEvents,
 AppProps) => {
-  //const [events, setEvents] = useState({});
-  const [userId, setUserId] = useState(1);
-
-  // useEffect((): void => {
-  //   // TAKE THIS AXIOS CALL TO GET USER
-  //   axios
-  //     .get<AxiosResponse>("/api/userProfile")
-  //     .then(({ data }: AxiosResponse) => {
-  //       console.log("userId", data);
-  //       const { id } = data;
-  //       setUserId(id);
-  //     })
-  //     .catch((err) => console.warn("Sorry it failed", err));
-  // }, []);
-
-  useEffect(() => {
-    //getAllEvents();
-    getAllRSVPSEvents();
-  }, []);
+  const user: any = useContext(UserContext);
+  const { role_id, id } = user;
 
   //patch request for deleteting an event in the database
   const deleteRsvpsEvent = () => {
-    console.log("LINE 81", userId, " and ", eventId);
+    console.log("LINE 81", id, " and ", eventId);
     axios
       .delete("/events/api/user/rsvps/delete", {
         params: { id: 1, event_id: eventId },
@@ -75,9 +59,11 @@ AppProps) => {
           <h1 className="user-event-type">{eventType}</h1>
           <h4 className="user-event-date">{eventDate}</h4>
           <h4 className="user-event-loc">{location}</h4>
-          <button onClick={deleteRsvpsEvent}>
-            Can't attend smthing came up
-          </button>
+          {role_id < 4 && (
+            <button onClick={deleteRsvpsEvent}>
+              Can't attend smthing came up
+            </button>
+          )}
         </section>
       )}
     </div>

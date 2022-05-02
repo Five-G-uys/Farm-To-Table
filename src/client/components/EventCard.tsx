@@ -31,6 +31,7 @@ const EventCard = ({
   updateCounter,
   inEditMode,
   deleteEvent,
+  updateState,
 }: AppProps | any) => {
   const user: any = useContext(UserContext);
 
@@ -88,6 +89,7 @@ const EventCard = ({
                   handleEditClick={handleEditClick}
                   deleteEvent={deleteEvent}
                   inEditMode={inEditMode}
+                  updateState={updateState}
                 />
               );
             }

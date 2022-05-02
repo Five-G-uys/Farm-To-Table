@@ -236,10 +236,6 @@ const ProductsPage = () => {
     setOpen(true);
   };
 
-  // useEffect((): void => {
-  //   // don't prevent default here so it gets on page load and all state updates?
-  //   getAllProducts();
-  // }, [products]);
   useEffect((): void => {
     getAllProducts();
   }, [updateCounter]);

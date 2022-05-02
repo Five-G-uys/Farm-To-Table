@@ -64,6 +64,8 @@ const Event = ({
   event,
   handleEditClick,
   inEditMode,
+  updateState,
+  updateCounter,
 }: any) => {
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
@@ -83,13 +85,14 @@ const Event = ({
         eventId: eventId,
       })
       .then((data) => {
+        updateState();
         console.log("66 LINE ", data);
       })
       .catch((err) => {
         console.error("68 REQUEST FAILED", err);
       });
   };
-
+  console.log("LINE 94 EVENT>TSX", updateState);
   //delete request for deleting an event in the database
   const deleteEvent = () => {
     console.log("LINE 81", user.id, " and ", eventId);
@@ -99,15 +102,15 @@ const Event = ({
       })
       .then((data) => {
         console.log("87 LINE ", data);
-        getAllEvents();
+        updateState();
       })
       .catch((err) => {
         console.error("91 REQUEST FAILED", err);
       });
   };
-  const hover = () => {
-    return <p>Click to participate</p>;
-  };
+  useEffect(() => {
+    updateState();
+  }, []);
   //console.log("LINE 78", user.id + "AND USER ROLE ", user.role_id);
   return (
     <Card
@@ -163,7 +166,7 @@ const Event = ({
               fontSize="small"
               onClick={handRSVPosts}
             >
-              +
+              RESVP
             </Icon>
           </ExpandMore>
           <ExpandMore

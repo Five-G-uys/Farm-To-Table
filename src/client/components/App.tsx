@@ -6,32 +6,33 @@ import axios, { AxiosResponse } from "axios";
 import { Routes, Route, Navigate, Link } from "react-router-dom";
 
 // MUI Imports
-import HomePage from './HomePage';
-import EventCard from './EventCard';
-import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
-import Confirmation from './Confirmation';
-import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
-import OrdersPage from './OrdersPage';
-import EventsPage from './EventsPage';
-import ProfilePage from './ProfilePage';
-import AboutUsPage from './AboutUsPage';
-import Login from './Login';
-import NewNavBar from './NewNavBar';
-import ProductsPage from './ProductsPage';
-import RecordsPage from './Records/RecordsPage';
-import DileveryZonesRecords from '../components/Records/Products/ProductsRecords';
-import EventsRecords from '../components/Records/Products/ProductsRecords';
-import FarmsRecords from '../components/Records/Products/ProductsRecords';
-import OrdersRecords from '../components/Records/Orders/OrdersRecords';
-import ProductsRecords from '../components/Records/Products/ProductsRecords';
-import SubscriptionEntries from '../components/Records/Products/ProductsRecords';
-import SubscriptionsRecords from '../components/Records/Products/ProductsRecords';
-import UsersRecords from '../components/Records/Products/ProductsRecords';
-import VendorsRecords from '../components/Records/Products/ProductsRecords';
-import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
-import PackingListPage from './PackingListPage';
-import UserRecordsPage from './Users/UsersRecordsPage';
-import Weather from './Weather';
+import HomePage from "./HomePage";
+import EventCard from "./EventCard";
+import SubscriptionsPage from "./Subscriptions/SubscriptionsPage";
+import Confirmation from "./Confirmation";
+import SubscriptionsAdmin from "./Subscriptions/SubscriptionsAdmin";
+import OrdersPage from "./OrdersPage";
+import EventsPage from "./EventsPage";
+import ProfilePage from "./ProfilePage";
+import AboutUsPage from "./AboutUsPage";
+import Login from "./Login";
+import NewNavBar from "./NewNavBar";
+import ProductsPage from "./ProductsPage";
+import RecordsPage from "./Records/RecordsPage";
+import DileveryZonesRecords from "../components/Records/Products/ProductsRecords";
+import EventsRecords from "../components/Records/Products/ProductsRecords";
+import FarmsRecords from "../components/Records/Products/ProductsRecords";
+import OrdersRecords from "../components/Records/Orders/OrdersRecords";
+import ProductsRecords from "../components/Records/Products/ProductsRecords";
+import SubscriptionEntries from "../components/Records/Products/ProductsRecords";
+import SubscriptionsRecords from "../components/Records/Products/ProductsRecords";
+import UsersRecords from "../components/Records/Products/ProductsRecords";
+import VendorsRecords from "../components/Records/Products/ProductsRecords";
+import DeliveryRoutesPage from "./DeliveryRoutes/DeliveryRoutesPage";
+import PackingListPage from "./PackingListPage";
+import UserRecordsPage from "./Users/UsersRecordsPage";
+import Weather from "./Weather";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 
 import { createTheme } from "@mui/material";
 //material UI IMPORTS
@@ -42,7 +43,6 @@ import { Container, Grid, Paper, Switch } from "@mui/material";
 // import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ThemeProvider } from "@mui/material";
 import { Typography } from "@mui/material";
-import IconButton from '@material-ui/core/IconButton/IconButton';
 
 // const useStyles = makeStyles((theme: any) => ({
 //   root: {
@@ -102,11 +102,11 @@ const App = () => {
           <Container>
             <Grid item xs={4} spacing={2}>
               <Paper sx={{ padding: "5px" }} elevation={5}>
-                <NewNavBar user={user} />
                 <IconButton>
                   {" "}
                   <Switch onClick={() => setMode(!mode)}></Switch>
                 </IconButton>
+                <NewNavBar user={user} />
               </Paper>
               <div>
                 <h1>{user.role_id}</h1>
@@ -131,10 +131,10 @@ const App = () => {
                       path="/subscriptions-page"
                       element={<SubscriptionsPage />}
                     />
-                    <Route path='/events-page' element={<EventsPage />} />
-                    <Route path='/edit-products' element={<ProductsPage />} />
+                    <Route path="/events-page" element={<EventsPage />} />
+                    <Route path="/edit-products" element={<ProductsPage />} />
                     <Route
-                      path='/weather-page'
+                      path="/weather-page"
                       element={<Weather lat={lat} lon={lon} />}
                     />
 

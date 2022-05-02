@@ -48,7 +48,7 @@ const EventsPage = () => {
   const [inEditMode, setInEditMode] = useState(false);
 
   const [value, setValue] = React.useState("Farmers Market");
-  console.log("LINE 265 VALUE", value);
+  // console.log("LINE 265 VALUE", value);
   const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("LINE 267 VALUE", value);
     setValue(event.target.value);
@@ -69,6 +69,10 @@ const EventsPage = () => {
   // handle create form
   const handleCreateForm = () => {
     setOpen(true);
+  };
+
+  const updateState = () => {
+    setUpdateCounter(updateCounter + 1);
   };
 
   // Handlers for backdrop control
@@ -128,7 +132,7 @@ const EventsPage = () => {
       })
       .then((data) => {
         console.log("87 LINE ", data);
-        getAllEvents();
+        setUpdateCounter(updateCounter + 1);
       })
       .catch((err) => {
         console.error("91 REQUEST FAILED", err);
@@ -258,7 +262,6 @@ const EventsPage = () => {
 
   useEffect((): void => {
     getAllEvents();
-    // deleteEvent();
   }, [updateCounter]);
 
   console.log("line 244 in EventsPage", event);
@@ -272,6 +275,7 @@ const EventsPage = () => {
         handleEditClick={handleEditClick}
         deleteEvent={deleteEvent}
         inEditMode={inEditMode}
+        updateState={updateState}
       />
       <div>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
