@@ -6,7 +6,9 @@
 import express, { Express, Request, Response } from 'express';
 require('dotenv').config();
 import path from 'path';
-// const path = require('path');
+// import cors from 'cors';
+// const uuid = require(uuid/v4);
+import uuid from 'uuid';
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
@@ -62,6 +64,7 @@ app.use(
 app.use(cookieParser());
 
 app.use(express.json());
+// app.use(cors());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
 
@@ -91,7 +94,7 @@ app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment', // subscriptions would be added here
-      line_iteams: req.body.items.map((item: { id: number; quantity: any }) => {
+      line_items: req.body.items.map((item: { id: number; quantity: any }) => {
         const storeItem: any = storeItems.get(item.id);
         return {
           price_data: {
@@ -107,7 +110,7 @@ app.post('/create-checkout-session', async (req, res) => {
       success_url: `${process.env.SERVER_URL}/success.html`,
       cancel_url: `${process.env.SERVER_URL}/cancel.html`,
     });
-    res.json({ url: 'session.url' });
+    res.json({ url: session.url });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
@@ -584,7 +587,7 @@ app.get('*', (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+  console.log(`⚡️[server]: Server is running at ${process.env.SERVER_URL}`);
 });
 
 function findUser(crushers: any) {
