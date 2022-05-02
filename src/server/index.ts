@@ -450,17 +450,7 @@ app.get('/api/farms', (req: Request, res: Response) => {
 app.get('/records/deliveryZones', (req: Request, res: Response) => {
   DeliveryZones.findAll()
     .then((data: any) => {
-      console.log('delivery data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/dietaryRestrictions', (req: Request, res: Response) => {
-  DietaryRestrictions.findAll()
-    .then((data: any) => {
-      console.log('DietaryRestrictions data', data);
+      // console.log('delivery data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -470,7 +460,7 @@ app.get('/records/dietaryRestrictions', (req: Request, res: Response) => {
 app.get('/records/events', (req: Request, res: Response) => {
   Events.findAll()
     .then((data: any) => {
-      console.log('Events data', data);
+      // console.log('Events data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -480,7 +470,7 @@ app.get('/records/events', (req: Request, res: Response) => {
 app.get('/records/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      console.log('Farms data', data);
+      // console.log('Farms data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -490,17 +480,37 @@ app.get('/records/farms', (req: Request, res: Response) => {
 app.get('/records/orders', (req: Request, res: Response) => {
   Orders.findAll()
     .then((data: any) => {
-      console.log('Orders data', data);
+      // console.log('Orders data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
       console.error('OH NOOOOO', err);
     });
 });
+
+// app.delete('/api/orders/delete', (req: Request, res: Response) => {
+//   Orders.destroy({
+//     where: {
+//       id: req.query.subscription_id,
+//     },
+//     return: true,
+//   })
+//   .then((rowDeleted: unknown) => {
+//     if(rowDeleted === 1) {
+//       console.log('deleted successfully')
+//       res.sendStatus(204)
+//     }
+//   })
+//     .catch((err: unknown) => {
+//       console.error('Server-side Delete Req FAIL', err);
+//       res.sendStatus(404);
+//     });
+// });
+
 app.get('/records/products', (req: Request, res: Response) => {
   Products.findAll()
     .then((data: any) => {
-      console.log('Products data', data);
+      // console.log('Products data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -510,7 +520,7 @@ app.get('/records/products', (req: Request, res: Response) => {
 app.get('/records/roles', (req: Request, res: Response) => {
   Roles.findAll()
     .then((data: any) => {
-      console.log('Roles data', data);
+      // console.log('Roles data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -520,7 +530,7 @@ app.get('/records/roles', (req: Request, res: Response) => {
 app.get('/records/rsvps', (req: Request, res: Response) => {
   RSVP.findAll()
     .then((data: any) => {
-      console.log('RSVP data', data);
+      // console.log('RSVP data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -530,7 +540,7 @@ app.get('/records/rsvps', (req: Request, res: Response) => {
 app.get('/records/subscriptionEntries', (req: Request, res: Response) => {
   SubscriptionEntries.findAll()
     .then((data: any) => {
-      console.log('SubscriptionEntries data', data);
+      // console.log('SubscriptionEntries data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -540,7 +550,7 @@ app.get('/records/subscriptionEntries', (req: Request, res: Response) => {
 app.get('/records/subscriptions', (req: Request, res: Response) => {
   Subscriptions.findAll()
     .then((data: any) => {
-      console.log('Subscriptions data', data);
+      // console.log('Subscriptions data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -550,7 +560,7 @@ app.get('/records/subscriptions', (req: Request, res: Response) => {
 app.get('/records/users', (req: Request, res: Response) => {
   Users.findAll()
     .then((data: any) => {
-      console.log('Users data', data);
+      // console.log('Users data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -560,7 +570,7 @@ app.get('/records/users', (req: Request, res: Response) => {
 app.get('/records/vendors', (req: Request, res: Response) => {
   Vendors.findAll()
     .then((data: any) => {
-      console.log('Vendors data', data);
+      // console.log('Vendors data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
