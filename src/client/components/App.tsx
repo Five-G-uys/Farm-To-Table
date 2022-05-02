@@ -104,7 +104,7 @@ const App = () => {
             </Typography>
             <Grid item xs={4} spacing={2}>
               <Paper sx={{ padding: '5px' }} elevation={5}>
-                <NewNavBar user={user} />
+                <NewNavBar user={user} mode={mode} setMode={setMode} />
                 <Switch onClick={() => setMode(!mode)}></Switch>
               </Paper>
               <div>

@@ -9,6 +9,7 @@ import SubscriptionsAdmin from './SubscriptionsAdmin';
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import Confirmation from '../Confirmation'
 
 import { UserContext } from '../App';
 import { updateSubscription, deleteSubscription } from './subscriptionCalls';
@@ -180,42 +181,7 @@ const SubscriptionsPage = () => {
     getAllSubscriptions();
   }, [updateCounter]);
 
-  const handleCheckout = () => {
-    // console.log('Checkout');
-    fetch('/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // Send along all the information about the items
-      body: JSON.stringify({
-        items: [
-          {
-            id: 1,
-            quantity: 2,
-          },
-          {
-            id: 2,
-            quantity: 1,
-          },
-        ],
-      }),
-    })
-      .then((res) => {
-        if (res.ok) return res.json();
-        // If there is an error then make sure we catch that
-        return res.json().then((e) => Promise.reject(e));
-      })
-      .then(({ url }) => {
-        // On success redirect the customer to the returned URL
-        // console.log(url);
-        window.location = url
-      })
-      .catch((e) => {
-        console.error(e.error);
-      })
-  };
-
+  
   //SUBSCRIPTION CREATE
   const handleSubscribed = () => {
     // Insert Stripe Functionality Here
@@ -319,9 +285,6 @@ const SubscriptionsPage = () => {
       />
       <label htmlFor='season'> Winter 2022 </label>
       <br />
-      {/* <button className='form--submit' onClick={handleCheckout}>
-        Checkout!
-      </button> */}
       <Button variant='contained' onClick={handleSubscribed}>
         Subscribe
       </Button>
