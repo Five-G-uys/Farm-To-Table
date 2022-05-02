@@ -497,6 +497,26 @@ app.get('/records/orders', (req: Request, res: Response) => {
       console.error('OH NOOOOO', err);
     });
 });
+
+app.delete('/api/orders/delete', (req: Request, res: Response) => {
+  Orders.destroy({
+    where: {
+      id: req.query.subscription_id,
+    },
+    return: true,
+  })
+  .then((rowDeleted: unknown) => {
+    if(rowDeleted === 1) {
+      console.log('deleted successfully')
+      res.sendStatus(204)
+    }
+  })
+    .catch((err: unknown) => {
+      console.error('Server-side Delete Req FAIL', err);
+      res.sendStatus(404);
+    });
+});
+
 app.get('/records/products', (req: Request, res: Response) => {
   Products.findAll()
     .then((data: any) => {

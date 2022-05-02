@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'farm_id' | 'subscription_entry_id' | 'delivery_date' | 'edit' | 'delete'
+  id: 'id' | 'farm_id' | 'subscription_entry_id' | 'delivery_date' 
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -34,35 +34,8 @@ const columns: readonly Column[] = [
     minWidth: 170,
     align: 'right',
   },
-  {
-    id: 'edit',
-    label: 'Edit',
-    minWidth: 170,
-    align: 'right',
-  },
-  {
-    id: 'delete',
-    label: 'Delete',
-    minWidth: 170,
-    align: 'right',
-  },
+  
 ];
-
-interface Data {
-  id: string;
-  farm_id: string;
-  subscription_entry_id: number;
-  delivery_date: Date;
-}
-
-function createData(
-  id: string,
-  farm_id: string,
-  subscription_entry_id: number,
-  delivery_date: string
-): Data {
-  return { id, farm_id, subscription_entry_id, delivery_date };
-}
 
 
 const OrdersRecords = () => {
@@ -80,6 +53,11 @@ const OrdersRecords = () => {
         console.log("failed request", error);
       })
   }
+
+  // const handleDelete = () => {
+  //   axios.delete("/api/orders/delete")
+  //     .then((data)) =>
+  // }
 
   useEffect(() => {
     getOrders();
@@ -124,13 +102,14 @@ const OrdersRecords = () => {
                           ? column.format(value)
                           : value}
                       </TableCell>
+                      
                     );
                   })}
                   <TableCell>
-                    <EditIcon />
+                    <EditIcon onClick={} />
                   </TableCell>
                   <TableCell>
-                    <DeleteIcon/>
+                    <DeleteIcon onClick={() => console.log(rows)}/>
                   </TableCell>
                 </TableRow>
 
