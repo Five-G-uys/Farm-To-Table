@@ -19,15 +19,15 @@ import Login from './Login';
 import NewNavBar from './NewNavBar';
 import ProductsPage from './ProductsPage';
 import RecordsPage from './Records/RecordsPage';
-import DileveryZonesRecords from '../components/Records/Products/ProductsRecords';
-import EventsRecords from '../components/Records/Products/ProductsRecords';
-import FarmsRecords from '../components/Records/Products/ProductsRecords';
+import DileveryZonesRecords from '../components/Records/DileveryZones/DeliveryZonesRecords';
+import EventsRecords from '../components/Records/Events/EventsRecords';
+import FarmsRecords from '../components/Records/Farms/FarmsRecords';
 import OrdersRecords from '../components/Records/Orders/OrdersRecords';
 import ProductsRecords from '../components/Records/Products/ProductsRecords';
-import SubscriptionEntries from '../components/Records/Products/ProductsRecords';
-import SubscriptionsRecords from '../components/Records/Products/ProductsRecords';
-import UsersRecords from '../components/Records/Products/ProductsRecords';
-import VendorsRecords from '../components/Records/Products/ProductsRecords';
+import SubscriptionEntriesRecords from '../components/Records/SubscriptionEntries/SubscriitionEntriesRecords';
+import SubscriptionsRecords from '../components/Records/Subscriptions/SubscriptionsRecords';
+import UsersRecords from '../components/Records/Users/UsersRecords';
+import VendorsRecords from '../components/Records/Vendors/VendorsRecords';
 import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
 import PackingListPage from './PackingListPage';
 import UserRecordsPage from './Users/UsersRecordsPage';
@@ -108,7 +108,6 @@ const App = () => {
                 <Switch onClick={() => setMode(!mode)}></Switch>
               </Paper>
               <div>
-                <h1>{user.role_id}</h1>
                 <UserContext.Provider value={user}>
                   <Routes>
                     {/* Login/Logout Routes */}
@@ -218,36 +217,16 @@ const App = () => {
                       />
                     </Route>
 
-                    <Route
-                      path='dileveryZones-records'
-                      element={<ProductsRecords />}
-                    />
-                    <Route
-                      path='events-records'
-                      element={<ProductsRecords />}
-                    />
-                    <Route path='farms-records' element={<ProductsRecords />} />
+                    <Route path='dileveryZones-records' element={<DileveryZonesRecords />} />
+                    <Route path='events-records' element={<EventsRecords />} />
+                    <Route path='farms-records' element={<FarmsRecords />} />
                     <Route path='orders-records' element={<OrdersRecords />} />
-                    <Route
-                      path='products-records'
-                      element={<ProductsRecords />}
-                    />
-                    <Route
-                      path='subscriptionEntries-records'
-                      element={<ProductsRecords />}
-                    />
-                    <Route
-                      path='subscriptions-records'
-                      element={<ProductsRecords />}
-                    />
-                    <Route path='users-records' element={<ProductsRecords />} />
-                    <Route
-                      path='vendors-records'
-                      element={<ProductsRecords />}
-                    />
-                    <Route
-                      path='/records'
-                      element={
+                    <Route path='products-records' element={<ProductsRecords />} />
+                    <Route path='subscription-entries-records' element={<SubscriptionEntriesRecords />} />
+                    <Route path='subscriptions-records' element={<SubscriptionsRecords />} />
+                    <Route path='users-records' element={<UsersRecords />} />
+                    <Route path='vendors-records' element={<VendorsRecords />} />
+                    <Route path='/records' element={
                         isAdmin(user) ? (
                           <RecordsPage />
                         ) : (
