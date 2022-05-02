@@ -16,7 +16,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-      callbackURL: 'http://localhost:5555/auth/google/callback',
+      callbackURL: `${process.env.SERVER_URL}/auth/google/callback`,
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, done) => {
@@ -45,8 +45,8 @@ passport.use(
 
 const port = process.env.LOCAL_PORT;
 
-const successLoginUrl = process.env.CALLBACK_URI;
-const errorLoginUrl = 'http://localhost:5555/login/error';
+const successLoginUrl = process.env.SERVER_URL;
+const errorLoginUrl = `${process.env.SERVER_URL}/login/error`;
 
 // all backend routes should start at a common place that dont exist on the front end
 
