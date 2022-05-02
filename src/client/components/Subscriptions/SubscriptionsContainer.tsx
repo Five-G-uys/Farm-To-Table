@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import SubscriptionCard from './SubscriptionCard';
 import { Grid } from '@mui/material';
@@ -16,8 +17,9 @@ const SubscriptionsContainer = ({
   getAllSubscriptions,
   handleEditClick,
   inEditMode,
+  handleSubscriptionDeleteSubmit,
 }: any) => {
-  console.log('LINE 5 || PRODUCTSCONTAINER', subscriptions);
+  // console.log('LINE 5 || SUBSCRIPTIONSCONTAINER', subscriptions);
   const classes = useStyles();
   return (
     <Grid
@@ -43,6 +45,7 @@ const SubscriptionsContainer = ({
               handleEditClick={handleEditClick}
               inEditMode={inEditMode}
               getAllSubscriptions={getAllSubscriptions}
+              handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
             />
           </Grid>
         );
