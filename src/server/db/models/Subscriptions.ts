@@ -45,7 +45,7 @@ const Subscriptions = db.define('subscriptions', {
     allowNull: true,
     references: { model: Farms, key: 'id' },
   },
-  thumbnail: { type: DataTypes.STRING, unique: false },
+ // thumbnail: { type: DataTypes.STRING, unique: false },
 });
 // Subscriptions.hasMany(SubscriptionEntries, {
 //   as: 'subscription_entries',
@@ -57,5 +57,7 @@ const Subscriptions = db.define('subscriptions', {
 // SubscriptionEntries.belongsTo(Subscriptions, {
 //   foreignKey: 'subscription_id',
 // });
+
+
 
 export default Subscriptions;

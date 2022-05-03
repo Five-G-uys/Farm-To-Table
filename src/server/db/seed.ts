@@ -86,28 +86,25 @@ syncModels(true)
 
     // Roles Seed Data
     await Roles.findOrCreate({
-      where: { id: 1 },
+      //where: { id: 1 },
       defaults: {
         id: 1,
         role: "user",
       },
     });
     await Roles.findOrCreate({
-      where: { id: 2 },
+      //where: { id: 2 },
       defaults: {
         id: 2,
         role: "subscriber",
       },
     });
-    await Roles.findOrCreate({
-      where: { id: 3 },
-      defaults: {
+    await Roles.create({
         id: 3,
         role: "employee",
-      },
     });
     await Roles.findOrCreate({
-      where: { id: 4 },
+      //where: { id: 4 },
       defaults: {
         id: 4,
         role: "admin",

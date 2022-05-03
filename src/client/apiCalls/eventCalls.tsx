@@ -15,3 +15,5 @@ export const updatedEvent = async (eventId: number, updatedEvent: any) => {
     return { error: err };
   }
 };
+
+

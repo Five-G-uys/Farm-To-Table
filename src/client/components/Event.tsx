@@ -32,7 +32,6 @@ import Box from "@mui/material/Box";
 //import { green } from "@mui/material/colors";
 import Icon from "@mui/material/Icon";
 
-import dayjs from "dayjs";
 import green from "@material-ui/core/colors/green";
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -162,10 +161,10 @@ const Event = ({
             <Icon
               baseClassName="fas"
               className="fa-plus-circle"
-              fontSize="small"
+              fontSize="medium"
               onClick={handRSVPosts}
             >
-              RESVP
+              +
             </Icon>
           </ExpandMore>
           <ExpandMore

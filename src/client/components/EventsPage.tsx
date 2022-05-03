@@ -86,7 +86,7 @@ const EventsPage = () => {
       description: "",
       thumbnail: "",
       eventDate: "",
-      eventType: "",
+      eventType: "Farmers Market",
       location: "",
     });
   };
