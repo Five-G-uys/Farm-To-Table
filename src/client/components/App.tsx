@@ -8,6 +8,7 @@ import { Routes, Route, Navigate, Link } from 'react-router-dom';
 // MUI Imports
 import HomePage from './HomePage';
 import EventCard from './EventCard';
+import DeliveryPage from './DeliveryPage';
 import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
 import Confirmation from './Confirmation';
 import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
@@ -33,13 +34,9 @@ import PackingListPage from './PackingListPage';
 import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
 
-import { createTheme } from '@mui/material';
 //material UI IMPORTS
+import { createTheme } from '@mui/material';
 import { Container, Grid, Paper, Switch } from '@mui/material';
-// import { makeStyles } from "@mui/styles";
-// import Paper from "@material-ui/core/Paper";
-// import { Switch, useTheme } from "@material-ui/core";
-// import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
 
@@ -55,20 +52,26 @@ export const UserContext: any = createContext(null);
 
 const App = () => {
   const [user, setUser] = useState({});
-  const [lat, setLat] = useState(0);
-  const [lon, setLon] = useState(0);
+  const [lat, setLat]: any = useState(null);
+  const [lon, setLon]: any = useState(null);
 
   navigator.geolocation.getCurrentPosition(function (position) {
     //returns lat/lon based on user location
     setLat(position.coords.latitude + 0.000001);
     setLon(position.coords.longitude + 0.000001);
   });
+
+  const updateCoords: any = (newLat: any, newLon: any) => {
+    setLat(newLat);
+    setLon(newLon);
+  };
   //const [theme, setTheme] = React.useState("light");
 
   const [mode, setMode] = useState(false);
   const theme = createTheme({
     palette: {
       mode: mode ? 'light' : 'dark',
+      // mode: mode ? 'light' : 'dark',
     },
   });
   // const toggleTheme = () => {
@@ -96,17 +99,24 @@ const App = () => {
 
   return (
     <>
+      <div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+      </div>
       <ThemeProvider theme={theme}>
-        <Paper sx={{ height: '100vh' }} variant='outlined' square>
+        <NewNavBar user={user} mode={mode} setMode={setMode} />
+        <Paper sx={{ height: '100%' }} variant='outlined'>
           <Container>
-            <Typography variant='h4' component='h5'>
-              Change the Theme
-            </Typography>
+            {/* <Typography variant='h4' component='h5'>
+            Change the Theme
+          </Typography> */}
             <Grid item xs={4} spacing={2}>
-              <Paper sx={{ padding: '5px' }} elevation={5}>
-                <NewNavBar user={user} />
-                <Switch onClick={() => setMode(!mode)}></Switch>
-              </Paper>
+              {/* <Paper sx={{ padding: '5px' }} elevation={5}> */}
+              {/* <Switch onClick={() => setMode(!mode)}></Switch> */}
+              {/* </Paper> */}
               <div>
                 <h1>{user.role_id}</h1>
                 <UserContext.Provider value={user}>
@@ -177,6 +187,16 @@ const App = () => {
                         ) : (
                           <Navigate to='/login' />
                         )
+                      }
+                    />
+                    <Route
+                      path='/delivery-map'
+                      element={
+                        <DeliveryPage
+                          updateCoords={updateCoords}
+                          lat={lat}
+                          lon={lon}
+                        />
                       }
                     />
                     <Route
