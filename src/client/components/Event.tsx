@@ -74,8 +74,8 @@ const Event = ({
     console.log('LINE 63', user.id, ' and ', eventId);
     axios
       .post('/events/api/Rsvp/', {
-        userId: user.id,
-        eventId: eventId,
+        user_id: user.id,
+        event_id: eventId,
       })
       .then((data) => {
         console.log('66 LINE ', data);
