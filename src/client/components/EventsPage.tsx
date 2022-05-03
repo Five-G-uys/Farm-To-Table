@@ -14,7 +14,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { Navigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
-import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -259,7 +258,7 @@ const EventsPage = () => {
 
   useEffect((): void => {
     getAllEvents();
-    deleteEvent();
+    // deleteEvent();
   }, [updateCounter]);
 
   console.log('line 244 in EventsPage', event);
