@@ -182,7 +182,6 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                 </Menu>
               </Box>
               <Switch onClick={() => setMode(!mode)}></Switch>
-
               <Typography
                 variant='h6'
                 noWrap

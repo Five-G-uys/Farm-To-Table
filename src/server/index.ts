@@ -6,7 +6,9 @@
 import express, { Express, Request, Response } from 'express';
 require('dotenv').config();
 import path from 'path';
-// const path = require('path');
+// import cors from 'cors';
+// const uuid = require(uuid/v4);
+import uuid from 'uuid';
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
@@ -62,6 +64,7 @@ app.use(
 app.use(cookieParser());
 
 app.use(express.json());
+// app.use(cors());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
 
@@ -91,7 +94,7 @@ app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment', // subscriptions would be added here
-      line_iteams: req.body.items.map((item: { id: number; quantity: any }) => {
+      line_items: req.body.items.map((item: { id: number; quantity: any }) => {
         const storeItem: any = storeItems.get(item.id);
         return {
           price_data: {
@@ -104,10 +107,10 @@ app.post('/create-checkout-session', async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: `${process.env.SERVER_URL}/success.html`,
-      cancel_url: `${process.env.SERVER_URL}/cancel.html`,
+      success_url: `${process.env.SERVER_URL}/orders-page`,
+      cancel_url: `${process.env.SERVER_URL}/subscriptions-page`,
     });
-    res.json({ url: 'session.url' });
+    res.json({ url: session.url });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
@@ -371,7 +374,6 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     end_date,
   } = req.body.event;
 
-  console.log('283 Request object postSubscription', req.body);
   Subscriptions.create({
     season,
     year,
@@ -450,17 +452,7 @@ app.get('/api/farms', (req: Request, res: Response) => {
 app.get('/records/deliveryZones', (req: Request, res: Response) => {
   DeliveryZones.findAll()
     .then((data: any) => {
-      console.log('delivery data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
-app.get('/records/dietaryRestrictions', (req: Request, res: Response) => {
-  DietaryRestrictions.findAll()
-    .then((data: any) => {
-      console.log('DietaryRestrictions data', data);
+      // console.log('delivery data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -470,7 +462,7 @@ app.get('/records/dietaryRestrictions', (req: Request, res: Response) => {
 app.get('/records/events', (req: Request, res: Response) => {
   Events.findAll()
     .then((data: any) => {
-      console.log('Events data', data);
+      // console.log('Events data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -480,7 +472,7 @@ app.get('/records/events', (req: Request, res: Response) => {
 app.get('/records/farms', (req: Request, res: Response) => {
   Farms.findAll()
     .then((data: any) => {
-      console.log('Farms data', data);
+      // console.log('Farms data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -490,17 +482,37 @@ app.get('/records/farms', (req: Request, res: Response) => {
 app.get('/records/orders', (req: Request, res: Response) => {
   Orders.findAll()
     .then((data: any) => {
-      console.log('Orders data', data);
+      // console.log('Orders data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
       console.error('OH NOOOOO', err);
     });
 });
+
+// app.delete('/api/orders/delete', (req: Request, res: Response) => {
+//   Orders.destroy({
+//     where: {
+//       id: req.query.subscription_id,
+//     },
+//     return: true,
+//   })
+//   .then((rowDeleted: unknown) => {
+//     if(rowDeleted === 1) {
+//       console.log('deleted successfully')
+//       res.sendStatus(204)
+//     }
+//   })
+//     .catch((err: unknown) => {
+//       console.error('Server-side Delete Req FAIL', err);
+//       res.sendStatus(404);
+//     });
+// });
+
 app.get('/records/products', (req: Request, res: Response) => {
   Products.findAll()
     .then((data: any) => {
-      console.log('Products data', data);
+      // console.log('Products data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -510,7 +522,7 @@ app.get('/records/products', (req: Request, res: Response) => {
 app.get('/records/roles', (req: Request, res: Response) => {
   Roles.findAll()
     .then((data: any) => {
-      console.log('Roles data', data);
+      // console.log('Roles data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -520,7 +532,7 @@ app.get('/records/roles', (req: Request, res: Response) => {
 app.get('/records/rsvps', (req: Request, res: Response) => {
   RSVP.findAll()
     .then((data: any) => {
-      console.log('RSVP data', data);
+      // console.log('RSVP data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -530,7 +542,7 @@ app.get('/records/rsvps', (req: Request, res: Response) => {
 app.get('/records/subscriptionEntries', (req: Request, res: Response) => {
   SubscriptionEntries.findAll()
     .then((data: any) => {
-      console.log('SubscriptionEntries data', data);
+      // console.log('SubscriptionEntries data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -540,7 +552,7 @@ app.get('/records/subscriptionEntries', (req: Request, res: Response) => {
 app.get('/records/subscriptions', (req: Request, res: Response) => {
   Subscriptions.findAll()
     .then((data: any) => {
-      console.log('Subscriptions data', data);
+      // console.log('Subscriptions data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -550,7 +562,7 @@ app.get('/records/subscriptions', (req: Request, res: Response) => {
 app.get('/records/users', (req: Request, res: Response) => {
   Users.findAll()
     .then((data: any) => {
-      console.log('Users data', data);
+      // console.log('Users data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -560,7 +572,7 @@ app.get('/records/users', (req: Request, res: Response) => {
 app.get('/records/vendors', (req: Request, res: Response) => {
   Vendors.findAll()
     .then((data: any) => {
-      console.log('Vendors data', data);
+      // console.log('Vendors data', data);
       res.status(200).send(data);
     })
     .catch((err: unknown) => {
@@ -574,7 +586,7 @@ app.get('*', (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+  console.log(`⚡️[server]: Server is running at ${process.env.SERVER_URL}`);
 });
 
 function findUser(crushers: any) {

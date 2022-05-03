@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
@@ -35,7 +37,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const SubscriptionCard = ({ sub, handleEditClick }: any) => {
+const SubscriptionCard = ({
+  sub,
+  handleEditClick,
+  handleSubscriptionDeleteSubmit,
+}: any) => {
   // expanded state var
   const [expanded, setExpanded] = useState(false);
 
@@ -46,16 +52,16 @@ const SubscriptionCard = ({ sub, handleEditClick }: any) => {
 
   // SUBSCRIPTION DELETE
   // make a DELETE request to handle delete
-  const handleDeleteSubscription = () => {
-    axios
-      .delete(`/api/subscriptions/delete`, {
-        params: { subscription_id: SubscriptionCard },
-      })
-      .then((data: any) => {
-        console.log('Subscription DELETE Success!', data);
-      })
-      .catch((err) => console.error(err));
-  };
+  // const handleDeleteSubscription = () => {
+  //   axios
+  //     .delete(`/api/subscriptions/delete`, {
+  //       params: { subscription_id: subscription_id },
+  //     })
+  //     .then((data: any) => {
+  //       console.log('Subscription DELETE Success!', data);
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
 
   const {
     id,
@@ -73,11 +79,11 @@ const SubscriptionCard = ({ sub, handleEditClick }: any) => {
     <div>
       <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>
         <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-              {season[0]}
-            </Avatar>
-          }
+          // avatar={
+          //   <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
+          //     {season[0]}
+          //   </Avatar>
+          // }
           subheader={`Harvest Year ${year}`}
           // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
           title={season}
@@ -118,7 +124,11 @@ const SubscriptionCard = ({ sub, handleEditClick }: any) => {
         </CardContent>
         <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
           <Stack spacing={5} direction='row' id='product_card_stack'>
-            <ExpandMore sx={{ color: 'green' }} expand={expanded}>
+            <ExpandMore
+              sx={{ color: 'green' }}
+              expand={expanded}
+              onClick={() => handleSubscriptionDeleteSubmit()}
+            >
               <DeleteIcon sx={{ color: 'green' }} />
             </ExpandMore>
             <ExpandMore

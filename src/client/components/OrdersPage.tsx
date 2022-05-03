@@ -41,7 +41,6 @@ const OrdersPage = () => {
 
   return (
     <div>
-      <div>OrdersPage Rendering!</div>
       <div>User ID: {id}</div>
       <OrdersList orders={orders} />
     </div>
