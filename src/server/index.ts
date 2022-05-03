@@ -8,7 +8,7 @@ require('dotenv').config();
 import path from 'path';
 // import cors from 'cors';
 // const uuid = require(uuid/v4);
-import uuid from 'uuid';
+// import uuid from 'uuid';
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
@@ -428,6 +428,24 @@ app.delete('/api/subscriptions/delete', (req: Request, res: Response) => {
       res.sendStatus(404);
     });
 });
+
+app.delete(
+  '/api/user/subscriptions/delete/:id',
+  (req: Request, res: Response) => {
+    // console.log('line 120', req);
+    Subscriptions.destroy({
+      where: { id: req.params.id },
+    })
+      .then((data: any) => {
+        console.log('440 subscription delete was successful!', data);
+        res.sendStatus(200);
+      })
+      .catch((err: any) => {
+        console.error('444 Deletion was not successful', err);
+        res.sendStatus(400);
+      });
+  }
+);
 
 // Home page routes
 app.get('/api/farms', (req: Request, res: Response) => {
