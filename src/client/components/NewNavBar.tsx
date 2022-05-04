@@ -143,7 +143,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                   display: { xs: 'flex', md: 'none' },
                 }}
               >
-                <IconButton
+                <Button
                   size='large'
                   aria-label='account of current user'
                   aria-controls='menu-appbar'
@@ -152,7 +152,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                   color='inherit'
                 >
                   <MenuIcon />
-                </IconButton>
+                </Button>
                 <Menu
                   id='menu-appbar'
                   anchorEl={anchorElNav}

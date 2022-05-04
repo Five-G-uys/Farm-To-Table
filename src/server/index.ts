@@ -8,7 +8,7 @@ require('dotenv').config();
 import path from 'path';
 // import cors from 'cors';
 // const uuid = require(uuid/v4);
-import uuid from 'uuid';
+//import uuid from 'uuid';
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
