@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { db } from "../database";
-import Farms from "./Farms";
+// import Farms from "./Farms";
 import Events from "./Events";
 import Users from "./Users";
 

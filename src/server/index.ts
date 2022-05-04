@@ -21,7 +21,7 @@ const { Op } = require('sequelize');
 require('./db/database.ts');
 require('./middleware/auth');
 import {
-  Farms,
+  // Farms,
   Roles,
   Orders,
   DeliveryZones,
@@ -291,7 +291,6 @@ app.post(
       SubscriptionEntries.create({
         // CHANGED REQ.PARMS.ID TO NUMBER, USED TO BE STRING
         user_id: Number(req.params.id),
-        farm_id: 1,
         subscription_id: id,
       })
         .then((data: any) => {
@@ -314,7 +313,6 @@ app.post(
               // subscription_id: data.dataValues.subscription_id,
               subscription_entry_id: data.dataValues.id,
               delivery_date: nextWeek(),
-              farm_id: 1,
             })
               .then((data: any) => {
                 // console.log('LINE 318 || SERVER INDEX ||', data);
@@ -376,7 +374,6 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
     description,
     start_date,
     end_date,
-    farm_id: 1,
   })
     .then((data: any) => {
       // console.log("294 Return Subscriptions Route || Post Request", data);
@@ -449,14 +446,14 @@ app.delete(
 
 // Home page routes
 app.get('/api/farms', (req: Request, res: Response) => {
-  Farms.findAll()
-    .then((data: any) => {
-      // console.log("this is the data from the farm api call", data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
+  // Farms.findAll()
+  //   .then((data: any) => {
+  //     // console.log("this is the data from the farm api call", data);
+  //     res.status(200).send(data);
+  //   })
+  //   .catch((err: unknown) => {
+  //     console.error('OH NOOOOO', err);
+  //   });
 });
 
 // ADMIN RECORDS ROUTES
@@ -481,16 +478,16 @@ app.get('/records/events', (req: Request, res: Response) => {
       console.error('OH NOOOOO', err);
     });
 });
-app.get('/records/farms', (req: Request, res: Response) => {
-  Farms.findAll()
-    .then((data: any) => {
-      // console.log('Farms data', data);
-      res.status(200).send(data);
-    })
-    .catch((err: unknown) => {
-      console.error('OH NOOOOO', err);
-    });
-});
+// app.get('/records/farms', (req: Request, res: Response) => {
+//   Farms.findAll()
+//     .then((data: any) => {
+//       // console.log('Farms data', data);
+//       res.status(200).send(data);
+//     })
+//     .catch((err: unknown) => {
+//       console.error('OH NOOOOO', err);
+//     });
+// });
 app.get('/records/orders', (req: Request, res: Response) => {
   Orders.findAll()
     .then((data: any) => {

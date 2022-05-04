@@ -188,7 +188,7 @@ const SubscriptionsPage = () => {
     if (season) {
       axios
         .post(`/api/add_subscription_entry/${id}`, {
-          farm_id: 1,
+          // farm_id: 1,
           // this is the subscription id, or at least it needs to be. Check state
           season: subscription.id, // change season to number season id on server side
         })

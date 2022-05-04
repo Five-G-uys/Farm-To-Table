@@ -22,7 +22,7 @@ import ProductsPage from './ProductsPage';
 import RecordsPage from './Records/RecordsPage';
 import DileveryZonesRecords from './Records/DeliveryZonesRecords';
 import EventsRecords from './Records/EventsRecords';
-import FarmsRecords from './Records/FarmsRecords';
+// import FarmsRecords from './Records/FarmsRecords';
 import OrdersRecords from './Records/OrdersRecords';
 import ProductsRecords from './Records/ProductsRecords';
 import SubscriptionEntriesRecords from './Records/SubscriitionEntriesRecords';
@@ -285,7 +285,7 @@ const App = () => {
                         path="events-records"
                         element={<EventsRecords />}
                       />
-                      <Route path="farms-records" element={<FarmsRecords />} />
+                      {/* <Route path="farms-records" element={<FarmsRecords />} /> */}
                       <Route
                         path="orders-records"
                         element={<OrdersRecords />}

@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'name' | 'zip_codes' | 'farm_id' 
+  id: 'id' | 'name' | 'zip_codes' 
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -28,12 +28,12 @@ const columns: readonly Column[] = [
     minWidth: 170,
     align: 'right'
   },
-  {
-    id: 'farm_id',
-    label: 'Farm ID',
-    minWidth: 170,
-    align: 'right',
-  },
+  // {
+  //   id: 'farm_id',
+  //   label: 'Farm ID',
+  //   minWidth: 170,
+  //   align: 'right',
+  // },
   
 ];
 

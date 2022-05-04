@@ -50,7 +50,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const Profile = () => {
   const user: any = useContext(UserContext);
-  const { id, googleId, name, email, address, picture, farm_id, role_id, delivery_zone } = user;
+  const { id, googleId, name, email, address, picture, role_id, delivery_zone } = user;
 
   const [expanded, setExpanded] = useState(false);
 
@@ -79,7 +79,7 @@ const Profile = () => {
       email: clickedUser.email,
       address: clickedUser.address,
       picture: clickedUser.picture,
-      farm_id: clickedUser.farm_id,
+      // farm_id: clickedUser.farm_id,
       role_id: clickedUser.role_id,
     });
     setInEditMode(true);
