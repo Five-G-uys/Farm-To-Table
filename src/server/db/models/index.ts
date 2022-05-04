@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import FarmsModel from "./Farms";
+// import FarmsModel from "./Farms";
 import DeliveryZonesModel from "./DeliveryZones";
 import EventsModel from "./Events";
 import RolesModel from "./Roles";
@@ -18,12 +18,11 @@ import RSVPModel from "./Rsvps";
 export const syncModels = async (dropTables = false) => {
   const options = { force: dropTables };
   try {
-    await FarmsModel.sync(options);
-    await DeliveryZonesModel.sync(options);
+    await UsersModel.sync(options);
     await EventsModel.sync(options);
+    await DeliveryZonesModel.sync(options);
     await RolesModel.sync(options);
     await VendorsModel.sync(options);
-    await UsersModel.sync(options);
     await SubscriptionsModel.sync(options);
     await ProductsModel.sync(options);
     await DietaryRestrictionsModel.sync(options);
@@ -31,8 +30,28 @@ export const syncModels = async (dropTables = false) => {
     await OrdersModel.sync(options);
     await RSVPModel.sync(options);
     console.log("models synced!");
-    EventsModel.belongsToMany(UsersModel, { through: RSVPModel });
-    UsersModel.belongsToMany(EventsModel, { through: RSVPModel });
+    await UsersModel.belongsToMany(EventsModel, { through: RSVPModel });
+    await EventsModel.belongsToMany(UsersModel, { through: RSVPModel });
+
+
+    // await UsersModel.hasOne(RolesModel, {
+    //   onDelete: 'CASCADE',
+    //   onUpdate: 'CASCADE'
+    // })
+    // await RolesModel.hasMany(UsersModel, {
+    //   onDelete: 'CASCADE',
+    //   onUpdate: 'CASCADE'
+    // })
+
+    // await UsersModel.belongsToMany(SubscriptionsModel, { through: SubscriptionEntriesModel });
+    // await SubscriptionsModel.belongsToMany(UsersModel, { through: SubscriptionEntriesModel });
+
+    // OrdersModel.belongsToMany(SubscriptionsModel, { through: SubscriptionEntriesModel });
+    // SubscriptionsModel.belongsToMany(OrdersModel, { through: SubscriptionEntriesModel });
+  
+
+
+
   } catch (err) {
     console.error(err);
   }
@@ -40,7 +59,6 @@ export const syncModels = async (dropTables = false) => {
 
 syncModels();
 
-export const Farms = FarmsModel;
 export const DeliveryZones = DeliveryZonesModel;
 export const Events = EventsModel;
 export const Roles = RolesModel;

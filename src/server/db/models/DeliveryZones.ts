@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-import Farms from './Farms';
+// import Farms from './Farms';
 
 const DeliveryZones = db.define('delivery_zones', {
   id: {
@@ -18,11 +18,11 @@ const DeliveryZones = db.define('delivery_zones', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: Farms, key: 'id' },
-  },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: false,
+  //   references: { model: Farms, key: 'id' },
+  // },
 });
 
 export default DeliveryZones;

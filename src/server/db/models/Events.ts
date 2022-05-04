@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import { db } from "../database";
-import Rsvps from "./Rsvps";
-import Farms from "./Farms";
+// import Farms from "./Farms";
 
 const Events = db.define("events", {
   id: {
@@ -20,26 +19,15 @@ const Events = db.define("events", {
     allowNull: false,
   },
   thumbnail: { type: DataTypes.STRING, unique: false, allowNull: false },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    unique: true,
-    allowNull: true,
-    references: { model: Farms, key: "id" },
-  },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   unique: true,
+  //   allowNull: true,
+  //   references: { model: Farms, key: "id" },
+  // },
   eventDate: { type: DataTypes.STRING, allowNull: false },
   location: { type: DataTypes.STRING, allowNull: false },
   eventType: { type: DataTypes.STRING, allowNull: false },
 });
-
-// Events.hasMany(Rsvps, {
-//   as: "rsvps",
-//   foreignKey: "rsvps_id",
-//   onDelete: "CASCADE",
-//   onUpdate: "CASCADE",
-// });
-
-// Rsvps.belongsTo(Events, {
-//   foreignKey: "rsvps_id",
-// });
 
 export default Events;

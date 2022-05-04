@@ -41,7 +41,6 @@ const UserRecordsPage = () => {
     email: '',
     address: '',
     picture: '',
-    farm_id: 0,
     role_id: 0,
   });
   
@@ -64,7 +63,6 @@ const UserRecordsPage = () => {
       email: '',
       address: '',
       picture: '',
-      farm_id: 0,
       role_id: 0,
     });
   };
@@ -103,7 +101,6 @@ const UserRecordsPage = () => {
     email,
     address,
     picture,
-    farm_id,
     role_id
   } = user;
 
@@ -118,7 +115,6 @@ const UserRecordsPage = () => {
           email: email,
           address: address,
           picture: picture,
-          farm_id: Number(farm_id),
           role_id: Number(role_id)
         },
       })
@@ -209,7 +205,6 @@ const updateUser = async (userId: number, updatedUser: any) => {
       email: clickedUser.email,
       address: clickedUser.address,
       picture: clickedUser.picture,
-      farm_id: clickedUser.farm_id,
       role_id: clickedUser.role_id,
     });
     setInEditMode(true);
