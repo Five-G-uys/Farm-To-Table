@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect, useContext } from "react";
 import Event from "./Event";
 import axios from "axios";
 import { UserContext } from "./App";
+import { Grid } from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
+
 //import RSVPS from "./RSVPS";
 interface AppProps {
   eventName: string;
@@ -15,82 +19,65 @@ interface AppProps {
   location: string;
   handleEditClick: () => void;
 }
+const useStyles = makeStyles({
+  gridContainer: {
+    paddingTop: "40px",
+    paddingLeft: "4rem",
+    paddingRight: "4rem",
+  },
+});
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EventCard = ({
   handleEditClick,
-  getAllEvents,
   allEvents,
   updateCounter,
-  deleteEvent,
+  inEditMode,
+  updateState,
+  getAllEvents,
 }: AppProps | any) => {
   const user: any = useContext(UserContext);
 
-  console.log("THIS IS WORKING", user, getAllEvents);
-  const { role_id, id } = user;
-  //const [events, setEvents] = useState({ allEvents: [] });
-  //const [counter, setCounter] = useState(0);
-
-  //const { allEvents } = events;
-  console.log("line 32", allEvents);
-
+  //console.log("line 32", allEvents);
+  const classes = useStyles();
   return (
     <div className="events">
       <nav className="nav">
-        <h1 className="nav-event">Spring Season Events</h1>
+        <h1 className="nav-event">Spring: events for the month of May</h1>
       </nav>
-      <h1 className="title-card">Events for this month</h1>
       <br></br>
-      <br></br>
-      <div className="card">
+      <Grid
+        container
+        spacing={12}
+        className={classes.gridContainer}
+        // justify='center'
+      >
         {Array.isArray(allEvents) &&
-          allEvents.map(
-            (event: {
-              eventName: string;
-              description: string;
-              thumbnail: React.ImgHTMLAttributes<string>;
-              eventType: string;
-              eventId: number;
-              eventDate: string;
-              id: number;
-              location: string;
-            }) => {
-              const {
-                eventName,
-                eventType,
-                thumbnail,
-                description,
-                eventDate,
-                id,
-                location,
-              } = event;
-              return (
+          allEvents.map((event: any) => {
+            return (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                xl={3}
+                key={event.eventName + event.id}
+              >
                 <Event
                   event={event}
-                  eventName={eventName}
-                  eventType={eventType}
-                  thumbnail={thumbnail}
-                  description={description}
-                  eventDate={eventDate}
-                  getAllEvents={getAllEvents}
-                  key={eventName}
-                  eventId={id}
-                  location={location}
                   updateCounter={updateCounter}
                   handleEditClick={handleEditClick}
-                  deleteEvent={deleteEvent}
+                  inEditMode={inEditMode}
+                  updateState={updateState}
+                  getAllEvents={getAllEvents}
                 />
-              );
-            }
-          )}
-      </div>
-      <footer className="footer"></footer>
+              </Grid>
+            );
+          })}
+      </Grid>
     </div>
   );
 };
 
 export default EventCard;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function userContext(UserContext: any): any {
-  throw new Error("Function not implemented.");
-}
