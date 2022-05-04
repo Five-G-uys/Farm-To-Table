@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import FarmsModel from "./Farms";
+// import FarmsModel from "./Farms";
 import DeliveryZonesModel from "./DeliveryZones";
 import EventsModel from "./Events";
 import RolesModel from "./Roles";
@@ -18,7 +18,6 @@ import RSVPModel from "./Rsvps";
 export const syncModels = async (dropTables = false) => {
   const options = { force: dropTables };
   try {
-    await FarmsModel.sync(options);
     await DeliveryZonesModel.sync(options);
     await EventsModel.sync(options);
     await RolesModel.sync(options);
@@ -40,7 +39,6 @@ export const syncModels = async (dropTables = false) => {
 
 syncModels();
 
-export const Farms = FarmsModel;
 export const DeliveryZones = DeliveryZonesModel;
 export const Events = EventsModel;
 export const Roles = RolesModel;

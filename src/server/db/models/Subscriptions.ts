@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import SubscriptionEntries from './SubscriptionEntries';
 import { db } from '../database';
-import Farms from './Farms';
+// import Farms from './Farms';
 // import Users from './Users';
 
 const Subscriptions = db.define('subscriptions', {
@@ -40,11 +40,11 @@ const Subscriptions = db.define('subscriptions', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  farm_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: { model: Farms, key: 'id' },
-  },
+  // farm_id: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: true,
+  //   references: { model: Farms, key: 'id' },
+  // },
  // thumbnail: { type: DataTypes.STRING, unique: false },
 });
 

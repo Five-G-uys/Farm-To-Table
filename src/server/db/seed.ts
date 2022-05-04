@@ -2,27 +2,26 @@ import {
   Roles,
   Subscriptions,
   Vendors,
-  Products,
+  // Products,
   syncModels,
   DeliveryZones,
   Events,
 } from "./models";
-import Farms from "./models/Farms";
 
 syncModels(true)
   .then(async () => {
     console.log("Models successfully synced!");
 
-    // Farm Seed Data
-    await Farms.findOrCreate({
-      where: { id: 1 },
-      defaults: {
-        id: 1,
-        name: "Cinco Gajues Farm",
-        description:
-          "Cinco Gajues Farm is a 20 acre family farm on the south shore of Lake Ponchatrain. We deliver our fresh seasonal all-natural produce straight to your doorstep",
-      },
-    });
+    // // Farm Seed Data
+    // await Farms.findOrCreate({
+    //   where: { id: 1 },
+    //   defaults: {
+    //     id: 1,
+    //     name: "Cinco Gajues Farm",
+    //     description:
+    //       "Cinco Gajues Farm is a 20 acre family farm on the south shore of Lake Ponchatrain. We deliver our fresh seasonal all-natural produce straight to your doorstep",
+    //   },
+    // });
 
     // Events Seed Data
     await Events.findOrCreate({
@@ -118,7 +117,6 @@ syncModels(true)
         id: 1,
         name: "Cinco Gajues Farm",
         contact_information: "CincoGajuesFarm@example.com",
-        farm_id: 1,
       },
     });
     await Vendors.findOrCreate({
@@ -127,7 +125,6 @@ syncModels(true)
         id: 2,
         name: "Renes Mushroom Munchies",
         contact_information: "RenesMushroomFarmm@example.com",
-        farm_id: 1,
       },
     });
     await Vendors.findOrCreate({
@@ -136,7 +133,6 @@ syncModels(true)
         id: 3,
         name: "Johns Fine Wines",
         contact_information: "JohnsFineWines@example.com",
-        farm_id: 1,
       },
     });
     await Vendors.findOrCreate({
@@ -145,7 +141,6 @@ syncModels(true)
         id: 4,
         name: "Santos Micro Greens Garden",
         contact_information: "SantosMicroGreensGarden.com",
-        farm_id: 1,
       },
     });
     await Vendors.findOrCreate({
@@ -154,7 +149,6 @@ syncModels(true)
         id: 5,
         name: "Rodolfos Honey Shop",
         contact_information: "RodolfosHoneyShop@example.com",
-        farm_id: 1,
       },
     });
     await Vendors.findOrCreate({
@@ -163,7 +157,6 @@ syncModels(true)
         id: 6,
         name: "Murfs Desert Delights",
         contact_information: "MurfsDesertDelights@example.com",
-        farm_id: 1,
       },
     });
 
@@ -284,7 +277,6 @@ syncModels(true)
         name: "New Orleans Delivery Zone",
         zip_codes:
           "70112, 70113, 70114, 70115, 70116, 70117, 70118, 70119, 70122, 70124, 70125, 70126, 70127, 70128, 70129, 70130, 70131, 70139, 70163 ",
-        farm_id: 1,
       },
     });
     await DeliveryZones.findOrCreate({
@@ -294,7 +286,6 @@ syncModels(true)
         name: "North Shore Delivery Zone",
         zip_codes:
           "70401, 70402, 70403, 70404, 70433, 70434, 70448, 70470, 70471, 70447, 70454",
-        farm_id: 1,
       },
     });
 
@@ -311,7 +302,6 @@ syncModels(true)
           "All your Spring favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of fresh blueberries as well.  Pears and and other seasonal goodies will make their usual Summer appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly",
         start_date: "April 26th",
         end_date: "July 29th",
-        farm_id: 1,
       },
     });
 
@@ -327,7 +317,6 @@ syncModels(true)
           "All your Fall favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of specialty fall crops as well.  Citrus and and other seasonal goodies will make their usual Late Fall appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly",
         start_date: "September 5th",
         end_date: "December 16th",
-        farm_id: 1,
       },
     });
 
@@ -343,7 +332,6 @@ syncModels(true)
           "All your Winter favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of specialty fall crops as well.  Citrus and and other seasonal goodies will make their usual Late Fall appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly",
         start_date: "December 19th",
         end_date: "March 10th",
-        farm_id: 1,
       },
     });
   })

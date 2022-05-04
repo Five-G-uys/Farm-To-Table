@@ -39,8 +39,8 @@ const RecordsPage = () => {
       <Button component={Link} to='/dileveryZones-records' variant='contained' color='primary'>get deliveryZones</Button>
       <br/>
       <Button component={Link} to='/events-records' variant='contained' color='primary'>get events</Button>
-      <br/>
-      <Button component={Link} to='/farms-records' variant='contained' color='primary'>get farms</Button>
+      {/* <br/>
+      <Button component={Link} to='/farms-records' variant='contained' color='primary'>get farms</Button> */}
       <br/>
       <Button component={Link} to='/orders-records' variant='contained' color='primary'>get orders</Button>
       <br/>

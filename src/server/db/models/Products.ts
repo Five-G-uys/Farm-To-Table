@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import Subscriptions from './Subscriptions';
 import { db } from '../database';
-import Farms from './Farms';
+// import Farms from './Farms';
 import Vendors from './Vendors';
 
 const Products = db.define(

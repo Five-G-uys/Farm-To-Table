@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Farms from './Farms';
+// import Farms from './Farms';
 import { stringify } from 'querystring';
 
 const HomePage = () => {
@@ -25,9 +25,9 @@ const HomePage = () => {
 
   return (
     <div>
-      {farms && farms.map((farm: { name: string, description: string, id: number }) => {
+      {/* {farms && farms.map((farm: { name: string, description: string, id: number }) => {
         return <Farms name={farm.name} description={farm.description} key={farm.id}></Farms>
-      })}
+      })} */}
     </div>
   )
 };

@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-import Farms from './Farms';
+// import Farms from './Farms';
 import Roles from './Roles';
 
 const Users = db.define(
@@ -37,14 +37,14 @@ const Users = db.define(
     //   type: DataTypes.BOOLEAN,
     //   defaultValue: false,
     // },
-    farm_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Farms,
-        key: 'id',
-      },
-      defaultValue: 1,
-    },
+    // farm_id: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: Farms,
+    //     key: 'id',
+    //   },
+    //   defaultValue: 1,
+    // },
     role_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
