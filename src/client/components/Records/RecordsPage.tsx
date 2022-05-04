@@ -1,8 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Button from '@mui/material/Button';
 import {Routes, Route, Link, Navigate} from 'react-router-dom' 
-import ProductsRecords from './Products/ProductsRecords';
+import ProductsRecords from './ProductsRecords';
 // import DietaryRestrictionsRecords from "./DietaryRestrictions/DietaryRestrictionsRecords";
 // import DeliveryZones from "./DileveryZones/DeliveryZonesRecords";
 // import Events from "./Events/EventsRecords";
@@ -32,18 +33,26 @@ const RecordsPage = () => {
 
   return (
     <div>
-      <button>get deliveryZones</button>
-      <button>get dietaryRestrictions</button>
-      <button>get events</button>
-      <button>get farms</button>
-      <button>get orders</button>
-      <button>get products</button>  
-      <button>get roles</button>
-      <button>get rsvp</button>
-      <button>get subscriptionEntries</button>
-      <button>get subscriptions</button>
-      <button>get users</button>
-      <button>get vendors</button>
+      <br/>
+      <br/>
+      <br/>
+      <Button component={Link} to='/dileveryZones-records' variant='contained' color='primary'>get deliveryZones</Button>
+      <br/>
+      <Button component={Link} to='/events-records' variant='contained' color='primary'>get events</Button>
+      {/* <br/>
+      <Button component={Link} to='/farms-records' variant='contained' color='primary'>get farms</Button> */}
+      <br/>
+      <Button component={Link} to='/orders-records' variant='contained' color='primary'>get orders</Button>
+      <br/>
+      <Button component={Link} to='/products-records' variant='contained' color='primary'>get products</Button>  
+      <br/>
+      <Button component={Link} to='/subscription-entries-records' variant='contained' color='primary'>get subscriptionEntries</Button>
+      <br/>
+      <Button component={Link} to='/subscriptions-records' variant='contained' color='primary'>get subscriptions</Button>
+      <br/>
+      <Button component={Link} to='/users-records' variant='contained' color='primary'>get users</Button>
+      <br/>
+      <Button component={Link} to='/vendors-records' variant='contained' color='primary'>get vendors</Button>
     </div>
   )
 

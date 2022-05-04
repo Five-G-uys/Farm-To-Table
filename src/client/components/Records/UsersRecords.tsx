@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'farm_id' | 'user_id' | 'subscription_id' 
+  id: 'id' | 'googleId' | 'name' | 'email' | 'address' | 'role_id' | 'delivery_zone'
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -21,30 +21,44 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'id', label: 'ID', minWidth: 170 },
-  { id: 'farm_id', label: 'Farm ID', minWidth: 100 },
+  { id: 'googleId', label: 'Season', minWidth: 100 },
   {
-    id: 'user_id',
-    label: 'User ID',
-    minWidth: 170,
-    align: 'right'
+    id: 'name',
+    label: 'Name',
+    minWidth: 170
   },
   {
-    id: 'subscription_id',
-    label: 'Subscription ID',
-    minWidth: 170,
-    align: 'right',
+    id: 'email',
+    label: 'Email',
+    minWidth: 170
+  },
+  {
+    id: 'address',
+    label: 'Address',
+    minWidth: 170
+  },
+
+  {
+    id: 'role_id',
+    label: 'Role ID',
+    minWidth: 170
+  },
+  {
+    id: 'delivery_zone',
+    label: 'Delivery Zone',
+    minWidth: 170
   },
   
 ];
 
 
-const SubscriptionEntriesRecords = () => {
+const UsersRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([])
 
-  const getSubscriptionEntries = () => {
-    axios.get("/records/subscriptionEntries")
+  const getUsers = () => {
+    axios.get("/records/users")
       .then((data) => {
         // console.log(data.data);
         setRows(data.data)
@@ -60,7 +74,7 @@ const SubscriptionEntriesRecords = () => {
   // }
 
   useEffect(() => {
-    getSubscriptionEntries();
+    getUsers();
   }, [])
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -130,4 +144,4 @@ const SubscriptionEntriesRecords = () => {
   );
 }
 
-export default SubscriptionEntriesRecords;
+export default UsersRecords;

@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'name' | 'contact_information' | 'farm_id'
+  id: 'id' | 'user_id' | 'subscription_id' 
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -22,30 +22,22 @@ interface Column {
 const columns: readonly Column[] = [
   { id: 'id', label: 'ID', minWidth: 170 },
   {
-    id: 'name',
-    label: 'Name',
-    minWidth: 170
+    id: 'subscription_id',
+    label: 'Subscription ID',
+    minWidth: 170,
+    align: 'right',
   },
-  {
-    id: 'contact_information',
-    label: 'Contact Infomation',
-    minWidth: 170
-  },
-  {
-    id: 'farm_id',
-    label: 'Farm ID',
-    minWidth: 170
-  }
+  
 ];
 
 
-const VendorsRecords = () => {
+const SubscriptionEntriesRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([])
 
-  const getVendors = () => {
-    axios.get("/records/vendors")
+  const getSubscriptionEntries = () => {
+    axios.get("/records/subscriptionEntries")
       .then((data) => {
         // console.log(data.data);
         setRows(data.data)
@@ -61,7 +53,7 @@ const VendorsRecords = () => {
   // }
 
   useEffect(() => {
-    getVendors();
+    getSubscriptionEntries();
   }, [])
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -131,4 +123,4 @@ const VendorsRecords = () => {
   );
 }
 
-export default VendorsRecords;
+export default SubscriptionEntriesRecords;

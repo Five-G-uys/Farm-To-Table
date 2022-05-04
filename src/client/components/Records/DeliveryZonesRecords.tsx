@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'googleId' | 'name' | 'email' | 'address' | 'farm_id' | 'role_id' | 'delivery_zone'
+  id: 'id' | 'name' | 'zip_codes' 
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -21,48 +21,29 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'id', label: 'ID', minWidth: 170 },
-  { id: 'googleId', label: 'Season', minWidth: 100 },
+  { id: 'name', label: 'Name', minWidth: 100 },
   {
-    id: 'name',
-    label: 'Name',
-    minWidth: 170
+    id: 'zip_codes',
+    label: 'Zip Codes',
+    minWidth: 170,
+    align: 'right'
   },
-  {
-    id: 'email',
-    label: 'Email',
-    minWidth: 170
-  },
-  {
-    id: 'address',
-    label: 'Address',
-    minWidth: 170
-  },
-  {
-    id: 'farm_id',
-    label: 'Farm ID',
-    minWidth: 170
-  },
-  {
-    id: 'role_id',
-    label: 'Role ID',
-    minWidth: 170
-  },
-  {
-    id: 'delivery_zone',
-    label: 'Delivery Zone',
-    minWidth: 170
-  },
+  // {
+  //   id: 'farm_id',
+  //   label: 'Farm ID',
+  //   minWidth: 170,
+  //   align: 'right',
+  // },
   
 ];
 
-
-const UsersRecords = () => {
+const DileveryZonesRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([])
 
-  const getUsers = () => {
-    axios.get("/records/users")
+  const getOrders = () => {
+    axios.get("/records/deliveryZones")
       .then((data) => {
         // console.log(data.data);
         setRows(data.data)
@@ -78,7 +59,7 @@ const UsersRecords = () => {
   // }
 
   useEffect(() => {
-    getUsers();
+    getOrders();
   }, [])
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -148,4 +129,4 @@ const UsersRecords = () => {
   );
 }
 
-export default UsersRecords;
+export default DileveryZonesRecords;

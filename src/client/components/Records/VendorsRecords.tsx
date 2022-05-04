@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'name' | 'zip_codes' | 'farm_id' 
+  id: 'id' | 'name' | 'contact_information'
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -21,29 +21,27 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'id', label: 'ID', minWidth: 170 },
-  { id: 'name', label: 'Name', minWidth: 100 },
   {
-    id: 'zip_codes',
-    label: 'Zip Codes',
-    minWidth: 170,
-    align: 'right'
+    id: 'name',
+    label: 'Name',
+    minWidth: 170
   },
   {
-    id: 'farm_id',
-    label: 'Farm ID',
-    minWidth: 170,
-    align: 'right',
+    id: 'contact_information',
+    label: 'Contact Infomation',
+    minWidth: 170
   },
-  
+
 ];
 
-const DileveryZonesRecords = () => {
+
+const VendorsRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([])
 
-  const getOrders = () => {
-    axios.get("/records/deliveryZones")
+  const getVendors = () => {
+    axios.get("/records/vendors")
       .then((data) => {
         // console.log(data.data);
         setRows(data.data)
@@ -59,7 +57,7 @@ const DileveryZonesRecords = () => {
   // }
 
   useEffect(() => {
-    getOrders();
+    getVendors();
   }, [])
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -129,4 +127,4 @@ const DileveryZonesRecords = () => {
   );
 }
 
-export default DileveryZonesRecords;
+export default VendorsRecords;

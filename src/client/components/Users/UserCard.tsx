@@ -49,7 +49,7 @@ const UserCard = ({ user, handleEditClick }: any) => {
     setExpanded(!expanded);
   };
 
-  const { id, googleId, name, email, address, picture, farm_id, role_id } = user;
+  const { id, googleId, name, email, address, picture, role_id } = user;
   // console.log('LINE 53 || USER CARD', id);
   return (
     <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>

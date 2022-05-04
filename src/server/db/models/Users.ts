@@ -1,7 +1,8 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-import Farms from './Farms';
+// import Farms from './Farms';
 import Roles from './Roles';
+import DeliveryZones from './DeliveryZones'
 
 const Users = db.define(
   'user',
@@ -15,7 +16,7 @@ const Users = db.define(
     },
     googleId: {
       type: DataTypes.STRING,
-      unique: true,
+      // unique: true,
       allowNull: false,
     },
     name: {
@@ -27,7 +28,22 @@ const Users = db.define(
       unique: true,
       allowNull: false,
     },
-    address: {
+    street_address: {
+      type: DataTypes.STRING,
+    },
+    city_address: {
+      type: DataTypes.STRING,
+    },
+    state_address: {
+      type: DataTypes.STRING,
+    },
+    zip_code: {
+      type: DataTypes.STRING,
+    },
+    lat: {
+      type: DataTypes.STRING,
+    },
+    lon: {
       type: DataTypes.STRING,
     },
     picture: {
@@ -37,14 +53,6 @@ const Users = db.define(
     //   type: DataTypes.BOOLEAN,
     //   defaultValue: false,
     // },
-    farm_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Farms,
-        key: 'id',
-      },
-      defaultValue: 1,
-    },
     role_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -53,9 +61,6 @@ const Users = db.define(
         key: 'id',
       },
       defaultValue: 1,
-    },
-    delivery_zone: {
-      type: DataTypes.STRING,
     },
   },
   { freezeTableName: true, tableName: 'user' }
