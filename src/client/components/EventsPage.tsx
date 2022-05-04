@@ -1,26 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-constant-condition */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "./App";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 //mateiral UI
-import { ThemeProvider, createTheme } from "@mui/system";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
-import { Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Backdrop from "@mui/material/Backdrop";
-//import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-
 import Fade from "@mui/material/Fade";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -30,20 +23,18 @@ import FormLabel from "@mui/material/FormLabel";
 
 //Component import
 import EventCard from "./EventCard";
+import RSVPS from "./RSVPS";
 
-// Component Imports
-import ProductsContainer from "./ProductsContainer";
 // can import getallproducts after migrating it to apicalls file
 import { updatedEvent } from "../apiCalls/eventCalls";
-import { cli } from "webpack";
 
 const EventsPage = () => {
-  //window.location.reload(true);
   const user: any = useContext(UserContext);
+  const { role_id, id } = user;
   console.log("THIS IS WORKING", user);
 
   const [updateCounter, setUpdateCounter] = useState(0);
-  // cerate state var Products array (set to result of get req)
+  // cerate state var events array (set to result of get req)
   const [allEvents, setAllEvents] = useState([]);
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
@@ -55,6 +46,9 @@ const EventsPage = () => {
     setValue(event.target.value);
   };
 
+  //get rsvps from DB
+
+  //event state variable;
   const [event, setEvent] = useState({
     id: 0,
     eventName: "",
@@ -65,6 +59,7 @@ const EventsPage = () => {
     location: "",
   });
 
+  //state that controls the form
   const [open, setOpen] = useState(false);
 
   // handle create form
@@ -72,6 +67,7 @@ const EventsPage = () => {
     setOpen(true);
   };
 
+  //to update state and cause a refresh?
   const updateState = () => {
     setUpdateCounter(updateCounter + 1);
   };
@@ -86,10 +82,11 @@ const EventsPage = () => {
       description: "",
       thumbnail: "",
       eventDate: "",
-      eventType: "Farmers Market",
+      eventType: "",
       location: "",
     });
   };
+
   // Destructure product state obj
   const {
     eventName,
@@ -101,9 +98,9 @@ const EventsPage = () => {
     id,
   } = event;
 
-  const postEvent = () => {
+  const postEvent = (e: any) => {
     console.log("LINE 108");
-    //e.preventDefault();
+    e.preventDefault();
     axios
       .post("/events/api/event", {
         event: {
@@ -119,25 +116,8 @@ const EventsPage = () => {
         console.log("LINE 107 saved!", data);
         setUpdateCounter(updateCounter + 1);
         handleClose();
-        // <Navigate to='/admin/edit-products' />; // ???
       })
       .catch((err) => console.error(err));
-  };
-
-  //delete request for deleteting an event in the database
-  const deleteEvent = () => {
-    console.log("LINE 81", user.id, " and ", id);
-    axios
-      .delete("/events/api/event/delete", {
-        params: { id: id },
-      })
-      .then((data) => {
-        console.log("87 LINE ", data);
-        setUpdateCounter(updateCounter + 1);
-      })
-      .catch((err) => {
-        console.error("91 REQUEST FAILED", err);
-      });
   };
 
   // Box component styles
@@ -223,7 +203,7 @@ const EventsPage = () => {
       .get("/events/api/event")
 
       .then(({ data }) => {
-        console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
+        //console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
         setAllEvents(data);
       })
       .catch((error) => {
@@ -237,6 +217,7 @@ const EventsPage = () => {
   const handleEditClick = (id: any) => {
     //console.log("LINE 185 || PRODUCTS PAGE CLICKED", id);
 
+    //handle searches for a clicked event in order to update
     const clickedEvent: any = allEvents.find(
       // find mutates original array values
       (event: any) => event.id === id
@@ -274,10 +255,10 @@ const EventsPage = () => {
         allEvents={allEvents}
         updateCounter={updateCounter}
         handleEditClick={handleEditClick}
-        deleteEvent={deleteEvent}
         inEditMode={inEditMode}
         updateState={updateState}
       />
+
       <div>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
         <Modal
@@ -298,7 +279,7 @@ const EventsPage = () => {
           }}
           className="add_x_form_modal"
         >
-          <Fade in={open}>
+          <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
             {
               <div>
                 <div>
@@ -385,37 +366,6 @@ const EventsPage = () => {
                       <br></br>
                       <br></br>
                       <Box>
-                        {/* <FormControl className="commonStyles">
-                          <FormLabel id="demo-controlled-radio-buttons-group">
-                            Event Type
-                          </FormLabel>
-                          <RadioGroup
-                            aria-labelledby="controlled-radio-buttons-group"
-                            name="controlled-radio-buttons-group"
-                            value={value}
-                            // onChange={handelTextInput}
-                            onChange={(event) => setValue(event.target.value)}
-                          >
-                            <FormControlLabel
-                              value="Farmers Market"
-                              control={<Radio size="small" />}
-                              label="Farmers Market"
-                              // variant="filled"
-                            />
-                            <FormControlLabel
-                              value="Customers Day"
-                              control={<Radio size="small" />}
-                              label="Customers Day"
-                              // variant="filled"
-                            />
-                            <FormControlLabel
-                              value="Community Volunteering"
-                              control={<Radio size="small" />}
-                              label="Community Volunteering"
-                              // variant="filled"
-                            />
-                          </RadioGroup>
-                        </FormControl> */}
                         <FormControl>
                           <FormLabel id="demo-controlled-radio-buttons-group">
                             Type of Event
@@ -445,91 +395,6 @@ const EventsPage = () => {
                           </RadioGroup>
                         </FormControl>
                       </Box>
-                      {/* <fieldset>
-                        <legend className="radio-title">Type of event</legend>
-                        <input
-                          type="radio"
-                          id="Farmers Market"
-                          name="eventType"
-                          value={value}
-                          checked={eventType === "Farmers Market"}
-                          onChange={handelTextInput}
-                        />
-                        <label htmlFor="Farmers Market">Farmers Market</label>
-                        <br />
-                        <input
-                          type="radio"
-                          id="Customer Day"
-                          name="eventType"
-                          value="Customers Day"
-                          checked={eventType === "Customers Day"}
-                          onChange={handelTextInput}
-                        />
-                        <label htmlFor="Customers Day">Customer Day</label>
-                        <br />
-
-                        <input
-                          type="radio"
-                          id="Community Volunteering"
-                          name="eventType"
-                          value="Community Volunteering"
-                          checked={eventType === "Community Volunteering"}
-                          onChange={handelTextInput}
-                        />
-                        <label htmlFor="Farmers-Market">
-                          Community volunteering
-                        </label>
-                      </fieldset> */}
-                      {/* </fieldset> 
-                       <FormControl>
-                      <FormLabel id="demo-radio-buttons-group-label">
-                        Type of Event
-                      </FormLabel>
-                      <RadioGroup
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue="Farmers market"
-                        name="radio-buttons-group"
-                      >
-                        <FormControlLabel
-                          value="Customer Day"
-                          control={eventType}
-                          label="Customer Day"
-                          onChange={handelTextInput}
-                        />
-                        <FormControlLabel
-                          value="Farmers Market"
-                          control={eventType}
-                          label="Farmers-Market"
-                          onChange={handelTextInput}
-                        />
-                        <FormControlLabel
-                          value="Community volunteering"
-                          control={eventType}
-                          label="Other"
-                          onChange={handelTextInput}
-                        />
-                      </RadioGroup>
-                    </FormControl> 
-                      <fieldset>
-                        <FormControlLabel
-                          value="Customer Day"
-                          control={<Radio disabled={handelTextInput} />}
-                          label="Customer Day"
-                          disabled={handelTextInput}
-                        />
-                        <FormControlLabel
-                          value="Farmers-Market"
-                          control={<Radio disabled={handelTextInput} />}
-                          label="Farmers-Market"
-                          disabled={handelTextInput}
-                        />
-                        <FormControlLabel
-                          value="none"
-                          control={<Radio disabled={handelTextInput} />}
-                          label="Community volunteering"
-                          disabled
-                        />
-                      </fieldset> */}
                       <br></br>
                       <br></br>
                       <Button variant="contained" size="large" type="submit">
@@ -562,17 +427,3 @@ const EventsPage = () => {
 };
 
 export default EventsPage;
-function updateEvent(
-  id: number,
-  event: {
-    id: number;
-    eventName: string;
-    description: string;
-    thumbnail: string;
-    eventDate: string;
-    eventType: string;
-    location: string;
-  }
-) {
-  throw new Error("Function not implemented.");
-}

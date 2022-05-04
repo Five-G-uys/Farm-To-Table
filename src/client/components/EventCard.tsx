@@ -1,11 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect, useContext } from "react";
 import Event from "./Event";
 import axios from "axios";
 import { UserContext } from "./App";
-
-
-
 
 //import RSVPS from "./RSVPS";
 interface AppProps {
@@ -19,32 +17,17 @@ interface AppProps {
   location: string;
   handleEditClick: () => void;
 }
-// const useStyles = makeStyles({
-//   gridContainer: {
-//     paddingTop: "40px",
-//     paddingLeft: "4rem",
-//     paddingRight: "4rem",
-//   },
-// });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EventCard = ({
   handleEditClick,
-  getAllEvents,
   allEvents,
   updateCounter,
   inEditMode,
-  deleteEvent,
   updateState,
 }: AppProps | any) => {
+  
   const user: any = useContext(UserContext);
 
-  console.log("THIS IS WORKING", user, getAllEvents);
-  const { role_id, id } = user;
-  //const [events, setEvents] = useState({ allEvents: [] });
-  //const [counter, setCounter] = useState(0);
-
-  //const { allEvents } = events;
   console.log("line 32", allEvents);
 
   return (
@@ -56,47 +39,17 @@ const EventCard = ({
       <br></br>
       <div className="card">
         {Array.isArray(allEvents) &&
-          allEvents.map(
-            (event: {
-              eventName: string;
-              description: string;
-              thumbnail: React.ImgHTMLAttributes<string>;
-              eventType: string;
-              eventId: number;
-              eventDate: string;
-              id: number;
-              location: string;
-            }) => {
-              const {
-                eventName,
-                eventType,
-                thumbnail,
-                description,
-                eventDate,
-                id,
-                location,
-              } = event;
-              return (
-                <Event
-                  event={event}
-                  eventName={eventName}
-                  eventType={eventType}
-                  thumbnail={thumbnail}
-                  description={description}
-                  eventDate={eventDate}
-                  getAllEvents={getAllEvents}
-                  key={eventName}
-                  eventId={id}
-                  location={location}
-                  updateCounter={updateCounter}
-                  handleEditClick={handleEditClick}
-                  deleteEvent={deleteEvent}
-                  inEditMode={inEditMode}
-                  updateState={updateState}
-                />
-              );
-            }
-          )}
+          allEvents.map((event: any) => {
+            return (
+              <Event
+                event={event}
+                updateCounter={updateCounter}
+                handleEditClick={handleEditClick}
+                inEditMode={inEditMode}
+                updateState={updateState}
+              />
+            );
+          })}
       </div>
       <footer className="footer"></footer>
     </div>

@@ -19,7 +19,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
 import ThemeProvider from './App';
-import { Grid, Switch } from '@mui/material'
+import { Grid, Switch } from '@mui/material';
 
 interface Props {
   /**
@@ -62,6 +62,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
       { name: 'Records', path: '/records' },
       { name: 'Packing List', path: '/packing-lists' },
       { name: 'Delivery Routes', path: '/delivery-routes' },
+      { name: 'Delivery Map', path: '/delivery-map' },
       { name: 'Edit User Role', path: '/edit-users' },
       { name: 'Profile', path: '/profile-page' },
       // { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
@@ -142,7 +143,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                   display: { xs: 'flex', md: 'none' },
                 }}
               >
-                <IconButton
+                <Button
                   size='large'
                   aria-label='account of current user'
                   aria-controls='menu-appbar'
@@ -151,7 +152,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                   color='inherit'
                 >
                   <MenuIcon />
-                </IconButton>
+                </Button>
                 <Menu
                   id='menu-appbar'
                   anchorEl={anchorElNav}

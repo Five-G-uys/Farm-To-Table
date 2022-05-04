@@ -30,4 +30,6 @@ const RSVP = db.define("rsvp", {
   },
 });
 
+
+
 export default RSVP;

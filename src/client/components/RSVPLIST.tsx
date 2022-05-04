@@ -29,31 +29,29 @@ import Icon from "@mui/material/Icon";
 import dayjs from "dayjs";
 import green from "@material-ui/core/colors/green";
 
-interface AppProps {
-  eventName: string;
-  description: string;
-  thumbnail: React.ImgHTMLAttributes<string>;
-  eventType: string;
-  eventDate: string;
-  eventId: number;
-  userRole: number;
-  location: string;
-  getAllRSVPSEvents(): void;
-  //getAllRSVPSEvents: () => void;
-}
+// interface AppProps {
+//   eventName: string;
+//   description: string;
+//   thumbnail: React.ImgHTMLAttributes<string>;
+//   eventType: string;
+//   eventDate: string;
+//   eventId: number;
+//   userRole: number;
+//   location: string;
+//   getAllRSVPSEvents(): void;
+//   //getAllRSVPSEvents: () => void;
+// }
 
 const RSVPLIST = ({
   eventName,
-  description,
-  thumbnail,
   eventType,
   eventDate,
   eventId,
   userRole,
-  getAllRSVPSEvents,
+  rsvpsCount,
   location,
 }: //getAllRSVPSEvents,
-AppProps) => {
+any) => {
   const user: any = useContext(UserContext);
   const { role_id, id } = user;
 
@@ -73,14 +71,10 @@ AppProps) => {
       });
   };
 
-  console.log(userRole);
-  useEffect(() => {
-    getAllRSVPSEvents();
-  }, []);
   return (
     <div>
       {userRole > 3 ? (
-        <div>TOTAL RSVP RESPONSES</div>
+        <div>{rsvpsCount} TOTAL RSVP RESPONSES</div>
       ) : (
         <section className="user-rsvps">
           <Box>
@@ -90,11 +84,9 @@ AppProps) => {
                 <h1 className="user-event-type">{eventType}</h1>
                 <h4 className="user-event-date">{eventDate}</h4>
                 <h4 className="user-event-loc">{location}</h4>
-                {role_id < 4 && (
-                  <button onClick={deleteRsvpsEvent}>
-                    Can't attend smthing came up
-                  </button>
-                )}
+                <button onClick={deleteRsvpsEvent}>
+                  Can't attend smthing came up
+                </button>
               </Typography>
             </CardContent>
           </Box>

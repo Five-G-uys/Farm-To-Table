@@ -8,6 +8,7 @@ import { Routes, Route, Navigate, Link } from "react-router-dom";
 // MUI Imports
 import HomePage from "./HomePage";
 import EventCard from "./EventCard";
+import DeliveryPage from "./DeliveryPage";
 import SubscriptionsPage from "./Subscriptions/SubscriptionsPage";
 import Confirmation from "./Confirmation";
 import SubscriptionsAdmin from "./Subscriptions/SubscriptionsAdmin";
@@ -19,28 +20,23 @@ import Login from "./Login";
 import NewNavBar from "./NewNavBar";
 import ProductsPage from "./ProductsPage";
 import RecordsPage from "./Records/RecordsPage";
-import DileveryZonesRecords from "../components/Records/Products/ProductsRecords";
-import EventsRecords from "../components/Records/Products/ProductsRecords";
-import FarmsRecords from "../components/Records/Products/ProductsRecords";
+import DileveryZonesRecords from "../components/Records/DileveryZones/DeliveryZonesRecords";
+import EventsRecords from "../components/Records/Events/EventsRecords";
+import FarmsRecords from "../components/Records/Farms/FarmsRecords";
 import OrdersRecords from "../components/Records/Orders/OrdersRecords";
 import ProductsRecords from "../components/Records/Products/ProductsRecords";
-// import SubscriptionEntries from "../components/Records/Products/ProductsRecords";
-// import SubscriptionsRecords from "../components/Records/Products/ProductsRecords";
-import UsersRecords from "../components/Records/Products/ProductsRecords";
-import VendorsRecords from "../components/Records/Products/ProductsRecords";
+import SubscriptionEntriesRecords from "../components/Records/SubscriptionEntries/SubscriitionEntriesRecords";
+import SubscriptionsRecords from "../components/Records/Subscriptions/SubscriptionsRecords";
+import UsersRecords from "../components/Records/Users/UsersRecords";
+import VendorsRecords from "../components/Records/Vendors/VendorsRecords";
 import DeliveryRoutesPage from "./DeliveryRoutes/DeliveryRoutesPage";
 import PackingListPage from "./PackingListPage";
 import UserRecordsPage from "./Users/UsersRecordsPage";
 import Weather from "./Weather";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 
-import { createTheme } from "@mui/material";
 //material UI IMPORTS
+import { createTheme } from "@mui/material";
 import { Container, Grid, Paper, Switch } from "@mui/material";
-// import { makeStyles } from "@mui/styles";
-// import Paper from "@material-ui/core/Paper";
-// import { Switch, useTheme } from "@material-ui/core";
-// import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ThemeProvider } from "@mui/material";
 import { Typography } from "@mui/material";
 
@@ -56,20 +52,26 @@ export const UserContext: any = createContext(null);
 
 const App = () => {
   const [user, setUser] = useState({});
-  const [lat, setLat] = useState(0);
-  const [lon, setLon] = useState(0);
+  const [lat, setLat]: any = useState(null);
+  const [lon, setLon]: any = useState(null);
 
   navigator.geolocation.getCurrentPosition(function (position) {
     //returns lat/lon based on user location
     setLat(position.coords.latitude + 0.000001);
     setLon(position.coords.longitude + 0.000001);
   });
+
+  const updateCoords: any = (newLat: any, newLon: any) => {
+    setLat(newLat);
+    setLon(newLon);
+  };
   //const [theme, setTheme] = React.useState("light");
 
   const [mode, setMode] = useState(false);
   const theme = createTheme({
     palette: {
-      mode: mode ? "dark" : "light",
+      mode: mode ? "light" : "dark",
+      // mode: mode ? 'light' : 'dark',
     },
   });
   // const toggleTheme = () => {
@@ -97,19 +99,18 @@ const App = () => {
 
   return (
     <>
-      <br></br>
-      <br></br>
-      <br></br>
+      <div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+      </div>
       <ThemeProvider theme={theme}>
-        <Paper sx={{ height: "100vh" }} variant="outlined" square>
+        <NewNavBar user={user} mode={mode} setMode={setMode} />
+        <Paper sx={{ height: "100%" }} variant="outlined">
           <Container>
-            {/* <Typography variant='h4' component='h5'>
-              Change the Theme
-            </Typography> */}
-            <Grid item xs={4} spacing={2}>
-              <Paper sx={{ padding: "5px" }} elevation={5}>
-                <NewNavBar user={user} mode={mode} setMode={setMode} />
-              </Paper>
+            <Grid item xs={4}>
               <div>
                 <UserContext.Provider value={user}>
                   <Routes>
@@ -179,6 +180,16 @@ const App = () => {
                         ) : (
                           <Navigate to="/login" />
                         )
+                      }
+                    />
+                    <Route
+                      path="/delivery-map"
+                      element={
+                        <DeliveryPage
+                          updateCoords={updateCoords}
+                          lat={lat}
+                          lon={lon}
+                        />
                       }
                     />
                     <Route

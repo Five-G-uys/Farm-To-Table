@@ -52,14 +52,6 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
-  eventName,
-  description,
-  thumbnail,
-  eventType,
-  eventDate,
-  eventId,
-  getAllEvents,
-  location,
   event,
   handleEditClick,
   inEditMode,
@@ -68,7 +60,7 @@ const Event = ({
 }: any) => {
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
-  //window.location.reload(false);
+
   const [expanded, setExpanded] = useState(false);
 
   // toggle bool
@@ -77,11 +69,11 @@ const Event = ({
   };
 
   const handRSVPosts = () => {
-    console.log("LINE 63", user.id, " and ", eventId);
+    console.log("LINE 63", user.id, " and ", event.id);
     axios
       .post("/events/api/Rsvp/", {
-        userId: user.id,
-        eventId: eventId,
+        user_id: user.id,
+        event_id: event.id,
       })
       .then((data) => {
         updateState();
@@ -91,24 +83,28 @@ const Event = ({
         console.error("68 REQUEST FAILED", err);
       });
   };
-  console.log("LINE 94 EVENT>TSX", updateState);
-  //delete request for deleting an event in the database
+
+  ////delete event
+  //delete request for deleteting an event in the database
   const deleteEvent = () => {
-    console.log("LINE 81", user.id, " and ", eventId);
+    console.log("LINE 81", user.id, " and ", event.id);
     axios
       .delete("/events/api/event/delete", {
-        params: { id: eventId },
+        params: { id: event.id },
       })
       .then((data) => {
         console.log("87 LINE ", data);
-        updateState();
+        updateState(updateCounter);
       })
       .catch((err) => {
         console.error("91 REQUEST FAILED", err);
       });
   };
-
-  //console.log("LINE 78", user.id + "AND USER ROLE ", user.role_id);
+  const { role_id } = user;
+  console.log("Event Line 104", role_id);
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  useEffect(() => {}, [updateCounter]);
+  console.log("LINE 94 EVENT>TSX", updateState);
   return (
     <Card
       sx={{
@@ -125,48 +121,50 @@ const Event = ({
             aria-label="recipe"
             font-size="20px"
           >
-            {eventName[0]}
+            {event.eventName[0]}
           </Avatar>
         }
-        subheader={`Date of Event ${eventDate}`}
+        subheader={`Date of Event ${event.eventDate}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
         fontSize="20px"
-        title={eventName}
+        title={event.eventName}
       />
-      {thumbnail ? (
-        <CardMedia component="img" height="300" image={thumbnail} />
+      {event.thumbnail ? (
+        <CardMedia component="img" height="300" image={event.thumbnail} />
       ) : (
         ""
       )}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {`location ${location}`}
+          {`location ${event.location}`}
         </Typography>
       </CardContent>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {`${eventType}`}
+          {`${event.eventType}`}
         </Typography>
       </CardContent>
       <CardContent>
         {/* // setup map that returns all product info */}
-        <Typography paragraph> {description}</Typography>
+        <Typography paragraph> {event.description}</Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
         <Stack spacing={5} direction="row" id="product_card_stack">
           <ExpandMore sx={{ color: "green" }} expand={expanded}>
             <DeleteIcon sx={{ color: "green" }} onClick={deleteEvent} />
           </ExpandMore>
-          <ExpandMore sx={{ color: "green" }} expand={expanded}>
-            <Icon
-              baseClassName="fas"
-              className="fa-plus-circle"
-              fontSize="medium"
-              onClick={handRSVPosts}
-            >
-              +
-            </Icon>
-          </ExpandMore>
+          {role_id < 4 && (
+            <ExpandMore sx={{ color: "green" }} expand={expanded}>
+              <Icon
+                baseClassName="fas"
+                className="fa-plus-circle"
+                fontSize="large"
+                onClick={handRSVPosts}
+              >
+                +
+              </Icon>
+            </ExpandMore>
+          )}
           <ExpandMore
             sx={{ color: "green" }}
             expand={expanded}
@@ -185,45 +183,9 @@ const Event = ({
           </ExpandMore>
         </Stack>
       </CardActions>
-
       <Collapse in={expanded} timeout="auto" unmountOnExit></Collapse>
-
-      {/* <div>product: {product.id}</div> */}
     </Card>
-    // <div>
-    //   <div></div>
-    //   {thumbnail && (
-    //     <>
-    //       <div>
-    //         <h1 className="event-name">{eventName}</h1>
-    //         <div></div>
-    //       </div>
-    //       <section className="sect-event">
-    //         <img src={thumbnail} className="event-img" />
-    //         <div className="text-card">
-    //           <h3 className="event-desc">Description: {description}</h3>
-    //           <h3 className="event-category">Type of event: {eventType}</h3>
-    //           <h4 className="event-date">Date: {eventDate}</h4>
-    //           <h4 className="event-date">Location: {location}</h4>
-    //           {user.role_id > 3 ? (
-    //             <button onClick={deleteEvent}>Delete Event</button>
-    //           ) : (
-    //             <button onClick={handRSVPosts}>Click to Attend</button>
-    //           )}
-    //         </div>
-    //       </section>
-    //       <div>{/* <RSVPS /> */}</div>
-    //     </>
-    //   )}
-    // </div>
   );
 };
 
 export default Event;
-function handleEditClick(id: any) {
-  throw new Error("Function not implemented.");
-}
-
-function id(id: any) {
-  throw new Error("Function not implemented.");
-}
