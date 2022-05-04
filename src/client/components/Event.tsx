@@ -55,12 +55,13 @@ const Event = ({
   event,
   handleEditClick,
   inEditMode,
+  getAllEvents,
   updateState,
   updateCounter,
 }: any) => {
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
-  const { id, role_id } = user;
+  const { id } = user;
   const [expanded, setExpanded] = useState(false);
 
   // toggle bool
@@ -77,24 +78,24 @@ const Event = ({
       })
       .then((data) => {
         updateState();
-        console.log("66 LINE ", data);
+        //console.log("66 LINE ", data);
       })
       .catch((err) => {
         console.error("68 REQUEST FAILED", err);
       });
   };
 
-  ////delete event
   //delete request for deleteting an event in the database
   const deleteEvent = () => {
     console.log("LINE 81", user.id, " and ", event.id);
     axios
-      .delete("/events/api/event/delete", {
+      .delete("/events/api/event", {
         params: { id: event.id },
       })
       .then((data) => {
         console.log("87 LINE ", data);
-        updateState(updateCounter);
+        // updateState();
+        getAllEvents();
       })
       .catch((err) => {
         console.error("91 REQUEST FAILED", err);
@@ -104,12 +105,11 @@ const Event = ({
   console.log("Event Line 104", role_id);
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [updateCounter]);
-  console.log("LINE 94 EVENT>TSX", updateState);
+  //console.log("LINE 94 EVENT>TSX", updateState);
   return (
     <Card
       sx={{
         minWidth: 300,
-        minHeight: 200,
         borderRadius: "2.5rem",
         boxShadow: 24,
       }}
@@ -151,7 +151,9 @@ const Event = ({
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
         <Stack spacing={5} direction="row" id="product_card_stack">
           <ExpandMore sx={{ color: "green" }} expand={expanded}>
-            <DeleteIcon sx={{ color: "green" }} onClick={deleteEvent} />
+            {role_id > 3 && (
+              <DeleteIcon sx={{ color: "green" }} onClick={deleteEvent} />
+            )}
           </ExpandMore>
           {role_id < 4 && (
             <ExpandMore sx={{ color: "green" }} expand={expanded}>
@@ -165,13 +167,15 @@ const Event = ({
               </Icon>
             </ExpandMore>
           )}
-          <ExpandMore
-            sx={{ color: "green" }}
-            expand={expanded}
-            onClick={() => handleEditClick(event.id)}
-          >
-            <EditIcon sx={{ color: "green" }} />
-          </ExpandMore>
+          {role_id > 3 && (
+            <ExpandMore
+              sx={{ color: "green" }}
+              expand={expanded}
+              onClick={() => handleEditClick(event.id)}
+            >
+              <EditIcon sx={{ color: "green" }} />
+            </ExpandMore>
+          )}
           <ExpandMore
             sx={{ color: "green" }}
             expand={expanded}

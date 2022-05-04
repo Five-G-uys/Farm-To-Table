@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from "axios";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import RSVPLIST from "./RSVPLIST";
 import { UserContext } from "./App";
-import { Typography } from "@mui/material";
+import { CardContent, Typography } from "@mui/material";
 //import Profile ""
 
 const RSVPS = () => {
@@ -18,9 +18,9 @@ const RSVPS = () => {
   const getAllRSVPSEvents = () => {
     axios
       .get(`/events/api/user/rsvps/${id}`)
-      .then((data) => {
-        console.log("LINE 33 FrontEND request", data.data);
-        const newArr = data.data
+      .then(({ data }) => {
+        console.log("LINE 33 FrontEND request", data);
+        const newArr = data
           .map((eventObj: any) => {
             return eventObj.value;
           })
@@ -50,13 +50,13 @@ const RSVPS = () => {
         </Typography>
       )}
       {role_id >= 4 ? (
-        <h1>
+        <CardContent>
           Total RSVPS
           <br></br>
           <Typography variant="h4" component="h5">
             {rsvpsCount}
           </Typography>
-        </h1>
+        </CardContent>
       ) : (
         rsvps.length > 0 &&
         rsvps.map(
@@ -87,8 +87,6 @@ const RSVPS = () => {
                 description={description}
                 eventDate={eventDate}
                 key={id | role_id}
-                eventId={id}
-                userRole={role_id}
                 location={location}
                 getAllRSVPSEvents={getAllRSVPSEvents}
               />

@@ -31,7 +31,7 @@ import { updatedEvent } from "../apiCalls/eventCalls";
 const EventsPage = () => {
   const user: any = useContext(UserContext);
   const { role_id, id } = user;
-  console.log("THIS IS WORKING", user);
+  //console.log("THIS IS WORKING", user);
 
   const [updateCounter, setUpdateCounter] = useState(0);
   // cerate state var events array (set to result of get req)
@@ -39,12 +39,12 @@ const EventsPage = () => {
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
-  const [value, setValue] = React.useState("Farmers Market");
+  const [value, setValue] = React.useState("");
   // console.log("LINE 265 VALUE", value);
-  const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("LINE 267 VALUE", value);
-    setValue(event.target.value);
-  };
+  // const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   //console.log("LINE 267 VALUE", value);
+  //   setValue(event.target.value);
+  // };
 
   //get rsvps from DB
 
@@ -55,7 +55,7 @@ const EventsPage = () => {
     description: "",
     thumbnail: "",
     eventDate: "",
-    eventType: "Community Volunteering",
+    eventType: value,
     location: "",
   });
 
@@ -69,7 +69,7 @@ const EventsPage = () => {
 
   //to update state and cause a refresh?
   const updateState = () => {
-    setUpdateCounter(updateCounter + 1);
+    setUpdateCounter((updateCounter) => updateCounter + 1);
   };
 
   // Handlers for backdrop control
@@ -99,7 +99,7 @@ const EventsPage = () => {
   } = event;
 
   const postEvent = (e: any) => {
-    console.log("LINE 108");
+    //console.log("LINE 108");
     e.preventDefault();
     axios
       .post("/events/api/event", {
@@ -112,9 +112,9 @@ const EventsPage = () => {
           location: location,
         },
       })
-      .then((data) => {
+      .then(({ data }) => {
         console.log("LINE 107 saved!", data);
-        setUpdateCounter(updateCounter + 1);
+        setUpdateCounter((updateCounter) => updateCounter + 1);
         handleClose();
       })
       .catch((err) => console.error(err));
@@ -144,7 +144,7 @@ const EventsPage = () => {
       setUpdateCounter(updateCounter + 1);
       handleClose();
 
-      console.log("LINE 162 || PRODUCTS PAGE", result);
+      // console.log("LINE 162 || PRODUCTS PAGE", result);
     } catch (err) {
       console.error("LINE 164 || PRODUCTS PAGE ", err);
     }
@@ -156,7 +156,7 @@ const EventsPage = () => {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value, type, checked } = event.target;
-    console.log("NAME INSIDE OF HANDELTEXTINPUT", name, +" and " + value);
+    //console.log("NAME INSIDE OF HANDELTEXTINPUT", name, +" and " + value);
     setEvent((state) => {
       return {
         ...state,
@@ -246,7 +246,7 @@ const EventsPage = () => {
     getAllEvents();
   }, [updateCounter]);
 
-  console.log("line 244 in EventsPage", event);
+  //console.log("line 244 in EventsPage", event);
 
   return (
     <>
