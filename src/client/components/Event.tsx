@@ -89,7 +89,7 @@ const Event = ({
   const deleteEvent = () => {
     console.log("LINE 81", user.id, " and ", event.id);
     axios
-      .delete("/events/api/event", {
+      .delete(`/events/api/event/${event.id}`, {
         params: { id: event.id },
       })
       .then((data) => {

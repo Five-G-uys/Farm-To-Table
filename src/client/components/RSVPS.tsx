@@ -65,7 +65,6 @@ const RSVPS = () => {
             description: string;
             thumbnail: React.ImgHTMLAttributes<string>;
             eventType: string;
-            eventId: number;
             eventDate: string;
             id: number;
             location: string;
@@ -86,6 +85,7 @@ const RSVPS = () => {
                 thumbnail={thumbnail}
                 description={description}
                 eventDate={eventDate}
+                eventId={id}
                 key={id | role_id}
                 location={location}
                 getAllRSVPSEvents={getAllRSVPSEvents}

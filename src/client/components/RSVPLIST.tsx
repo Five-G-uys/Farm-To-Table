@@ -29,19 +29,6 @@ import Icon from "@mui/material/Icon";
 import dayjs from "dayjs";
 import green from "@material-ui/core/colors/green";
 
-// interface AppProps {
-//   eventName: string;
-//   description: string;
-//   thumbnail: React.ImgHTMLAttributes<string>;
-//   eventType: string;
-//   eventDate: string;
-//   eventId: number;
-//   userRole: number;
-//   location: string;
-//   getAllRSVPSEvents(): void;
-//   //getAllRSVPSEvents: () => void;
-// }
-
 const RSVPLIST = ({
   eventName,
   eventType,
@@ -50,8 +37,8 @@ const RSVPLIST = ({
   userRole,
   rsvpsCount,
   location,
-}: //getAllRSVPSEvents,
-any) => {
+  getAllRSVPSEvents,
+}: any) => {
   const user: any = useContext(UserContext);
   const { role_id, id } = user;
 
@@ -59,12 +46,12 @@ any) => {
   const deleteRsvpsEvent = () => {
     console.log("LINE 81", id, " and ", eventId);
     axios
-      .delete("/events/api/user/rsvps/delete", {
-        params: { id: 1, event_id: eventId },
+      .delete("/events/api/rsvps", {
+        params: { userId: id, eventId: eventId },
       })
       .then((data) => {
-        console.log("87 LINE ", data);
-        //getAllEvents();
+        console.log("52 LINE ", data);
+        getAllRSVPSEvents();
       })
       .catch((err) => {
         console.error("91 REQUEST FAILED", err);
