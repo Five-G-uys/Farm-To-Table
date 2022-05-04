@@ -16,11 +16,11 @@ const DietaryRestrictions = db.define('dietary_restrictions', {
   //   allowNull: false,
   //   references: { model: Farms, key: 'id' },
   // },
-  problematic_products_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: Products, key: 'id' },
-  },
+  // problematic_products_id: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: false,
+  //   references: { model: Products, key: 'id' },
+  // },
 });
 
 export default DietaryRestrictions;
