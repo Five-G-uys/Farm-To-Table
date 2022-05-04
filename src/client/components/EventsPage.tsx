@@ -407,20 +407,22 @@ const EventsPage = () => {
             }
           </Fade>
         </Modal>
-        <Fab
-          onClick={handleCreateForm}
-          size="small"
-          // color='secondary'
-          aria-label="add"
-          style={{ transform: "scale(2.5)", backgroundColor: "#80D55F" }}
-          sx={{
-            position: "fixed",
-            bottom: (theme) => theme.spacing(8),
-            right: (theme) => theme.spacing(8),
-          }}
-        >
-          <AddIcon style={{ color: "#FFFFFF" }} />
-        </Fab>
+        {role_id > 3 && (
+          <Fab
+            onClick={handleCreateForm}
+            size="small"
+            // color='secondary'
+            aria-label="add"
+            style={{ transform: "scale(2.5)", backgroundColor: "#80D55F" }}
+            sx={{
+              position: "fixed",
+              bottom: (theme) => theme.spacing(8),
+              right: (theme) => theme.spacing(8),
+            }}
+          >
+            <AddIcon style={{ color: "#FFFFFF" }} />
+          </Fab>
+        )}
       </div>
     </>
   );

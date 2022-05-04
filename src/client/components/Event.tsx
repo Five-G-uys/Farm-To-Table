@@ -60,7 +60,7 @@ const Event = ({
 }: any) => {
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
-
+  const { id, role_id } = user;
   const [expanded, setExpanded] = useState(false);
 
   // toggle bool
@@ -72,7 +72,7 @@ const Event = ({
     console.log("LINE 63", user.id, " and ", event.id);
     axios
       .post("/events/api/Rsvp/", {
-        user_id: user.id,
+        user_id: id,
         event_id: event.id,
       })
       .then((data) => {

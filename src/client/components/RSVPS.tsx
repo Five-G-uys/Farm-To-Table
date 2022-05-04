@@ -16,40 +16,23 @@ const RSVPS = () => {
   const [rsvpsCount, setRsvpsCount] = useState(0);
 
   const getAllRSVPSEvents = () => {
-    if (role_id < 4) {
-      axios
-        .get(`/events/api/user/rsvps/${id}`)
-        .then((data) => {
-          console.log("LINE 33 FrontEND request", data.data);
-          const newArr = data.data
-            .map((eventObj: any) => {
-              return eventObj.value;
-            })
-            .map((eventArr: any) => {
-              return eventArr[0];
-            });
-          setRsvpsCount((count: any) => count + newArr.length);
-        })
-        .catch((err) => {
-          console.log("LINE 48 FAILED", err);
-        });
-    }
-
-    if (role_id > 3) {
-      axios
-        .get("/events/api/rsvps")
-        .then((data) => {
-          console.log("LINE 55 FrontEND request", data.data);
-          const newArr = data.data;
-
-          setRsvps((state: any) => {
-            return { ...state, rsvpsCount: newArr.length };
+    axios
+      .get(`/events/api/user/rsvps/${id}`)
+      .then((data) => {
+        console.log("LINE 33 FrontEND request", data.data);
+        const newArr = data.data
+          .map((eventObj: any) => {
+            return eventObj.value;
+          })
+          .map((eventArr: any) => {
+            return eventArr[0];
           });
-        })
-        .catch((err) => {
-          console.log("LINE 15 FAILED", err);
-        });
-    }
+        setRsvps(newArr);
+        setRsvpsCount(newArr.length);
+      })
+      .catch((err) => {
+        console.log("LINE 48 FAILED", err);
+      });
   };
 
   console.log("LINE 75 ", rsvps + "and" + rsvpsCount + "number");
@@ -58,6 +41,7 @@ const RSVPS = () => {
   useEffect(() => {
     getAllRSVPSEvents();
   }, []);
+
   return (
     <div>
       {role_id < 4 && (
