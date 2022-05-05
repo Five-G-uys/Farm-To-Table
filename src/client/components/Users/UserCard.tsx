@@ -49,7 +49,7 @@ const UserCard = ({ user, handleEditClick }: any) => {
     setExpanded(!expanded);
   };
 
-  const { id, googleId, name, email, address, picture, role_id } = user;
+  const { id, googleId, name, email, address, picture, roleId } = user;
   // console.log('LINE 53 || USER CARD', id);
   return (
     <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>
@@ -59,14 +59,10 @@ const UserCard = ({ user, handleEditClick }: any) => {
             {name[0]}
           </Avatar>
         }
-        subheader={`User Role: ${role_id}`}
+        subheader={`User Role: ${roleId}`}
         title={name}
       />
-      <CardMedia
-        component='img'
-        height='194'
-        image={picture}
-      />
+      <CardMedia component='img' height='194' image={picture} />
       <CardContent>
         <Typography variant='body2' color='text.secondary'>
           {`Email: ${email}`}

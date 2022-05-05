@@ -47,10 +47,10 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-
 const Profile = () => {
   const user: any = useContext(UserContext);
-  const { id, googleId, name, email, address, picture, role_id, delivery_zone } = user;
+  const { id, googleId, name, email, address, picture, roleId, delivery_zone } =
+    user;
 
   const [expanded, setExpanded] = useState(false);
 
@@ -80,7 +80,7 @@ const Profile = () => {
       address: clickedUser.address,
       picture: clickedUser.picture,
       // farm_id: clickedUser.farm_id,
-      role_id: clickedUser.role_id,
+      roleId: clickedUser.roleId,
     });
     setInEditMode(true);
     setOpen(true);
@@ -96,7 +96,7 @@ const Profile = () => {
               {name[0]}
             </Avatar>
           }
-          subheader={`Role: ${role_id === 4 ? 'Admin' : 'User'}`}
+          subheader={`Role: ${roleId === 4 ? 'Admin' : 'User'}`}
           title={name}
         />
         <CardContent>

@@ -38,9 +38,9 @@
 
 //   const addSubscription = (id: number) => {
 //     SubscriptionEntries.create({
-//       user_id: req.params.id,
+//       userId: req.params.id,
 //       farm_id: 1,
-//       subscription_id: id,
+//       subscriptionId: id,
 //     })
 //       .then((data: any) => {
 //         // console.log('LINE 196 || SERVER ||', data.dataValues.id);
@@ -59,8 +59,8 @@
 //           };
 //           // console.log('LINE 218 || NEXTWEEK', nextWeek());
 //           Orders.create({
-//             // subscription_id: data.dataValues.subscription_id,
-//             subscription_entry_id: data.dataValues.id,
+//             // subscriptionId: data.dataValues.subscriptionId,
+//             subscriptionEntryId: data.dataValues.id,
 //             delivery_date: nextWeek(),
 //             farm_id: 1,
 //           })
@@ -82,8 +82,8 @@
 //       await addSubscription(2);
 //       res.status(201).send('Subscribed!');
 //     } else {
-//       const subscription_id = req.body.season === 'fall' ? 2 : 1;
-//       await addSubscription(subscription_id);
+//       const subscriptionId = req.body.season === 'fall' ? 2 : 1;
+//       await addSubscription(subscriptionId);
 //       res.status(201).send('Subscribed!');
 //     }
 //   } catch (err) {
@@ -95,14 +95,14 @@
 //   // console.log('LINE 238 || SERVER INDEX', req.params); // user id
 //   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
 //   // QUERY USER TABLE THEN JOIN
-//   SubscriptionEntries.findAll({ where: { user_id: req.params.id } })
+//   SubscriptionEntries.findAll({ where: { userId: req.params.id } })
 //     .then((data: Array<object>) => {
 //       const dataObj: Array<object> = [];
 //       console.log(
 //         'LINE 253',
 //         data.forEach((subscriptionEntry: any) => {
 //           console.log('LINE 255', subscriptionEntry.dataValues);
-//           if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
+//           if (subscriptionEntry.dataValues.userId === Number(req.params.id)) {
 //             dataObj.push(subscriptionEntry.dataValues.id);
 //           }
 //         })
@@ -110,14 +110,14 @@
 //       console.log(
 //         'LINE 261',
 //         dataObj.map((subscriptionEntryId: any) => {
-//           return { subscription_entry_id: subscriptionEntryId };
+//           return { subscriptionEntryId: subscriptionEntryId };
 //         })
 //       );
-//       // Orders.findAll({ where: { subscription_entry_id: req.params.id } })
+//       // Orders.findAll({ where: { subscriptionEntryId: req.params.id } })
 //       Orders.findAll({
 //         where: {
 //           [Op.or]: dataObj.map((subscriptionEntryId: any) => ({
-//             subscription_entry_id: subscriptionEntryId,
+//             subscriptionEntryId: subscriptionEntryId,
 //           })),
 //         },
 //       })
