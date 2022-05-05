@@ -89,22 +89,7 @@ export const syncModels = async (dropTables = false) => {
     await OrdersModel.belongsToMany(ProductsModel, {
       through: OrderContentsModel,
     });
-
-    //////////////////////////////////////////////////////////////////////
-
-    // await UsersModel.belongsToMany(SubscriptionsModel, {
-    //   through: SubscriptionEntriesModel,
-    // });
-    // await SubscriptionsModel.belongsToMany(UsersModel, {
-    //   through: SubscriptionEntriesModel,
-    // });
-
-    // OrdersModel.belongsToMany(SubscriptionsModel, {
-    //   through: SubscriptionEntriesModel,
-    // });
-    // SubscriptionsModel.belongsToMany(OrdersModel, {
-    //   through: SubscriptionEntriesModel,
-    // });
+    
   } catch (err) {
     console.error(err);
   }

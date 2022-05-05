@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { Router } = require('express');
-const weatherRouter = Router();
-const axios = require('axios');
+
+// Import Dependencies
+import { Router } from 'express';
+import axios from 'axios';
 require('dotenv').config();
 
+// Initialize Router
+const weatherRouter = Router();
+
+///////////////////////////////////////////////////////////////////////////////////////////// GET WEATHER FUNCTION
 const getCurrentWeather: any = (lat: any, lon: any) => {
   return axios
     .get(
@@ -14,6 +19,7 @@ const getCurrentWeather: any = (lat: any, lon: any) => {
     .catch((err: any) => console.error('error in weather api call: ', err));
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////// GET WEATHER ROUTE
 //sends location to weather api and responds with current weather
 weatherRouter.get('/weather/:lat/:lon', (req: any, res: any) => {
   const { lat, lon } = req.params;
@@ -27,4 +33,5 @@ weatherRouter.get('/weather/:lat/:lon', (req: any, res: any) => {
     });
 });
 
+// Export Router
 module.exports = weatherRouter;

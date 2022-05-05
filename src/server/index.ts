@@ -37,6 +37,7 @@ import {
 const authRouter = require('./routes/AuthRouter');
 const eventRouter = require('./routes/EventRouter');
 const weatherRouter = require('./routes/WeatherRouter');
+const userRouter = require('./routes/UserRouter')
 
 // const subscriptionRouter = require('./routes/SubscriptionsRouter')
 // const farmRouter = require('./routes/FarmRouter')
@@ -86,6 +87,7 @@ app.use('/events', eventRouter);
 // app.use('/subscriptions', subscriptionRouter);
 // app.use('/', farmRouter)
 app.use('/weather', weatherRouter);
+app.use('/users', userRouter);
 
 // Create a post request for /create-checkout-session
 app.post('/create-checkout-session', async (req, res) => {

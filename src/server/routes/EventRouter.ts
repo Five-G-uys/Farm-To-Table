@@ -2,19 +2,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { Router } from 'express';
-import { Events, RSVP, Users } from '../db/models';
 // Import Dependencies
+import { Router } from 'express';
 import express, { Express, Request, Response } from 'express';
-//import dotenv from "dotenv";
-require('dotenv').config();
-const path = require('path');
-const passport = require('passport');
-const session = require('express-session');
-const axios = require('axios');
 
+// Import Models
+import { Events, RSVP, Users } from '../db/models';
+
+// Set Up Router
 const eventRouter: Router = Router();
 
+///////////////////////////////////////////////////////////////////////////////////////////// CREATE EVENT ROUTE
 eventRouter.post('/api/event', (req, res) => {
   const { eventName, description, thumbnail, eventDate, eventType, location } =
     req.body.event;
@@ -38,7 +36,9 @@ eventRouter.post('/api/event', (req, res) => {
     });
 });
 
-//Events get request
+            // EVENT ROUTES
+
+///////////////////////////////////////////////////////////////////////////////////////////// READ ALL EVENTs ROUTE
 eventRouter.get('/api/event', (req, res) => {
   Events.findAll()
     .then((response: any) => {
@@ -51,7 +51,50 @@ eventRouter.get('/api/event', (req, res) => {
     });
 });
 
-//Get request for the Events with a certain type
+///////////////////////////////////////////////////////////////////////////////////////////// UPDATE ONE EVENT ROUTE
+eventRouter.patch(
+  '/api/event/update/:id',
+  async (req: Request, res: Response) => {
+    console.log('LINE 146 || UPDATE EVENT', req.body);
+
+    try {
+      // update product model with async query and assign the result of that promise to a variable to res.send back
+      const updatedEvent = await Events.update(req.body, {
+        where: { id: req.params.id },
+        returning: true,
+      });
+      console.log('LINE 155 || UPDATE EVENT', updatedEvent);
+
+      res.status(204).json(updatedEvent);
+    } catch (err) {
+      console.error('LINE 159 || UPDATE EVENTS', err);
+      res.status(500).json(err);
+    }
+  }
+);
+
+///////////////////////////////////////////////////////////////////////////////////////////// DELETE ONE EVENT ROUTE
+eventRouter.delete('/api/event/:id', (req: Request, res: Response) => {
+  // console.log("line 120", req.query);
+  // console.log("LINE 121", req.params);
+  Events.destroy({
+    where: req.params,
+  })
+    .then((data: any) => {
+      //console.log("125 deletion was successful!", data);
+      res.sendStatus(200);
+    })
+    .catch((err: any) => {
+      console.error('128 Deletion was not successful', err);
+      res.sendStatus(400);
+    });
+});
+
+
+
+            // RSVP ROUTES
+
+///////////////////////////////////////////////////////////////////////////////////////////// CREATE RSVP ROUTE
 eventRouter.post('/api/Rsvp/', (req: Request, res: Response) => {
   //console.log("Line 170", "user ID", req.body);
   //console.log("Line 171", "Event Id", req.body.eventId);
@@ -68,7 +111,7 @@ eventRouter.post('/api/Rsvp/', (req: Request, res: Response) => {
     });
 });
 
-//Get request For the RSVP
+///////////////////////////////////////////////////////////////////////////////////////////// READ USER RSVPs ROUTE
 eventRouter.get('/api/user/rsvps/:userId', (req: Request, res: Response) => {
   RSVP.findAll({
     where: { userId: req.params.userId },
@@ -95,43 +138,7 @@ eventRouter.get('/api/user/rsvps/:userId', (req: Request, res: Response) => {
     });
 });
 
-// //delete request for deleting an event in the DB
-// eventRouter.delete("/api/rsvp", (req: Request, res: Response) => {
-//   console.log("line 210", req.query);
-//   //first delete the rsvps associated with a given event_id
-//   RSVP.destroy({
-//     where: { eventId: req.query.id },
-//   }).then((data: any) => {
-//     //then delete the event with that id.
-//     Events.destroy({ where: { id: req.query.id } })
-//       .then((data: any) => {
-//         //console.log("deletion was successful!", data);
-//         res.status(201).send();
-//       })
-//       .catch((err: any) => {
-//         console.error("Deletion was not successful", err);
-//       });
-//   });
-// });
-
-eventRouter.delete('/api/event/:id', (req: Request, res: Response) => {
-  // console.log("line 120", req.query);
-  // console.log("LINE 121", req.params);
-
-  Events.destroy({
-    where: req.params,
-  })
-    .then((data: any) => {
-      //console.log("125 deletion was successful!", data);
-      res.sendStatus(200);
-    })
-    .catch((err: any) => {
-      console.error('128 Deletion was not successful', err);
-      res.sendStatus(400);
-    });
-});
-
-//Get all from RSVP table
+///////////////////////////////////////////////////////////////////////////////////////////// READ ALL RSVPs ROUTE
 eventRouter.get('/api/rsvps', (req: Request, res: Response) => {
   RSVP.findAll()
     .then((data: any) => {
@@ -144,7 +151,7 @@ eventRouter.get('/api/rsvps', (req: Request, res: Response) => {
     });
 });
 
-//Get all from RSVP table
+///////////////////////////////////////////////////////////////////////////////////////////// DELETE ONE RSVP ROUTE
 eventRouter.delete('/api/rsvps', (req: Request, res: Response) => {
   console.log('line 149', req.query);
   //console.log("LINE 150", req.params);
@@ -161,25 +168,5 @@ eventRouter.delete('/api/rsvps', (req: Request, res: Response) => {
     });
 });
 
-///////////////////////////////////////////////////////////////////////////////////////////// POST EVENT ROUTE
-eventRouter.patch(
-  '/api/event/update/:id',
-  async (req: Request, res: Response) => {
-    console.log('LINE 146 || UPDATE EVENT', req.body);
-
-    try {
-      // update product model with async query and assign the result of that promise to a variable to res.send back
-      const updatedEvent = await Events.update(req.body, {
-        where: { id: req.params.id },
-        returning: true,
-      });
-      console.log('LINE 155 || UPDATE EVENT', updatedEvent);
-
-      res.status(204).json(updatedEvent);
-    } catch (err) {
-      console.error('LINE 159 || UPDATE EVENTS', err);
-      res.status(500).json(err);
-    }
-  }
-);
+// Export Router
 module.exports = eventRouter;
