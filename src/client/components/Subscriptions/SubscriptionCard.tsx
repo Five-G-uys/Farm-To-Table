@@ -55,7 +55,7 @@ const SubscriptionCard = ({
   // const handleDeleteSubscription = () => {
   //   axios
   //     .delete(`/api/subscriptions/delete`, {
-  //       params: { subscription_id: subscription_id },
+  //       params: { subscriptionId: subscriptionId },
   //     })
   //     .then((data: any) => {
   //       console.log('Subscription DELETE Success!', data);

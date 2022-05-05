@@ -9,7 +9,7 @@ import SubscriptionsAdmin from './SubscriptionsAdmin';
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import Confirmation from '../Confirmation'
+import Confirmation from '../Confirmation';
 
 import { UserContext } from '../App';
 import { updateSubscription, deleteSubscription } from './subscriptionCalls';
@@ -181,7 +181,6 @@ const SubscriptionsPage = () => {
     getAllSubscriptions();
   }, [updateCounter]);
 
-  
   //SUBSCRIPTION CREATE
   const handleSubscribed = () => {
     // Insert Stripe Functionality Here
@@ -203,12 +202,12 @@ const SubscriptionsPage = () => {
     }
   };
 
-  const handleEditClick = (subscription_id: any) => {
-    // console.log('LINE 221 || SUBSCRIPTIONS PAGE CLICKED', subscription_id);
+  const handleEditClick = (subscriptionId: any) => {
+    // console.log('LINE 221 || SUBSCRIPTIONS PAGE CLICKED', subscriptionId);
 
     const clickedProduct: any = subscriptions.find(
       // find mutates original array values
-      (sub: any) => sub.id === subscription_id
+      (sub: any) => sub.id === subscriptionId
     );
     clickedProduct.thumbnail = clickedProduct.thumbnail
       ? clickedProduct.thumbnail
@@ -218,7 +217,7 @@ const SubscriptionsPage = () => {
     // delete clickedProduct.id;
 
     setSubscription({
-      id: subscription_id,
+      id: subscriptionId,
       season: clickedProduct.season,
       year: clickedProduct.year,
       flat_price: clickedProduct.flat_price,

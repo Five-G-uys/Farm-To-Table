@@ -45,20 +45,18 @@ const Subscriptions = db.define('subscriptions', {
   //   allowNull: true,
   //   references: { model: Farms, key: 'id' },
   // },
- // thumbnail: { type: DataTypes.STRING, unique: false },
+  // thumbnail: { type: DataTypes.STRING, unique: false },
 });
 
-Subscriptions.hasMany(SubscriptionEntries, {
-  as: 'subscription_entries',
-  foreignKey: 'subscription_id',
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
-});
+// Subscriptions.hasMany(SubscriptionEntries, {
+//   as: 'subscriptionEntries',
+//   foreignKey: 'subscriptionId',
+//   onDelete: 'CASCADE',
+//   onUpdate: 'CASCADE',
+// });
 
-SubscriptionEntries.belongsTo(Subscriptions, {
-  foreignKey: 'subscription_id',
-});
-
-
+// SubscriptionEntries.belongsTo(Subscriptions, {
+//   foreignKey: 'subscriptionId',
+// });
 
 export default Subscriptions;
