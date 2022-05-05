@@ -17,7 +17,7 @@ const Orders = db.define('orders', {
   //   allowNull: false,
   //   references: { model: Farms, key: 'id' },
   // },
-  subscription_entry_id: {
+  subscriptionEntryId: {
     type: DataTypes.INTEGER,
     unique: false,
     allowNull: false,

@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'user_id' | 'subscription_id' 
+  id: 'id' | 'userId' | 'subscriptionId';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -22,30 +22,29 @@ interface Column {
 const columns: readonly Column[] = [
   { id: 'id', label: 'ID', minWidth: 170 },
   {
-    id: 'subscription_id',
+    id: 'subscriptionId',
     label: 'Subscription ID',
     minWidth: 170,
     align: 'right',
   },
-  
 ];
-
 
 const SubscriptionEntriesRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [rows, setRows] = useState([])
+  const [rows, setRows] = useState([]);
 
   const getSubscriptionEntries = () => {
-    axios.get("/records/subscriptionEntries")
+    axios
+      .get('/records/subscriptionEntries')
       .then((data) => {
         // console.log(data.data);
-        setRows(data.data)
+        setRows(data.data);
       })
       .catch((error) => {
-        console.log("failed request", error);
-      })
-  }
+        console.log('failed request', error);
+      });
+  };
 
   // const handleDelete = () => {
   //   axios.delete("/api/orders/delete")
@@ -54,7 +53,7 @@ const SubscriptionEntriesRecords = () => {
 
   useEffect(() => {
     getSubscriptionEntries();
-  }, [])
+  }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -68,7 +67,7 @@ const SubscriptionEntriesRecords = () => {
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader aria-label='sticky table'>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -86,7 +85,7 @@ const SubscriptionEntriesRecords = () => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
@@ -95,24 +94,22 @@ const SubscriptionEntriesRecords = () => {
                           ? column.format(value)
                           : value}
                       </TableCell>
-                      
                     );
                   })}
                   <TableCell>
                     <EditIcon onClick={} />
                   </TableCell>
                   <TableCell>
-                    <DeleteIcon onClick={() => console.log(rows)}/>
+                    <DeleteIcon onClick={() => console.log(rows)} />
                   </TableCell>
                 </TableRow>
-
               ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
-        component="div"
+        component='div'
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -121,6 +118,6 @@ const SubscriptionEntriesRecords = () => {
       />
     </Paper>
   );
-}
+};
 
 export default SubscriptionEntriesRecords;

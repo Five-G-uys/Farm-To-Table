@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'name' | 'description' | 'subscription_id' 
+  id: 'id' | 'name' | 'description' | 'subscriptionId';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -26,33 +26,32 @@ const columns: readonly Column[] = [
     id: 'description',
     label: 'Description',
     minWidth: 170,
-    align: 'right'
+    align: 'right',
   },
   {
-    id: 'subscription_id',
+    id: 'subscriptionId',
     label: 'Subscription ID',
     minWidth: 170,
     align: 'right',
   },
-  
 ];
-
 
 const ProductsRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [rows, setRows] = useState([])
+  const [rows, setRows] = useState([]);
 
   const getProducts = () => {
-    axios.get("/records/products")
+    axios
+      .get('/records/products')
       .then((data) => {
         // console.log(data.data);
-        setRows(data.data)
+        setRows(data.data);
       })
       .catch((error) => {
-        console.log("failed request", error);
-      })
-  }
+        console.log('failed request', error);
+      });
+  };
 
   // const handleDelete = () => {
   //   axios.delete("/api/orders/delete")
@@ -61,7 +60,7 @@ const ProductsRecords = () => {
 
   useEffect(() => {
     getProducts();
-  }, [])
+  }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -75,7 +74,7 @@ const ProductsRecords = () => {
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader aria-label='sticky table'>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -93,7 +92,7 @@ const ProductsRecords = () => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
@@ -102,24 +101,22 @@ const ProductsRecords = () => {
                           ? column.format(value)
                           : value}
                       </TableCell>
-                      
                     );
                   })}
                   <TableCell>
                     <EditIcon onClick={} />
                   </TableCell>
                   <TableCell>
-                    <DeleteIcon onClick={() => console.log(rows)}/>
+                    <DeleteIcon onClick={() => console.log(rows)} />
                   </TableCell>
                 </TableRow>
-
               ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
-        component="div"
+        component='div'
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -128,6 +125,6 @@ const ProductsRecords = () => {
       />
     </Paper>
   );
-}
+};
 
 export default ProductsRecords;

@@ -41,9 +41,9 @@ const UserRecordsPage = () => {
     email: '',
     address: '',
     picture: '',
-    role_id: 0,
+    roleId: 0,
   });
-  
+
   // state var for backdrop
   const [open, setOpen] = useState(false);
 
@@ -63,7 +63,7 @@ const UserRecordsPage = () => {
       email: '',
       address: '',
       picture: '',
-      role_id: 0,
+      roleId: 0,
     });
   };
   // const handleToggle = () => {
@@ -94,15 +94,7 @@ const UserRecordsPage = () => {
   };
 
   // Destructure product state obj
-  const {
-    id,
-    googleId,
-    name,
-    email,
-    address,
-    picture,
-    role_id
-  } = user;
+  const { id, googleId, name, email, address, picture, roleId } = user;
 
   // create post req to send user form data
   const postUser = (e: any) => {
@@ -115,7 +107,7 @@ const UserRecordsPage = () => {
           email: email,
           address: address,
           picture: picture,
-          role_id: Number(role_id)
+          roleId: Number(roleId),
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -128,22 +120,18 @@ const UserRecordsPage = () => {
       .catch((err) => console.error(err));
   };
 
-
-// export function to product pages component
-const updateUser = async (userId: number, updatedUser: any) => {
-  try {
-    // axios always has data property available on response obj so can destructure here
-    const { data } = await axios.patch(
-      `/api/user/${userId}`,
-      updateUser
-    );
-    console.log('LINE 117 || USER CALLS', data);
-    return data;
-  } catch (err) {
-    console.error('LINE 120 || USER CALLS', err);
-    return { error: err };
-  }
-};
+  // export function to product pages component
+  const updateUser = async (userId: number, updatedUser: any) => {
+    try {
+      // axios always has data property available on response obj so can destructure here
+      const { data } = await axios.patch(`/api/user/${userId}`, updateUser);
+      console.log('LINE 117 || USER CALLS', data);
+      return data;
+    } catch (err) {
+      console.error('LINE 120 || USER CALLS', err);
+      return { error: err };
+    }
+  };
 
   // create function to handle update form submission
   const handleUserUpdateSubmit = async (e: any) => {
@@ -205,7 +193,7 @@ const updateUser = async (userId: number, updatedUser: any) => {
       email: clickedUser.email,
       address: clickedUser.address,
       picture: clickedUser.picture,
-      role_id: clickedUser.role_id,
+      roleId: clickedUser.roleId,
     });
     setInEditMode(true);
     setOpen(true);
@@ -260,9 +248,7 @@ const updateUser = async (userId: number, updatedUser: any) => {
                   }}
                 >
                   <form
-                    onSubmit={
-                      inEditMode ? handleUserUpdateSubmit : postUser
-                    }
+                    onSubmit={inEditMode ? handleUserUpdateSubmit : postUser}
                   >
                     <br></br>
                     {picture && <img width={300} src={picture} />}
@@ -328,8 +314,8 @@ const updateUser = async (userId: number, updatedUser: any) => {
                       fullWidth
                       id='filled-basic'
                       variant='filled'
-                      value={role_id}
-                      name='role_id'
+                      value={roleId}
+                      name='roleId'
                       label='Role Id'
                       // id='fullWidth'
                       placeholder='1 for User / 3 for Employee / 4 for Admin'

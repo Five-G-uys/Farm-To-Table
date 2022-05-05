@@ -23,14 +23,14 @@ export const updateSubscription = async (
 // export function to product pages component
 export const deleteSubscription = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  subscription_id: any
+  subscriptionId: any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   // deletedSubscription: any
 ) => {
   try {
     // axios always has data property available on response obj so can destructure here
     const { data } = await axios.delete(`/api/subscriptions/delete/`, {
-      params: { subscription_id: subscription_id },
+      params: { subscriptionId: subscriptionId },
     });
     console.log('LINE 14 || Subscription CALLS', data);
     return data;

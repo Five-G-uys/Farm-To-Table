@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 // import FarmsModel from "./Farms";
-import DeliveryZonesModel from "./DeliveryZones";
-import EventsModel from "./Events";
-import RolesModel from "./Roles";
-import VendorsModel from "./Vendors";
-import ProductsModel from "./Products";
-import UsersModel from "./Users";
-import SubscriptionsModel from "./Subscriptions";
-import SubscriptionEntriesModel from "./SubscriptionEntries";
-import DietaryRestrictionsModel from "./DietaryRestrictions";
-import OrdersModel from "./Orders";
-import RSVPModel from "./Rsvps";
+import RolesModel from './Roles';
+import UsersModel from './Users';
+import DeliveryZonesModel from './DeliveryZones';
+import EventsModel from './Events';
+import VendorsModel from './Vendors';
+import ProductsModel from './Products';
+import SubscriptionsModel from './Subscriptions';
+import SubscriptionEntriesModel from './SubscriptionEntries';
+import DietaryRestrictionsModel from './DietaryRestrictions';
+import OrdersModel from './Orders';
+import RSVPModel from './Rsvps';
+import OrderContentsModel from './OrderContents';
 // const { dummyFarm } = require('./dummyUser');
 // const { dummyRole } = require('./dummyUser');
 // const { dummyUser } = require('./dummyUser');
@@ -18,40 +19,92 @@ import RSVPModel from "./Rsvps";
 export const syncModels = async (dropTables = false) => {
   const options = { force: dropTables };
   try {
-    await UsersModel.sync(options);
     await EventsModel.sync(options);
     await DeliveryZonesModel.sync(options);
     await RolesModel.sync(options);
+    await UsersModel.sync(options);
     await VendorsModel.sync(options);
     await SubscriptionsModel.sync(options);
     await ProductsModel.sync(options);
     await DietaryRestrictionsModel.sync(options);
     await SubscriptionEntriesModel.sync(options);
     await OrdersModel.sync(options);
+    await OrderContentsModel.sync(options);
     await RSVPModel.sync(options);
-    console.log("models synced!");
+    console.log('models synced!');
+
     await UsersModel.belongsToMany(EventsModel, { through: RSVPModel });
     await EventsModel.belongsToMany(UsersModel, { through: RSVPModel });
 
+    await ProductsModel.belongsTo(SubscriptionsModel);
 
-    // await UsersModel.hasOne(RolesModel, {
-    //   onDelete: 'CASCADE',
-    //   onUpdate: 'CASCADE'
-    // })
-    // await RolesModel.hasMany(UsersModel, {
-    //   onDelete: 'CASCADE',
-    //   onUpdate: 'CASCADE'
-    // })
+    //////////////////////////////////////////////////////////////////////
+    await RolesModel.hasMany(UsersModel, {
+      foreignKey: 'roleId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    await UsersModel.belongsTo(RolesModel, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    //////////////////////////////////////////////////////////////////////
 
-    // await UsersModel.belongsToMany(SubscriptionsModel, { through: SubscriptionEntriesModel });
-    // await SubscriptionsModel.belongsToMany(UsersModel, { through: SubscriptionEntriesModel });
+    await SubscriptionsModel.hasMany(SubscriptionEntriesModel, {
+      foreignKey: 'subscriptionId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    await SubscriptionEntriesModel.belongsTo(SubscriptionsModel, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    //////////////////////////////////////////////////////////////////////
 
-    // OrdersModel.belongsToMany(SubscriptionsModel, { through: SubscriptionEntriesModel });
-    // SubscriptionsModel.belongsToMany(OrdersModel, { through: SubscriptionEntriesModel });
-  
+    await SubscriptionEntriesModel.hasMany(OrdersModel, {
+      foreignKey: 'subscriptionEntryId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    await OrdersModel.belongsTo(SubscriptionEntriesModel, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    //////////////////////////////////////////////////////////////////////
+    await UsersModel.hasMany(SubscriptionEntriesModel, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    await SubscriptionEntriesModel.belongsTo(UsersModel, {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
 
+    //////////////////////////////////////////////////////////////////////
 
+    await ProductsModel.belongsToMany(OrdersModel, {
+      through: OrderContentsModel,
+    });
+    await OrdersModel.belongsToMany(ProductsModel, {
+      through: OrderContentsModel,
+    });
 
+    //////////////////////////////////////////////////////////////////////
+
+    // await UsersModel.belongsToMany(SubscriptionsModel, {
+    //   through: SubscriptionEntriesModel,
+    // });
+    // await SubscriptionsModel.belongsToMany(UsersModel, {
+    //   through: SubscriptionEntriesModel,
+    // });
+
+    // OrdersModel.belongsToMany(SubscriptionsModel, {
+    //   through: SubscriptionEntriesModel,
+    // });
+    // SubscriptionsModel.belongsToMany(OrdersModel, {
+    //   through: SubscriptionEntriesModel,
+    // });
   } catch (err) {
     console.error(err);
   }
