@@ -40,42 +40,36 @@ const EventCard = ({
   //console.log("line 32", allEvents);
   const classes = useStyles();
   return (
-    <div className="events">
-      <nav className="nav">
-        <h1 className="nav-event">Spring: events for the month of May</h1>
-      </nav>
-      <br></br>
-      <Grid
-        container
-        spacing={12}
-        className={classes.gridContainer}
-        // justify='center'
-      >
-        {Array.isArray(allEvents) &&
-          allEvents.map((event: any) => {
-            return (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                lg={3}
-                xl={3}
-                key={event.eventName + event.id}
-              >
-                <Event
-                  event={event}
-                  updateCounter={updateCounter}
-                  handleEditClick={handleEditClick}
-                  inEditMode={inEditMode}
-                  updateState={updateState}
-                  getAllEvents={getAllEvents}
-                />
-              </Grid>
-            );
-          })}
-      </Grid>
-    </div>
+    <Grid
+      container
+      spacing={12}
+      className={classes.gridContainer}
+      // justify='center'
+    >
+      {Array.isArray(allEvents) &&
+        allEvents.map((event: any) => {
+          return (
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              xl={3}
+              key={event.eventName + event.id}
+            >
+              <Event
+                event={event}
+                updateCounter={updateCounter}
+                handleEditClick={handleEditClick}
+                inEditMode={inEditMode}
+                updateState={updateState}
+                getAllEvents={getAllEvents}
+              />
+            </Grid>
+          );
+        })}
+    </Grid>
   );
 };
 
