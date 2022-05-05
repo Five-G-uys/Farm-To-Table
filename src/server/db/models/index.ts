@@ -27,17 +27,20 @@ export const syncModels = async (dropTables = false) => {
     await OrdersModel.sync(options);
     await RSVPModel.sync(options);
     console.log('models synced!');
+
+    await RolesModel.hasMany(UsersModel, {
+      foreignKey: 'roleId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE,',
+    });
+    await UsersModel.belongsTo(RolesModel, {
+      foreignKey: 'roleId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE,',
+    });
+
     await UsersModel.belongsToMany(EventsModel, { through: RSVPModel });
     await EventsModel.belongsToMany(UsersModel, { through: RSVPModel });
-
-    await UsersModel.hasOne(RolesModel, {
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
-    await RolesModel.hasMany(UsersModel, {
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
 
     await UsersModel.belongsToMany(SubscriptionsModel, {
       through: SubscriptionEntriesModel,
@@ -46,10 +49,10 @@ export const syncModels = async (dropTables = false) => {
       through: SubscriptionEntriesModel,
     });
 
-    OrdersModel.belongsToMany(SubscriptionsModel, {
+    await OrdersModel.belongsToMany(SubscriptionsModel, {
       through: SubscriptionEntriesModel,
     });
-    SubscriptionsModel.belongsToMany(OrdersModel, {
+    await SubscriptionsModel.belongsToMany(OrdersModel, {
       through: SubscriptionEntriesModel,
     });
   } catch (err) {

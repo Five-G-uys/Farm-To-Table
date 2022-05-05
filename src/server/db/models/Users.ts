@@ -53,15 +53,15 @@ const Users = db.define(
     //   type: DataTypes.BOOLEAN,
     //   defaultValue: false,
     // },
-    // role_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   references: {
-    //     model: Roles,
-    //     key: 'id',
-    //   },
-    //   defaultValue: 1,
-    // },
+    roleId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Roles,
+        key: 'id',
+      },
+      defaultValue: 1,
+    },
   },
   { freezeTableName: true, tableName: 'user' }
 );
