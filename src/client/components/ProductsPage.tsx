@@ -44,7 +44,7 @@ const ProductsPage = () => {
     description: '',
     plant_date: '',
     harvest_date: '',
-    subscription_id: '',
+    subscriptionId: '',
   });
   // state var for backdrop
   const [open, setOpen] = useState(false);
@@ -65,7 +65,7 @@ const ProductsPage = () => {
       description: '',
       plant_date: '',
       harvest_date: '',
-      subscription_id: '',
+      subscriptionId: '',
     });
   };
   // const handleToggle = () => {
@@ -102,7 +102,7 @@ const ProductsPage = () => {
     description,
     plant_date,
     harvest_date,
-    subscription_id,
+    subscriptionId,
   } = product;
 
   // create post req to send product form data
@@ -117,7 +117,7 @@ const ProductsPage = () => {
           img_url: img_url,
           plant_date: plant_date,
           harvest_date: harvest_date,
-          subscription_id: Number(subscription_id),
+          subscriptionId: Number(subscriptionId),
         },
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -175,7 +175,7 @@ const ProductsPage = () => {
         folder: name,
         // WE NEED TO CONSIDER ADDING A 2 DIGIT YEAR NUMBER AT THE END OF EACH SEASON TO IDENTIFY
         // AND ACCESS PHOTOS MORE EASILY
-        tags: [subscription_id],
+        tags: [subscriptionId],
       },
       (error: any, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
@@ -230,12 +230,11 @@ const ProductsPage = () => {
       description: clickedProduct.description,
       plant_date: clickedProduct.plant_date,
       harvest_date: clickedProduct.harvest_date,
-      subscription_id: clickedProduct.subscription_id,
+      subscriptionId: clickedProduct.subscriptionId,
     });
     setInEditMode(true);
     setOpen(true);
   };
-
 
   useEffect((): void => {
     getAllProducts();
@@ -365,8 +364,8 @@ const ProductsPage = () => {
                       fullWidth
                       id='filled-basic'
                       variant='filled'
-                      value={subscription_id}
-                      name='subscription_id'
+                      value={subscriptionId}
+                      name='subscriptionId'
                       label='Season'
                       // id='fullWidth'
                       placeholder='Season'

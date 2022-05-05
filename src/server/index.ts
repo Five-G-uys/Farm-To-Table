@@ -161,7 +161,7 @@ app.post('/api/product', (req: Request, res: Response) => {
     description,
     plant_date,
     harvest_date,
-    subscription_id,
+    subscriptionId,
   } = req.body.product;
 
   console.log('162 Request object postEvent', req.body);
@@ -171,7 +171,7 @@ app.post('/api/product', (req: Request, res: Response) => {
     img_url,
     plant_date,
     harvest_date,
-    subscription_id,
+    subscriptionId,
   })
     .then((data: any) => {
       console.log('LINE 187 || Product Post Request', data);
@@ -224,23 +224,23 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
   console.log('LINE 184 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
-  SubscriptionEntries.findAll({ where: { user_id: Number(req.params.id) } })
+  SubscriptionEntries.findAll({ where: { userId: Number(req.params.id) } })
     .then((data: Array<object>) => {
       const dataObj: Array<object> = [];
       data.forEach((subscriptionEntry: any) => {
         // console.log('LINE 230', subscriptionEntry.dataValues);
-        if (subscriptionEntry.dataValues.user_id === Number(req.params.id)) {
+        if (subscriptionEntry.dataValues.userId === Number(req.params.id)) {
           dataObj.push(subscriptionEntry.dataValues.id);
         }
       });
       dataObj.map((subscriptionEntryId: any) => {
-        return { subscription_entry_id: subscriptionEntryId };
+        return { subscriptionEntryId: subscriptionEntryId };
       });
-      // Orders.findAll({ where: { subscription_entry_id: req.params.id } })
+      // Orders.findAll({ where: { subscriptionEntryId: req.params.id } })
       Orders.findAll({
         where: {
           [Op.or]: dataObj.map((subscriptionEntryId: any) => ({
-            subscription_entry_id: subscriptionEntryId,
+            subscriptionEntryId: subscriptionEntryId,
           })),
         },
       })
@@ -290,8 +290,8 @@ app.post(
       );
       SubscriptionEntries.create({
         // CHANGED REQ.PARMS.ID TO NUMBER, USED TO BE STRING
-        user_id: Number(req.params.id),
-        subscription_id: id,
+        userId: Number(req.params.id),
+        subscriptionId: id,
       })
         .then((data: any) => {
           console.log('LINE 301 || SERVER ||', data.dataValues.id);
@@ -310,8 +310,8 @@ app.post(
             };
             // console.log('LINE 218 || NEXTWEEK', nextWeek());
             Orders.create({
-              // subscription_id: data.dataValues.subscription_id,
-              subscription_entry_id: data.dataValues.id,
+              // subscriptionId: data.dataValues.subscriptionId,
+              subscriptionEntryId: data.dataValues.id,
               delivery_date: nextWeek(),
             })
               .then((data: any) => {
@@ -332,8 +332,8 @@ app.post(
         await addSubscription(2);
         res.status(201).send('Subscribed!');
       } else {
-        const subscription_id = req.body.season === 'fall' ? 2 : 1;
-        await addSubscription(subscription_id);
+        const subscriptionId = req.body.season === 'fall' ? 2 : 1;
+        await addSubscription(subscriptionId);
         res.status(201).send('Subscribed!');
       }
     } catch (err) {
@@ -406,12 +406,12 @@ app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
 app.delete('/api/subscriptions/delete', (req: Request, res: Response) => {
   SubscriptionEntries.destroy({
     where: {
-      subscription_id: req.query.subscription_id,
+      subscriptionId: req.query.subscriptionId,
     },
     return: true,
   })
     .then((data: any) => {
-      Subscriptions.destroy({ where: { id: req.query.subscription_id } })
+      Subscriptions.destroy({ where: { id: req.query.subscriptionId } })
         .then((data: any) => {
           res.sendStatus(200);
         })
@@ -502,7 +502,7 @@ app.get('/records/orders', (req: Request, res: Response) => {
 // app.delete('/api/orders/delete', (req: Request, res: Response) => {
 //   Orders.destroy({
 //     where: {
-//       id: req.query.subscription_id,
+//       id: req.query.subscriptionId,
 //     },
 //     return: true,
 //   })

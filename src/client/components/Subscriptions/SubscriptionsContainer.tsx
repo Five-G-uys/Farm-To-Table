@@ -80,7 +80,7 @@ export default SubscriptionsContainer;
         start_date={sub.start_date}
         end_date={sub.end_date}
         key={sub.id}
-        subscription_id={sub.id}
+        subscriptionId={sub.id}
       />
     );
   }

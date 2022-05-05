@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../database';
 // import Farms from './Farms';
 import Roles from './Roles';
-import DeliveryZones from './DeliveryZones';
+// import DeliveryZones from './DeliveryZones';
 
 const Users = db.define(
   'user',

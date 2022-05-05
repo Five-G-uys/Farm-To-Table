@@ -56,7 +56,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
     { name: 'About Us', path: '/about-us-page' },
   ];
 
-  if (user.role_id === 4) {
+  if (user.roleId === 4) {
     const settings = [
       { name: 'Orders', path: '/orders-page' },
       { name: 'Records', path: '/records' },
@@ -67,14 +67,14 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
       { name: 'Profile', path: '/profile-page' },
       // { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
     ];
-  } else if (user.role_id === 3) {
+  } else if (user.roleId === 3) {
     const settings = [
       { name: 'Packing List', path: '/packing-lists' },
       { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Profile', path: '/profile-page' },
       // { name: 'Logout', path: '/auth/api/logout' },
     ];
-  } else if (user.role_id === 2 || user.role_id === 1) {
+  } else if (user.roleId === 2 || user.roleId === 1) {
     const settings = [
       { name: 'Orders', path: '/orders-page' },
       { name: 'Profile', path: '/profile-page' },
