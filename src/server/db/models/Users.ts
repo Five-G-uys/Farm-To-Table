@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../database';
 // import Farms from './Farms';
 import Roles from './Roles';
-import DeliveryZones from './DeliveryZones'
+import DeliveryZones from './DeliveryZones';
 
 const Users = db.define(
   'user',
@@ -53,15 +53,15 @@ const Users = db.define(
     //   type: DataTypes.BOOLEAN,
     //   defaultValue: false,
     // },
-    role_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Roles,
-        key: 'id',
-      },
-      defaultValue: 1,
-    },
+    // role_id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   references: {
+    //     model: Roles,
+    //     key: 'id',
+    //   },
+    //   defaultValue: 1,
+    // },
   },
   { freezeTableName: true, tableName: 'user' }
 );

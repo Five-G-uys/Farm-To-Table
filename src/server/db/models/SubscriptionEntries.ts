@@ -12,25 +12,6 @@ const SubscriptionEntries = db.define('subscription_entries', {
     allowNull: false,
     autoIncrement: true,
   },
-  // farm_id: {
-  //   type: DataTypes.INTEGER,
-  //   unique: false,
-  //   allowNull: false,
-  //   references: { model: Farms, key: 'id' },
-  //   defaultValue: 1,
-  // },
-  user_id: {
-    type: DataTypes.INTEGER,
-    unique: false,
-    allowNull: false,
-    references: { model: Users, key: 'id' },
-  },
-  subscription_id: {
-    type: DataTypes.INTEGER,
-    unique: false,
-    allowNull: false,
-    references: { model: Subscriptions, key: 'id' },
-  },
 });
 
 export default SubscriptionEntries;
