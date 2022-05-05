@@ -164,7 +164,7 @@ app.post('/api/product', (req: Request, res: Response) => {
     subscriptionId,
   } = req.body.product;
 
-  console.log('162 Request object postEvent', req.body);
+  // console.log('162 Request object postEvent', req.body);
   Products.create({
     name,
     description,

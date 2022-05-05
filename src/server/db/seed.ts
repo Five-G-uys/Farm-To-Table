@@ -84,32 +84,32 @@ syncModels(true)
     //       },
     //     });
 
-    // Roles Seed Data
-    await Roles.findOrCreate({
-      where: { id: 1 },
-      defaults: {
-        id: 1,
-        role: 'user',
-      },
-    });
-    await Roles.findOrCreate({
-      where: { id: 2 },
-      defaults: {
-        id: 2,
-        role: 'subscriber',
-      },
-    });
-    await Roles.create({
-      id: 3,
-      role: 'employee',
-    });
-    await Roles.findOrCreate({
-      where: { id: 4 },
-      defaults: {
-        id: 4,
-        role: 'admin',
-      },
-    });
+    // // Roles Seed Data
+    // await Roles.findOrCreate({
+    //   where: { id: 1 },
+    //   defaults: {
+    //     id: 1,
+    //     role: 'user',
+    //   },
+    // });
+    // await Roles.findOrCreate({
+    //   where: { id: 2 },
+    //   defaults: {
+    //     id: 2,
+    //     role: 'subscriber',
+    //   },
+    // });
+    // await Roles.create({
+    //   id: 3,
+    //   role: 'employee',
+    // });
+    // await Roles.findOrCreate({
+    //   where: { id: 4 },
+    //   defaults: {
+    //     id: 4,
+    //     role: 'admin',
+    //   },
+    // });
 
     //     // Vendors Seed Data
     //     await Vendors.findOrCreate({
