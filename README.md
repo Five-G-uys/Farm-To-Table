@@ -7,6 +7,7 @@ And Farmers can manage it all in one easy to use application
 
 # Deployed Instance
 Url: http://ec2-54-200-56-17.us-west-2.compute.amazonaws.com:5555/
+SERVER_URL=http://ec2-54-200-56-17.us-west-2.compute.amazonaws.com:5555/
 
 # Team ACE
 Product Owner:

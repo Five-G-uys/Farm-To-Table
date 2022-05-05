@@ -5,19 +5,20 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   gridContainer: {
-    paddingTop: '40px',
-    paddingLeft: '4rem',
-    paddingRight: '4rem',
+    paddingTop: '60px',
+    justifyContent: 'center',
+    paddingLeft: '5vw',
+    paddingRight: '5vw',
   },
 });
 
 const ProductsContainer = ({ products, handleEditClick, inEditMode }: any) => {
-  console.log('LINE 5 || PRODUCTSCONTAINER', products);
+  // console.log('LINE 5 || PRODUCTSCONTAINER', products);
   const classes = useStyles();
   return (
     <Grid
       container
-      spacing={4}
+      spacing={6}
       className={classes.gridContainer}
       // justify='center'
     >
@@ -25,8 +26,8 @@ const ProductsContainer = ({ products, handleEditClick, inEditMode }: any) => {
         return (
           <Grid
             item
-            xs={12}
-            sm={6}
+            xs={10}
+            sm={5}
             md={4}
             lg={3}
             xl={3}

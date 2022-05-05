@@ -1,88 +1,83 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { useState, useEffect, useContext } from "react";
 import Event from "./Event";
 import axios from "axios";
+import { UserContext } from "./App";
+import { Grid } from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
+
 //import RSVPS from "./RSVPS";
+interface AppProps {
+  eventName: string;
+  description: string;
+  thumbnail: React.ImgHTMLAttributes<string>;
+  eventType: string;
+  eventDate: string;
+  eventId: number;
+  getAllEvents: () => void;
+  location: string;
+  handleEditClick: () => void;
+}
+const useStyles = makeStyles({
+  gridContainer: {
+    paddingTop: "40px",
+    paddingLeft: "4rem",
+    paddingRight: "4rem",
+  },
+});
 
-const EventCard = () => {
-  const [events, setEvents] = useState({ eventArray: [] });
+const EventCard = ({
+  handleEditClick,
+  allEvents,
+  updateCounter,
+  inEditMode,
+  updateState,
+  getAllEvents,
+}: AppProps | any) => {
+  const user: any = useContext(UserContext);
 
-  const getAllEvents = () => {
-    axios
-      .get("/events/api/event")
-
-      .then(({ data }) => {
-        console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
-        setEvents((state) => {
-          return {
-            ...state,
-            eventArray: data,
-          };
-        });
-      })
-      .catch((error) => {
-        console.log("sorry, request failed", error);
-      });
-  };
-
-  useEffect(() => {
-    getAllEvents();
-  }, []);
-
-  const { eventArray } = events;
-  //console.log("line 28", eventArray);
-
+  //console.log("line 32", allEvents);
+  const classes = useStyles();
   return (
     <div className="events">
       <nav className="nav">
-        <h1 className="nav-event">Spring Season Events</h1>
+        <h1 className="nav-event">Spring: events for the month of May</h1>
       </nav>
-      <h1 className="title-card">Events for this month</h1>
       <br></br>
-      <br></br>
-      <div className="card">
-        {Array.isArray(eventArray) &&
-          eventArray.map(
-            (event: {
-              eventName: string;
-              description: string;
-              thumbnail: React.ImgHTMLAttributes<string>;
-              eventType: string;
-              eventId: number;
-              eventDate: string;
-              id: number;
-              location: string;
-              season: string;
-            }) => {
-              const {
-                eventName,
-                eventType,
-                thumbnail,
-                description,
-                eventDate,
-                id,
-                season,
-                location,
-              } = event;
-              return (
+      <Grid
+        container
+        spacing={12}
+        className={classes.gridContainer}
+        // justify='center'
+      >
+        {Array.isArray(allEvents) &&
+          allEvents.map((event: any) => {
+            return (
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                xl={3}
+                key={event.eventName + event.id}
+              >
                 <Event
-                  eventName={eventName}
-                  eventType={eventType}
-                  thumbnail={thumbnail}
-                  description={description}
-                  eventDate={eventDate}
+                  event={event}
+                  updateCounter={updateCounter}
+                  handleEditClick={handleEditClick}
+                  inEditMode={inEditMode}
+                  updateState={updateState}
                   getAllEvents={getAllEvents}
-                  key={eventName}
-                  eventId={id}
-                  location={location}
-                  season={season}
                 />
-              );
-            }
-          )}
-      </div>
-      <footer className="footer"></footer>
+              </Grid>
+            );
+          })}
+      </Grid>
     </div>
   );
 };
 
 export default EventCard;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
