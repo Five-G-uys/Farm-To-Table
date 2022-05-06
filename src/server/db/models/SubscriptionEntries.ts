@@ -12,19 +12,24 @@ const SubscriptionEntries = db.define('subscriptionEntries', {
     allowNull: false,
     autoIncrement: true,
   },
-  // farm_id: {
-  //   type: DataTypes.INTEGER,
-  //   unique: false,
-  //   allowNull: false,
-  //   references: { model: Farms, key: 'id' },
-  //   defaultValue: 1,
-  // },
-  // userId: {
-  //   type: DataTypes.INTEGER,
-  //   unique: false,
-  //   allowNull: false,
-  //   references: { model: Users, key: 'id' },
-  // },
+  streetAddress: {
+    type: DataTypes.STRING,
+  },
+  city: {
+    type: DataTypes.STRING,
+  },
+  state: {
+    type: DataTypes.STRING,
+  },
+  zip: {
+    type: DataTypes.STRING,
+  },
+  lat: {
+    type: DataTypes.STRING,
+  },
+  lon: {
+    type: DataTypes.STRING,
+  },
   subscriptionId: {
     type: DataTypes.INTEGER,
     unique: false,
