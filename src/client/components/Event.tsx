@@ -71,23 +71,23 @@ const Event = ({
 
   const handRSVPosts = () => {
     axios
-      .post("/events/api/Rsvp/", {
+      .post("/api/rsvps/", {
         userId: id,
         eventId: event.id,
       })
-      .then((data: any) => {
-        const { userId } = data.data;
-        const tracker = data.data;
-        console.log("tracker 81", tracker);
+      .then(({ rsvpResponseObj }: any) => {
+        //const { userId } = rsvpResponseObj;
+        const tracker = rsvpResponseObj;
+        //console.log("tracker 81", tracker);
         getAllEvents();
         axios
-          .get(`/events/api/rsvps/${userId}`, {
-            params: { eventId: tracker.eventId, userId: id },
+          .get(`/api/rsvps/${tracker.userId}`, {
+            params: { eventId: tracker.eventId, userId: tracker.userId },
           })
-          .then(({ data }) => {
-            console.log("Line 84", data);
-            //console.log("79 LINE ", data);
-            const tracker = data;
+          .then(({ rsvp }: any) => {
+            console.log("Line 84", rsvp);
+            //console.log("79 LINE ", rsvp);
+            const tracker = rsvp;
             console.log("line 82", tracker);
             setRsvpTracker((state: any) => state.push(...tracker));
             console.log("line 93", rsvpTracker);
@@ -106,7 +106,7 @@ const Event = ({
   const deleteEvent = () => {
     console.log("LINE 81", user.id, " and ", event.id);
     axios
-      .delete(`/events/api/event/${event.id}`, {
+      .delete(`/api/events/${event.id}`, {
         params: { id: event.id },
       })
       .then((data) => {
@@ -170,18 +170,20 @@ const Event = ({
               <DeleteIcon sx={{ color: "green" }} onClick={deleteEvent} />
             )}
           </ExpandMore>
-          {roleId < 4 && (
-            <ExpandMore sx={{ color: "green" }} expand={expanded}>
+
+          <ExpandMore sx={{ color: "green" }} expand={expanded}>
+            {roleId < 4 && (
               <Icon
                 baseClassName="fas"
                 className="fa-plus-circle"
                 fontSize="large"
                 onClick={handRSVPosts}
               >
-                {rsvpTracker.length > 0 ? rsvpTracker.length : "+"}
+                +
               </Icon>
-            </ExpandMore>
-          )}
+            )}
+          </ExpandMore>
+
           <ExpandMore expand={false}>{rsvpTracker.length}</ExpandMore>
           {roleId > 3 && (
             <ExpandMore

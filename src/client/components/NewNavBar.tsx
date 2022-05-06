@@ -52,7 +52,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
     { name: "Sign Up!", path: "/subscriptions-page" },
     { name: "Products ", path: "/edit-products" },
     { name: "Weather", path: "/weather-page" },
-    { name: "Farm events", path: "/events-page" },
+    { name: "Events", path: "/events-page" },
     { name: "About Us", path: "/about-us-page" },
   ];
 

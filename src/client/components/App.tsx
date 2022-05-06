@@ -234,8 +234,7 @@ const App = () => {
               <Route path="products-records" element={<ProductsRecords />} />
               {/* <Route
                       path="subscription-entries-records"
-                      element={<SubscriptionEntriesRecords />}
-                    />
+                      element={<SubscriptionEntriesRecords />} />
                     <Route
                       path="subscriptions-records"
                       element={<SubscriptionsRecords />}

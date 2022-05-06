@@ -9,7 +9,7 @@ const Weather = ({ lat, lon }) => {
 
   useEffect(() => {
     axios
-      .get(`weather/weather/${lat}/${lon}`)
+      .get(`/weather/${lat}/${lon}`)
       .then((response) => {
         //console.log('Weather Data Response', response.data);
         setCity(response.data.name);

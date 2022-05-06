@@ -103,7 +103,7 @@ const EventsPage = () => {
     //console.log("LINE 108");
     e.preventDefault();
     axios
-      .post("/events/api/event", {
+      .post('/api/events', {
         event: {
           eventName: eventName,
           description: description,
@@ -201,7 +201,7 @@ const EventsPage = () => {
 
   const getAllEvents = () => {
     axios
-      .get("/events/api/event")
+      .get('/api/events')
 
       .then(({ data }) => {
         //console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);

@@ -30,7 +30,7 @@ const OrdersPage = () => {
   }, []);
 
   // axios
-  //   .get(`/api/upcoming_orders/${id}`, { params: { id } })
+  //   .get(`/upcoming_orders/${id}`, { params: { id } })
   //   .then((data: any) => {
   //     console.log('LINE 29 || ORDERSPAGE ||SUCCESS', data.data); //array of objects
   //     setOrders(data.data);
