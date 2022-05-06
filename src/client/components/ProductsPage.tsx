@@ -110,7 +110,7 @@ const ProductsPage = () => {
     console.log('LINE 108');
     e.preventDefault();
     axios
-      .post('/api/product', {
+      .post('/api/products', {
         product: {
           name: name,
           description: description,
@@ -120,6 +120,9 @@ const ProductsPage = () => {
           subscriptionId: Number(subscriptionId),
         },
       })
+      .catch((err) => {
+        console.log('LINE 124: ', err)
+      })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((data) => {
         console.log('saved!', data);
@@ -127,7 +130,9 @@ const ProductsPage = () => {
         handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.log('LINE 134: ', err)
+      });
   };
 
   // create function to handle update form submission
@@ -197,7 +202,7 @@ const ProductsPage = () => {
   // get all products handler
   const getAllProducts = () => {
     axios
-      .get('/get_all_products')
+      .get('/api/products')
       .then((data) => {
         console.log('LINE 165 || GET ALL PRODUCTS', data);
         // set products state to allProducts array

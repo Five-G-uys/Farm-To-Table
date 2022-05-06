@@ -98,10 +98,10 @@ const UserRecordsPage = () => {
 
   // create post req to send user form data
   const postUser = (e: any) => {
-    console.log('LINE 108');
+    // console.log('LINE 108');
     e.preventDefault();
     axios
-      .post('/api/user', {
+      .post('/api/users', {
         product: {
           name: name,
           email: email,
@@ -124,7 +124,7 @@ const UserRecordsPage = () => {
   const updateUser = async (userId: number, updatedUser: any) => {
     try {
       // axios always has data property available on response obj so can destructure here
-      const { data } = await axios.patch(`/api/user/${userId}`, updateUser);
+      const { data } = await axios.patch(`/api/users/${userId}`, updateUser);
       console.log('LINE 117 || USER CALLS', data);
       return data;
     } catch (err) {
@@ -167,7 +167,7 @@ const UserRecordsPage = () => {
   // get all users handler
   const getAllUsers = () => {
     axios
-      .get('/get_all_users')
+      .get('/api/users')
       .then((data) => {
         console.log('LINE 161 || GET ALL USERS', data);
         setUsers(data.data);

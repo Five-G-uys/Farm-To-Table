@@ -55,7 +55,7 @@ const EventsRecords = () => {
   const [rows, setRows] = useState([])
 
   const getOrders = () => {
-    axios.get("/records/events")
+    axios.get("/api/events")
       .then((data) => {
         // console.log(data.data);
         setRows(data.data)

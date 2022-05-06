@@ -6,7 +6,7 @@ export const updateProduct = async (productId: number, updatedProduct: any) => {
   try {
     // axios always has data property available on response obj so can destructure here
     const { data } = await axios.patch(
-      `/api/product/${productId}`,
+      `/api/products/${productId}`,
       updatedProduct
     );
     console.log('LINE 7 || PRODUCT CALLS', data);

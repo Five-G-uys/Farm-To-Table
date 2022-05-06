@@ -36,7 +36,7 @@ const SubscriptionEntriesRecords = () => {
 
   const getSubscriptionEntries = () => {
     axios
-      .get('/records/subscriptionEntries')
+      .get('/api/subscription-entries')
       .then((data) => {
         // console.log(data.data);
         setRows(data.data);

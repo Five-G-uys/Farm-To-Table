@@ -113,7 +113,7 @@ const SubscriptionsPage = () => {
 
   const postSubscription = () => {
     axios
-      .post('/api/subscriptions-admin', {
+      .post('/api/subscriptions', {
         event: {
           season: subscription.season,
           year: subscription.year,
@@ -165,7 +165,7 @@ const SubscriptionsPage = () => {
 
   const getAllSubscriptions = () => {
     axios
-      .get(`/api/subscriptions/`)
+      .get(`/api/subscriptions`)
       .then((data) => {
         setSubscriptions(data.data);
       })

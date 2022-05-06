@@ -47,7 +47,7 @@ const SubscriptionsRecords = () => {
   const [rows, setRows] = useState([])
 
   const getSubscriptions = () => {
-    axios.get("/records/subscriptions")
+    axios.get("/api/subscriptions")
       .then((data) => {
         // console.log(data.data);
         setRows(data.data)
