@@ -125,7 +125,7 @@ const UsersRecords = () => {
                     );
                   })}
                   <TableCell>
-                    <EditIcon onClick={} />
+                    <EditIcon onClick={() => console.log(row)} />
                   </TableCell>
                   <TableCell>
                     <DeleteIcon onClick={() => console.log(rows)} />
