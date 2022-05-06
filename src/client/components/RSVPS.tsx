@@ -14,6 +14,7 @@ const RSVPS = () => {
 
   const [rsvps, setRsvps] = useState([]);
   const [rsvpsCount, setRsvpsCount] = useState(0);
+  
 
   const getAllRSVPSEvents = () => {
     axios
