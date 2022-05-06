@@ -17,9 +17,9 @@ const SubscriptionsContainer = ({
   getAllSubscriptions,
   handleEditClick,
   inEditMode,
-  handleSubscriptionDeleteSubmit,
+  subscription,
+  deleteSubscription,
 }: any) => {
-  // console.log('LINE 5 || SUBSCRIPTIONSCONTAINER', subscriptions);
   const classes = useStyles();
   return (
     <Grid
@@ -44,8 +44,10 @@ const SubscriptionsContainer = ({
               key={sub.season + sub.id}
               handleEditClick={handleEditClick}
               inEditMode={inEditMode}
+              subscription={subscription}
+              subscriptions={subscriptions}
               getAllSubscriptions={getAllSubscriptions}
-              handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
+              deleteSubscription={deleteSubscription}
             />
           </Grid>
         );
@@ -55,35 +57,3 @@ const SubscriptionsContainer = ({
 };
 
 export default SubscriptionsContainer;
-
-{
-  /* <div>
-{subArray.map(
-  (sub: {
-    id: number;
-    season: string;
-    year: number;
-    flat_price: number;
-    weekly_price: number;
-    description: string;
-    start_date: string;
-    end_date: string;
-    farm_id: 1;
-  }) => {
-    return (
-      <SubscriptionCard
-        season={sub.season}
-        year={sub.year}
-        flat_price={sub.flat_price}
-        weekly_price={sub.weekly_price}
-        description={sub.description}
-        start_date={sub.start_date}
-        end_date={sub.end_date}
-        key={sub.id}
-        subscriptionId={sub.id}
-      />
-    );
-  }
-)}
-</div> */
-}

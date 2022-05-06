@@ -42,7 +42,7 @@ const OrdersRecords = () => {
 
   const getOrders = () => {
     axios
-      .get('/records/orders')
+      .get('/api/orders')
       .then((data) => {
         // console.log(data.data);
         setRows(data.data);

@@ -64,7 +64,7 @@ const UsersRecords = () => {
 
   const getUsers = () => {
     axios
-      .get('/records/users')
+      .get('/api/users')
       .then((data) => {
         // console.log(data.data);
         setRows(data.data);

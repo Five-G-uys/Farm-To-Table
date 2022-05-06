@@ -17,7 +17,7 @@ const RSVPS = () => {
 
   const getAllRSVPSEvents = () => {
     axios
-      .get(`/events/api/user/rsvps/${id}`)
+      .get(`/api/rsvps/user-id/${id}`)
       .then(({ data }) => {
         console.log('LINE 33 FrontEND request', data);
         const newArr = data
