@@ -1,7 +1,8 @@
+// Import Dependencies
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-// import Farms from './Farms';
 
+// Define Model
 const DeliveryZones = db.define('delivery_zones', {
   id: {
     type: DataTypes.INTEGER,
@@ -12,17 +13,13 @@ const DeliveryZones = db.define('delivery_zones', {
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
+  },
+  description: {
+    type: DataTypes.STRING,
   },
   zip_codes: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  // farm_id: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  //   references: { model: Farms, key: 'id' },
-  // },
 });
 
 export default DeliveryZones;

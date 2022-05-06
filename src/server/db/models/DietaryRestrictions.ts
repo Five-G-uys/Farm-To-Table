@@ -1,8 +1,9 @@
+// Import Dependencies
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-// import Farms from './Farms';
 import Products from './Products';
 
+// Define Model
 const DietaryRestrictions = db.define('dietary_restrictions', {
   id: {
     type: DataTypes.INTEGER,
@@ -11,16 +12,29 @@ const DietaryRestrictions = db.define('dietary_restrictions', {
     allowNull: false,
     autoIncrement: true,
   },
-  // farm_id: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  //   references: { model: Farms, key: 'id' },
-  // },
-  // problematic_products_id: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  //   references: { model: Products, key: 'id' },
-  // },
+  name: {
+    type: DataTypes.STRING,
+  },
+  description: {
+    type: DataTypes.STRING,
+  },
+  product_to_exclude1: {
+    type: DataTypes.INTEGER,
+    references: { model: Products, key: 'id' },
+  },
+  product_to_exclude2: {
+    type: DataTypes.INTEGER,
+    references: { model: Products, key: 'id' },
+  },
+  product_to_exclude3: {
+    type: DataTypes.INTEGER,
+    references: { model: Products, key: 'id' },
+  },
+  product_to_exclude4: {
+    type: DataTypes.INTEGER,
+    references: { model: Products, key: 'id' },
+  },
 });
 
+// Export Model
 export default DietaryRestrictions;

@@ -120,6 +120,9 @@ const ProductsPage = () => {
           subscriptionId: Number(subscriptionId),
         },
       })
+      .catch((err) => {
+        console.log('LINE 124: ', err)
+      })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((data) => {
         console.log('saved!', data);
@@ -127,7 +130,9 @@ const ProductsPage = () => {
         handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.log('LINE 134: ', err)
+      });
   };
 
   // create function to handle update form submission

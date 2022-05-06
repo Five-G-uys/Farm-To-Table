@@ -98,7 +98,7 @@ const UserRecordsPage = () => {
 
   // create post req to send user form data
   const postUser = (e: any) => {
-    console.log('LINE 108');
+    // console.log('LINE 108');
     e.preventDefault();
     axios
       .post('/api/user', {

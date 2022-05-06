@@ -2,26 +2,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+// Import Env
+require('dotenv').config();
+
 // Import Dependencies
 import express, { Express, Request, Response } from 'express';
-require('dotenv').config();
 import path from 'path';
-// import cors from 'cors';
-// const uuid = require(uuid/v4);
-//import uuid from 'uuid';
-const passport = require('passport');
-const cookieSession = require('cookie-session');
-const cookieParser = require('cookie-parser');
-
-const axios = require('axios');
-// require Op object from sequelize to modify where clause in options object
-const { Op } = require('sequelize');
+import passport from 'passport';
+import cookieSession from 'cookie-session';
+import cookieParser from 'cookie-parser';
+import axios from 'axios';
+import { Op } from 'sequelize';
 
 // Import database and models
 require('./db/database.ts');
 require('./middleware/auth');
 import {
-  // Farms,
   Roles,
   Orders,
   DeliveryZones,
@@ -34,16 +30,26 @@ import {
   DietaryRestrictions,
   Events,
 } from './db/models';
-const authRouter = require('./routes/AuthRouter');
-const eventRouter = require('./routes/EventRouter');
-const weatherRouter = require('./routes/WeatherRouter');
-const userRouter = require('./routes/UserRouter')
 
-// const subscriptionRouter = require('./routes/SubscriptionsRouter')
-// const farmRouter = require('./routes/FarmRouter')
+// Import Routers
+import authRouter from './routes/AuthRouter';
+import deliveryZonesRouter from './routes/DeliveryZoneRouter';
+import dietaryRestrictionRouter from './routes/DietaryRestrictionRouter';
+import eventRouter from './routes/EventRouter';
+// import orderContentRouter from './routes/OrderContentRouter';
+import orderRouter from './routes/OrderRouter';
+import productRouter from './routes/ProductRouter';
+import roleRouter from './routes/RoleRouter';
+import rsvpRouter from './routes/RsvpRouter';
+import subscriptionEntriesRouter from './routes/SubscriptionEntriesRouter';
+import subscriptionRouter from './routes/SubscriptionsRouter';
+import userRouter from './routes/UserRouter';
+import weatherRouter from './routes/WeatherRouter';
+
+// Import Interfaces
 import UserInterface from '../types/UserInterface';
 import Profile from 'src/client/components/ProfilePage';
-//import { postEvent } from "./routes/EventRoutes";
+
 
 const app: Express = express();
 const port = process.env.LOCAL_PORT;
@@ -54,41 +60,46 @@ const dist = path.resolve(__dirname, '..', '..', 'dist');
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000, //one day
-    keys: [process.env.PASSPORT_CLIENT_SECRET],
+    keys: [process.env.PASSPORT_CLIENT_SECRET || ''],
     httpOnly: true,
     signed: true,
     secure: process.env.NODE_ENV === 'production',
   })
 );
 
-// Sets us req.user
 app.use(cookieParser());
-
 app.use(express.json());
-// app.use(cors());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
 
 // Stripe Setup
-const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
-
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY); // ** NEED TO TURN INTO IMPORT STATEMENT
 const storeItems = new Map([
   [1, { priceInCents: 10000, name: 'Season Subscription' }],
   [2, { priceInCents: 20000, name: 'Annual Subscription' }],
 ]);
-//routes
 
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Mount Routers
 app.use('/auth', authRouter);
+// app.use('/delivery-zones', deliveryZonesRouter);
+// app.use('/dietary-restrictions', dietaryRestrictionRouter);
 app.use('/events', eventRouter);
+// app.use('/order-contents', orderContentRouter);
+// app.use('/orders', orderRouter);
+// app.use('/products', productRouter);
+// app.use('/roles', roleRouter);
+// app.use('/rsvps', rsvpRouter);
+// app.use('/subscription-entries', subscriptionEntriesRouter);
 // app.use('/subscriptions', subscriptionRouter);
-// app.use('/', farmRouter)
 app.use('/weather', weatherRouter);
 app.use('/users', userRouter);
 
+
+/// ** NEED TO MOVE ROUTES TO INDIVIDUAL ROUTER FILES
 // Create a post request for /create-checkout-session
 app.post('/create-checkout-session', async (req, res) => {
   try {
@@ -116,23 +127,24 @@ app.post('/create-checkout-session', async (req, res) => {
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
-}),
-  //////////////////////////////////////////////////////////////////////////////////////////// GET ALL USERS ROUTE
-  app.get('/get_all_users', (req: Request, res: Response) => {
-    // findAll products in the current season for users. find ALL products (organized by season) for admin
-    // NEED TO GIVE ALL SEASONS A CURRENT SEASON BOOLEAN. WILL MAKE REQUEST EASIER??
-    // CHECK SEASON START DATE PROPERTY
+})
 
-    // IMPLEMENTING SIMPLE GET ALL REQUEST FOR MVP
-    Users.findAll({ where: {} })
-      .then((data: any) => {
-        console.log('LINE 129 || INDEX GET ALL USERS', data);
-        res.json(data);
-      })
-      .catch((err: any) => {
-        console.error('LINE 133 || INDEX GET ALL USERS ERROR', err);
-      });
-  });
+//////////////////////////////////////////////////////////////////////////////////////////// GET ALL USERS ROUTE
+app.get('/get_all_users', (req: Request, res: Response) => {
+  // findAll products in the current season for users. find ALL products (organized by season) for admin
+  // NEED TO GIVE ALL SEASONS A CURRENT SEASON BOOLEAN. WILL MAKE REQUEST EASIER??
+  // CHECK SEASON START DATE PROPERTY
+
+  // IMPLEMENTING SIMPLE GET ALL REQUEST FOR MVP
+  Users.findAll({ where: {} })
+    .then((data: any) => {
+      console.log('LINE 129 || INDEX GET ALL USERS', data);
+      res.json(data);
+    })
+    .catch((err: any) => {
+      console.error('LINE 133 || INDEX GET ALL USERS ERROR', err);
+    });
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////// POST USER ROUTE
 app.patch('/api/user/:id', async (req: Request, res: Response) => {
