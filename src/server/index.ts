@@ -438,7 +438,7 @@ app.delete(
       where: { id: Number(req.params.subscriptionId) },
     })
       .then((data: any) => {
-        console.log('440 subscription delete was successful!', data);
+        console.log('440 subscription delete was successful!!', data);
         res.sendStatus(200);
       })
       .catch((err: any) => {
