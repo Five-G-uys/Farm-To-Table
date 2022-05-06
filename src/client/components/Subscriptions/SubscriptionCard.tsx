@@ -2,18 +2,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import axios from 'axios';
+
+// MUI IMPORTS
 import {
-  Card,
-  CardHeader,
   Avatar,
-  CardMedia,
-  CardContent,
-  Typography,
+  Button,
+  Card,
   CardActions,
-  Stack,
-  styled,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Collapse,
   IconButton,
   IconButtonProps,
+  Stack,
+  styled,
+  Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -41,6 +45,7 @@ const SubscriptionCard = ({
   sub,
   handleEditClick,
   handleSubscriptionDeleteSubmit,
+  handleAddressForm,
 }: any) => {
   // expanded state var
   const [expanded, setExpanded] = useState(false);
@@ -107,11 +112,7 @@ const SubscriptionCard = ({
             {`Weekly Price: $${weekly_price}`}
           </Typography>
         </CardContent>
-        <CardContent>
-          <Typography variant='body2' color='text.secondary'>
-            {`Inside Your Order: ${description}`}
-          </Typography>
-        </CardContent>
+
         <CardContent>
           <Typography variant='body2' color='text.secondary'>
             {`Start Date: ${start_date}`}
@@ -131,6 +132,7 @@ const SubscriptionCard = ({
             >
               <DeleteIcon sx={{ color: 'green' }} />
             </ExpandMore>
+
             <ExpandMore
               sx={{ color: 'green' }}
               expand={expanded}
@@ -148,7 +150,24 @@ const SubscriptionCard = ({
               <ExpandMoreIcon />
             </ExpandMore>
           </Stack>
+          <Button
+            variant='text'
+            size='small'
+            // type='submit'
+            sx={{ color: 'green' }}
+            onClick={() => handleAddressForm(id)}
+          >
+            SUBSCRIBE
+          </Button>
         </CardActions>
+        <Collapse in={expanded} timeout='auto' unmountOnExit>
+          <CardContent>
+            {/* // setup map that returns all product info */}
+            <Typography variant='body2' color='text.secondary'>
+              {`Inside Your Order: ${description}`}
+            </Typography>
+          </CardContent>
+        </Collapse>
       </Card>
     </div>
   );

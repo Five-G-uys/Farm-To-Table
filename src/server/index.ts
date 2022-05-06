@@ -281,61 +281,68 @@ app.patch('/api/subscribed/:id', async (req: Request, res: Response) => {
 app.post(
   `/api/add_subscription_entry/:id`,
   async (req: Request, res: Response) => {
-    console.log('LINE 287 || SERVER INDEX.TS', req.body, req.params);
+    console.log('LINE 284 || SERVER INDEX.TS', req.body, req.params);
+    const { subscriptionId, streetAddress, city, state, zip } = req.body;
 
-    const addSubscription = (id: number) => {
-      console.log(
-        'LINE 291 || INDEXSERVER || SUBSCRIPTION ENTRY POST ROUTE',
-        id
-      );
-      SubscriptionEntries.create({
-        // CHANGED REQ.PARMS.ID TO NUMBER, USED TO BE STRING
-        userId: Number(req.params.id),
-        subscriptionId: id,
-      })
-        .then((data: any) => {
-          console.log('LINE 301 || SERVER ||', data.dataValues.id);
-
-          const today: Date = new Date();
-          // iterate over number of orders
-          for (let i = 1; i < 15; i++) {
-            const nextWeek = () => {
-              const today = new Date();
-              const nextwk = new Date(
-                today.getFullYear(),
-                today.getMonth(),
-                today.getDate() + 7 * i
-              );
-              return nextwk;
-            };
-            // console.log('LINE 218 || NEXTWEEK', nextWeek());
-            Orders.create({
-              // subscriptionId: data.dataValues.subscriptionId,
-              subscriptionEntryId: data.dataValues.id,
-              delivery_date: nextWeek(),
-            })
-              .then((data: any) => {
-                // console.log('LINE 318 || SERVER INDEX ||', data);
-              })
-              .catch((err: any) => {
-                console.log('LINE 326 || SERVER INDEX || ERROR', err);
-              });
-          }
-        })
-        .catch((err: any) => {
-          console.error('LINE 331', err);
-        });
-    };
+    const address: any = `${streetAddress} ${city}`;
     try {
-      if (req.body.season === 'whole year') {
-        await addSubscription(1);
-        await addSubscription(2);
-        res.status(201).send('Subscribed!');
-      } else {
-        const subscriptionId = req.body.season === 'fall' ? 2 : 1;
-        await addSubscription(subscriptionId);
-        res.status(201).send('Subscribed!');
-      }
+      const { data } = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A`
+      );
+
+      console.log('LINE 293 || INDEX SERVER SUB POST', data.geometry);
+
+      const addSubscription = () => {
+        console.log('LINE 288 || INDEXSERVER || SUBSCRIPTION ENTRY POST ROUTE');
+        SubscriptionEntries.create({
+          // CHANGED REQ.PARMS.ID TO NUMBER, USED TO BE STRING
+          userId: Number(req.params.id),
+          subscriptionId,
+          streetAddress,
+          city,
+          state,
+          zip,
+          lat: data.features[0].geometry.coordinates[1],
+          lon: data.features[0].geometry.coordinates[0],
+        })
+          .then((data: any) => {
+            console.log('LINE 301 || SERVER ||', data.dataValues.id);
+
+            // CHANGE TODAY TO FIRST DAY OF SEASON START DATE
+            const today: Date = new Date();
+            // iterate over number of orders
+            for (let i = 1; i < 15; i++) {
+              const nextWeek = () => {
+                const today = new Date();
+                const nextwk = new Date(
+                  today.getFullYear(),
+                  today.getMonth(),
+                  today.getDate() + 7 * i
+                );
+                return nextwk;
+              };
+              // console.log('LINE 218 || NEXTWEEK', nextWeek());
+              Orders.create({
+                // subscriptionId: data.dataValues.subscriptionId,
+                subscriptionEntryId: data.dataValues.id,
+                delivery_date: nextWeek(),
+              })
+                .then((data: any) => {
+                  // console.log('LINE 318 || SERVER INDEX ||', data);
+                })
+                .catch((err: any) => {
+                  console.log('LINE 326 || SERVER INDEX || ERROR', err);
+                });
+            }
+          })
+          .catch((err: any) => {
+            console.error('LINE 327', err);
+          });
+      };
+
+      await addSubscription();
+      // console.log('LINE 332 || INDEXTS SUB POST');
+      res.status(201).send('Subscribed!');
     } catch (err) {
       res.status(500).json(err);
     }
