@@ -84,7 +84,7 @@ syncModels(true)
     //       },
     //     });
 
-    // Roles Seed Data
+    // // Roles Seed Data
     await Roles.findOrCreate({
       where: { id: 1 },
       defaults: {
