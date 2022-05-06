@@ -43,20 +43,6 @@ const SubscriptionsAdmin = ({
   value,
   handleRadioBtn,
 }: any) => {
-  // console.log('LINE 40 OPEN', open);
-
-  // const [subscription, setSubscription] = useState({
-  //   id: '',
-  //   season: '',
-  //   year: '',
-  //   flat_price: '',
-  //   weekly_price: '',
-  //   description: '',
-  //   start_date: '',
-  //   end_date: '',
-  //   thumbnail: '',
-  // });
-
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
@@ -67,7 +53,6 @@ const SubscriptionsAdmin = ({
       },
       (error: unknown, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
-          // console.log("LINE 62", result.info.url);
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           setSubscription((state: any) => {
             return {
@@ -92,8 +77,6 @@ const SubscriptionsAdmin = ({
     thumbnail,
   } = subscription;
 
-  // console.log('LINE 89', subscription);
-  // console.log('LINE 96', value);
   return (
     <Modal
       aria-labelledby='transition-modal-title'
@@ -267,98 +250,3 @@ const SubscriptionsAdmin = ({
 };
 
 export default SubscriptionsAdmin;
-
-{
-  /* <input
-type='radio'
-id='Season'
-name='season'
-value='Spring'
-checked={season === 'Spring'}
-onChange={handleInputSubscription}
-/>
-<label htmlFor='Season'>Spring</label>
-<br />
-<input
-type='radio'
-id='Season'
-name='season'
-value='Autumn'
-checked={season === 'Autumn'}
-onChange={handleInputSubscription}
-/>
-<label htmlFor='Season'>Autumn</label>
-<br />
-<input
-type='radio'
-id='Season'
-name='season'
-value='Winter'
-checked={season === 'Winter'}
-onChange={handleInputSubscription}
-/>
-<label htmlFor='Season'>Winter</label> 
-   <br />
-                    <label>Year</label>
-                    <input
-                      type='text'
-                      placeholder='ex: 2022'
-                      value={year}
-                      name='year'
-                      onChange={handleInputSubscription}
-                      className='input'
-                    />
-                    <br></br>
-                    <label>Flat Price</label>
-                    <input
-                      type='text'
-                      placeholder='ex: $500'
-                      value={flat_price}
-                      name='flat_price'
-                      onChange={handleInputSubscription}
-                      className='input'
-                    />
-                    <label>Weekly Price</label>
-                    <input
-                      type='text'
-                      placeholder='ex: $40'
-                      value={weekly_price}
-                      name='weekly_price'
-                      onChange={handleInputSubscription}
-                      className='input'
-                    />
-                    <br></br>
-                    <label>Description</label>
-                    <textarea
-                      className='text-form'
-                      placeholder='ex: A beautiful bounty of fruits and vegetables...'
-                      value={description}
-                      name='description'
-                      onChange={handleInputSubscription}
-                    ></textarea>
-                    <br></br>
-                    <label>Start Date</label>
-                    <input
-                      type='text'
-                      placeholder='MM/DD/YY'
-                      value={start_date}
-                      name='start_date'
-                      onChange={handleInputSubscription}
-                      className='form-input'
-                    />
-                    <label>End Date</label>
-                    <input
-                      type='text'
-                      placeholder='MM/DD/YY'
-                      value={end_date}
-                      name='end_date'
-                      onChange={handleInputSubscription}
-                      className='form-input'
-                    />
-                    <br></br>
-                    <br></br>
-                    <button type='submit' className='form--submit'>
-                      Create Subscription
-                    </button>
-                  </div>*/
-}

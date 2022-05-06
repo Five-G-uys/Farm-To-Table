@@ -13,7 +13,6 @@ export const updateSubscription = async (
       `/api/subscribed/${subscriptionId}`,
       updatedSubscription
     );
-    console.log('LINE 14 || Subscription CALLS', data);
     return data;
   } catch (err) {
     console.error('LINE 10 || Subscription CALLS', err);

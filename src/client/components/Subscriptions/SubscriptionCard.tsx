@@ -53,25 +53,6 @@ const SubscriptionCard = ({
     setExpanded(!expanded);
   };
 
-  // SUBSCRIPTION DELETE
-
-  // const deleteSubscription = (e: any) => {
-  //   e.preventDefault();
-  //   console.log('e.target', e.target.value);
-  //   console.log('LINE 59', subscriptions);
-  //   axios
-  //     .delete(`/api/subscriptions/${subscription.id}`, {
-  //       params: { id: subscription.id },
-  //     })
-  //     .then((data) => {
-  //       console.log('65 LINE ', data);
-  //       getAllSubscriptions();
-  //     })
-  //     .catch((err) => {
-  //       console.error('69 REQUEST FAILED', err);
-  //     });
-  // };
-
   const {
     id,
     season,
