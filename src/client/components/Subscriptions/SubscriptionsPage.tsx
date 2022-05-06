@@ -246,6 +246,7 @@ const SubscriptionsPage = () => {
         inEditMode={inEditMode}
         handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
         value={value}
+        setValue={setValue}
         handleRadioBtn={handleRadioBtn}
       />
       <input

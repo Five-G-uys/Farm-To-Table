@@ -41,6 +41,7 @@ const SubscriptionsAdmin = ({
   handleClose,
   commonStyles,
   value,
+  setValue,
   handleRadioBtn,
 }: any) => {
   const CLOUD_NAME = process.env.CLOUD_NAME;
