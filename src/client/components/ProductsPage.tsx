@@ -320,7 +320,7 @@ const ProductsPage = () => {
                       value={name}
                       name='name'
                       label='Product Name'
-                      // id='fullWidth'
+                      fullWidth
                       placeholder='Avocado'
                       onChange={handelTextInput}
                     />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef, useEffect, useState } from 'react';
 
 import mapboxgl from 'mapbox-gl';
@@ -67,6 +68,20 @@ const Map = ({ lat, lon, updateCoords }: any) => {
   //       {}
   //     );
   //   }, []);
+  // useEffect(() => {
+  //   const address = '8319 Apricot Street New Orleans';
+
+  //   axios
+  //     .get(
+  //       `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A`
+  //     )
+  //     .then((data) => {
+  //       console.log('LINE 76', data);
+  //     })
+  //     .catch((err) => {
+  //       console.error('LINE 79', err);
+  //     });
+  // }, []);
 
   // create a function to make a directions request
   async function getRoute() {

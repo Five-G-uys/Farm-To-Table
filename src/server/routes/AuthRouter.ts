@@ -14,6 +14,9 @@ import { Users } from '../db/models';
 // Initialize Router
 const authRouter: Router = Router();
 
+
+let isFirstUser: any;
+
 // Initialize Passport w/ Google Strategy
 passport.use('google', new GoogleStrategy(
     {
@@ -23,13 +26,36 @@ passport.use('google', new GoogleStrategy(
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, done) => {
-      console.log(profile);
-      const defaultUser = {
-        name: profile._json.name,
-        email: profile._json.email,
-        picture: profile._json.picture,
-        googleId: profile.id,
+      // console.log('Return from Google: ', profile);
+      const checkFirstUser = async () => {
+        await Users.findAll()
+          .then((response: any) => {
+            isFirstUser = !response.length ? true : false;
+          })
+          .catch((err: any) => {
+            console.error(err);
+          })
       };
+      await checkFirstUser()
+      let defaultUser = {};
+
+      if (isFirstUser) {
+        defaultUser = {
+          name: profile._json.name,
+          email: profile._json.email,
+          picture: profile._json.picture,
+          googleId: profile.id,
+          roleId: 4,
+        };
+      } else {
+        defaultUser = {
+          name: profile._json.name,
+          email: profile._json.email,
+          picture: profile._json.picture,
+          googleId: profile.id,
+        };
+      }
+      
       const user = await Users.findOrCreate({
         where: { googleId: profile.id },
         defaults: defaultUser,
