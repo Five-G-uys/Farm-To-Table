@@ -1,7 +1,148 @@
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// /* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-var-requires */
 
+// Import Dependencies
+import { Router } from 'express';
+import express, { Express, Request, Response } from 'express';
+// Import Models
+import { Subscriptions } from '../db/models';
+
+// Set Up Router
+const subscriptionRouter: Router = Router();
+
+///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Subscription ROUTE
+subscriptionRouter.post('/api/subscriptions', (req, res) => {
+  console.log('LINE 16 || ', req.body);
+  let { year, flat_price, weekly_price } = req.body;
+  const { season, description, start_date, end_date } = req.body;
+  year = Number(year);
+  flat_price = Number(flat_price);
+  weekly_price = Number(weekly_price);
+
+  console.log('LINE 23 || ', season, description, start_date, end_date);
+
+  Subscriptions.create({
+    season,
+    year,
+    flat_price,
+    weekly_price,
+    description,
+    start_date,
+    end_date,
+  })
+    .then((data: any) => {
+      res.status(201).send(data);
+    })
+    .catch((err: string) => {
+      console.error('Subscriptions Post Request Failed', err);
+      res.sendStatus(500);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////// READ ALL Subscriptions ROUTE
+subscriptionRouter.get('/api/subscriptions', (req, res) => {
+  Subscriptions.findAll()
+    .then((response: any) => {
+      // console.log('FINDALL Subscriptions RESPONSE: ', response);
+      res.status(200).send(response);
+    })
+    .catch((err: object) => {
+      console.log('FIND ALL SUBSCRIPTION ERROR: ', err);
+      res.sendStatus(404);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Subscription PUT ROUTE (original from index.ts)
+//Subscription Admin PUT request:
+subscriptionRouter.put(
+  `/api/subscriptions/:id`,
+  (req: Request, res: Response) => {
+    console.log('LINE 390 Subscription PUT req', req.params.id);
+    Subscriptions.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+      returning: true,
+    })
+      .then((response: any) => {
+        res.json(response).status(204);
+      })
+      .catch((err: unknown) => {
+        console.error('SUBSCRIPTION UPDATE REQUEST:', err);
+      });
+  }
+);
+
+///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Subscription PATCH ROUTE
+subscriptionRouter.patch(
+  '/api/subscriptions/:id',
+  async (req: Request, res: Response) => {
+    // console.log('UPDATE Subscription REQUEST BODY: ', req.body);
+    try {
+      const updatedSubscription = await Subscriptions.update(req.body, {
+        where: { id: req.params.id },
+        returning: true,
+      });
+      console.log('Subscription UPDATE INFO: ', updatedSubscription);
+      res.status(204).json(updatedSubscription);
+    } catch (err) {
+      console.error('Subscription UPDATE WAS NOT SUCCESSFUL: ', err);
+      res.status(500).json(err);
+    }
+  }
+);
+
+// ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Subscription ROUTE (ORIGINAL from index.ts)
+subscriptionRouter.delete(
+  '/api/subscriptions/:subscriptionId',
+  (req: Request, res: Response) => {
+    console.log('line 436', req.params);
+    Subscriptions.destroy({
+      where: { id: Number(req.params.subscriptionId) },
+    })
+      .then((data: any) => {
+        console.log('440 subscription delete was successful!!', data);
+        res.sendStatus(200);
+      })
+      .catch((err: any) => {
+        console.error('444 Deletion was not successful', err);
+        res.sendStatus(400);
+      });
+  }
+);
+
+// ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Subscription ROUTE
+// subscriptionRouter.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
+//   Subscriptions.destroy({ where: req.params })
+//     .then((data: any) => {
+//       console.log("Subscription DELETION SUCCESSFUL: ", data);
+//       res.sendStatus(200);
+//     })
+//     .catch((err: any) => {
+//       console.error('Subscription DELETION WAS NOT SUCCESSFUL: ', err);
+//       res.sendStatus(400);
+//     });
+// });
+
+// Export Router
+export default subscriptionRouter;
+
+////////// THIS WAS HERE BEFORE I GOT HERE, DIDN'T WANT TO DELETE (MURPHY)
+
+// // import { Router } from 'express';
+// // import {
+// //   Farms,
+// //   Roles,
+// //   Orders,
+// //   DeliveryZones,
+// //   Products,
+// //   RSVP,
+// //   Subscriptions,
+// //   Users,
+// //   Vendors,
+// //   SubscriptionEntries,
+// // } from '../db/models';
 // import { Router } from 'express';
 // import {
 //   Farms,
@@ -18,7 +159,7 @@
 
 // const subscriptionRouter: Router = Router();
 
-// subscriptionRouter.put(`/api/subscribed/:id`, (req, res) => {
+// subscriptionRouter.put(`/api/subscription/:id`, (req, res) => {
 //   Users.update(req.body, { where: { id: req.params.id }, returning: true })
 //     .then((response: any) => {
 //       // console.log('Subscription Route', response[1]);

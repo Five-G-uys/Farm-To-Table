@@ -43,7 +43,7 @@ const DileveryZonesRecords = () => {
   const [rows, setRows] = useState([])
 
   const getOrders = () => {
-    axios.get("/records/deliveryZones")
+    axios.get("/api/delivery-zones")
       .then((data) => {
         // console.log(data.data);
         setRows(data.data)

@@ -44,8 +44,12 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 const SubscriptionCard = ({
   sub,
   handleEditClick,
-  handleSubscriptionDeleteSubmit,
+  // handleSubscriptionDeleteSubmit,
   handleAddressForm,
+  subscription,
+  subscriptions,
+  getAllSubscriptions,
+  deleteSubscription,
 }: any) => {
   // expanded state var
   const [expanded, setExpanded] = useState(false);
@@ -54,19 +58,6 @@ const SubscriptionCard = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  // SUBSCRIPTION DELETE
-  // make a DELETE request to handle delete
-  // const handleDeleteSubscription = () => {
-  //   axios
-  //     .delete(`/api/subscriptions/delete`, {
-  //       params: { subscriptionId: subscriptionId },
-  //     })
-  //     .then((data: any) => {
-  //       console.log('Subscription DELETE Success!', data);
-  //     })
-  //     .catch((err) => console.error(err));
-  // };
 
   const {
     id,
@@ -128,7 +119,7 @@ const SubscriptionCard = ({
             <ExpandMore
               sx={{ color: 'green' }}
               expand={expanded}
-              onClick={() => handleSubscriptionDeleteSubmit()}
+              onClick={() => deleteSubscription(id)}
             >
               <DeleteIcon sx={{ color: 'green' }} />
             </ExpandMore>

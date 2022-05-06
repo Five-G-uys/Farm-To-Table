@@ -72,9 +72,9 @@ const Event = ({
   const handRSVPosts = () => {
     console.log('LINE 63', user.id, ' and ', event.id);
     axios
-      .post('/events/api/Rsvp/', {
+      .post('/api/rsvps/', {
         userId: id,
-        event_id: event.id,
+        eventId: event.id,
       })
       .then((data) => {
         updateState();
@@ -89,7 +89,7 @@ const Event = ({
   const deleteEvent = () => {
     console.log('LINE 81', user.id, ' and ', event.id);
     axios
-      .delete(`/events/api/event/${event.id}`, {
+      .delete(`/api/events/${event.id}`, {
         params: { id: event.id },
       })
       .then((data) => {

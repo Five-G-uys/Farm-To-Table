@@ -4,14 +4,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../App';
-import { updateSubscription, deleteSubscription } from './subscriptionCalls';
+import { updateSubscription } from './subscriptionCalls';
 import { useNavigate } from 'react-router-dom';
 
 // MUI IMPORTS
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import Confirmation from '../Confirmation';
+// import Confirmation from '../Confirmation';
 
 // COMPONENT IMPORTS
 import SubscriptionsContainer from './SubscriptionsContainer';
@@ -28,7 +28,6 @@ const SubscriptionsPage = () => {
   // NEED TO SET USER ID TO CURRENT USER ID. RIGHT NOW IT'S ALWAYS GOING TO BE 0
   // const [id, setId] = useState(0);
   // user.id);
-  // console.log('LINE 37 || SUBSCRIPTION PAGE ', user);
   const { id } = user;
   const [season, setSeason] = useState('');
 
@@ -190,20 +189,17 @@ const SubscriptionsPage = () => {
 
   const postSubscription = () => {
     axios
-      .post('/api/subscriptions-admin', {
-        event: {
-          season: subscription.season,
-          year: subscription.year,
-          flat_price: subscription.flat_price,
-          weekly_price: subscription.weekly_price,
-          description: subscription.description,
-          start_date: subscription.start_date,
-          end_date: subscription.end_date,
-          thumbnail: subscription.thumbnail,
-        },
+      .post('/api/subscriptions', {
+        season: subscription.season,
+        year: subscription.year,
+        flat_price: subscription.flat_price,
+        weekly_price: subscription.weekly_price,
+        description: subscription.description,
+        start_date: subscription.start_date,
+        end_date: subscription.end_date,
+        thumbnail: subscription.thumbnail,
       })
       .then((data) => {
-        // console.log('saved!', data);
         setUpdateCounter(updateCounter + 1);
         handleClose();
       })
@@ -219,33 +215,32 @@ const SubscriptionsPage = () => {
       // keep in try so it doesn't rerender on error
       setUpdateCounter(updateCounter + 1);
       handleClose();
-
-      console.log('LINE 145 || Subscription Update', result);
     } catch (err) {
       console.error('LINE 140 || Subscription Update ', err);
     }
   };
 
-  // create function to handle delete season submission
-  const handleSubscriptionDeleteSubmit = async () => {
-    try {
-      // call async function that was imported from apiCalls/productCalls
-      const result = await deleteSubscription(subscription.id);
-      // keep in try so it doesn't rerender on error
-      setUpdateCounter(updateCounter + 1);
-      handleClose();
-
-      console.log('LINE 160 || Subscription Delete', result);
-    } catch (err) {
-      console.error('LINE 162 || Subscription Delete ', err);
-    }
+  const deleteSubscription = (subscriptionId: any) => {
+    const clickedSubscription: any = subscriptions.find(
+      // find mutates original array values
+      (sub: any) => sub.id === subscriptionId
+    );
+    axios
+      .delete(`/api/subscriptions/${clickedSubscription.id}`, {
+        params: { id: clickedSubscription.id },
+      })
+      .then(() => {
+        getAllSubscriptions();
+      })
+      .catch((err) => {
+        console.error('69 REQUEST FAILED', err);
+      });
   };
 
   const getAllSubscriptions = () => {
     axios
-      .get(`/api/subscriptions/`)
+      .get(`/api/subscriptions`)
       .then((data) => {
-        // console.log('LINE 139 SubPage', data.data);
         setSubscriptions(data.data);
       })
       .catch((err) => {
@@ -258,29 +253,24 @@ const SubscriptionsPage = () => {
   }, [updateCounter]);
 
   const handleEditClick = (subscriptionId: any) => {
-    // console.log('LINE 221 || SUBSCRIPTIONS PAGE CLICKED', subscriptionId);
-
-    const clickedProduct: any = subscriptions.find(
+    const clickedSubscription: any = subscriptions.find(
       // find mutates original array values
       (sub: any) => sub.id === subscriptionId
     );
-    clickedProduct.thumbnail = clickedProduct.thumbnail
-      ? clickedProduct.thumbnail
+    clickedSubscription.thumbnail = clickedSubscription.thumbnail
+      ? clickedSubscription.thumbnail
       : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
-    // delete clickedProduct.updatedAt;
-    // delete clickedProduct.createdAt;
-    // delete clickedProduct.id;
 
     setSubscription({
       id: subscriptionId,
-      season: clickedProduct.season,
-      year: clickedProduct.year,
-      flat_price: clickedProduct.flat_price,
-      weekly_price: clickedProduct.weekly_price,
-      description: clickedProduct.description,
-      start_date: clickedProduct.start_date,
-      end_date: clickedProduct.end_date,
-      thumbnail: clickedProduct.thumbnail,
+      season: clickedSubscription.season,
+      year: clickedSubscription.year,
+      flat_price: clickedSubscription.flat_price,
+      weekly_price: clickedSubscription.weekly_price,
+      description: clickedSubscription.description,
+      start_date: clickedSubscription.start_date,
+      end_date: clickedSubscription.end_date,
+      thumbnail: clickedSubscription.thumbnail,
     });
     setInEditMode(true);
     setOpen(true);
@@ -290,11 +280,13 @@ const SubscriptionsPage = () => {
     <div>
       <SubscriptionsContainer
         subscriptions={subscriptions}
+        subscription={subscription}
         getAllSubscriptions={getAllSubscriptions}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
-        handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
+        // handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
         handleAddressForm={handleAddressForm}
+        deleteSubscription={deleteSubscription}
       />
       <AddressForm
         handleAddressForm={handleAddressForm}
@@ -304,6 +296,7 @@ const SubscriptionsPage = () => {
         handleSubscribed={handleSubscribed}
         commonStyles={commonStyles}
         address={address}
+        deleteSubscription={deleteSubscription}
       />
       <SubscriptionsAdmin
         handleInputSubscription={handleInputSubscription}
@@ -318,7 +311,6 @@ const SubscriptionsPage = () => {
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
         handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-        handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
         value={value}
         handleRadioBtn={handleRadioBtn}
       />

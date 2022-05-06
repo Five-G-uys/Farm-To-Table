@@ -46,7 +46,7 @@ const RSVPLIST = ({
   const deleteRsvpsEvent = () => {
     console.log('LINE 81', id, ' and ', eventId);
     axios
-      .delete('/events/api/rsvps', {
+      .delete('/api/rsvps', {
         params: { userId: id, eventId: eventId },
       })
       .then((data) => {
