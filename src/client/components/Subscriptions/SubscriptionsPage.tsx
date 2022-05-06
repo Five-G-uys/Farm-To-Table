@@ -9,10 +9,10 @@ import SubscriptionsAdmin from './SubscriptionsAdmin';
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import Confirmation from '../Confirmation';
+// import Confirmation from '../Confirmation';
 
 import { UserContext } from '../App';
-import { updateSubscription, deleteSubscription } from './subscriptionCalls';
+import { updateSubscription } from './subscriptionCalls';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
@@ -24,7 +24,6 @@ const SubscriptionsPage = () => {
   // NEED TO SET USER ID TO CURRENT USER ID. RIGHT NOW IT'S ALWAYS GOING TO BE 0
   // const [id, setId] = useState(0);
   // user.id);
-  // console.log('LINE 37 || SUBSCRIPTION PAGE ', user);
   const { id } = user;
   const [season, setSeason] = useState('');
 
@@ -127,7 +126,6 @@ const SubscriptionsPage = () => {
         },
       })
       .then((data) => {
-        // console.log('saved!', data);
         setUpdateCounter(updateCounter + 1);
         handleClose();
       })
@@ -143,33 +141,32 @@ const SubscriptionsPage = () => {
       // keep in try so it doesn't rerender on error
       setUpdateCounter(updateCounter + 1);
       handleClose();
-
-      console.log('LINE 145 || Subscription Update', result);
     } catch (err) {
       console.error('LINE 140 || Subscription Update ', err);
     }
   };
 
-  // create function to handle delete season submission
-  const handleSubscriptionDeleteSubmit = async () => {
-    try {
-      // call async function that was imported from apiCalls/productCalls
-      const result = await deleteSubscription(subscription.id);
-      // keep in try so it doesn't rerender on error
-      setUpdateCounter(updateCounter + 1);
-      handleClose();
-
-      console.log('LINE 160 || Subscription Delete', result);
-    } catch (err) {
-      console.error('LINE 162 || Subscription Delete ', err);
-    }
+  const deleteSubscription = (subscriptionId: any) => {
+    const clickedSubscription: any = subscriptions.find(
+      // find mutates original array values
+      (sub: any) => sub.id === subscriptionId
+    );
+    axios
+      .delete(`/api/subscriptions/${clickedSubscription.id}`, {
+        params: { id: clickedSubscription.id },
+      })
+      .then(() => {
+        getAllSubscriptions();
+      })
+      .catch((err) => {
+        console.error('69 REQUEST FAILED', err);
+      });
   };
 
   const getAllSubscriptions = () => {
     axios
       .get(`/api/subscriptions/`)
       .then((data) => {
-        // console.log('LINE 139 SubPage', data.data);
         setSubscriptions(data.data);
       })
       .catch((err) => {
@@ -187,7 +184,6 @@ const SubscriptionsPage = () => {
     if (season) {
       axios
         .post(`/api/add_subscription_entry/${id}`, {
-          // farm_id: 1,
           // this is the subscription id, or at least it needs to be. Check state
           season: subscription.id, // change season to number season id on server side
         })
@@ -203,29 +199,24 @@ const SubscriptionsPage = () => {
   };
 
   const handleEditClick = (subscriptionId: any) => {
-    // console.log('LINE 221 || SUBSCRIPTIONS PAGE CLICKED', subscriptionId);
-
-    const clickedProduct: any = subscriptions.find(
+    const clickedSubscription: any = subscriptions.find(
       // find mutates original array values
       (sub: any) => sub.id === subscriptionId
     );
-    clickedProduct.thumbnail = clickedProduct.thumbnail
-      ? clickedProduct.thumbnail
+    clickedSubscription.thumbnail = clickedSubscription.thumbnail
+      ? clickedSubscription.thumbnail
       : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
-    // delete clickedProduct.updatedAt;
-    // delete clickedProduct.createdAt;
-    // delete clickedProduct.id;
 
     setSubscription({
       id: subscriptionId,
-      season: clickedProduct.season,
-      year: clickedProduct.year,
-      flat_price: clickedProduct.flat_price,
-      weekly_price: clickedProduct.weekly_price,
-      description: clickedProduct.description,
-      start_date: clickedProduct.start_date,
-      end_date: clickedProduct.end_date,
-      thumbnail: clickedProduct.thumbnail,
+      season: clickedSubscription.season,
+      year: clickedSubscription.year,
+      flat_price: clickedSubscription.flat_price,
+      weekly_price: clickedSubscription.weekly_price,
+      description: clickedSubscription.description,
+      start_date: clickedSubscription.start_date,
+      end_date: clickedSubscription.end_date,
+      thumbnail: clickedSubscription.thumbnail,
     });
     setInEditMode(true);
     setOpen(true);
@@ -235,10 +226,11 @@ const SubscriptionsPage = () => {
     <div>
       <SubscriptionsContainer
         subscriptions={subscriptions}
+        subscription={subscription}
         getAllSubscriptions={getAllSubscriptions}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
-        handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
+        deleteSubscription={deleteSubscription}
       />
       <SubscriptionsAdmin
         handleInputSubscription={handleInputSubscription}
@@ -253,7 +245,6 @@ const SubscriptionsPage = () => {
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
         handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-        handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
         value={value}
         handleRadioBtn={handleRadioBtn}
       />
