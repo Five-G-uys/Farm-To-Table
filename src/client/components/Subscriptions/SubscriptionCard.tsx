@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from '../App';
 
 // MUI IMPORTS
 import {
@@ -51,6 +52,9 @@ const SubscriptionCard = ({
   getAllSubscriptions,
   deleteSubscription,
 }: any) => {
+  const user: any = useContext(UserContext);
+  const { roleId } = user;
+
   // expanded state var
   const [expanded, setExpanded] = useState(false);
 
@@ -121,15 +125,14 @@ const SubscriptionCard = ({
               expand={expanded}
               onClick={() => deleteSubscription(id)}
             >
-              <DeleteIcon sx={{ color: 'green' }} />
+              {roleId > 3 && <DeleteIcon sx={{ color: 'green' }} />}
             </ExpandMore>
-
             <ExpandMore
               sx={{ color: 'green' }}
               expand={expanded}
               onClick={() => handleEditClick(id)}
             >
-              <EditIcon sx={{ color: 'green' }} />
+              {roleId > 3 && <EditIcon sx={{ color: 'green' }} />}
             </ExpandMore>
             <ExpandMore
               sx={{ color: 'green' }}
@@ -141,15 +144,17 @@ const SubscriptionCard = ({
               <ExpandMoreIcon />
             </ExpandMore>
           </Stack>
-          <Button
-            variant='text'
-            size='small'
-            // type='submit'
-            sx={{ color: 'green' }}
-            onClick={() => handleAddressForm(id)}
-          >
-            SUBSCRIBE
-          </Button>
+          {roleId < 4 && (
+            <Button
+              variant='text'
+              size='small'
+              // type='submit'
+              sx={{ color: 'green' }}
+              onClick={() => handleAddressForm(id)}
+            >
+              SUBSCRIBE
+            </Button>
+          )}
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
           <CardContent>
