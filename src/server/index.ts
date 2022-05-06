@@ -17,7 +17,6 @@ import axios from 'axios';
 require('./db/database.ts');
 require('./middleware/auth');
 
-
 // Import Routers
 import authRouter from './routes/AuthRouter';
 import deliveryZonesRouter from './routes/DeliveryZoneRouter';
@@ -38,7 +37,6 @@ import weatherRouter from './routes/WeatherRouter';
 // Import Interfaces
 import UserInterface from '../types/UserInterface';
 import Profile from 'src/client/components/ProfilePage';
-
 
 const app: Express = express();
 const port = process.env.LOCAL_PORT;
@@ -67,9 +65,10 @@ app.use(passport.session());
 
 // Mount Routers
 app.use('/auth', authRouter);
-app.use('', deliveryZonesRouter); 
+app.use('', deliveryZonesRouter);
 app.use('', dietaryRestrictionRouter);
-app.use('', eventRouter); ('/api/events')
+app.use('', eventRouter);
+('/api/events');
 // app.use('/order-contents', orderContentRouter);
 app.use('', orderRouter);
 app.use('', productRouter);

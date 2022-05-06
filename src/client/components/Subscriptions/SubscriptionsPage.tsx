@@ -3,16 +3,20 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from '../App';
+import { updateSubscription } from './subscriptionCalls';
 import { useNavigate } from 'react-router-dom';
-import SubscriptionsContainer from './SubscriptionsContainer';
-import SubscriptionsAdmin from './SubscriptionsAdmin';
+
+// MUI IMPORTS
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 // import Confirmation from '../Confirmation';
 
-import { UserContext } from '../App';
-import { updateSubscription } from './subscriptionCalls';
+// COMPONENT IMPORTS
+import SubscriptionsContainer from './SubscriptionsContainer';
+import SubscriptionsAdmin from './SubscriptionsAdmin';
+import AddressForm from './AddressForm';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
@@ -31,7 +35,6 @@ const SubscriptionsPage = () => {
   const [inEditMode, setInEditMode] = useState(false);
 
   const [subscriptions, setSubscriptions] = useState([]);
-
   const [value, setValue] = React.useState('Season');
 
   const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,9 +53,8 @@ const SubscriptionsPage = () => {
     thumbnail: '',
   });
 
-  // state var for backdrop
+  // state var for form modal and backdrop
   const [open, setOpen] = useState(false);
-
   // handle create form
   const handleCreateForm = () => {
     setOpen(true);
@@ -72,6 +74,94 @@ const SubscriptionsPage = () => {
       end_date: '',
       thumbnail: '',
     });
+  };
+  const handleInputSubscription = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setSubscription((state) => {
+      return {
+        ...state,
+        [name]: value,
+      };
+    });
+  };
+  //////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////
+
+  // create state var for each address component (street, city, state, zip)
+  const [selectedSubscriptionId, setSelectedSubscriptionId] = useState(null);
+
+  const [address, setAddress] = useState({
+    streetAddress: '',
+    city: '',
+    state: '',
+    zip: '',
+  });
+
+  // state var for address form control
+  const [addressOpen, setAddressOpen] = useState(false);
+  // handle open address form
+  const handleAddressForm = (subId: any) => {
+    setSelectedSubscriptionId(subId);
+    setAddressOpen(true);
+  };
+  // set address state vars and handle close address form
+  const handleAddressFormClose = () => {
+    setAddressOpen(false);
+    setAddress({
+      streetAddress: '',
+      city: '',
+      state: '',
+      zip: '',
+    });
+  };
+
+  const handleInputAddress = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setAddress((state) => {
+      return {
+        ...state,
+        [name]: value,
+      };
+    });
+  };
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////
+
+  //SUBSCRIPTION CREATE
+  const handleSubscribed = (event: any) => {
+    event.preventDefault();
+    // Insert Stripe Functionality Here
+    // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
+    axios
+      .post(`/api/add_subscription_entry/${id}`, {
+        // farm_id: 1,
+        // this is the subscription id, or at least it needs to be. Check state
+        subscriptionId: selectedSubscriptionId, // change season to number season id on server side
+        streetAddress: address.streetAddress,
+        city: address.city,
+        state: address.state,
+        zip: address.zip,
+      })
+      .then((data) => {
+        console.log('LINE 159 || SEUBSCRIPTIONS PAGE', data);
+        navigate('/subscriptions-page/confirmation-page');
+      })
+      .catch((err) => {
+        console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
+      });
   };
 
   // Box component styles
@@ -97,33 +187,17 @@ const SubscriptionsPage = () => {
     // display: 'flex',
   };
 
-  const handleInputSubscription = (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setSubscription((state) => {
-      return {
-        ...state,
-        [name]: value,
-      };
-    });
-  };
-
   const postSubscription = () => {
     axios
       .post('/api/subscriptions', {
-        event: {
-          season: subscription.season,
-          year: subscription.year,
-          flat_price: subscription.flat_price,
-          weekly_price: subscription.weekly_price,
-          description: subscription.description,
-          start_date: subscription.start_date,
-          end_date: subscription.end_date,
-          thumbnail: subscription.thumbnail,
-        },
+        season: subscription.season,
+        year: subscription.year,
+        flat_price: subscription.flat_price,
+        weekly_price: subscription.weekly_price,
+        description: subscription.description,
+        start_date: subscription.start_date,
+        end_date: subscription.end_date,
+        thumbnail: subscription.thumbnail,
       })
       .then((data) => {
         setUpdateCounter(updateCounter + 1);
@@ -178,26 +252,6 @@ const SubscriptionsPage = () => {
     getAllSubscriptions();
   }, [updateCounter]);
 
-  //SUBSCRIPTION CREATE
-  const handleSubscribed = () => {
-    // Insert Stripe Functionality Here
-    if (season) {
-      axios
-        .post(`/api/add_subscription_entry/${id}`, {
-          // this is the subscription id, or at least it needs to be. Check state
-          season: subscription.id, // change season to number season id on server side
-        })
-        .then(() => {
-          navigate('/subscriptions-page/confirmation-page');
-        })
-        .catch((err) => {
-          console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
-        });
-    } else {
-      alert('You must select one');
-    }
-  };
-
   const handleEditClick = (subscriptionId: any) => {
     const clickedSubscription: any = subscriptions.find(
       // find mutates original array values
@@ -230,6 +284,18 @@ const SubscriptionsPage = () => {
         getAllSubscriptions={getAllSubscriptions}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
+        // handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
+        handleAddressForm={handleAddressForm}
+        deleteSubscription={deleteSubscription}
+      />
+      <AddressForm
+        handleAddressForm={handleAddressForm}
+        handleAddressFormClose={handleAddressFormClose}
+        addressOpen={addressOpen}
+        handleInputAddress={handleInputAddress}
+        handleSubscribed={handleSubscribed}
+        commonStyles={commonStyles}
+        address={address}
         deleteSubscription={deleteSubscription}
       />
       <SubscriptionsAdmin

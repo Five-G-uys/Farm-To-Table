@@ -8,6 +8,7 @@ mapboxgl.accessToken =
   'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A';
 
 const DeliveryPage = ({ lat, lon, updateCoords }: any) => {
+  //FIRST FETCH ORDER
   return (
     <div>
       <Map updateCoords={updateCoords} lat={lat} lon={lon} />
