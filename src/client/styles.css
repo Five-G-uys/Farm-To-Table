@@ -1,4 +1,4 @@
-* {
+/* * {
   font-family: "Fira Sans", sans-serif;
 }
 /*Events Section Start*/
@@ -8,8 +8,8 @@
   font-family: "Inter", sans-serif;
 } */
 body {
-  /* background-image: url("/src/BackGROUND.jpg"); */
-  background-color: #c8bebe34;
+  background-image: url("/src/BackGROUND.jpg");
+  /* background-color: #c8bebe34; */
 }
 
 .event {

@@ -8,17 +8,6 @@ import { Grid } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 
 //import RSVPS from "./RSVPS";
-interface AppProps {
-  eventName: string;
-  description: string;
-  thumbnail: React.ImgHTMLAttributes<string>;
-  eventType: string;
-  eventDate: string;
-  eventId: number;
-  getAllEvents: () => void;
-  location: string;
-  handleEditClick: () => void;
-}
 const useStyles = makeStyles({
   gridContainer: {
     paddingTop: "40px",
@@ -34,8 +23,36 @@ const EventCard = ({
   inEditMode,
   updateState,
   getAllEvents,
-}: AppProps | any) => {
+}: any) => {
   const user: any = useContext(UserContext);
+  const { id, roleId } = user;
+  const [rsvps, setRsvps] = useState([]);
+  const getAllRSVPSEvents = () => {
+    axios
+      .get(`/events/api/user/rsvps/${id}`)
+      .then(({ data }) => {
+        console.log("LINE 33 FrontEND request", data);
+        const newArr = data
+          .map((eventObj: any) => {
+            return eventObj.value;
+          })
+          .map((eventArr: any) => {
+            return eventArr[0];
+          });
+        setRsvps(newArr);
+        //setRsvpsCount(newArr.length);
+      })
+      .catch((err) => {
+        console.log("LINE 48 FAILED", err);
+      });
+  };
+
+  // console.log("LINE 75 ", rsvps + "and number");
+
+  // console.log("LINE 45", rsvps);
+  // useEffect(() => {
+  //   getAllRSVPSEvents();
+  // }, []);
 
   //console.log("line 32", allEvents);
   const classes = useStyles();
@@ -65,6 +82,7 @@ const EventCard = ({
                 inEditMode={inEditMode}
                 updateState={updateState}
                 getAllEvents={getAllEvents}
+                rsvps={rsvps}
               />
             </Grid>
           );

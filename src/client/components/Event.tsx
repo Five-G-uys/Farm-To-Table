@@ -31,6 +31,7 @@ import { loadCSS } from "fg-loadcss";
 import Box from "@mui/material/Box";
 import Icon from "@mui/material/Icon";
 import green from "@material-ui/core/colors/green";
+import ButtonIcon from "@mui/material";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -55,29 +56,46 @@ const Event = ({
   inEditMode,
   getAllEvents,
   updateState,
+  rsvps,
 }: any) => {
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
   const { id } = user;
   const [expanded, setExpanded] = useState(false);
-  const [userRsvp, setUserRsvp] = useState("Not going");
-
+  const [userRsvp, setUserRsvp] = useState([]);
+  const [rsvpTracker, setRsvpTracker] = useState<any[]>([]);
   // toggle bool
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   const handRSVPosts = () => {
-    setUserRsvp("going");
     axios
       .post("/events/api/Rsvp/", {
         userId: id,
-        event_id: event.id,
+        eventId: event.id,
       })
-      .then((data) => {
-        setUserRsvp((rsvp) => (rsvp += "going"));
-        updateState();
-        console.log("66 LINE ", data);
+      .then((data: any) => {
+        const { userId } = data.data;
+        const tracker = data.data;
+        console.log("tracker 81", tracker);
+        getAllEvents();
+        axios
+          .get(`/events/api/rsvps/${userId}`, {
+            params: { eventId: tracker.eventId, userId: id },
+          })
+          .then(({ data }) => {
+            console.log("Line 84", data);
+            //console.log("79 LINE ", data);
+            const tracker = data;
+            console.log("line 82", tracker);
+            setRsvpTracker((state: any) => state.push(...tracker));
+            console.log("line 93", rsvpTracker);
+          });
+      })
+      .then(() => {
+        //setUserRsvp(rsvpTracker);
+        console.log(userRsvp);
       })
       .catch((err) => {
         console.error("68 REQUEST FAILED", err);
@@ -101,7 +119,7 @@ const Event = ({
       });
   };
   const { roleId } = user;
-  console.log("Event Line 107", userRsvp);
+  console.log("Event Line 107 and ", rsvpTracker);
 
   return (
     <Card
@@ -160,11 +178,11 @@ const Event = ({
                 fontSize="large"
                 onClick={handRSVPosts}
               >
-                +
+                {rsvpTracker.length > 0 ? rsvpTracker.length : "+"}
               </Icon>
             </ExpandMore>
           )}
-          <ExpandMore expand={false}>{userRsvp}</ExpandMore>
+          <ExpandMore expand={false}>{rsvpTracker.length}</ExpandMore>
           {roleId > 3 && (
             <ExpandMore
               sx={{ color: "green" }}
