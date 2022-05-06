@@ -19,18 +19,18 @@ import OrderContentsModel from './OrderContents';
 export const syncModels = async (dropTables = false) => {
   const options = { force: dropTables };
   try {
-    await EventsModel.sync(options);
-    await DeliveryZonesModel.sync(options);
     await RolesModel.sync(options);
     await UsersModel.sync(options);
+    await DeliveryZonesModel.sync(options);
+    await EventsModel.sync(options);
     await VendorsModel.sync(options);
-    await SubscriptionsModel.sync(options);
     await ProductsModel.sync(options);
-    await DietaryRestrictionsModel.sync(options);
+    await SubscriptionsModel.sync(options);
     await SubscriptionEntriesModel.sync(options);
+    await DietaryRestrictionsModel.sync(options);
     await OrdersModel.sync(options);
-    await OrderContentsModel.sync(options);
     await RSVPModel.sync(options);
+    await OrderContentsModel.sync(options);
     console.log('models synced!');
 
     await UsersModel.belongsToMany(EventsModel, { through: RSVPModel });

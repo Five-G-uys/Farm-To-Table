@@ -12,7 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Confirmation from '../Confirmation';
 
 import { UserContext } from '../App';
-import { updateSubscription, deleteSubscription } from './subscriptionCalls';
+import { updateSubscription } from './subscriptionCalls';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
@@ -150,20 +150,40 @@ const SubscriptionsPage = () => {
     }
   };
 
-  // create function to handle delete season submission
-  const handleSubscriptionDeleteSubmit = async () => {
-    try {
-      // call async function that was imported from apiCalls/productCalls
-      const result = await deleteSubscription(subscription.id);
-      // keep in try so it doesn't rerender on error
-      setUpdateCounter(updateCounter + 1);
-      handleClose();
-
-      console.log('LINE 160 || Subscription Delete', result);
-    } catch (err) {
-      console.error('LINE 162 || Subscription Delete ', err);
-    }
+  const deleteSubscription = (subscriptionId: any) => {
+    const clickedSubscription: any = subscriptions.find(
+      // find mutates original array values
+      (sub: any) => sub.id === subscriptionId
+    );
+    console.log('CLICKED SUB', clickedSubscription.id);
+    axios
+      .delete(`/api/subscriptions/${clickedSubscription.id}`, {
+        params: { id: clickedSubscription.id },
+      })
+      .then((data) => {
+        console.log('65 LINE ', data);
+        getAllSubscriptions();
+      })
+      .catch((err) => {
+        console.error('69 REQUEST FAILED', err);
+      });
   };
+
+  // // create function to handle delete season submission
+  // const handleSubscriptionDeleteSubmit = async () => {
+  //   try {
+  //     // call async function that was imported from apiCalls/productCalls
+  //     const result = await deleteSubscription();
+  //     console.log('LINE 158', subscription);
+  //     // keep in try so it doesn't rerender on error
+  //     setUpdateCounter(updateCounter + 1);
+  //     handleClose();
+
+  //     console.log('LINE 160 || Subscription Delete', result);
+  //   } catch (err) {
+  //     console.error('LINE 162 || Subscription Delete ', err);
+  //   }
+  // };
 
   const getAllSubscriptions = () => {
     axios
@@ -212,9 +232,6 @@ const SubscriptionsPage = () => {
     clickedProduct.thumbnail = clickedProduct.thumbnail
       ? clickedProduct.thumbnail
       : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
-    // delete clickedProduct.updatedAt;
-    // delete clickedProduct.createdAt;
-    // delete clickedProduct.id;
 
     setSubscription({
       id: subscriptionId,
@@ -235,10 +252,11 @@ const SubscriptionsPage = () => {
     <div>
       <SubscriptionsContainer
         subscriptions={subscriptions}
+        subscription={subscription}
         getAllSubscriptions={getAllSubscriptions}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
-        handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
+        deleteSubscription={deleteSubscription}
       />
       <SubscriptionsAdmin
         handleInputSubscription={handleInputSubscription}
@@ -253,7 +271,6 @@ const SubscriptionsPage = () => {
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
         handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-        handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
         value={value}
         handleRadioBtn={handleRadioBtn}
       />

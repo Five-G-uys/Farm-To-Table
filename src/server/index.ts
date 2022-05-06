@@ -262,7 +262,7 @@ app.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
 
 ////////////////////////////////////////////////////////////////////////////// SUBSCRIPTION REQUESTS ////////////
 app.patch('/api/subscribed/:id', async (req: Request, res: Response) => {
-  // console.log('LINE 216 || UPDATE SEASON', req.body);
+  console.log('LINE 265 || UPDATE SEASON', req.body); //UPDATES SEASON  SUCCESS
   try {
     // update subscription model with async query and assign the result of that promise to a variable to res.send back
     const updatedSubscription = await Subscriptions.update(req.body, {
@@ -281,11 +281,11 @@ app.patch('/api/subscribed/:id', async (req: Request, res: Response) => {
 app.post(
   `/api/add_subscription_entry/:id`,
   async (req: Request, res: Response) => {
-    console.log('LINE 287 || SERVER INDEX.TS', req.body, req.params);
-
+    // console.log('LINE 284 || SERVER INDEX.TS', req.body, req.params);
+    //UPDATES SEASON ID - WORKS!
     const addSubscription = (id: number) => {
       console.log(
-        'LINE 291 || INDEXSERVER || SUBSCRIPTION ENTRY POST ROUTE',
+        'LINE 288 || INDEXSERVER || SUBSCRIPTION ENTRY POST ROUTE',
         id
       );
       SubscriptionEntries.create({
@@ -294,7 +294,7 @@ app.post(
         subscriptionId: id,
       })
         .then((data: any) => {
-          console.log('LINE 301 || SERVER ||', data.dataValues.id);
+          // console.log('LINE 301 || SERVER ||', data.dataValues.id);
 
           const today: Date = new Date();
           // iterate over number of orders
@@ -355,7 +355,7 @@ app.get(`/api/subscriptions/`, (req: Request, res: Response) => {
 //////////////////////////////////////////////////////////////Subscription ADMIN Creation/Edit/Delete Routes//
 
 app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
-  // console.log('LINE 272 ****', req.body.event);
+  // console.log('LINE 358 ****', req.body.event); //CREATES NEW SEASON !! WORKS
   const {
     season,
     year,
@@ -387,7 +387,7 @@ app.post('/api/subscriptions-admin', (req: Request, res: Response) => {
 
 //Subscription Admin PUT request:
 app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
-  console.log('LINE 305 Subscription PUT req', req.params.id);
+  console.log('LINE 390 Subscription PUT req', req.params.id);
   Subscriptions.update(req.body, {
     where: {
       id: req.params.id,
@@ -403,35 +403,39 @@ app.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
 });
 
 //SUBSCRIPTION Admin DELETE req:
-app.delete('/api/subscriptions/delete', (req: Request, res: Response) => {
-  SubscriptionEntries.destroy({
-    where: {
-      subscriptionId: req.query.subscriptionId,
-    },
-    return: true,
-  })
-    .then((data: any) => {
-      Subscriptions.destroy({ where: { id: req.query.subscriptionId } })
-        .then((data: any) => {
-          res.sendStatus(200);
-        })
-        .catch((err: unknown) => {
-          console.log('Subscription DELETE', err);
-          res.sendStatus(404);
-        });
-    })
-    .catch((err: unknown) => {
-      console.error('Server-side Delete Req FAIL', err);
-      res.sendStatus(404);
-    });
-});
+// app.delete(
+//   '/api/subscriptions/:subscriptionId',
+//   (req: Request, res: Response) => {
+//     console.log('LINE 407', req.params);
+//     SubscriptionEntries.destroy({
+//       where: {
+//         subscriptionId: req.params.subscriptionId,
+//       },
+//       return: true,
+//     })
+//       .then((data: any) => {
+//         Subscriptions.destroy({ where: { id: req.query.subscriptionId } })
+//           .then((data: any) => {
+//             res.sendStatus(200);
+//           })
+//           .catch((err: unknown) => {
+//             console.log('Subscription DELETE', err);
+//             res.sendStatus(404);
+//           });
+//       })
+//       .catch((err: unknown) => {
+//         console.error('Server-side Delete Req FAIL', err);
+//         res.sendStatus(404);
+//       });
+//   }
+// );
 
 app.delete(
-  '/api/user/subscriptions/delete/:id',
+  '/api/subscriptions/:subscriptionId',
   (req: Request, res: Response) => {
-    // console.log('line 120', req);
+    console.log('line 436', req.params);
     Subscriptions.destroy({
-      where: { id: req.params.id },
+      where: { id: Number(req.params.subscriptionId) },
     })
       .then((data: any) => {
         console.log('440 subscription delete was successful!', data);

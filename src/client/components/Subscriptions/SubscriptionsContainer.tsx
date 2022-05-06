@@ -17,7 +17,8 @@ const SubscriptionsContainer = ({
   getAllSubscriptions,
   handleEditClick,
   inEditMode,
-  handleSubscriptionDeleteSubmit,
+  subscription,
+  deleteSubscription,
 }: any) => {
   // console.log('LINE 5 || SUBSCRIPTIONSCONTAINER', subscriptions);
   const classes = useStyles();
@@ -44,8 +45,10 @@ const SubscriptionsContainer = ({
               key={sub.season + sub.id}
               handleEditClick={handleEditClick}
               inEditMode={inEditMode}
+              subscription={subscription}
+              subscriptions={subscriptions}
               getAllSubscriptions={getAllSubscriptions}
-              handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
+              deleteSubscription={deleteSubscription}
             />
           </Grid>
         );
