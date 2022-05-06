@@ -5,7 +5,6 @@
 // Import Dependencies
 import { Router } from 'express';
 import express, { Express, Request, Response } from 'express';
-
 // Import Models
 import { Subscriptions } from '../db/models';
 
@@ -14,17 +13,15 @@ const subscriptionRouter: Router = Router();
 
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Subscription ROUTE
 subscriptionRouter.post('/api/subscriptions', (req, res) => {
-  console.log('find me', req.body);
-  const {
-    season,
-    year,
-    flat_price,
-    weekly_price,
-    description,
-    start_date,
-    end_date,
-    thumbnail,
-  } = req.body;
+  console.log('LINE 16 || ', req.body);
+  let { year, flat_price, weekly_price } = req.body;
+  const { season, description, start_date, end_date, thumbnail } = req.body;
+  year = Number(year);
+  flat_price = Number(flat_price);
+  weekly_price = Number(weekly_price);
+
+  console.log('LINE 23 || ', season, description, start_date, end_date);
+
   Subscriptions.create({
     season,
     year,
@@ -116,7 +113,7 @@ subscriptionRouter.delete(
   }
 );
 
-///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Subscription ROUTE
+// ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Subscription ROUTE
 // subscriptionRouter.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
 //   Subscriptions.destroy({ where: req.params })
 //     .then((data: any) => {
