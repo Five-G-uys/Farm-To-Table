@@ -2,6 +2,93 @@
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // /* eslint-disable @typescript-eslint/no-var-requires */
 
+// Import Dependencies
+import { Router } from 'express';
+import express, { Express, Request, Response } from 'express';
+
+// Import Models
+import { Subscriptions } from '../db/models';
+
+// Set Up Router
+const subscriptionRouter: Router = Router();
+
+
+///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Subscription ROUTE
+subscriptionRouter.post('/api/subscription', (req, res) => {
+  // console.log(req.body)
+  const { season, year, flatPrice, weeklyPrice, description, startDate, endDate } =
+    req.body;
+    Subscriptions.create({ season, year, flatPrice, weeklyPrice, description, startDate, endDate })
+    .then((data: any) => {
+      res.status(201).send(data);
+    })
+    .catch((err: string) => {
+      console.error('Subscriptions Post Request Failed', err);
+      res.sendStatus(500);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////// READ ALL Subscriptions ROUTE
+subscriptionRouter.get('/api/subscription', (req, res) => {
+  Subscriptions.findAll()
+    .then((response: any) => {
+      console.log('FINDALL Subscriptions RESPONSE: ', response);
+      res.status(200).send(response);
+    })
+    .catch((err: object) => {
+      console.log('FIND ALL SUBSCRIPTION ERROR: ', err);
+      res.sendStatus(404);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Subscription ROUTE
+subscriptionRouter.patch(
+  '/api/subscription/:id',
+  async (req: Request, res: Response) => {
+    console.log('UPDATE Subscription REQUEST BODY: ', req.body);
+    try {
+      const updatedSubscription = await Subscriptions.update(req.body, {
+        where: { id: req.params.id },
+        returning: true,
+      });
+      console.log('Subscription UPDATE INFO: ', updatedSubscription);
+      res.status(204).json(updatedSubscription);
+    } catch (err) {
+      console.error('Subscription UPDATE WAS NOT SUCCESSFUL: ', err);
+      res.status(500).json(err);
+    }
+  }
+);
+
+///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Subscription ROUTE
+subscriptionRouter.delete('/api/subscription/:id', (req: Request, res: Response) => {
+  Subscriptions.destroy({ where: req.params })
+    .then((data: any) => {
+      console.log("Subscription DELETION SUCCESSFUL: ", data);
+      res.sendStatus(200);
+    })
+    .catch((err: any) => {
+      console.error('Subscription DELETION WAS NOT SUCCESSFUL: ', err);
+      res.sendStatus(400);
+    });
+});
+
+// Export Router
+export default subscriptionRouter;
+
+
+
+
+
+
+
+
+
+
+
+
+////////// THIS WAS HERE BEFORE I GOT HERE, DIDN'T WANT TO DELETE (MURPHY)
+
 // import { Router } from 'express';
 // import {
 //   Farms,

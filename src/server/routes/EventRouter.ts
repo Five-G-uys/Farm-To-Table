@@ -169,4 +169,4 @@ eventRouter.delete('/api/rsvps', (req: Request, res: Response) => {
 });
 
 // Export Router
-module.exports = eventRouter;
+export default eventRouter;

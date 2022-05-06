@@ -34,4 +34,4 @@ weatherRouter.get('/weather/:lat/:lon', (req: any, res: any) => {
 });
 
 // Export Router
-module.exports = weatherRouter;
+export default weatherRouter;

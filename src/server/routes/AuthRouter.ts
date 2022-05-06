@@ -96,4 +96,4 @@ authRouter.get('/api/userProfile', (req, res) => {
 });
 
 // Export Router
-module.exports = authRouter;
+export default authRouter;

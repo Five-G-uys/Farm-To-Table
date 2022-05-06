@@ -4,21 +4,21 @@
 
 // Import Dependencies
 import { Router } from 'express';
-import express, { Express, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 
 // Import Models
-import { Users } from '../db/models';
+import { DeliveryZones } from '../db/models';
 
 // Set Up Router
-const userRouter: Router = Router();
+const deliveryZonesRouter: Router = Router();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE USER ROUTE
-userRouter.post('/api/user', (req, res) => {
+deliveryZonesRouter.post('/api/delivery-zone', (req, res) => {
   // console.log(req.body)
-  const { googleId, name, email, streetAddress, cityAddress, stateAddress, zipCode, lat, lon, picture, roleId  } =
+  const { name, description, zipCodes } =
     req.body;
-  Users.create({ googleId, name, email, streetAddress, cityAddress, stateAddress, zipCode, lat, lon, picture, roleId })
+    DeliveryZones.create({ name, description, zipCodes })
     .then((data: any) => {
       res.status(201).send(data);
     })
@@ -29,49 +29,49 @@ userRouter.post('/api/user', (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL USERs ROUTE
-userRouter.get('/api/user', (req, res) => {
-  Users.findAll()
+deliveryZonesRouter.get('/api/delivery-zone', (req, res) => {
+  DeliveryZones.findAll()
     .then((response: any) => {
-      console.log('FINDALL USERS RESPONSE: ', response);
+      console.log('FIND ALL DeliveryZones RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('Something went wrong', err);
+      console.log('FIND ALL DeliveryZones ERROR: ', err);
       res.sendStatus(404);
     });
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE ONE USER ROUTE
-userRouter.patch(
-  '/api/user/:id',
+deliveryZonesRouter.patch(
+  '/api/delivery-zone/:id',
   async (req: Request, res: Response) => {
     console.log('UPDATE USERS REQUEST BODY: ', req.body);
     try {
-      const updatedUser = await Users.update(req.body, {
+      const updatedDeliveryZones = await DeliveryZones.update(req.body, {
         where: { id: req.params.id },
         returning: true,
       });
-      console.log('USER UPDATE INFO: ', updatedUser);
-      res.status(204).json(updatedUser);
+      console.log('DeliveryZones UPDATE INFO: ', updatedDeliveryZones);
+      res.status(204).json(updatedDeliveryZones);
     } catch (err) {
-      console.error('USER UPDATE WAS NOT SUCCESSFUL: ', err);
+      console.error('DeliveryZones UPDATE WAS NOT SUCCESSFUL: ', err);
       res.status(500).json(err);
     }
   }
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE ONE USER ROUTE
-userRouter.delete('/api/user/:id', (req: Request, res: Response) => {
-  Users.destroy({ where: req.params })
+deliveryZonesRouter.delete('/api/delivery-zone/:id', (req: Request, res: Response) => {
+  DeliveryZones.destroy({ where: req.params })
     .then((data: any) => {
-      console.log("USER DELETION SUCCESSFUL: ", data);
+      console.log("DeliveryZones DELETION SUCCESSFUL: ", data);
       res.sendStatus(200);
     })
     .catch((err: any) => {
-      console.error('USER DELETION WAS NOT SUCCESSFUL: ', err);
+      console.error('DeliveryZones DELETION WAS NOT SUCCESSFUL: ', err);
       res.sendStatus(400);
     });
 });
 
 // Export Router
-export default userRouter;
+export default deliveryZonesRouter;
