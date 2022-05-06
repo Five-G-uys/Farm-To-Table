@@ -7,7 +7,7 @@
 
 // const farmRouter: Router = Router();
 
-// farmRouter.get('/farms', (req, res) => {
+// farmRouter.get('/api/farms', (req, res) => {
 //   Farms.findAll()
 //     .then((data: any) => {
 //       // console.log('this is the data from the farm api call', data);

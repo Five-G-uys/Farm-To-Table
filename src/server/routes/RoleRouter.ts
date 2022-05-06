@@ -14,7 +14,7 @@ const roleRouter: Router = Router();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Role ROUTE
-roleRouter.post('/api/role', (req, res) => {
+roleRouter.post('/api/roles', (req, res) => {
   // console.log(req.body)
   const { role } =
     req.body;
@@ -29,7 +29,7 @@ roleRouter.post('/api/role', (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL Roles ROUTE
-roleRouter.get('/api/role', (req, res) => {
+roleRouter.get('/api/roles', (req, res) => {
   Roles.findAll()
     .then((response: any) => {
       console.log('FIND ALL Roles RESPONSE: ', response);
@@ -42,7 +42,7 @@ roleRouter.get('/api/role', (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Role ROUTE
-roleRouter.patch('/api/role/:id',
+roleRouter.patch('/api/roles/:id',
   async (req: Request, res: Response) => {
     console.log('UPDATE Role REQUEST BODY: ', req.body);
     try {
@@ -60,7 +60,7 @@ roleRouter.patch('/api/role/:id',
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Role ROUTE
-roleRouter.delete('/api/role/:id', (req: Request, res: Response) => {
+roleRouter.delete('/api/roles/:id', (req: Request, res: Response) => {
   Roles.destroy({ where: req.params })
     .then((data: any) => {
       console.log("Role DELETION SUCCESSFUL: ", data);

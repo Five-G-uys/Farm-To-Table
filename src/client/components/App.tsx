@@ -254,26 +254,24 @@ const App = () => {
                         element={<ProductsRecords />}
                       />
                     </Route>
-
                     <Route
-                      path="dileveryZones-records"
-                      element={<DileveryZonesRecords />}
-                    />
-                    <Route path="events-records" element={<EventsRecords />} />
-                    {/* <Route path="farms-records" element={<FarmsRecords />} /> */}
-                    <Route path="orders-records" element={<OrdersRecords />} />
+                      path="delivery-zones-records"
+                      element={<DileveryZonesRecords />} />
+                    <Route 
+                      path="events-records" 
+                      element={<EventsRecords />} />
+                    <Route 
+                      path="orders-records" 
+                      element={<OrdersRecords />} />
                     <Route
                       path="products-records"
-                      element={<ProductsRecords />}
-                    />
-                    {/* <Route
+                      element={<ProductsRecords />}/>
+                    <Route
                       path="subscription-entries-records"
-                      element={<SubscriptionEntriesRecords />}
-                    />
+                      element={<SubscriptionEntriesRecords />} />
                     <Route
                       path="subscriptions-records"
-                      element={<SubscriptionsRecords />}
-                    /> */}
+                      element={<SubscriptionsRecords />} />
                     <Route path="users-records" element={<UsersRecords />} />
                     <Route
                       path="vendors-records"

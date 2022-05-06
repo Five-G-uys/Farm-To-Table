@@ -110,7 +110,7 @@ const ProductsPage = () => {
     console.log('LINE 108');
     e.preventDefault();
     axios
-      .post('/api/product', {
+      .post('/api/products', {
         product: {
           name: name,
           description: description,
@@ -202,7 +202,7 @@ const ProductsPage = () => {
   // get all products handler
   const getAllProducts = () => {
     axios
-      .get('/get_all_products')
+      .get('/api/products')
       .then((data) => {
         console.log('LINE 165 || GET ALL PRODUCTS', data);
         // set products state to allProducts array

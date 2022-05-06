@@ -13,23 +13,38 @@ import { Products } from '../db/models';
 const productRouter: Router = Router();
 
 
-///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Product ROUTE
-productRouter.post('/api/product', (req, res) => {
-  // console.log(req.body)
-  const { name, description, imgUrl, plantDate, harvestDate, subscriptionId } =
-    req.body;
-    Products.create({ name, description, imgUrl, plantDate, harvestDate, subscriptionId })
+///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Product ROUTE (ORIGINAL FROM index.ts)
+productRouter.post('/api/products', (req: Request, res: Response) => {
+  const {
+    img_url,
+    name,
+    description,
+    plant_date,
+    harvest_date,
+    subscriptionId,
+  } = req.body.product;
+
+  // console.log('162 Request object postEvent', req.body);
+  Products.create({
+    name,
+    description,
+    img_url,
+    plant_date,
+    harvest_date,
+    subscriptionId,
+  })
     .then((data: any) => {
-      res.status(201).send(data);
+      console.log('LINE 187 || Product Post Request', data);
+      res.status(201).json(data);
     })
     .catch((err: string) => {
-      console.error('Products Post Request Failed', err);
-      res.sendStatus(500);
+      console.error('Product Post Request Failed', err);
+      res.status(500).json(err);
     });
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL Products ROUTE
-productRouter.get('/api/product', (req, res) => {
+productRouter.get('/api/products', (req, res) => {
   Products.findAll()
     .then((response: any) => {
       console.log('FIND ALL Products RESPONSE: ', response);
@@ -37,30 +52,32 @@ productRouter.get('/api/product', (req, res) => {
     })
     .catch((err: object) => {
       console.log('FIND ALL Products RESPONSE: ', err);
-      res.sendStatus(404);
+      res.sendStatus(500);
     });
 });
 
-///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Product ROUTE
-productRouter.patch('/api/product/:id',
-  async (req: Request, res: Response) => {
-    console.log('UPDATE Product REQUEST BODY: ', req.body);
-    try {
-      const updatedProduct = await Products.update(req.body, {
-        where: { id: req.params.id },
-        returning: true,
-      });
-      console.log('Product UPDATE INFO: ', updatedProduct);
-      res.status(204).json(updatedProduct);
-    } catch (err) {
-      console.error('Product UPDATE WAS NOT SUCCESSFUL: ', err);
-      res.status(500).json(err);
-    }
+
+///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
+productRouter.patch('/api/products/:id', async (req: Request, res: Response) => {
+  console.log('LINE 271 || UPDATE PRODUCT', req.body);
+
+  try {
+    // update product model with async query and assign the result of that promise to a variable to res.send back
+    const updatedProduct = await Products.update(req.body, {
+      where: { id: req.params.id },
+      returning: true,
+    });
+    // console.log('LINE 278 || UPDATE PRODUCT', updatedProduct);
+
+    res.status(204).json(updatedProduct);
+  } catch (err) {
+    console.error('LINE 274 || UPDATE PRODUCTS', err);
+    res.status(500).json(err);
   }
-);
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Role ROUTE
-productRouter.delete('/api/product/:id', (req: Request, res: Response) => {
+productRouter.delete('/api/products/:id', (req: Request, res: Response) => {
   Products.destroy({ where: req.params })
     .then((data: any) => {
       console.log("Products DELETION SUCCESSFUL: ", data);

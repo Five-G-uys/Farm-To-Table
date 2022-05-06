@@ -14,7 +14,7 @@ const userRouter: Router = Router();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE USER ROUTE
-userRouter.post('/api/user', (req, res) => {
+userRouter.post('/api/users', (req, res) => {
   // console.log(req.body)
   const { googleId, name, email, streetAddress, cityAddress, stateAddress, zipCode, lat, lon, picture, roleId  } =
     req.body;
@@ -29,7 +29,7 @@ userRouter.post('/api/user', (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL USERs ROUTE
-userRouter.get('/api/user', (req, res) => {
+userRouter.get('/api/users', (req, res) => {
   Users.findAll()
     .then((response: any) => {
       console.log('FINDALL USERS RESPONSE: ', response);
@@ -43,7 +43,7 @@ userRouter.get('/api/user', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE ONE USER ROUTE
 userRouter.patch(
-  '/api/user/:id',
+  '/api/users/:id',
   async (req: Request, res: Response) => {
     console.log('UPDATE USERS REQUEST BODY: ', req.body);
     try {
@@ -61,7 +61,7 @@ userRouter.patch(
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE ONE USER ROUTE
-userRouter.delete('/api/user/:id', (req: Request, res: Response) => {
+userRouter.delete('/api/users/:id', (req: Request, res: Response) => {
   Users.destroy({ where: req.params })
     .then((data: any) => {
       console.log("USER DELETION SUCCESSFUL: ", data);

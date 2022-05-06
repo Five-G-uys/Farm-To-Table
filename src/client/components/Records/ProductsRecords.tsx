@@ -43,7 +43,7 @@ const ProductsRecords = () => {
 
   const getProducts = () => {
     axios
-      .get('/records/products')
+      .get('/api/products')
       .then((data) => {
         // console.log(data.data);
         setRows(data.data);

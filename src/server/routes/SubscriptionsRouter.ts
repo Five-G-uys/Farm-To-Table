@@ -14,11 +14,11 @@ const subscriptionRouter: Router = Router();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Subscription ROUTE
-subscriptionRouter.post('/api/subscription', (req, res) => {
-  // console.log(req.body)
-  const { season, year, flatPrice, weeklyPrice, description, startDate, endDate } =
+subscriptionRouter.post('/api/subscriptions', (req, res) => {
+  console.log('find me', req.body)
+  const { season, year, flat_price, weekly_price, description, start_date, end_date } =
     req.body;
-    Subscriptions.create({ season, year, flatPrice, weeklyPrice, description, startDate, endDate })
+    Subscriptions.create({ season, year, flat_price, weekly_price, description, start_date, end_date })
     .then((data: any) => {
       res.status(201).send(data);
     })
@@ -29,10 +29,10 @@ subscriptionRouter.post('/api/subscription', (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL Subscriptions ROUTE
-subscriptionRouter.get('/api/subscription', (req, res) => {
+subscriptionRouter.get('/api/subscriptions', (req, res) => {
   Subscriptions.findAll()
     .then((response: any) => {
-      console.log('FINDALL Subscriptions RESPONSE: ', response);
+      // console.log('FINDALL Subscriptions RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
@@ -41,11 +41,29 @@ subscriptionRouter.get('/api/subscription', (req, res) => {
     });
 });
 
-///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Subscription ROUTE
+///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Subscription PUT ROUTE (original from index.ts)
+//Subscription Admin PUT request:
+subscriptionRouter.put(`/api/subscriptions/:id`, (req: Request, res: Response) => {
+  console.log('LINE 390 Subscription PUT req', req.params.id);
+  Subscriptions.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+    returning: true,
+  })
+    .then((response: any) => {
+      res.json(response).status(204);
+    })
+    .catch((err: unknown) => {
+      console.error('SUBSCRIPTION UPDATE REQUEST:', err);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Subscription PATCH ROUTE
 subscriptionRouter.patch(
-  '/api/subscription/:id',
+  '/api/subscriptions/:id',
   async (req: Request, res: Response) => {
-    console.log('UPDATE Subscription REQUEST BODY: ', req.body);
+    // console.log('UPDATE Subscription REQUEST BODY: ', req.body);
     try {
       const updatedSubscription = await Subscriptions.update(req.body, {
         where: { id: req.params.id },
@@ -60,8 +78,27 @@ subscriptionRouter.patch(
   }
 );
 
+// ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Subscription ROUTE (ORIGINAL from index.ts)
+// subscriptionRouter.delete(
+//   '/api/subscriptions/:subscriptionId',
+//   (req: Request, res: Response) => {
+//     console.log('line 436', req.params);
+//     Subscriptions.destroy({
+//       where: { id: Number(req.params.subscriptionId) },
+//     })
+//       .then((data: any) => {
+//         console.log('440 subscription delete was successful!!', data);
+//         res.sendStatus(200);
+//       })
+//       .catch((err: any) => {
+//         console.error('444 Deletion was not successful', err);
+//         res.sendStatus(400);
+//       });
+//   }
+// );
+
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Subscription ROUTE
-subscriptionRouter.delete('/api/subscription/:id', (req: Request, res: Response) => {
+subscriptionRouter.delete('/api/subscriptions/:id', (req: Request, res: Response) => {
   Subscriptions.destroy({ where: req.params })
     .then((data: any) => {
       console.log("Subscription DELETION SUCCESSFUL: ", data);
@@ -118,7 +155,7 @@ export default subscriptionRouter;
 
 // const subscriptionRouter: Router = Router();
 
-// subscriptionRouter.put(`/api/subscribed/:id`, (req, res) => {
+// subscriptionRouter.put(`/api/subscription/:id`, (req, res) => {
 //   Users.update(req.body, { where: { id: req.params.id }, returning: true })
 //     .then((response: any) => {
 //       // console.log('Subscription Route', response[1]);

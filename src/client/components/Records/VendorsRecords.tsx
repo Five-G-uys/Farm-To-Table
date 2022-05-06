@@ -41,7 +41,7 @@ const VendorsRecords = () => {
   const [rows, setRows] = useState([])
 
   const getVendors = () => {
-    axios.get("/records/vendors")
+    axios.get("/api/vendors")
       .then((data) => {
         // console.log(data.data);
         setRows(data.data)
@@ -52,7 +52,7 @@ const VendorsRecords = () => {
   }
 
   // const handleDelete = () => {
-  //   axios.delete("/api/orders/delete")
+  //   axios.delete("/api/orders")
   //     .then((data)) =>
   // }
 

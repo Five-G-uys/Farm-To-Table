@@ -14,7 +14,7 @@ const deliveryZonesRouter: Router = Router();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE USER ROUTE
-deliveryZonesRouter.post('/api/delivery-zone', (req, res) => {
+deliveryZonesRouter.post('/api/delivery-zones', (req, res) => {
   // console.log(req.body)
   const { name, description, zipCodes } =
     req.body;
@@ -29,7 +29,7 @@ deliveryZonesRouter.post('/api/delivery-zone', (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL USERs ROUTE
-deliveryZonesRouter.get('/api/delivery-zone', (req, res) => {
+deliveryZonesRouter.get('/api/delivery-zones', (req, res) => {
   DeliveryZones.findAll()
     .then((response: any) => {
       console.log('FIND ALL DeliveryZones RESPONSE: ', response);
@@ -37,13 +37,13 @@ deliveryZonesRouter.get('/api/delivery-zone', (req, res) => {
     })
     .catch((err: object) => {
       console.log('FIND ALL DeliveryZones ERROR: ', err);
-      res.sendStatus(404);
+      res.sendStatus(500);
     });
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE ONE USER ROUTE
 deliveryZonesRouter.patch(
-  '/api/delivery-zone/:id',
+  '/api/delivery-zones/:id',
   async (req: Request, res: Response) => {
     console.log('UPDATE USERS REQUEST BODY: ', req.body);
     try {
@@ -61,7 +61,7 @@ deliveryZonesRouter.patch(
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE ONE USER ROUTE
-deliveryZonesRouter.delete('/api/delivery-zone/:id', (req: Request, res: Response) => {
+deliveryZonesRouter.delete('/api/delivery-zones/:id', (req: Request, res: Response) => {
   DeliveryZones.destroy({ where: req.params })
     .then((data: any) => {
       console.log("DeliveryZones DELETION SUCCESSFUL: ", data);

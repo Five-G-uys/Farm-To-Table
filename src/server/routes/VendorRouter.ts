@@ -14,7 +14,7 @@ const vendorRouter: Router = Router();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Vendor ROUTE
-vendorRouter.post('/api/vendor', (req, res) => {
+vendorRouter.post('/api/vendors', (req, res) => {
   // console.log(req.body)
   const { name, contactInformation } =
     req.body;
@@ -29,7 +29,7 @@ vendorRouter.post('/api/vendor', (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL Vendors ROUTE
-vendorRouter.get('/api/vendor', (req, res) => {
+vendorRouter.get('/api/vendors', (req, res) => {
   Vendors.findAll()
     .then((response: any) => {
       console.log('FIND ALL Vendor RESPONSE: ', response);
@@ -43,7 +43,7 @@ vendorRouter.get('/api/vendor', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Vendor ROUTE
 vendorRouter.patch(
-  '/api/vendor/:id',
+  '/api/vendors/:id',
   async (req: Request, res: Response) => {
     console.log('UPDATE Vendor REQUEST BODY: ', req.body);
     try {
@@ -61,7 +61,7 @@ vendorRouter.patch(
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Vendor ROUTE
-vendorRouter.delete('/api/vendor/:id', (req: Request, res: Response) => {
+vendorRouter.delete('/api/vendors/:id', (req: Request, res: Response) => {
   Vendors.destroy({ where: req.params })
     .then((data: any) => {
       console.log("Vendor DELETION SUCCESSFUL: ", data);

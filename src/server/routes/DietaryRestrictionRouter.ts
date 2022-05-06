@@ -14,7 +14,7 @@ const dietaryRestrictionRouter: Router = Router();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE DietaryRestriction ROUTE
-dietaryRestrictionRouter.post('/api/dietary-restriction', (req, res) => {
+dietaryRestrictionRouter.post('/api/dietary-restrictions', (req, res) => {
   // console.log(req.body)
   const { name, description, productsToExclude, productToExclude1, productToExclude2, productToExclude3, productToExclude4 } =
     req.body;
@@ -29,7 +29,7 @@ dietaryRestrictionRouter.post('/api/dietary-restriction', (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL DietaryRestrictions ROUTE
-dietaryRestrictionRouter.get('/api/dietary-restriction', (req, res) => {
+dietaryRestrictionRouter.get('/api/dietary-restrictions', (req, res) => {
   DietaryRestrictions.findAll()
     .then((response: any) => {
       console.log('FIND ALL DietaryRestrictions RESPONSE: ', response);
@@ -43,7 +43,7 @@ dietaryRestrictionRouter.get('/api/dietary-restriction', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID DietaryRestriction ROUTE
 dietaryRestrictionRouter.patch(
-  '/api/dietary-restriction/:id',
+  '/api/dietary-restrictions/:id',
   async (req: Request, res: Response) => {
     console.log('UPDATE DietaryRestriction REQUEST BODY: ', req.body);
     try {
@@ -61,7 +61,7 @@ dietaryRestrictionRouter.patch(
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID DietaryRestriction ROUTE
-dietaryRestrictionRouter.delete('/api/dietary-restriction/:id', (req: Request, res: Response) => {
+dietaryRestrictionRouter.delete('/api/dietary-restrictions/:id', (req: Request, res: Response) => {
   DietaryRestrictions.destroy({ where: req.params })
     .then((data: any) => {
       res.sendStatus(200);

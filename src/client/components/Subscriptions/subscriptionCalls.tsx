@@ -10,7 +10,7 @@ export const updateSubscription = async (
   try {
     // axios always has data property available on response obj so can destructure here
     const { data } = await axios.patch(
-      `/api/subscribed/${subscriptionId}`,
+      `/api/subscriptions/${subscriptionId}`,
       updatedSubscription
     );
     return data;
