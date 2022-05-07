@@ -81,7 +81,7 @@ const App = () => {
             primary: amber,
             divider: amber[200],
             text: {
-              primary: grey[900],
+              primary: grey[700],
               secondary: grey[800],
             },
           }

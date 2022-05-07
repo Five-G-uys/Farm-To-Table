@@ -55,18 +55,30 @@ const Event = ({
   handleEditClick,
   inEditMode,
   getAllEvents,
-  updateState,
   rsvps,
+  rsvpCount,
+  updateState,
 }: any) => {
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   const user: any = useContext(UserContext);
   console.log("THIS IS WORKING", user);
   const { id } = user;
   const [expanded, setExpanded] = useState(false);
-  const [userRsvp, setUserRsvp] = useState([]);
-  const [rsvpTracker, setRsvpTracker] = useState<any[]>([]);
   // toggle bool
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+
+  const [isGoing, setIsGoing] = useState(false);
+
+  console.log("User Rsvp events LINE 80", rsvps);
+  const isUserGoing = (event: any) => {
+    for (let i = 0; i < rsvps.length; i++) {
+      console.log("LINE 75", rsvps[i]);
+      if (event.id === rsvps[i].eventId && id === rsvps[i].userId) {
+        setIsGoing((state) => !state);
+      }
+    }
   };
 
   const handRSVPosts = () => {
@@ -76,26 +88,13 @@ const Event = ({
         eventId: event.id,
       })
       .then(({ rsvpResponseObj }: any) => {
-        //const { userId } = rsvpResponseObj;
-        const tracker = rsvpResponseObj;
-        //console.log("tracker 81", tracker);
         getAllEvents();
-        axios
-          .get(`/api/rsvps/${tracker.userId}`, {
-            params: { eventId: tracker.eventId, userId: tracker.userId },
-          })
-          .then(({ rsvp }: any) => {
-            console.log("Line 84", rsvp);
-            //console.log("79 LINE ", rsvp);
-            const tracker = rsvp;
-            console.log("line 82", tracker);
-            setRsvpTracker((state: any) => state.push(...tracker));
-            console.log("line 93", rsvpTracker);
-          });
+        updateState();
+        isUserGoing(event);
       })
       .then(() => {
-        //setUserRsvp(rsvpTracker);
-        console.log(userRsvp);
+        //setUserRsvp(rsvps);
+        console.log(rsvps);
       })
       .catch((err) => {
         console.error("68 REQUEST FAILED", err);
@@ -119,7 +118,7 @@ const Event = ({
       });
   };
   const { roleId } = user;
-  console.log("Event Line 107 and ", rsvpTracker);
+  console.log("Event Line 107 and ", rsvps);
 
   return (
     <Card
@@ -127,6 +126,7 @@ const Event = ({
         minWidth: 300,
         borderRadius: "2.5rem",
         boxShadow: 24,
+        size: "large",
       }}
     >
       <CardHeader
@@ -134,14 +134,15 @@ const Event = ({
           <Avatar
             sx={{ bgcolor: red[500] }}
             aria-label="recipe"
-            font-size="20px"
+            font-Size="12px"
           >
             {event.eventName[0]}
           </Avatar>
         }
-        subheader={`Date of Event ${event.eventDate}`}
+        subheader={`Date of Event: ${event.eventDate}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
-        fontSize="20px"
+        fontSize="18px"
+        fontWeight="bolder"
         title={event.eventName}
       />
       {event.thumbnail ? (
@@ -151,7 +152,7 @@ const Event = ({
       )}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {`location ${event.location}`}
+          {`Address: ${event.location}`}
         </Typography>
       </CardContent>
       <CardContent>
@@ -162,6 +163,12 @@ const Event = ({
       <CardContent>
         {/* // setup map that returns all product info */}
         <Typography paragraph> {event.description}</Typography>
+        <Typography paragraph>
+          {" "}
+          {rsvpCount === 1
+            ? "1 person is going"
+            : `${rsvpCount}    people are going`}
+        </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
         <Stack spacing={5} direction="row" id="product_card_stack">
@@ -184,7 +191,6 @@ const Event = ({
             )}
           </ExpandMore>
 
-          <ExpandMore expand={false}>{rsvpTracker.length}</ExpandMore>
           {roleId > 3 && (
             <ExpandMore
               sx={{ color: "green" }}

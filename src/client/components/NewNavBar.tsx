@@ -181,7 +181,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                   ))}
                 </Menu>
               </Box>
-              <Switch onChange={() => setMode("dark")}></Switch>
+              <Switch onChange={(mode) => setMode(mode)}></Switch>
               <Typography
                 variant="h6"
                 noWrap

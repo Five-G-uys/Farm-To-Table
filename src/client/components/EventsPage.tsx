@@ -31,7 +31,7 @@ import { updatedEvent } from "../apiCalls/eventCalls";
 
 const EventsPage = () => {
   const user: any = useContext(UserContext);
-  const { roleId, id } = user;
+  const { roleId } = user;
   //console.log("THIS IS WORKING", user);
 
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -41,13 +41,9 @@ const EventsPage = () => {
   const [inEditMode, setInEditMode] = useState(false);
 
   const [value, setValue] = React.useState("");
-  // console.log("LINE 265 VALUE", value);
-  // const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   //console.log("LINE 267 VALUE", value);
-  //   setValue(event.target.value);
-  // };
-
-  //get rsvps from DB
+  const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
 
   //event state variable;
   const [event, setEvent] = useState({
@@ -103,7 +99,7 @@ const EventsPage = () => {
     //console.log("LINE 108");
     e.preventDefault();
     axios
-      .post('/api/events', {
+      .post("/api/events", {
         event: {
           eventName: eventName,
           description: description,
@@ -201,7 +197,7 @@ const EventsPage = () => {
 
   const getAllEvents = () => {
     axios
-      .get('/api/events')
+      .get("/api/events")
 
       .then(({ data }) => {
         //console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
@@ -211,7 +207,20 @@ const EventsPage = () => {
         console.log("sorry, request failed", error);
       });
   };
-
+  const [rsvpCount, setRsvpCount] = useState(0);
+  const [rsvps, setRsvps] = useState<string[]>([]);
+  const getUserRsvps = () => {
+    axios
+      .get("/api/rsvps")
+      .then(({ data }: any) => {
+        console.log("Rsvps get all Response ", data);
+        setRsvps(data);
+        setRsvpCount(data.length);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   ////////////////Radio Button handle function///////////////////////////
 
   // handle click + edit form functionality for edit button in Product Card component
@@ -245,6 +254,7 @@ const EventsPage = () => {
 
   useEffect((): void => {
     getAllEvents();
+    getUserRsvps();
   }, [updateCounter]);
 
   //console.log("line 244 in EventsPage", event);
@@ -256,6 +266,9 @@ const EventsPage = () => {
         allEvents={allEvents}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
+        updateState={updateState}
+        rsvps={rsvps}
+        rsvpCount={rsvpCount}
         updateState={updateState}
       />
 
@@ -345,7 +358,7 @@ const EventsPage = () => {
                         variant="filled"
                         value={location}
                         name="location"
-                        label="location"
+                        label="Address"
                         // id='fullWidth'
                         placeholder="location of event"
                         onChange={handelTextInput}
@@ -366,31 +379,32 @@ const EventsPage = () => {
                       <br></br>
                       <br></br>
                       <Box>
-                        <FormControl>
-                          <FormLabel id="demo-controlled-radio-buttons-group">
+                        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                          {" "}
+                          <FormLabel id="demo-radio-buttons-group-label">
                             Type of Event
                           </FormLabel>
                           <RadioGroup
-                            aria-labelledby="demo-controlled-radio-buttons-group"
+                            aria-labelledby="demo-radio-buttons-group-label"
                             name="controlled-radio-buttons-group"
+                            defaultValue="Farmers Market"
                             value={value}
-                            onChange={(e) => setValue(e.target.value)}
+                            onChange={handleRadioBtn}
                           >
                             <FormControlLabel
-                              value="Community Volunteering"
-                              control={<Radio text-color="success" />}
-                              label="Community Volunteering"
-                              color="success"
-                            />
-                            <FormControlLabel
-                              value="Customers Day"
-                              control={<Radio color="success" />}
-                              label="Customers Day"
-                            />
-                            <FormControlLabel
+                              control={<Radio size="small" />}
                               value="Farmers Market"
-                              control={<Radio color="success" />}
                               label="Farmers Market"
+                            />
+                            <FormControlLabel
+                              control={<Radio size="small" />}
+                              value="Community Volunteering"
+                              label="Community Volunteering"
+                            />
+                            <FormControlLabel
+                              control={<Radio size="small" />}
+                              value="Customer Day"
+                              label="Customer Day"
                             />
                           </RadioGroup>
                         </FormControl>
