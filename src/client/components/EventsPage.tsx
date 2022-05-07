@@ -226,7 +226,6 @@ const EventsPage = () => {
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (id: any) => {
     //console.log("LINE 185 || PRODUCTS PAGE CLICKED", id);
-
     //handle searches for a clicked event in order to update
     const clickedEvent: any = allEvents.find(
       // find mutates original array values
@@ -269,7 +268,7 @@ const EventsPage = () => {
         updateState={updateState}
         rsvps={rsvps}
         rsvpCount={rsvpCount}
-        updateState={updateState}
+        //updateState={updateState}
       />
 
       <div>

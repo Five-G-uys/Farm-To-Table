@@ -64,12 +64,16 @@ const Event = ({
   };
 
   const user: any = useContext(UserContext);
-  console.log("THIS IS WORKING", user);
   const { id } = user;
   const [expanded, setExpanded] = useState(false);
   // toggle bool
-
+  const [userRsvp, setUserRsvp] = useState({});
   const [isGoing, setIsGoing] = useState(false);
+  const { roleId } = user;
+  //console.log("Event Line 107 and ", userRsvp);
+  // useEffect(() => {
+
+  // }, []);
 
   const handRSVPosts = () => {
     axios
@@ -79,32 +83,31 @@ const Event = ({
       })
       .then(({ rsvpResponseObj }: any) => {
         getAllEvents();
-        updateState();
-        isUserGoing(event);
+        // updateState();
       })
       .then(() => {
         //setUserRsvp(rsvps);
-        console.log(rsvps);
+        //console.log(rsvps);
       })
       .catch((err) => {
         console.error("68 REQUEST FAILED", err);
       });
   };
 
-  console.log("User Rsvp events LINE 80", rsvps);
+  //console.log("User Rsvp events LINE 80", rsvps);
   const isUserGoing = (event: any) => {
-    rsvps = rsvps.filter(
-      (rsvp: any) => rsvp.eventId === event.id && rsvp.userId === id
+    const onlyOneRsvp = rsvps.find(
+      (rsvp: any) => rsvp.userId === id && rsvp.eventId === event.id
     );
-    console.log("current userSpecific rsvp of the current event", rsvps);
-    for (let i = 0; i < rsvps.length; i++) {
-      console.log("LINE 75", rsvps[i]);
-      if (event.id === rsvps[i].eventId && id === rsvps[i].userId ) {
-        setIsGoing((state) => !state);
-      }
+    console.log(onlyOneRsvp, `${event.eventName}  userRsvp`);
+    if (onlyOneRsvp) {
+      setIsGoing(true);
+    } else {
+      setIsGoing(false);
     }
   };
 
+  console.log(isGoing, "Line 106");
   //delete request for deleteting an event in the database
   const deleteEvent = () => {
     console.log("LINE 81", user.id, " and ", event.id);
@@ -113,7 +116,7 @@ const Event = ({
         params: { id: event.id },
       })
       .then((data) => {
-        console.log("87 LINE ", data);
+        //console.log("87 LINE ", data);
         // updateState();
         getAllEvents();
       })
@@ -121,8 +124,6 @@ const Event = ({
         console.error("91 REQUEST FAILED", err);
       });
   };
-  const { roleId } = user;
-  console.log("Event Line 107 and ", rsvps);
 
   return (
     <Card
@@ -169,10 +170,12 @@ const Event = ({
         <Typography paragraph> {event.description}</Typography>
         <Typography paragraph>
           {" "}
-          {rsvpCount === 1
+          {event.id === userRsvp.eventId
             ? "1 person is going"
             : `${rsvpCount}    people are going`}
         </Typography>
+        {/* <Typography> {isUserGoing(event)} </Typography> */}
+        <Typography paragraph>{`user is going: ${isGoing}`}</Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
         <Stack spacing={5} direction="row" id="product_card_stack">
