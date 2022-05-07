@@ -71,16 +71,6 @@ const Event = ({
 
   const [isGoing, setIsGoing] = useState(false);
 
-  console.log("User Rsvp events LINE 80", rsvps);
-  const isUserGoing = (event: any) => {
-    for (let i = 0; i < rsvps.length; i++) {
-      console.log("LINE 75", rsvps[i]);
-      if (event.id === rsvps[i].eventId && id === rsvps[i].userId) {
-        setIsGoing((state) => !state);
-      }
-    }
-  };
-
   const handRSVPosts = () => {
     axios
       .post("/api/rsvps/", {
@@ -99,6 +89,20 @@ const Event = ({
       .catch((err) => {
         console.error("68 REQUEST FAILED", err);
       });
+  };
+
+  console.log("User Rsvp events LINE 80", rsvps);
+  const isUserGoing = (event: any) => {
+    rsvps = rsvps.filter(
+      (rsvp: any) => rsvp.eventId === event.id && rsvp.userId === id
+    );
+    console.log("current userSpecific rsvp of the current event", rsvps);
+    for (let i = 0; i < rsvps.length; i++) {
+      console.log("LINE 75", rsvps[i]);
+      if (event.id === rsvps[i].eventId && id === rsvps[i].userId ) {
+        setIsGoing((state) => !state);
+      }
+    }
   };
 
   //delete request for deleteting an event in the database
