@@ -8,18 +8,21 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import EditIcon from '@mui/icons-material/Edit';
+import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import { Input } from '@mui/material';
+import { FormControlUnstyledContext } from '@mui/base';
 
 interface Column {
   id:
-    | 'id'
-    | 'googleId'
-    | 'name'
-    | 'email'
-    | 'address'
-    | 'roleId'
-    | 'delivery_zone';
+  | 'id'
+  | 'googleId'
+  | 'name'
+  | 'email'
+  | 'street_address'
+  | 'roleId'
+  | 'delivery_zone';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -40,7 +43,7 @@ const columns: readonly Column[] = [
     minWidth: 170,
   },
   {
-    id: 'address',
+    id: 'street_address',
     label: 'Address',
     minWidth: 170,
   },
@@ -61,10 +64,11 @@ const UsersRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
+  const [editing, setEditing] = useState(false);
+  const [previous, setPrevious] = React.useState({});
 
   const getUsers = () => {
-    axios
-      .get('/api/users')
+    axios.get('/api/users')
       .then((data) => {
         // console.log(data.data);
         setRows(data.data);
@@ -73,6 +77,20 @@ const UsersRecords = () => {
         console.log('failed request', error);
       });
   };
+
+  const patchUsers = async (userId: number, updatedUser: any ) => {
+    try {
+      const { data } = await axios.patch(`/api/users/${userId}`, updatedUser);
+      return data
+    } catch (err) {
+      console.error(err)
+      return {
+        error: err
+      }
+    }
+    
+      
+  }
 
   // const handleDelete = () => {
   //   axios.delete("/api/orders/delete")
@@ -91,6 +109,33 @@ const UsersRecords = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const onChange = (e, row) => {
+    if (!previous[row.id]) {
+      setPrevious(state => ({ ...state, [row.id]: row }));
+    }
+    const value = e.target.value;
+    const name = e.target.name;
+    const { id } = row;
+    const newRows = rows.map((row: any) => {
+      if (row.id === id) {
+        return { ...row, [name]: value };
+      }
+      return row;
+    });
+    console.log(newRows);
+    setRows(newRows);
+  };
+  
+  const onDone = (row: object) => {
+    console.log(row)
+    setEditing(!editing)
+    patchUsers(row.id, row);
+  }
+
+  const onEdit = () => {
+    setEditing(!editing)
+  }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -113,23 +158,34 @@ const UsersRecords = () => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
+                        {editing ? (
+                          <Input
+                            value={value}
+                            name={column.label}
+                            onChange={e => onChange(e, row)} />
+                        ) : (
+                          column.format && typeof value === 'number'
+                            ? column.format(value)
+                            : value
+                        )}
                       </TableCell>
                     );
                   })}
-                  <TableCell>
-                    <EditIcon onClick={() => console.log(row)} />
-                  </TableCell>
-                  <TableCell>
-                    <DeleteIcon onClick={() => console.log(rows)} />
-                  </TableCell>
+                  {editing ? (
+                    <DoneIcon onClick={() => onDone(row)} />
+                  ) :
+                  <><TableCell>
+                      <EditIcon onClick={() => onEdit()} />
+                    </TableCell><TableCell>
+                        <DeleteIcon onClick={() => console.log(rows)} />
+                      </TableCell></>
+                  }
+
                 </TableRow>
               ))}
           </TableBody>

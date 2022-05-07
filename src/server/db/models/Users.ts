@@ -28,24 +28,6 @@ const Users = db.define(
       unique: true,
       allowNull: false,
     },
-    street_address: {
-      type: DataTypes.STRING,
-    },
-    city_address: {
-      type: DataTypes.STRING,
-    },
-    state_address: {
-      type: DataTypes.STRING,
-    },
-    zip_code: {
-      type: DataTypes.STRING,
-    },
-    lat: {
-      type: DataTypes.STRING,
-    },
-    lon: {
-      type: DataTypes.STRING,
-    },
     picture: {
       type: DataTypes.STRING,
     },
