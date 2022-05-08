@@ -58,6 +58,7 @@ const ProductsRecords = () => {
   const [editing, setEditing] = useState(false);
   const [previous, setPrevious] = useState({});
   const [rowColumnId, setRowColumnId] = useState({});
+  const [deleteCount, setDeleteCount] = useState(0);
 
   const getProducts = () => {
     axios
@@ -71,7 +72,7 @@ const ProductsRecords = () => {
       });
   };
 
-  const patchProducts = async (productId: string, updatedProduct: any ) => {
+  const patchProducts = async (productId: string, updatedProduct: any) => {
     try {
       console.log('big info', productId, "updated big info", updatedProduct)
       const { data } = await axios.patch(`/api/products/${productId}`, updatedProduct);
@@ -82,7 +83,19 @@ const ProductsRecords = () => {
       return {
         error: err
       }
-    } 
+    }
+  }
+
+  const deleteProduct = async (productId: string) => {
+    try {
+      const {data} = await axios.delete(`/api/products/${productId}`);
+      return data;
+    } catch (err) {
+      console.error(err)
+      return {
+        error: err
+      }
+    }
   }
 
   // const handleDelete = () => {
@@ -92,7 +105,7 @@ const ProductsRecords = () => {
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [deleteCount]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -130,6 +143,11 @@ const ProductsRecords = () => {
     setEditing(!editing)
   }
 
+  const onDelete = (row: object) => {
+    setDeleteCount(deleteCount + 1)
+    deleteProduct(row.id)
+  }
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -158,7 +176,7 @@ const ProductsRecords = () => {
                       <TableCell key={column.id} align={column.align}>
                         {editing ? (
                           <Input
-                            type={String}
+                            // type={String}
                             defaultValue={value}
                             name={column.id}
                             onChange={e => onChange(e, row)} />
@@ -173,11 +191,14 @@ const ProductsRecords = () => {
                   {editing ? (
                     <DoneIcon onClick={() => onDone(row)} />
                   ) :
-                  <><TableCell>
-                      <EditIcon onClick={() => onEdit()} />
-                    </TableCell><TableCell>
-                        <DeleteIcon onClick={() => console.log(rows)} />
-                      </TableCell></>
+                    <>
+                      <TableCell>
+                        <EditIcon onClick={() => onEdit()} />
+                      </TableCell>
+                      <TableCell>
+                        <DeleteIcon onClick={() => onDelete(row)} />
+                      </TableCell>
+                    </>
                   }
 
                 </TableRow>
