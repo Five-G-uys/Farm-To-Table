@@ -146,22 +146,6 @@ const HomePage = ({ getAllSubscriptions }: any) => {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      {/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
-        <Typography variant='h6' align='center' gutterBottom>
-          Knock, Knock Tomatoes
-        </Typography>
-        <Typography
-          variant='subtitle1'
-          align='center'
-          color='text.secondary'
-          component='p'
-        >
-          Who's there? Farm freshness!
-        </Typography>
-        <Copyright />
-      </Box> */}
-      {/* End footer */}
     </ThemeProvider>
   );
 };

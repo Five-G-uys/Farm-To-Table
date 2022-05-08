@@ -36,7 +36,7 @@ import Weather from './Weather';
 //material UI IMPORTS
 import { createTheme, PaletteMode } from '@mui/material';
 import { Container, Grid, Paper, Switch } from '@mui/material';
-import { ThemeProvider, ColorModeContext } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import { Typography, Box } from '@mui/material';
 import { amber, blueGrey, grey } from '@mui/material/colors';
 
@@ -301,6 +301,7 @@ const App = () => {
             </Grid>
           </Container>
         </Paper>
+        {/* Footer */}
         <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
           <Typography variant='h6' align='center' gutterBottom>
             Knock, Knock Tomatoes
@@ -315,6 +316,7 @@ const App = () => {
           </Typography>
           <Copyright />
         </Box>
+        {/* End footer */}
       </ThemeProvider>
       {/* </ColorModeContext.Provider> */}
     </>
