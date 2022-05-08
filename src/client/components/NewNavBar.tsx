@@ -108,6 +108,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
       <HideOnScroll {...props}>
         <AppBar
           position='sticky'
+          // position='fixed'
           style={{
             backgroundColor: 'lightgreen',
             maxHeight: '5rem',
@@ -118,6 +119,10 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
             margin: 'auto',
             // marginRight: "1rem",
             // marginLeft: "5vw",
+            // justifyContent: 'center',
+            // marginTop: '1rem',
+            // marginRight: '1rem',
+            // marginLeft: '5vw',
             borderRadius: '50px',
           }}
         >
@@ -134,7 +139,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                 component='div'
                 sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
               >
-                Bumpkin' Box
+                Knock, Knock Tomatoes
               </Typography>
 
               <Box
@@ -190,7 +195,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                 component='div'
                 sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
               >
-                Bumpkin' Box
+                Knock, Knock Tomatoes
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {pages.map((page) => (
@@ -204,7 +209,7 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                 ))}
               </Box>
 
-              <Box sx={{ flexGrow: 1 }}>
+              <Box sx={{ flexGrow: -1 }}>
                 <Tooltip title='Open settings'>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar

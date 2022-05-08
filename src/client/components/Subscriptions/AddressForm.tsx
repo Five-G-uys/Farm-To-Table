@@ -29,13 +29,14 @@ const AddressForm = ({
   handleAddressFormClose,
   handleInputAddress,
   handleSubscribed,
+  handleCheckout,
   addressOpen,
   commonStyles,
   address,
 }: any) => {
   // state var
 
-  const { streetAddress, city, state, zip } = address;
+  const { streetAddress, city, state, zip, phone } = address;
   return (
     <div>
       {' '}
@@ -123,6 +124,18 @@ const AddressForm = ({
                     />
                     <br></br>
                     <br></br>
+                    <TextField
+                      fullWidth
+                      id='filled-basic'
+                      variant='filled'
+                      value={phone}
+                      name='phone'
+                      label='Phone'
+                      placeholder='(555) 555-5555'
+                      onChange={handleInputAddress}
+                    />
+                    <br></br>
+                    <br></br>
 
                     <Stack
                       direction='row'
@@ -141,8 +154,9 @@ const AddressForm = ({
                         size='large'
                         type='submit'
                         sx={{ color: 'green' }}
+                        onClick={handleCheckout}
                       >
-                        SUBSCRIBE
+                        PAY NOW
                       </Button>
                     </Stack>
                     <br></br>

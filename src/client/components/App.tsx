@@ -10,7 +10,6 @@ import HomePage from './HomePage';
 import EventCard from './EventCard';
 import DeliveryPage from './DeliveryPage';
 import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
-import Confirmation from './Confirmation';
 import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
 import OrdersPage from './OrdersPage';
 import EventsPage from './EventsPage';
@@ -174,12 +173,12 @@ const App = () => {
                   isLoggedIn(user) ? <ProfilePage /> : <Navigate to='/login' />
                 }
               />
-              <Route
+              {/* <Route
                 path='/subscriptions-page/confirmation-page'
                 element={
                   isLoggedIn(user) ? <Confirmation /> : <Navigate to='/login' />
                 }
-              />
+              /> */}
               <Route
                 path='/orders-page'
                 element={
