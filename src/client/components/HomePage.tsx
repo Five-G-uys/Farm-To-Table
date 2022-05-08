@@ -102,7 +102,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               <Button variant='contained' onClick={getAllSubscriptions}>
                 Sign Up
               </Button>
-              <Button variant='outlined'>Secondary action</Button>
+              {/* <Button variant='outlined'>Secondary action</Button> */}
             </Stack>
           </Container>
         </Box>
@@ -132,13 +132,13 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                       Season Subscription
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
+                      A 4 month subscription of weekly boxes filled with the
+                      freshest produce from our farm.
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size='small'>View</Button>
-                    <Button size='small'>Edit</Button>
+                    {/* <Button size='small'>View</Button>
+                    <Button size='small'>Edit</Button> */}
                   </CardActions>
                 </Card>
               </Grid>
@@ -149,7 +149,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
         <Typography variant='h6' align='center' gutterBottom>
-          Footer
+          Knock, Knock Tomatoes
         </Typography>
         <Typography
           variant='subtitle1'
@@ -157,7 +157,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
           color='text.secondary'
           component='p'
         >
-          Something here to give the footer a purpose!
+          Who's there? Farm freshness!
         </Typography>
         <Copyright />
       </Box>

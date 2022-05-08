@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-// import Confirmation from '../Confirmation';
 
 // COMPONENT IMPORTS
 import HomePage from '../HomePage';
@@ -25,17 +24,11 @@ const SubscriptionsPage = () => {
   // const navigate = useNavigate();
 
   const [updateCounter, setUpdateCounter] = useState(0);
-  // const [season, setSeason] = useState('');
 
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
   const [subscriptions, setSubscriptions] = useState([]);
-
-  // const [value, setValue] = React.useState('Season');
-  // const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValue(event.target.value);
-  // };
 
   const [subscription, setSubscription] = useState({
     id: '',
@@ -139,7 +132,6 @@ const SubscriptionsPage = () => {
     // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
     axios
       .post(`/api/add_subscription_entry/${id}`, {
-        // this is the subscription id, or at least it needs to be. Check state
         subscriptionId: selectedSubscriptionId, // change season to number season id on server side
         streetAddress: address.streetAddress,
         city: address.city,

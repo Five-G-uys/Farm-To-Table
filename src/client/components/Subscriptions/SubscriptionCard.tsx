@@ -45,7 +45,6 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 const SubscriptionCard = ({
   sub,
   handleEditClick,
-  // handleSubscriptionDeleteSubmit,
   handleAddressForm,
   subscription,
   subscriptions,
