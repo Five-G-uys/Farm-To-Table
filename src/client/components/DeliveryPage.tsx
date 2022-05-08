@@ -1,4 +1,4 @@
-// REACT IMPORTS
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef, useEffect, useState } from 'react';
 
 // COMPONENT IMPORTS
@@ -19,7 +19,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
   const [updateCounter, setUpdateCounter] = useState(0);
   // SET VAR FOR TODAYS DATE THAT MATCHES DATABASE FORMAT
   const today = dayjs().add(7, 'day').format().slice(0, 10);
-  console.log('LINE 21 || DELIVERY PAGE', today);
+  // console.log('LINE 21 || DELIVERY PAGE', today);
 
   let tempStr = '';
   //FIRST FETCH ALL ORDERS FOR TODAY
@@ -31,15 +31,15 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
 
         tempStr = data.data
           .map((location: any) => {
-            console.log(
-              'LINE 33 || LOCATION MAP',
-              `${location.lat},${location.lon}`
-            );
+            // console.log(
+            //   'LINE 33 || LOCATION MAP',
+            //   `${location.lat},${location.lon}`
+            // );
             return `${location.lon},${location.lat}`;
           })
           .join(';');
 
-        console.log('LINE 42 || DELIVERY PAGE', tempStr);
+        // console.log('LINE 42 || DELIVERY PAGE', tempStr);
         setRouteCoordinates(tempStr);
         setUpdateCounter(updateCounter + 1);
       })

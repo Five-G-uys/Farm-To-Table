@@ -184,15 +184,16 @@
 
 // export default Map;
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef, useEffect, useState } from 'react';
 
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+// import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import MapboxTraffic from '@mapbox/mapbox-gl-traffic';
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 import * as turf from '@turf/turf';
-import axios from 'axios';
+// import axios from 'axios';
 import dayjs from 'dayjs';
 
 mapboxgl.accessToken =
@@ -207,17 +208,24 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
   // const [latt, setLatt] = useState(lat);
   const [zoom, setZoom] = useState(14);
   console.log('LINE 209', mode);
+  const routeCoordinatesArray = routeCoordinates
+    .split(';')
+    .map((coordinate: any) => {
+      return coordinate.split(',');
+    });
   // Initialize map when component mounts
   useEffect(() => {
     if (!lat && !lon) return;
+    if (routeCoordinatesArray.length < 2) return;
+
     if (map.current) return;
 
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style:
         Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
-          ? 'mapbox://styles/mapbox/streets-v11'
-          : 'mapbox://styles/mapbox/traffic-night-v2',
+          ? 'mapbox://styles/mapbox/traffic-night-v2'
+          : 'mapbox://styles/mapbox/streets-v11',
       center: [lon, lat],
       zoom: zoom,
     });
@@ -247,11 +255,11 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
     //   'bottom-left'
     // );
     // Clean up on unmount
-    return map
-      ? () => map.remove()
-      : map
-      ? setTimeout(() => map.remove(), 2000)
-      : setTimeout(() => map.remove(), 2000);
+    return map.current
+      ? () => map.current.remove()
+      : map.current
+      ? setTimeout(() => map.current.remove(), 2000)
+      : setTimeout(() => map.current.remove(), 2000);
   }, [lat, lon, zoom]);
 
   useEffect(() => {
@@ -393,16 +401,12 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
 
 */
 
-  const routeCoordinatesArray = routeCoordinates
-    .split(';')
-    .map((coordinate: any) => {
-      return coordinate.split(',');
-    });
   let dropoffs: any;
 
   // useEffect to get route and apply it to map whenever the lat or lon change
   useEffect(() => {
     if (!lat || !lon) return;
+    if (routeCoordinatesArray.length < 2) return;
     // console.log('LINE 125 || MAP', lat, lon);
     // create hypothetical warehouse location coordinate. Set to current location of device for now. Will hardcode
     // once a permanent location is decided
@@ -418,7 +422,7 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
       ...routeCoordinatesArray.map((coordinate: any) => turf.point(coordinate)),
     ]);
 
-    console.log('LINE 362', dropoffs);
+    // console.log('LINE 362', dropoffs);
 
     // FOR EACH ORDER COORDINATE CREATE A POINT FEATURE
 
