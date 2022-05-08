@@ -245,3 +245,7 @@ body {
   position: absolute;
   top: 5px;
 }
+
+.deliveryMapContainer {
+  height: 100%;
+}

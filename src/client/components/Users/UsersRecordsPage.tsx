@@ -96,35 +96,11 @@ const UserRecordsPage = () => {
   // Destructure product state obj
   const { id, googleId, name, email, address, picture, roleId } = user;
 
-  // create post req to send user form data
-  const postUser = (e: any) => {
-    // console.log('LINE 108');
-    e.preventDefault();
-    axios
-      .post('/api/users', {
-        product: {
-          name: name,
-          email: email,
-          address: address,
-          picture: picture,
-          roleId: Number(roleId),
-        },
-      })
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .then((data) => {
-        console.log('saved!', data);
-        setUpdateCounter(updateCounter + 1);
-        handleClose();
-        // <Navigate to='/admin/edit-products' />; // ???
-      })
-      .catch((err) => console.error(err));
-  };
-
   // export function to product pages component
   const updateUser = async (userId: number, updatedUser: any) => {
     try {
       // axios always has data property available on response obj so can destructure here
-      const { data } = await axios.patch(`/api/users/${userId}`, updateUser);
+      const { data } = await axios.patch(`/api/users/${userId}`, updatedUser);
       console.log('LINE 117 || USER CALLS', data);
       return data;
     } catch (err) {
@@ -248,7 +224,7 @@ const UserRecordsPage = () => {
                   }}
                 >
                   <form
-                    onSubmit={inEditMode ? handleUserUpdateSubmit : postUser}
+                    onSubmit={handleUserUpdateSubmit}
                   >
                     <br></br>
                     {picture && <img width={300} src={picture} />}

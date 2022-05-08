@@ -12,7 +12,7 @@ const DeliveryPage = ({ lat, lon, updateCoords }: any) => {
   //FIRST FETCH ORDER
   return (
     <div>
-      <Map updateCoords={updateCoords} lat={lat} lon={lon} />
+      <Map updateCoords={updateCoords} lat={lat} lon={lon} className='deliveryMapContainer' />
     </div>
   );
 };

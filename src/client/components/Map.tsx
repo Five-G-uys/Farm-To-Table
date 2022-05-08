@@ -8,7 +8,7 @@ import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-direct
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 
 mapboxgl.accessToken =
-  'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A';
+  'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg';
 
 const Map = ({ lat, lon, updateCoords }: any) => {
   const mapContainerRef = useRef(null);
@@ -172,7 +172,7 @@ const Map = ({ lat, lon, updateCoords }: any) => {
           Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
         </div>
       </div>
-      <div className='map-container' ref={mapContainerRef} />
+      <div className='map-container deliveryMapContainer' ref={mapContainerRef} />
     </div>
   );
 };
