@@ -119,7 +119,7 @@ const Event = ({
           <Avatar
             sx={{ bgcolor: red[500] }}
             aria-label='recipe'
-            font-size='20px'
+            fontSize='20px'
           >
             {event.eventName[0]}
           </Avatar>
