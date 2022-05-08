@@ -130,5 +130,20 @@ rsvpRouter.get("/api/rsvps/:id", (req: Request, res: Response) => {
       res.sendStatus(500);
     });
 });
+//Get by id from RSVP table
+rsvpRouter.get("/api/rsvps/total/:eventId", (req: Request, res: Response) => {
+  console.log("Query object in the request", req.query);
+  RSVP.findAll({
+    where: { eventId: req.query.eventId },
+  })
+    .then((data: any) => {
+      console.log("LINE 140 ALL THE RESPONSES FROM RSVP", data.length);
+      res.send(data);
+    })
+    .catch((err: any) => {
+      console.log("FAILED REQUEST", err);
+      res.sendStatus(500);
+    });
+});
 // Export Router
 export default rsvpRouter;

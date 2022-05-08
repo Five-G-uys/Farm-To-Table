@@ -127,9 +127,9 @@ const EventsPage = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     border: 1,
-    padding: "20px",
-    borderRadius: "2.5rem",
-    boxShadow: 24,
+    padding: '20px',
+    borderRadius: '2.5rem',
+    boxShadow: 3,
   };
 
   // create function to handle update form submission

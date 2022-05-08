@@ -68,6 +68,7 @@ const Event = ({
   // toggle bool
   const [rsvpCount, setRsvpCount] = useState(0);
   const [isGoing, setIsGoing] = useState(false);
+  const [totalRsvp, setTotalRsvp] = useState(0);
   const { roleId } = user;
   console.log("Event Line 73 and ", rsvpCount);
 
@@ -79,7 +80,7 @@ const Event = ({
       })
       .then(({ data }: any) => {
         setRsvpCount(data);
-        console.log("Line 85", data);
+        //console.log("Line 85", data);
         getAllEvents();
         //updateState();
         setIsGoing(true);
@@ -101,7 +102,7 @@ const Event = ({
       .then(({ data }) => {
         console.log("count for user rsvps", data);
         setRsvpCount((state: any) => state + data.length);
-        if (rsvpCount > 0) {
+        if (data.length > 0) {
           setIsGoing(true);
         } else {
           setIsGoing(false);
@@ -112,24 +113,36 @@ const Event = ({
       });
   };
 
-  //console.log("User Rsvp events LINE 80", rsvps);
-  const isUserGoing = (event: any) => {
-    const onlyOneRsvp = rsvps.find(
-      (rsvp: any) => rsvp.userId === id && rsvp.eventId === event.id
-    );
-    console.log(onlyOneRsvp, `${event.eventName}  rsvp`);
+  // //console.log("User Rsvp events LINE 80", rsvps);
+  // const isUserGoing = (event: any) => {
+  //   const onlyOneRsvp = rsvps.find(
+  //     (rsvp: any) => rsvp.userId === id && rsvp.eventId === event.id
+  //   );
+  //   console.log(onlyOneRsvp, `${event.eventName}  rsvp`);
 
-    if (onlyOneRsvp) {
-      setIsGoing(true);
-    } else {
-      setIsGoing(false);
-    }
+  //   if (onlyOneRsvp) {
+  //     setIsGoing(true);
+  //   } else {
+  //     setIsGoing(false);
+  //   }
+  // };
+
+  const totalEventRsvps = () => {
+    axios
+      .get(`/api/rsvps/total/${event.id}`, { params: { eventId: event.id } })
+      .then((data) => {
+        console.log("Line 132 total rsvps", data.data.length);
+        setTotalRsvp(data.data.length);
+      })
+      .catch((err) => {
+        console.log("135 rsvps error", err);
+      });
   };
 
   console.log(isGoing, "Line 106");
   //delete request for deleteting an event in the database
   const deleteEvent = () => {
-    console.log("LINE 81", user.id, " and ", event.id);
+    //console.log("LINE 81", user.id, " and ", event.id);
     axios
       .delete(`/api/events/${event.id}`, {
         params: { id: event.id },
@@ -145,7 +158,11 @@ const Event = ({
   };
 
   useEffect(() => {
-    getUserRsvpCount();
+    if (user.roleId < 4) {
+      getUserRsvpCount();
+    } else {
+      totalEventRsvps();
+    }
   }, []);
 
   return (
@@ -158,15 +175,6 @@ const Event = ({
       }}
     >
       <CardHeader
-        // avatar={
-        //   <Avatar
-        //     sx={{ bgcolor: red[500] }}
-        //     aria-label="recipe"
-        //     font-Size="12px"
-        //   >
-        //     {event.eventName[0]}
-        //   </Avatar>
-        // }
         subheader={`Date of Event: ${event.eventDate}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
         title={event.eventName}
@@ -190,18 +198,18 @@ const Event = ({
         {/* // setup map that returns all product info */}
         <Typography paragraph> {event.description}</Typography>
         <Typography paragraph>
-          {" "}
-          {`${
-            rsvpCount === 1
-              ? "one person is attending"
-              : `${rsvpCount} people are attending`
-          }`}
+          {user.roleId < 4
+            ? `${
+                rsvpCount === 1
+                  ? "one person is attending"
+                  : `${rsvpCount} people are attending`
+              }`
+            : totalRsvp}
         </Typography>
         <Typography paragraph>
           {" "}
           {isGoing ? "You are Going" : " Not going"}
         </Typography>
-        {/* <Typography paragraph>{`user is going: ${isGoing}`}</Typography> */}
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
         <Stack spacing={5} direction="row" id="product_card_stack">
@@ -212,28 +220,11 @@ const Event = ({
           </ExpandMore>
           <ExpandMore sx={{ color: "green" }} expand={expanded}>
             {roleId < 4 && (
-              <Button
-                // baseClassName="fas"
-                // className="fa-plus-circle"
-                // fontSize="medium"
-                onClick={handRSVPosts}
-              >
+              <Button onClick={handRSVPosts} color="success">
                 Click to Go
               </Button>
             )}
           </ExpandMore>
-          {/* <ExpandMore sx={{ color: "green" }} expand={expanded}>
-            {roleId < 4 && (
-              <Icon
-                baseClassName="fas"
-                className="fa-plus-circle"
-                fontSize="medium"
-                onClick={handRSVPosts}
-              >
-                Go
-              </Icon>
-            )}
-          </ExpandMore> */}
 
           {roleId > 3 && (
             <ExpandMore
@@ -261,3 +252,28 @@ const Event = ({
 };
 
 export default Event;
+
+{
+  /* <ExpandMore sx={{ color: "green" }} expand={expanded}>
+            {roleId < 4 && (
+              <Icon
+                baseClassName="fas"
+                className="fa-plus-circle"
+                fontSize="medium"
+                onClick={handRSVPosts}
+              >
+                Go
+              </Icon>
+            )}
+          </ExpandMore> */
+}
+
+// avatar={
+//   <Avatar
+//     sx={{ bgcolor: red[500] }}
+//     aria-label="recipe"
+//     font-Size="12px"
+//   >
+//     {event.eventName[0]}
+//   </Avatar>
+// }
