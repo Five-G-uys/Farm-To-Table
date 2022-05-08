@@ -79,11 +79,6 @@ const SubscriptionCard = ({
     <div>
       <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>
         <CardHeader
-          // avatar={
-          //   <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-          //     {season[0]}
-          //   </Avatar>
-          // }
           subheader={`Harvest Year ${year}`}
           // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
           title={season}
@@ -120,20 +115,24 @@ const SubscriptionCard = ({
         </CardContent>
         <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
           <Stack spacing={5} direction='row' id='product_card_stack'>
-            <ExpandMore
-              sx={{ color: 'green' }}
-              expand={expanded}
-              onClick={() => deleteSubscription(id)}
-            >
-              {roleId > 3 && <DeleteIcon sx={{ color: 'green' }} />}
-            </ExpandMore>
-            <ExpandMore
-              sx={{ color: 'green' }}
-              expand={expanded}
-              onClick={() => handleEditClick(id)}
-            >
-              {roleId > 3 && <EditIcon sx={{ color: 'green' }} />}
-            </ExpandMore>
+            {roleId > 3 && (
+              <ExpandMore
+                sx={{ color: 'green' }}
+                expand={expanded}
+                onClick={() => deleteSubscription(id)}
+              >
+                <DeleteIcon sx={{ color: 'green' }} />
+              </ExpandMore>
+            )}
+            {roleId > 3 && (
+              <ExpandMore
+                sx={{ color: 'green' }}
+                expand={expanded}
+                onClick={() => handleEditClick(id)}
+              >
+                <EditIcon sx={{ color: 'green' }} />
+              </ExpandMore>
+            )}
             <ExpandMore
               sx={{ color: 'green' }}
               expand={expanded}

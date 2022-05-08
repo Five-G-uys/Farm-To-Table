@@ -1,45 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // React Imports
-import React, { useState, useEffect, createContext } from "react";
-import axios, { AxiosResponse } from "axios";
-import { Routes, Route, Navigate, Link } from "react-router-dom";
+import React, { useState, useEffect, createContext } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 
 // MUI Imports
-import HomePage from "./HomePage";
-import EventCard from "./EventCard";
-import DeliveryPage from "./DeliveryPage";
-import SubscriptionsPage from "./Subscriptions/SubscriptionsPage";
-import Confirmation from "./Confirmation";
-import SubscriptionsAdmin from "./Subscriptions/SubscriptionsAdmin";
-import OrdersPage from "./OrdersPage";
-import EventsPage from "./EventsPage";
-import ProfilePage from "./ProfilePage";
-import AboutUsPage from "./AboutUsPage";
-import Login from "./Login";
-import NewNavBar from "./NewNavBar";
-import ProductsPage from "./ProductsPage";
-import RecordsPage from "./Records/RecordsPage";
-import DileveryZonesRecords from "./Records/DeliveryZonesRecords";
-import EventsRecords from "./Records/EventsRecords";
+import HomePage from './HomePage';
+import EventCard from './EventCard';
+import DeliveryPage from './DeliveryPage';
+import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
+// import Confirmation from './Confirmation';
+import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
+import OrdersPage from './OrdersPage';
+import EventsPage from './EventsPage';
+import ProfilePage from './ProfilePage';
+import AboutUsPage from './AboutUsPage';
+import Login from './Login';
+import NewNavBar from './NewNavBar';
+import ProductsPage from './ProductsPage';
+import RecordsPage from './Records/RecordsPage';
+import DileveryZonesRecords from './Records/DeliveryZonesRecords';
+import EventsRecords from './Records/EventsRecords';
 // import FarmsRecords from './Records/FarmsRecords';
-import OrdersRecords from "./Records/OrdersRecords";
-import ProductsRecords from "./Records/ProductsRecords";
-import SubscriptionEntriesRecords from "./Records/SubscriitionEntriesRecords";
-import SubscriptionsRecords from "./Records/SubscriptionsRecords";
-import UsersRecords from "./Records/UsersRecords";
-import VendorsRecords from "./Records/VendorsRecords";
-import DeliveryRoutesPage from "./DeliveryRoutes/DeliveryRoutesPage";
-import PackingListPage from "./PackingListPage";
-import UserRecordsPage from "./Users/UsersRecordsPage";
-import Weather from "./Weather";
+import OrdersRecords from './Records/OrdersRecords';
+import ProductsRecords from './Records/ProductsRecords';
+import SubscriptionEntriesRecords from './Records/SubscriitionEntriesRecords';
+import SubscriptionsRecords from './Records/SubscriptionsRecords';
+import UsersRecords from './Records/UsersRecords';
+import VendorsRecords from './Records/VendorsRecords';
+import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
+import PackingListPage from './PackingListPage';
+import UserRecordsPage from './Users/UsersRecordsPage';
+import Weather from './Weather';
 
 //material UI IMPORTS
-import { createTheme, PaletteMode } from "@mui/material";
-import { Container, Grid, Paper, Switch } from "@mui/material";
-import { ThemeProvider, ColorModeContext } from "@mui/material";
-import { Typography } from "@mui/material";
-import { amber, blueGrey, grey } from "@mui/material/colors";
+import { createTheme, PaletteMode } from '@mui/material';
+import { Container, Grid, Paper, Switch } from '@mui/material';
+import { ThemeProvider, ColorModeContext } from '@mui/material';
+import { Typography } from '@mui/material';
+import { amber, blueGrey, grey } from '@mui/material/colors';
 
 // const useStyles = makeStyles((theme: any) => ({
 //   root: {
@@ -70,7 +70,7 @@ const App = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get("/auth/api/userProfile")
+      .get('/auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
         // console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
@@ -79,13 +79,13 @@ const App = () => {
   }, []);
 
   ////********************DARK MODE HERE *********************////
-  const [mode, setMode] = React.useState<PaletteMode>("light");
+  const [mode, setMode] = React.useState<PaletteMode>('light');
   // The light theme is used by default
   // const [isDarkTheme, setIsDarkTheme] = useState(false);
   const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
       mode,
-      ...(mode === "light"
+      ...(mode === 'light'
         ? {
             // palette values for light mode
             primary: amber,
@@ -104,7 +104,7 @@ const App = () => {
               paper: blueGrey[900],
             },
             text: {
-              primary: "#fff",
+              primary: '#fff',
               secondary: grey[500],
             },
           }),
@@ -114,7 +114,7 @@ const App = () => {
   // Update the theme only if the mode changes
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
   const changeMode = (color: any) => {
-    setMode((color) => (color === "dark" ? "light" : "dark"));
+    setMode((color) => (color === 'dark' ? 'light' : 'dark'));
   };
   const isLoggedIn = (user: any) => user.roleId > 0;
   const isEmployee = (user: any) => user.roleId > 2;
@@ -132,7 +132,7 @@ const App = () => {
       {/* <ColorModeContext.Provider value={colorMode}> */}
       <ThemeProvider theme={theme}>
         <NewNavBar user={user} mode={mode} setMode={changeMode} />
-        <Paper sx={{ height: "100%" }} variant="outlined">
+        <Paper sx={{ height: '100%' }} variant='outlined'>
           <Container>
             <Grid item xs={4}>
               <div>
@@ -140,10 +140,10 @@ const App = () => {
                   <Routes>
                     {/* Login/Logout Routes */}
                     <Route
-                      path="/login"
+                      path='/login'
                       element={
                         isLoggedIn(user) ? (
-                          <Navigate to="/profile-page" />
+                          <Navigate to='/profile-page' />
                         ) : (
                           <Login />
                         )
@@ -151,31 +151,31 @@ const App = () => {
                     />
 
                     {/* General Routes */}
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/about-us-page" element={<AboutUsPage />} />
+                    <Route path='/' element={<HomePage />} />
+                    <Route path='/about-us-page' element={<AboutUsPage />} />
                     <Route
-                      path="/subscriptions-page"
+                      path='/subscriptions-page'
                       element={<SubscriptionsPage />}
                     />
-                    <Route path="/events-page" element={<EventsPage />} />
-                    <Route path="/edit-products" element={<ProductsPage />} />
+                    <Route path='/events-page' element={<EventsPage />} />
+                    <Route path='/edit-products' element={<ProductsPage />} />
                     <Route
-                      path="/weather-page"
+                      path='/weather-page'
                       element={<Weather lat={lat} lon={lon} />}
                     />
 
                     {/* Restricted User Routes */}
                     <Route
-                      path="/profile-page"
+                      path='/profile-page'
                       element={
                         isLoggedIn(user) ? (
                           <ProfilePage />
                         ) : (
-                          <Navigate to="/login" />
+                          <Navigate to='/login' />
                         )
                       }
                     />
-                    <Route
+                    {/* <Route
                       path="/subscriptions-page/confirmation-page"
                       element={
                         isLoggedIn(user) ? (
@@ -184,30 +184,30 @@ const App = () => {
                           <Navigate to="/login" />
                         )
                       }
-                    />
+                    /> */}
                     <Route
-                      path="/orders-page"
+                      path='/orders-page'
                       element={
                         isLoggedIn(user) ? (
                           <OrdersPage />
                         ) : (
-                          <Navigate to="/login" />
+                          <Navigate to='/login' />
                         )
                       }
                     />
                     {/* Restricted Employ Routes */}
                     <Route
-                      path="/delivery-routes"
+                      path='/delivery-routes'
                       element={
                         isEmployee(user) ? (
                           <DeliveryRoutesPage lat={lat} lon={lon} />
                         ) : (
-                          <Navigate to="/login" />
+                          <Navigate to='/login' />
                         )
                       }
                     />
                     <Route
-                      path="/delivery-map"
+                      path='/delivery-map'
                       element={
                         <DeliveryPage
                           updateCoords={updateCoords}
@@ -217,73 +217,73 @@ const App = () => {
                       }
                     />
                     <Route
-                      path="/packing-lists"
+                      path='/packing-lists'
                       element={
                         isEmployee(user) ? (
                           <PackingListPage />
                         ) : (
-                          <Navigate to="/login" />
+                          <Navigate to='/login' />
                         )
                       }
                     />
                     {/* Restricted Admin Routes */}
 
                     <Route
-                      path="/edit-users"
+                      path='/edit-users'
                       element={
                         isAdmin(user) ? (
                           <UserRecordsPage />
                         ) : (
-                          <Navigate to="/profile-page" />
+                          <Navigate to='/profile-page' />
                         )
                       }
                     />
                     <Route
-                      path="/subscriptions-admin"
+                      path='/subscriptions-admin'
                       element={
                         isAdmin(user) ? (
                           <SubscriptionsAdmin />
                         ) : (
-                          <Navigate to="/subscriptions-page" />
+                          <Navigate to='/subscriptions-page' />
                         )
                       }
                     />
-                    <Route path="records" element={<RecordsPage />}>
+                    <Route path='records' element={<RecordsPage />}>
                       <Route
-                        path="products-records"
+                        path='products-records'
                         element={<ProductsRecords />}
                       />
                     </Route>
                     <Route
-                      path="delivery-zones-records"
-                      element={<DileveryZonesRecords />} />
-                    <Route 
-                      path="events-records" 
-                      element={<EventsRecords />} />
-                    <Route 
-                      path="orders-records" 
-                      element={<OrdersRecords />} />
+                      path='delivery-zones-records'
+                      element={<DileveryZonesRecords />}
+                    />
+                    <Route path='events-records' element={<EventsRecords />} />
+                    <Route path='orders-records' element={<OrdersRecords />} />
                     <Route
-                      path="products-records"
-                      element={<ProductsRecords />}/>
+                      path='products-records'
+                      element={<ProductsRecords />}
+                    />
                     <Route
-                      path="subscription-entries-records"
-                      element={<SubscriptionEntriesRecords />} />
+                      path='subscription-entries-records'
+                      element={<SubscriptionEntriesRecords />}
+                    />
                     <Route
-                      path="subscriptions-records"
-                      element={<SubscriptionsRecords />} />
-                    <Route path="users-records" element={<UsersRecords />} />
+                      path='subscriptions-records'
+                      element={<SubscriptionsRecords />}
+                    />
+                    <Route path='users-records' element={<UsersRecords />} />
                     <Route
-                      path="vendors-records"
+                      path='vendors-records'
                       element={<VendorsRecords />}
                     />
                     <Route
-                      path="/records"
+                      path='/records'
                       element={
                         isAdmin(user) ? (
                           <RecordsPage />
                         ) : (
-                          <Navigate to="/profile-page" />
+                          <Navigate to='/profile-page' />
                         )
                       }
                     />

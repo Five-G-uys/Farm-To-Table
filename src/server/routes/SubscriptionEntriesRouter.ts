@@ -17,7 +17,7 @@ const subscriptionEntriesRouter: Router = Router();
 subscriptionEntriesRouter.post(
   `/api/add_subscription_entry/:id`,
   async (req: Request, res: Response) => {
-    const { subscriptionId, streetAddress, city, state, zip } = req.body;
+    const { subscriptionId, streetAddress, city, state, zip, phone } = req.body;
 
     const address: any = `${streetAddress} ${city}`;
     try {
@@ -36,6 +36,7 @@ subscriptionEntriesRouter.post(
           zip,
           lat: data.features[0].geometry.coordinates[1],
           lon: data.features[0].geometry.coordinates[0],
+          phone,
         })
           .then((data: any) => {
             // CHANGE TODAY TO FIRST DAY OF SEASON START DATE

@@ -22,7 +22,6 @@ const storeItems = new Map([
 // Create a post request for /create-checkout-session
 stripeRouter.post('/create-checkout-session', async (req, res) => {
   try {
-    console.log('Stripe Session req', req);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment', // subscriptions would be added here
@@ -46,7 +45,7 @@ stripeRouter.post('/create-checkout-session', async (req, res) => {
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
-})
+});
 
 // Export Router
 export default stripeRouter;

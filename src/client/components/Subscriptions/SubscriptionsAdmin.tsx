@@ -121,47 +121,34 @@ const SubscriptionsAdmin = ({
                   {thumbnail && <img width={300} src={thumbnail} />}
                   <br></br>
                   <Box>
-                    <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
+                    <FormControl
+                      fullWidth
+                      sx={{ m: 1, color: '#fff' }}
+                      variant='standard'
+                    >
                       {' '}
                       <FormLabel id='demo-radio-buttons-group-label'>
                         <h3 className='create-subscription'>Create Season</h3>
-                        Season
                       </FormLabel>
-                      <RadioGroup
-                        aria-labelledby='demo-radio-buttons-group-label'
-                        name='controlled-radio-buttons-group'
-                        defaultValue='Spring'
-                        value={value}
-                        onChange={handleRadioBtn}
-                      >
-                        <FormControlLabel
-                          control={<Radio size='small' />}
-                          value='Spring'
-                          label='Spring'
-                        />
-                        <FormControlLabel
-                          control={<Radio size='small' />}
-                          value='Fall'
-                          label='Fall'
-                        />
-                        <FormControlLabel
-                          control={<Radio size='small' />}
-                          value='Winter'
-                          label='Winter'
-                        />
-                      </RadioGroup>
                     </FormControl>
                   </Box>
                   <TextField
-                    // width='75%'
-                    // type={{ width: '75%' }}
                     id='filled-basic'
                     variant='filled'
-                    // label='Filled'
+                    value={season}
+                    name='season'
+                    label='Season'
+                    placeholder='ex: Spring'
+                    onChange={(e) => handleInputSubscription(e)}
+                  />
+                  <br></br>
+                  <br></br>
+                  <TextField
+                    id='filled-basic'
+                    variant='filled'
                     value={year}
                     name='year'
                     label='Year'
-                    // id='fullWidth'
                     placeholder='ex: 2022'
                     onChange={(e) => handleInputSubscription(e)}
                   />
@@ -238,7 +225,7 @@ const SubscriptionsAdmin = ({
                   <br></br>
                   <br></br>
                   <Button variant='contained' size='large' type='submit'>
-                    {handleInputSubscription ? 'UPDATE' : 'CREATE'}
+                    {handleInputSubscription ? 'SAVE' : 'UPDATE'}
                   </Button>
                 </form>
               </Box>
