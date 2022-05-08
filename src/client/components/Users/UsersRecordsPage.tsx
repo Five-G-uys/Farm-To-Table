@@ -303,7 +303,7 @@ const UserRecordsPage = () => {
                       variant='filled'
                       value={address}
                       name='address'
-                      label='Delivery Adderss'
+                      label='Delivery Address'
                       // id='fullWidth'
                       placeholder='1234 Example Rd / New Orleans / LA / 70117'
                       onChange={handelTextInput}

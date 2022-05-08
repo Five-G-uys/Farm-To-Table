@@ -158,19 +158,17 @@ const Event = ({
       }}
     >
       <CardHeader
-        avatar={
-          <Avatar
-            sx={{ bgcolor: red[500] }}
-            aria-label="recipe"
-            font-Size="12px"
-          >
-            {event.eventName[0]}
-          </Avatar>
-        }
+        // avatar={
+        //   <Avatar
+        //     sx={{ bgcolor: red[500] }}
+        //     aria-label="recipe"
+        //     font-Size="12px"
+        //   >
+        //     {event.eventName[0]}
+        //   </Avatar>
+        // }
         subheader={`Date of Event: ${event.eventDate}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
-        fontSize="18px"
-        fontWeight="bolder"
         title={event.eventName}
       />
       {event.thumbnail ? (

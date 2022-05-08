@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from '../App';
 
 // MUI IMPORTS
 import {
@@ -44,13 +45,15 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 const SubscriptionCard = ({
   sub,
   handleEditClick,
-  // handleSubscriptionDeleteSubmit,
   handleAddressForm,
   subscription,
   subscriptions,
   getAllSubscriptions,
   deleteSubscription,
 }: any) => {
+  const user: any = useContext(UserContext);
+  const { roleId } = user;
+
   // expanded state var
   const [expanded, setExpanded] = useState(false);
 
@@ -75,11 +78,6 @@ const SubscriptionCard = ({
     <div>
       <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>
         <CardHeader
-          // avatar={
-          //   <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-          //     {season[0]}
-          //   </Avatar>
-          // }
           subheader={`Harvest Year ${year}`}
           // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
           title={season}
@@ -116,21 +114,24 @@ const SubscriptionCard = ({
         </CardContent>
         <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
           <Stack spacing={5} direction='row' id='product_card_stack'>
-            <ExpandMore
-              sx={{ color: 'green' }}
-              expand={expanded}
-              onClick={() => deleteSubscription(id)}
-            >
-              <DeleteIcon sx={{ color: 'green' }} />
-            </ExpandMore>
-
-            <ExpandMore
-              sx={{ color: 'green' }}
-              expand={expanded}
-              onClick={() => handleEditClick(id)}
-            >
-              <EditIcon sx={{ color: 'green' }} />
-            </ExpandMore>
+            {roleId > 3 && (
+              <ExpandMore
+                sx={{ color: 'green' }}
+                expand={expanded}
+                onClick={() => deleteSubscription(id)}
+              >
+                <DeleteIcon sx={{ color: 'green' }} />
+              </ExpandMore>
+            )}
+            {roleId > 3 && (
+              <ExpandMore
+                sx={{ color: 'green' }}
+                expand={expanded}
+                onClick={() => handleEditClick(id)}
+              >
+                <EditIcon sx={{ color: 'green' }} />
+              </ExpandMore>
+            )}
             <ExpandMore
               sx={{ color: 'green' }}
               expand={expanded}
@@ -141,15 +142,17 @@ const SubscriptionCard = ({
               <ExpandMoreIcon />
             </ExpandMore>
           </Stack>
-          <Button
-            variant='text'
-            size='small'
-            // type='submit'
-            sx={{ color: 'green' }}
-            onClick={() => handleAddressForm(id)}
-          >
-            SUBSCRIBE
-          </Button>
+          {roleId < 4 && (
+            <Button
+              variant='text'
+              size='small'
+              // type='submit'
+              sx={{ color: 'green' }}
+              onClick={() => handleAddressForm(id)}
+            >
+              SUBSCRIBE
+            </Button>
+          )}
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
           <CardContent>

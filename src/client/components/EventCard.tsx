@@ -38,7 +38,7 @@ const EventCard = ({
 
       <Grid
         container
-        spacing={12}
+        spacing={8}
         className={classes.gridContainer}
         // justify='center'
       >
