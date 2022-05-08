@@ -12,7 +12,6 @@ import { Products } from '../db/models';
 // Set Up Router
 const productRouter: Router = Router();
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Product ROUTE (ORIGINAL FROM index.ts)
 productRouter.post('/api/products', (req: Request, res: Response) => {
   const {
@@ -47,40 +46,42 @@ productRouter.post('/api/products', (req: Request, res: Response) => {
 productRouter.get('/api/products', (req, res) => {
   Products.findAll()
     .then((response: any) => {
-      console.log('FIND ALL Products RESPONSE: ', response);
+      // console.log('FIND ALL Products RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('FIND ALL Products RESPONSE: ', err);
+      console.log('FIND ALL Products ERROR: ', err);
       res.sendStatus(500);
     });
 });
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////// POST PRODUCT ROUTE
-productRouter.patch('/api/products/:id', async (req: Request, res: Response) => {
-  console.log('LINE 271 || UPDATE PRODUCT', req.body);
+productRouter.patch(
+  '/api/products/:id',
+  async (req: Request, res: Response) => {
+    console.log('LINE 271 || UPDATE PRODUCT', req.body);
 
-  try {
-    // update product model with async query and assign the result of that promise to a variable to res.send back
-    const updatedProduct = await Products.update(req.body, {
-      where: { id: req.params.id },
-      returning: true,
-    });
-    // console.log('LINE 278 || UPDATE PRODUCT', updatedProduct);
+    try {
+      // update product model with async query and assign the result of that promise to a variable to res.send back
+      const updatedProduct = await Products.update(req.body, {
+        where: { id: req.params.id },
+        returning: true,
+      });
+      // console.log('LINE 278 || UPDATE PRODUCT', updatedProduct);
 
-    res.status(204).json(updatedProduct);
-  } catch (err) {
-    console.error('LINE 274 || UPDATE PRODUCTS', err);
-    res.status(500).json(err);
+      res.status(204).json(updatedProduct);
+    } catch (err) {
+      console.error('LINE 274 || UPDATE PRODUCTS', err);
+      res.status(500).json(err);
+    }
   }
-});
+);
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Role ROUTE
 productRouter.delete('/api/products/:id', (req: Request, res: Response) => {
   Products.destroy({ where: req.params })
     .then((data: any) => {
-      console.log("Products DELETION SUCCESSFUL: ", data);
+      console.log('Products DELETION SUCCESSFUL: ', data);
       res.sendStatus(200);
     })
     .catch((err: any) => {

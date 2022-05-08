@@ -11,39 +11,28 @@ import { useNavigate } from 'react-router-dom';
 import Fab from '@mui/material/Fab';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-// import Confirmation from '../Confirmation';
 
 // COMPONENT IMPORTS
+import HomePage from '../HomePage';
 import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
 import AddressForm from './AddressForm';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
-  // console.log('THIS IS WORKING', user);
-  const navigate = useNavigate();
+  const { id } = user;
+  // const navigate = useNavigate();
 
   const [updateCounter, setUpdateCounter] = useState(0);
-
-  // NEED TO SET USER ID TO CURRENT USER ID. RIGHT NOW IT'S ALWAYS GOING TO BE 0
-  // const [id, setId] = useState(0);
-  // user.id);
-  const { id } = user;
-  const [season, setSeason] = useState('');
 
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
   const [subscriptions, setSubscriptions] = useState([]);
-  const [value, setValue] = React.useState('Season');
-
-  const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
 
   const [subscription, setSubscription] = useState({
     id: '',
-    season: value,
+    season: '',
     year: '',
     flat_price: '',
     weekly_price: '',
@@ -100,6 +89,7 @@ const SubscriptionsPage = () => {
     city: '',
     state: '',
     zip: '',
+    phone: '',
   });
 
   // state var for address form control
@@ -117,6 +107,7 @@ const SubscriptionsPage = () => {
       city: '',
       state: '',
       zip: '',
+      phone: '',
     });
   };
 
@@ -134,12 +125,6 @@ const SubscriptionsPage = () => {
     });
   };
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////
-
   //SUBSCRIPTION CREATE
   const handleSubscribed = (event: any) => {
     event.preventDefault();
@@ -147,17 +132,16 @@ const SubscriptionsPage = () => {
     // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
     axios
       .post(`/api/add_subscription_entry/${id}`, {
-        // farm_id: 1,
-        // this is the subscription id, or at least it needs to be. Check state
         subscriptionId: selectedSubscriptionId, // change season to number season id on server side
         streetAddress: address.streetAddress,
         city: address.city,
         state: address.state,
         zip: address.zip,
+        phone: address.phone,
       })
       .then((data) => {
-        console.log('LINE 159 || SEUBSCRIPTIONS PAGE', data);
-        navigate('/subscriptions-page/confirmation-page');
+        console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
+        // navigate('/subscriptions-page/confirmation-page');
       })
       .catch((err) => {
         console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
@@ -199,7 +183,7 @@ const SubscriptionsPage = () => {
         end_date: subscription.end_date,
         thumbnail: subscription.thumbnail,
       })
-      .then((data) => {
+      .then(() => {
         setUpdateCounter(updateCounter + 1);
         handleClose();
       })
@@ -276,15 +260,50 @@ const SubscriptionsPage = () => {
     setOpen(true);
   };
 
+  const handleCheckout = () => {
+    // console.log('Checkout');
+    fetch('/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Send along all the information about the items
+      body: JSON.stringify({
+        items: [
+          {
+            id: 1,
+            quantity: 2,
+          },
+          {
+            id: 2,
+            quantity: 1,
+          },
+        ],
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        // If there is an error then make sure we catch that
+        return res.json().then((e) => Promise.reject(e));
+      })
+      .then(({ url }) => {
+        // On success redirect the customer to the returned URL
+        window.location = url;
+      })
+      .catch((e) => {
+        console.error(e.error);
+      });
+  };
+
   return (
     <div>
+      {/* <HomePage getAllSubscriptions={getAllSubscriptions} /> */}
       <SubscriptionsContainer
         subscriptions={subscriptions}
         subscription={subscription}
         getAllSubscriptions={getAllSubscriptions}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
-        // handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
         handleAddressForm={handleAddressForm}
         deleteSubscription={deleteSubscription}
       />
@@ -297,6 +316,7 @@ const SubscriptionsPage = () => {
         commonStyles={commonStyles}
         address={address}
         deleteSubscription={deleteSubscription}
+        handleCheckout={handleCheckout}
       />
       <SubscriptionsAdmin
         handleInputSubscription={handleInputSubscription}
@@ -311,39 +331,10 @@ const SubscriptionsPage = () => {
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
         handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-        value={value}
-        handleRadioBtn={handleRadioBtn}
+        // value={value}
+        // setValue={setValue}
+        // handleRadioBtn={handleRadioBtn}
       />
-      <input
-        name='season'
-        value='spring'
-        type='radio'
-        className='form-event'
-        onChange={(e) => setSeason(e.target.value)}
-      />
-      <label htmlFor='season'> Spring 2022 </label>
-      <br />
-      <input
-        name='season'
-        value='fall'
-        type='radio'
-        className='form-event'
-        onChange={(e) => setSeason(e.target.value)}
-      />
-      <label htmlFor='season'> Fall 2022 </label>
-      <br />
-      <input
-        name='season'
-        value='winter'
-        type='radio'
-        className='form-event'
-        onChange={(e) => setSeason(e.target.value)}
-      />
-      <label htmlFor='season'> Winter 2022 </label>
-      <br />
-      <Button variant='contained' onClick={handleSubscribed}>
-        Subscribe
-      </Button>
       <Fab
         onClick={handleCreateForm}
         size='large'
