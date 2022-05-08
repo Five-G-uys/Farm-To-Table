@@ -10,7 +10,6 @@ import HomePage from './HomePage';
 import EventCard from './EventCard';
 import DeliveryPage from './DeliveryPage';
 import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
-// import Confirmation from './Confirmation';
 import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
 import OrdersPage from './OrdersPage';
 import EventsPage from './EventsPage';
@@ -38,7 +37,7 @@ import Weather from './Weather';
 import { createTheme, PaletteMode } from '@mui/material';
 import { Container, Grid, Paper, Switch } from '@mui/material';
 import { ThemeProvider, ColorModeContext } from '@mui/material';
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { amber, blueGrey, grey } from '@mui/material/colors';
 
 // const useStyles = makeStyles((theme: any) => ({
@@ -48,6 +47,15 @@ import { amber, blueGrey, grey } from '@mui/material/colors';
 //     [theme.breakpoints.down("xs")]: { paddingTop: theme.spacing(2) },
 //   },
 // }));
+
+function Copyright() {
+  return (
+    <Typography variant='body2' color='text.secondary' align='center'>
+      {'Copyright © www.knockknocktomatoes.com'} {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 export const UserContext: any = createContext(null);
 
@@ -176,12 +184,12 @@ const App = () => {
                       }
                     />
                     {/* <Route
-                      path="/subscriptions-page/confirmation-page"
+                      path='/subscriptions-page/confirmation-page'
                       element={
                         isLoggedIn(user) ? (
                           <Confirmation />
                         ) : (
-                          <Navigate to="/login" />
+                          <Navigate to='/login' />
                         )
                       }
                     /> */}
@@ -293,6 +301,20 @@ const App = () => {
             </Grid>
           </Container>
         </Paper>
+        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
+          <Typography variant='h6' align='center' gutterBottom>
+            Knock, Knock Tomatoes
+          </Typography>
+          <Typography
+            variant='subtitle1'
+            align='center'
+            color='text.secondary'
+            component='p'
+          >
+            Who's there? Farm freshness!
+          </Typography>
+          <Copyright />
+        </Box>
       </ThemeProvider>
       {/* </ColorModeContext.Provider> */}
     </>
