@@ -65,7 +65,7 @@ const UsersRecords = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
   const [editing, setEditing] = useState(false);
-  const [previous, setPrevious] = React.useState({});
+  const [previous, setPrevious] = useState({});
 
   const getUsers = () => {
     axios.get('/api/users')
@@ -81,15 +81,14 @@ const UsersRecords = () => {
   const patchUsers = async (userId: number, updatedUser: any ) => {
     try {
       const { data } = await axios.patch(`/api/users/${userId}`, updatedUser);
+      console.log('patch data', data);
       return data
     } catch (err) {
       console.error(err)
       return {
         error: err
       }
-    }
-    
-      
+    } 
   }
 
   // const handleDelete = () => {
@@ -98,7 +97,7 @@ const UsersRecords = () => {
   // }
 
   useEffect(() => {
-    getUsers();
+    getUsers()
   }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -123,7 +122,7 @@ const UsersRecords = () => {
       }
       return row;
     });
-    console.log(newRows);
+    console.log();
     setRows(newRows);
   };
   
