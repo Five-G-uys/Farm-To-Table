@@ -7,7 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Input from "@material-ui/core/Input";
 import EditIcon from '@mui/icons-material/Edit';
+import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
@@ -40,7 +42,10 @@ const columns: readonly Column[] = [
 const DileveryZonesRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [rows, setRows] = useState([])
+  const [rows, setRows] = useState([]);
+  const [editing, setEditing] = useState([]);
+  const [rowColumnId, setRowColumnId] = useState({});
+  const [deleteCount, setDeleteCount] = useState(0);
 
   const getOrders = () => {
     axios.get("/api/delivery-zones")
@@ -53,14 +58,34 @@ const DileveryZonesRecords = () => {
       })
   }
 
-  // const handleDelete = () => {
-  //   axios.delete("/api/orders/delete")
-  //     .then((data)) =>
-  // }
+  const patchDeliveryZones = async (zonesId: string, updatedZones: any) => {
+    try {
+      const { data } = await axios.patch(`/api/delivery-zones/${zonesId}`, updatedZones);
+      console.log('patch data', data);
+      return data
+    } catch (err) {
+      console.error(err)
+      return {
+        error: err
+      }
+    }
+  }
+
+  const deleteZones = async (zonesId: string) => {
+    try {
+      const {data} = await axios.delete(`/api/delivery-zones/${zonesId}`);
+      return data;
+    } catch (err) {
+      console.error(err)
+      return {
+        error: err
+      }
+    }
+  }
 
   useEffect(() => {
     getOrders();
-  }, [])
+  }, [deleteCount])
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -71,10 +96,42 @@ const DileveryZonesRecords = () => {
     setPage(0);
   };
 
+  const onChange = (e, row) => {
+    // if (!previous[row.id]) {
+    //   setPrevious(state => ({ ...state, [row.id]: row }));
+    // }
+    const value = e.target.value;
+    const name = e.target.name;
+    const { id } = row;
+    const newRows = rows.map((row: any) => {
+      if (row.id === id) {
+        return { ...row, [name]: value };
+      }
+      return row;
+    });
+    console.log();
+    setRows(newRows);
+  };
+
+  const onDone = (row: object) => {
+    console.log(row)
+    setEditing(!editing)
+    patchProducts(row.id, row);
+  }
+
+  const onEdit = () => {
+    setEditing(!editing)
+  }
+
+  const onDelete = (row: object) => {
+    setDeleteCount(deleteCount + 1)
+    deleteZones(row.id)
+  }
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader aria-label='sticky table'>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -92,33 +149,46 @@ const DileveryZonesRecords = () => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
+                        {editing ? (
+                          <Input
+                            // type={String}
+                            defaultValue={value}
+                            name={column.id}
+                            onChange={e => onChange(e, row)} />
+                        ) : (
+                          column.format && typeof value === 'number'
+                            ? column.format(value)
+                            : value
+                        )}
                       </TableCell>
-                      
                     );
                   })}
-                  <TableCell>
-                    <EditIcon onClick={} />
-                  </TableCell>
-                  <TableCell>
-                    <DeleteIcon onClick={() => console.log(rows)}/>
-                  </TableCell>
-                </TableRow>
+                  {editing ? (
+                    <DoneIcon onClick={() => onDone(row)} />
+                  ) :
+                    <>
+                      <TableCell>
+                        <EditIcon onClick={() => onEdit()} />
+                      </TableCell>
+                      <TableCell>
+                        <DeleteIcon onClick={() => onDelete(row)} />
+                      </TableCell>
+                    </>
+                  }
 
+                </TableRow>
               ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
-        component="div"
+        component='div'
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}

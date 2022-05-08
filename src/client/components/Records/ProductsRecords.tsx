@@ -12,7 +12,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import { text } from 'stream/consumers';
 
 interface Column {
   id: 'id' | 'name' | 'description' | 'subscriptionId' | 'plant_date' | 'harvest_date';
@@ -56,7 +55,6 @@ const ProductsRecords = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
   const [editing, setEditing] = useState(false);
-  const [previous, setPrevious] = useState({});
   const [rowColumnId, setRowColumnId] = useState({});
   const [deleteCount, setDeleteCount] = useState(0);
 
@@ -74,9 +72,7 @@ const ProductsRecords = () => {
 
   const patchProducts = async (productId: string, updatedProduct: any) => {
     try {
-      console.log('big info', productId, "updated big info", updatedProduct)
       const { data } = await axios.patch(`/api/products/${productId}`, updatedProduct);
-      console.log('patch data', data);
       return data
     } catch (err) {
       console.error(err)
