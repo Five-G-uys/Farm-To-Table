@@ -38,7 +38,7 @@ import { createTheme, PaletteMode } from "@mui/material";
 import { Container, Grid, Paper, Switch } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import { Typography } from "@mui/material";
-import { amber, blueGrey, grey } from "@mui/material/colors";
+import { amber, blueGrey, grey, blue } from "@mui/material/colors";
 
 export const UserContext: any = createContext(null);
 
@@ -81,7 +81,7 @@ const App = () => {
             primary: amber,
             divider: amber[200],
             text: {
-              primary: grey[700],
+              primary: blueGrey[700],
               secondary: grey[800],
             },
           }

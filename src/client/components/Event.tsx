@@ -32,6 +32,7 @@ import Box from "@mui/material/Box";
 import Icon from "@mui/material/Icon";
 import green from "@material-ui/core/colors/green";
 import ButtonIcon from "@mui/material";
+import Button from "@mui/material";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -92,6 +93,25 @@ const Event = ({
       });
   };
 
+  const getUserRsvpCount = () => {
+    axios
+      .get(`/api/rsvps/${id}`, {
+        params: { userId: id, eventId: event.id },
+      })
+      .then(({ data }) => {
+        console.log("count for user rsvps", data);
+        setRsvpCount((state: any) => state + data.length);
+        if (rsvpCount > 0) {
+          setIsGoing(true);
+        } else {
+          setIsGoing(false);
+        }
+      })
+      .catch((err) => {
+        console.error("a blunder occured", err);
+      });
+  };
+
   //console.log("User Rsvp events LINE 80", rsvps);
   const isUserGoing = (event: any) => {
     const onlyOneRsvp = rsvps.find(
@@ -125,16 +145,7 @@ const Event = ({
   };
 
   useEffect(() => {
-    axios
-      .get(`/api/rsvps/${id}`, {
-        params: { userId: id, eventId: event.id },
-      })
-      .then((data) => {
-        console.log("132 data from all esvps", data);
-      })
-      .catch((err) => {
-        console.log("an error was found", err);
-      });
+    getUserRsvpCount();
   }, []);
 
   return (
@@ -180,8 +191,18 @@ const Event = ({
       <CardContent>
         {/* // setup map that returns all product info */}
         <Typography paragraph> {event.description}</Typography>
-        <Typography paragraph> {`${rsvpCount} : Are attending`}</Typography>
-        <Typography paragraph> {isGoing ? "Going" : " Not going"}</Typography>
+        <Typography paragraph>
+          {" "}
+          {`${
+            rsvpCount === 1
+              ? "one person is attending"
+              : `${rsvpCount} people are attending`
+          }`}
+        </Typography>
+        <Typography paragraph>
+          {" "}
+          {isGoing ? "You are Going" : " Not going"}
+        </Typography>
         {/* <Typography paragraph>{`user is going: ${isGoing}`}</Typography> */}
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
@@ -191,19 +212,30 @@ const Event = ({
               <DeleteIcon sx={{ color: "green" }} onClick={deleteEvent} />
             )}
           </ExpandMore>
-
           <ExpandMore sx={{ color: "green" }} expand={expanded}>
+            {roleId < 4 && (
+              <Button
+                // baseClassName="fas"
+                // className="fa-plus-circle"
+                // fontSize="medium"
+                onClick={handRSVPosts}
+              >
+                Click to Go
+              </Button>
+            )}
+          </ExpandMore>
+          {/* <ExpandMore sx={{ color: "green" }} expand={expanded}>
             {roleId < 4 && (
               <Icon
                 baseClassName="fas"
                 className="fa-plus-circle"
-                fontSize="large"
+                fontSize="medium"
                 onClick={handRSVPosts}
               >
-                +
+                Go
               </Icon>
             )}
-          </ExpandMore>
+          </ExpandMore> */}
 
           {roleId > 3 && (
             <ExpandMore

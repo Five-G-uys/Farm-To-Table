@@ -32,7 +32,10 @@ const EventCard = ({
   const classes = useStyles();
   return (
     <>
-      <h1 align-text="center">Spring Season Events</h1>
+      <div>
+        <h1 align-text="center">Spring Season Events</h1>
+      </div>
+
       <Grid
         container
         spacing={12}
