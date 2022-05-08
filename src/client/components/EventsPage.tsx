@@ -207,7 +207,7 @@ const EventsPage = () => {
         console.log("sorry, request failed", error);
       });
   };
-  const [rsvpCount, setRsvpCount] = useState(0);
+  //const [rsvpCount, setRsvpCount] = useState(0);
 
   const [rsvps, setRsvps] = useState<string[]>([]);
   const getUserRsvps = () => {
@@ -216,7 +216,7 @@ const EventsPage = () => {
       .then(({ data }: any) => {
         console.log("Rsvps get all Response ", data);
         setRsvps(data);
-        setRsvpCount(data.length);
+        //setRsvpCount(data.length);
       })
       .catch((err) => {
         console.error(err);
@@ -269,7 +269,7 @@ const EventsPage = () => {
         updateState={updateState}
         rsvps={rsvps}
         //rsvpCount={rsvpCount}
-        updateState={updateState}
+        //updateState={updateState}
       />
 
       <div>

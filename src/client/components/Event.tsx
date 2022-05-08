@@ -56,7 +56,6 @@ const Event = ({
   inEditMode,
   getAllEvents,
   rsvps,
-  updateState,
 }: any) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -70,9 +69,6 @@ const Event = ({
   const [isGoing, setIsGoing] = useState(false);
   const { roleId } = user;
   console.log("Event Line 73 and ", rsvpCount);
-  useEffect(() => {
-    isUserGoing(event);
-  }, []);
 
   const handRSVPosts = () => {
     axios
@@ -84,7 +80,8 @@ const Event = ({
         setRsvpCount(data);
         console.log("Line 85", data);
         getAllEvents();
-        updateState();
+        //updateState();
+        setIsGoing(true);
       })
       .then(() => {
         //setUserRsvp(rsvps);
@@ -126,6 +123,19 @@ const Event = ({
         console.error("91 REQUEST FAILED", err);
       });
   };
+
+  useEffect(() => {
+    axios
+      .get(`/api/rsvps/${id}`, {
+        params: { userId: id, eventId: event.id },
+      })
+      .then((data) => {
+        console.log("132 data from all esvps", data);
+      })
+      .catch((err) => {
+        console.log("an error was found", err);
+      });
+  }, []);
 
   return (
     <Card

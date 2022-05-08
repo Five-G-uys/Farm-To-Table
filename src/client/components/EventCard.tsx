@@ -56,11 +56,10 @@ const EventCard = ({
                   updateCounter={updateCounter}
                   handleEditClick={handleEditClick}
                   inEditMode={inEditMode}
-                  updateState={updateState}
                   getAllEvents={getAllEvents}
                   rsvps={rsvps}
                   rsvpCount={rsvpCount}
-                  updateState={updateState}
+                  //updateState={updateState}
                 />
               </Grid>
             );
