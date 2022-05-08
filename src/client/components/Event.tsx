@@ -56,7 +56,6 @@ const Event = ({
   inEditMode,
   getAllEvents,
   rsvps,
-  rsvpCount,
   updateState,
 }: any) => {
   const handleExpandClick = () => {
@@ -67,13 +66,13 @@ const Event = ({
   const { id } = user;
   const [expanded, setExpanded] = useState(false);
   // toggle bool
-  const [userRsvp, setUserRsvp] = useState({});
+  const [rsvpCount, setRsvpCount] = useState(0);
   const [isGoing, setIsGoing] = useState(false);
   const { roleId } = user;
-  //console.log("Event Line 107 and ", userRsvp);
-  // useEffect(() => {
-
-  // }, []);
+  console.log("Event Line 73 and ", rsvpCount);
+  useEffect(() => {
+    isUserGoing(event);
+  }, []);
 
   const handRSVPosts = () => {
     axios
@@ -81,9 +80,11 @@ const Event = ({
         userId: id,
         eventId: event.id,
       })
-      .then(({ rsvpResponseObj }: any) => {
+      .then(({ data }: any) => {
+        setRsvpCount(data);
+        console.log("Line 85", data);
         getAllEvents();
-        // updateState();
+        updateState();
       })
       .then(() => {
         //setUserRsvp(rsvps);
@@ -99,7 +100,8 @@ const Event = ({
     const onlyOneRsvp = rsvps.find(
       (rsvp: any) => rsvp.userId === id && rsvp.eventId === event.id
     );
-    console.log(onlyOneRsvp, `${event.eventName}  userRsvp`);
+    console.log(onlyOneRsvp, `${event.eventName}  rsvp`);
+
     if (onlyOneRsvp) {
       setIsGoing(true);
     } else {
@@ -168,14 +170,9 @@ const Event = ({
       <CardContent>
         {/* // setup map that returns all product info */}
         <Typography paragraph> {event.description}</Typography>
-        <Typography paragraph>
-          {" "}
-          {event.id === userRsvp.eventId
-            ? "1 person is going"
-            : `${rsvpCount}    people are going`}
-        </Typography>
-        {/* <Typography> {isUserGoing(event)} </Typography> */}
-        <Typography paragraph>{`user is going: ${isGoing}`}</Typography>
+        <Typography paragraph> {`${rsvpCount} : Are attending`}</Typography>
+        <Typography paragraph> {isGoing ? "Going" : " Not going"}</Typography>
+        {/* <Typography paragraph>{`user is going: ${isGoing}`}</Typography> */}
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
         <Stack spacing={5} direction="row" id="product_card_stack">

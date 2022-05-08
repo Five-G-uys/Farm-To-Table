@@ -18,7 +18,10 @@ rsvpRouter.post("/api/rsvps", (req: Request, res: Response) => {
   const { userId, eventId } = req.body;
   RSVP.create({ userId, eventId })
     .then((data: any) => {
-      res.status(201).send(data);
+      RSVP.findAll({ where: { eventId } }).then((data: any) => {
+        console.log("LINE 22 Three", data.length);
+        res.json(data.length);
+      });
     })
     .catch((err: string) => {
       console.error("RSVP Post Request Failed", err);
@@ -27,7 +30,7 @@ rsvpRouter.post("/api/rsvps", (req: Request, res: Response) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL - RSVPs ROUTE
-rsvpRouter.get("/api/rsvps", (req, res) => {
+rsvpRouter.get("/api/rsvps", (req: Request, res: Response) => {
   RSVP.findAll()
     .then((response: any) => {
       // console.log('FIND ALL RSVPs RESPONSE: ', response);

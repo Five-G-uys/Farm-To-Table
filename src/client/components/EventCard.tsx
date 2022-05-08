@@ -60,7 +60,7 @@ const EventCard = ({
                   getAllEvents={getAllEvents}
                   rsvps={rsvps}
                   rsvpCount={rsvpCount}
-                  //updateState={updateState}
+                  updateState={updateState}
                 />
               </Grid>
             );

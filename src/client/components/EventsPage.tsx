@@ -208,6 +208,7 @@ const EventsPage = () => {
       });
   };
   const [rsvpCount, setRsvpCount] = useState(0);
+
   const [rsvps, setRsvps] = useState<string[]>([]);
   const getUserRsvps = () => {
     axios
@@ -267,8 +268,8 @@ const EventsPage = () => {
         inEditMode={inEditMode}
         updateState={updateState}
         rsvps={rsvps}
-        rsvpCount={rsvpCount}
-        //updateState={updateState}
+        //rsvpCount={rsvpCount}
+        updateState={updateState}
       />
 
       <div>
