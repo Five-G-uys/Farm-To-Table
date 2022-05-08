@@ -17,6 +17,7 @@ import AddIcon from '@mui/icons-material/Add';
 import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
 import AddressForm from './AddressForm';
+import { padding } from '@mui/system';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
@@ -277,8 +278,9 @@ const SubscriptionsPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: '10vh' }}>
       <SubscriptionsContainer
+        // style={commonStyles}
         subscriptions={subscriptions}
         subscription={subscription}
         getAllSubscriptions={getAllSubscriptions}

@@ -189,22 +189,24 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import MapboxTraffic from '@mapbox/mapbox-gl-traffic';
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 import * as turf from '@turf/turf';
 import axios from 'axios';
+import dayjs from 'dayjs';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A';
 
-const Map = ({ lat, lon, updateCoords, routeCoordinates }: any) => {
+const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
   const mapContainerRef = useRef(null);
   const map: any = useRef(null);
   let warehouse: any;
-
+  const [distance, setDistance] = useState(0);
   // const [lng, setLng] = useState(lon);
   // const [latt, setLatt] = useState(lat);
-  const [zoom, setZoom] = useState(11);
-
+  const [zoom, setZoom] = useState(14);
+  console.log('LINE 209', mode);
   // Initialize map when component mounts
   useEffect(() => {
     if (!lat && !lon) return;
@@ -212,25 +214,44 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates }: any) => {
 
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style:
+        Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
+          ? 'mapbox://styles/mapbox/streets-v11'
+          : 'mapbox://styles/mapbox/traffic-night-v2',
       center: [lon, lat],
       zoom: zoom,
     });
 
     // Add navigation control (the +/- zoom buttons)
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-left');
-    // Add directions start/destination widget (box to enter starting location and destination)
+    map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+    map.current.addControl(new MapboxTraffic(), 'bottom-left');
     map.current.addControl(
-      new MapboxDirections({
-        unit: 'metric',
-        profile: 'mapbox/driving',
-        accessToken: mapboxgl.accessToken,
-        // coordinates,
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
       }),
-      'top-left'
+      'bottom-left'
     );
+    console.log('LINE 222 || MAP.CURRENT', map.current);
+    // // Add directions start/destination widget (box to enter starting location and destination)
+    // map.current.addControl(
+    //   new MapboxDirections({
+    //     unit: 'metric',
+    //     profile: 'mapbox/driving',
+    //     accessToken: mapboxgl.accessToken,
+    //     // coordinates,
+    //   }),
+    //   'bottom-left'
+    // );
     // Clean up on unmount
-    return () => map.remove();
+    return map
+      ? () => map.remove()
+      : map
+      ? setTimeout(() => map.remove(), 2000)
+      : setTimeout(() => map.remove(), 2000);
   }, [lat, lon, zoom]);
 
   useEffect(() => {
@@ -256,21 +277,21 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates }: any) => {
       // lon is first (-90ish)
       // for one way trips add source=first&destination=last& before access token
       const query = await fetch(
-        `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${lon},${lat};${routeCoordinates}?steps=true&geometries=geojson&roundtrip=true&access_token=${mapboxgl.accessToken}`,
+        `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${lon},${lat};${routeCoordinates}?steps=true&geometries=geojson&roundtrip=true&access_token=${mapboxgl.accessToken}`,
         { method: 'GET' }
       );
-      const matrixTime = await fetch(
-        `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${lon},${lat};${routeCoordinates}?&access_token=${mapboxgl.accessToken}`,
-        { method: 'GET' }
-      );
-      console.log('LINE 101 || MATRIX TIME', matrixTime);
+      // const matrixTime = await fetch(
+      //   `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${lon},${lat};${routeCoordinates}?&access_token=${mapboxgl.accessToken}`,
+      //   { method: 'GET' }
+      // );
+      // console.log('LINE 101 || MATRIX TIME', matrixTime);
 
       const json = await query.json();
       if (!json.trips || !json.waypoints) {
         throw json;
       }
       const waypoints: any = json.waypoints;
-      // console.log('LINE 80 || MAP COMPONENT', json);
+      console.log('LINE 80 || MAP COMPONENT', json);
       // console.log('LINE 81 || MAP COMPONENT', lat, lon);
       const data = json.trips[0];
 
@@ -307,6 +328,43 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates }: any) => {
             'line-opacity': 0.75,
           },
         });
+
+        map.current.addLayer(
+          {
+            id: 'routearrows',
+            type: 'symbol',
+            source: 'route',
+            layout: {
+              'symbol-placement': 'line',
+              'text-field': '▶',
+              'text-size': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                12,
+                24,
+                22,
+                60,
+              ],
+              'symbol-spacing': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                12,
+                30,
+                22,
+                160,
+              ],
+              'text-keep-upright': false,
+            },
+            paint: {
+              'text-color': '#3887be',
+              'text-halo-color': 'hsl(55, 11%, 96%)',
+              'text-halo-width': 3,
+            },
+          },
+          'waterway-label'
+        );
       }
 
       for (let i = 0; i < waypoints.length; i++) {
@@ -328,15 +386,59 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates }: any) => {
 
     // add turn instructions here at the end
   }
+  /*
+
+
+
+
+*/
+
+  const routeCoordinatesArray = routeCoordinates
+    .split(';')
+    .map((coordinate: any) => {
+      return coordinate.split(',');
+    });
+  let dropoffs: any;
 
   // useEffect to get route and apply it to map whenever the lat or lon change
   useEffect(() => {
     if (!lat || !lon) return;
-    console.log('LINE 125 || MAP', lat, lon);
+    // console.log('LINE 125 || MAP', lat, lon);
+    // create hypothetical warehouse location coordinate. Set to current location of device for now. Will hardcode
+    // once a permanent location is decided
     const warehouseLocation = [lon, lat];
+    // Turning warehouse coordinate (or potentially a series of coordinates) into a GeoJSON feature collection.
     warehouse = turf.featureCollection([turf.point(warehouseLocation)]);
-    console.log('LINE 371 || WAREHOUSE', warehouse);
+    // console.log('LINE 371 || WAREHOUSE', warehouse);
 
+    // Creating empty feature collection to store all order points
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    dropoffs = turf.featureCollection([
+      turf.point([lon, lat]),
+      ...routeCoordinatesArray.map((coordinate: any) => turf.point(coordinate)),
+    ]);
+
+    console.log('LINE 362', dropoffs);
+
+    // FOR EACH ORDER COORDINATE CREATE A POINT FEATURE
+
+    // Add layer for drop off locations
+    // map.current.addLayer({
+    //   id: 'dropoffs-symbol',
+    //   type: 'symbol',
+    //   source: {
+    //     data: dropoffs,
+    //     type: 'geojson',
+    //   },
+    //   layout: {
+    //     'icon-allow-overlap': true,
+    //     'icon-ignore-placement': true,
+    //     'icon-image': 'marker-15',
+    //   },
+    // });
+    // dropoffs = turf.featureCollection([]);
+
+    // Invoking getRoute function to get the route layer from mapbox
     getRoute();
   }, [lat, lon]);
 
@@ -375,17 +477,32 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates }: any) => {
           'text-color': '#3887be',
         },
       });
+      // Create a layer for all dropoff points
+      map.current.addLayer({
+        id: 'dropoffs-symbol',
+        type: 'symbol',
+        source: {
+          data: dropoffs,
+          type: 'geojson',
+        },
+        layout: {
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true,
+          'icon-image': 'marker-15',
+        },
+      });
     });
   }, [lat, lon]);
 
   return (
     <div>
-      <div className='sidebarStyle'>
-        <div>
-          Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
+      <div className='map-container' ref={mapContainerRef}>
+        <div className='sidebar'>
+          <div>
+            Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
+          </div>
         </div>
       </div>
-      <div className='map-container' ref={mapContainerRef} />
     </div>
   );
 };

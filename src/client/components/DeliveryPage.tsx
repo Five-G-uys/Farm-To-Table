@@ -13,7 +13,7 @@ import axios from 'axios';
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A';
 
-const DeliveryPage = ({ lat, lon, updateCoords }: any) => {
+const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
   // STATE VAR FOR COORDINATE CHAIN STRING
   const [routeCoordinates, setRouteCoordinates] = useState('');
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -49,10 +49,13 @@ const DeliveryPage = ({ lat, lon, updateCoords }: any) => {
   };
   useEffect(getTodaysOrders, []);
 
+  console.log('LINE 52 || DELIVERY PAGE||', dayjs().format('H'));
+
   console.log('LINE 49', routeCoordinates);
   return (
     <div>
       <Map
+        mode={mode}
         routeCoordinates={routeCoordinates}
         updateCoords={updateCoords}
         lat={lat}
