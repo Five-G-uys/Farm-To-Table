@@ -107,15 +107,22 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
       <CssBaseline />
       <HideOnScroll {...props}>
         <AppBar
-          position='fixed'
+          position='sticky'
+          // position='fixed'
           style={{
             backgroundColor: 'lightgreen',
             maxHeight: '5rem',
             // margin: '.4rem',
-            justifyContent: 'center',
+            justifySelf: 'center',
             marginTop: '1rem',
-            marginRight: '1rem',
-            marginLeft: '5vw',
+            maxWidth: '80vw',
+            margin: 'auto',
+            // marginRight: "1rem",
+            // marginLeft: "5vw",
+            // justifyContent: 'center',
+            // marginTop: '1rem',
+            // marginRight: '1rem',
+            // marginLeft: '5vw',
             borderRadius: '50px',
           }}
         >

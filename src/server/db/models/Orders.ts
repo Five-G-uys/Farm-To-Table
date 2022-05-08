@@ -24,7 +24,7 @@ const Orders = db.define('orders', {
     references: { model: SubscriptionEntries, key: 'id' },
   },
   delivery_date: {
-    type: DataTypes.DATE,
+    type: DataTypes.STRING,
     unique: false,
     allowNull: false,
   },

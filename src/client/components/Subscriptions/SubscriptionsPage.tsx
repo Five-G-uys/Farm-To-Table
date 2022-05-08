@@ -17,6 +17,7 @@ import HomePage from '../HomePage';
 import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
 import AddressForm from './AddressForm';
+import { padding } from '@mui/system';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
@@ -296,62 +297,64 @@ const SubscriptionsPage = () => {
   };
 
   return (
-    <div>
-      {/* <HomePage getAllSubscriptions={getAllSubscriptions} /> */}
-      <SubscriptionsContainer
-        subscriptions={subscriptions}
-        subscription={subscription}
-        getAllSubscriptions={getAllSubscriptions}
-        handleEditClick={handleEditClick}
-        inEditMode={inEditMode}
-        handleAddressForm={handleAddressForm}
-        deleteSubscription={deleteSubscription}
-      />
-      <AddressForm
-        handleAddressForm={handleAddressForm}
-        handleAddressFormClose={handleAddressFormClose}
-        addressOpen={addressOpen}
-        handleInputAddress={handleInputAddress}
-        handleSubscribed={handleSubscribed}
-        commonStyles={commonStyles}
-        address={address}
-        deleteSubscription={deleteSubscription}
-        handleCheckout={handleCheckout}
-      />
-      <SubscriptionsAdmin
-        handleInputSubscription={handleInputSubscription}
-        getAllSubscriptions={getAllSubscriptions}
-        postSubscription={postSubscription}
-        open={open}
-        subscription={subscription}
-        setSubscription={setSubscription}
-        handleCreateForm={handleCreateForm}
-        handleClose={handleClose}
-        commonStyles={commonStyles}
-        handleEditClick={handleEditClick}
-        inEditMode={inEditMode}
-        handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-        // value={value}
-        // setValue={setValue}
-        // handleRadioBtn={handleRadioBtn}
-      />
-      <Fab
-        onClick={handleCreateForm}
-        size='large'
-        // color='secondary'
-        aria-label='add'
-        style={{
-          transform: 'scale(1.5)',
-          backgroundColor: 'lightgreen',
-        }}
-        sx={{
-          position: 'fixed',
-          bottom: (theme) => theme.spacing(8),
-          right: (theme) => theme.spacing(8),
-        }}
-      >
-        <AddIcon style={{ color: '#FFFFFF' }} />
-      </Fab>
+    <div style={{ marginTop: '10vh' }}>
+      <div>
+        <SubscriptionsContainer
+          // style={commonStyles}
+          subscriptions={subscriptions}
+          subscription={subscription}
+          getAllSubscriptions={getAllSubscriptions}
+          handleEditClick={handleEditClick}
+          inEditMode={inEditMode}
+          handleAddressForm={handleAddressForm}
+          deleteSubscription={deleteSubscription}
+        />
+        <AddressForm
+          handleAddressForm={handleAddressForm}
+          handleAddressFormClose={handleAddressFormClose}
+          addressOpen={addressOpen}
+          handleInputAddress={handleInputAddress}
+          handleSubscribed={handleSubscribed}
+          commonStyles={commonStyles}
+          address={address}
+          deleteSubscription={deleteSubscription}
+          handleCheckout={handleCheckout}
+        />
+        <SubscriptionsAdmin
+          handleInputSubscription={handleInputSubscription}
+          getAllSubscriptions={getAllSubscriptions}
+          postSubscription={postSubscription}
+          open={open}
+          subscription={subscription}
+          setSubscription={setSubscription}
+          handleCreateForm={handleCreateForm}
+          handleClose={handleClose}
+          commonStyles={commonStyles}
+          handleEditClick={handleEditClick}
+          inEditMode={inEditMode}
+          handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
+          // value={value}
+          // setValue={setValue}
+          // handleRadioBtn={handleRadioBtn}
+        />
+        <Fab
+          onClick={handleCreateForm}
+          size='large'
+          // color='secondary'
+          aria-label='add'
+          style={{
+            transform: 'scale(1.5)',
+            backgroundColor: 'lightgreen',
+          }}
+          sx={{
+            position: 'fixed',
+            bottom: (theme) => theme.spacing(8),
+            right: (theme) => theme.spacing(8),
+          }}
+        >
+          <AddIcon style={{ color: '#FFFFFF' }} />
+        </Fab>
+      </div>
     </div>
   );
 };

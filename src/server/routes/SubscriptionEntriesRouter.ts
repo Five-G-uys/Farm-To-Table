@@ -52,17 +52,20 @@ subscriptionEntriesRouter.post(
                 );
                 return nextwk;
               };
-              // console.log('LINE 218 || NEXTWEEK', nextWeek());
+              // console.log(
+              //   'LINE 61 || NEXTWEEK',
+              //   nextWeek().toJSON().slice(0, 10)
+              // );
               Orders.create({
                 // subscriptionId: data.dataValues.subscriptionId,
                 subscriptionEntryId: data.dataValues.id,
-                delivery_date: nextWeek(),
+                delivery_date: nextWeek().toJSON().slice(0, 10),
               })
                 .then((data: any) => {
                   // console.log('LINE 318 || SERVER INDEX ||', data);
                 })
                 .catch((err: any) => {
-                  console.log('LINE 326 || SERVER INDEX || ERROR', err);
+                  console.log('LINE 73 || SERVER INDEX || ERROR', err);
                 });
             }
           })

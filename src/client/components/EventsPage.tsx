@@ -132,7 +132,7 @@ const EventsPage = () => {
     border: 1,
     padding: '20px',
     borderRadius: '2.5rem',
-    boxShadow: 24,
+    boxShadow: 3,
   };
 
   // create function to handle update form submission
