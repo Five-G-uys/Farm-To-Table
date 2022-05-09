@@ -6,6 +6,7 @@ import axios, { AxiosResponse } from "axios";
 import RSVPLIST from "./RSVPLIST";
 import { UserContext } from "./App";
 import { CardContent, Typography } from "@mui/material";
+import Reminders from "@mui/material";
 //import Profile ""
 
 const RSVPS = () => {
@@ -46,7 +47,7 @@ const RSVPS = () => {
     <div>
       {roleId < 4 && (
         <Typography variant="h4" component="h5">
-          My Events to Attend
+          Reminders
         </Typography>
       )}
       {roleId >= 4 ? (

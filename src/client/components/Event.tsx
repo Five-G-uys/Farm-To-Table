@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { UrlWithStringQuery } from "node:url";
 import React, { useState, useEffect, useContext } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { UserContext } from "./App";
 
 //////////////////////MATERIAL UI/////////////////////////////////
@@ -15,24 +14,13 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { loadCSS } from "fg-loadcss";
-import Box from "@mui/material/Box";
-import Icon from "@mui/material/Icon";
-import green from "@material-ui/core/colors/green";
-import ButtonIcon from "@mui/material";
-import Button from "@mui/material";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -64,14 +52,15 @@ const Event = ({
 
   const user: any = useContext(UserContext);
   const { id } = user;
+  console.log("USER ID", id);
   const [expanded, setExpanded] = useState(false);
-  // toggle bool
   const [rsvpCount, setRsvpCount] = useState(0);
   const [isGoing, setIsGoing] = useState(false);
   const [totalRsvp, setTotalRsvp] = useState(0);
+  const [updateCounter, setUpdateCounter] = useState(0);
   const { roleId } = user;
   console.log("Event Line 73 and ", rsvpCount);
-
+////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
     axios
       .post("/api/rsvps/", {
@@ -79,21 +68,16 @@ const Event = ({
         eventId: event.id,
       })
       .then(({ data }: any) => {
-        setRsvpCount(data);
+        // setRsvpCount(data);
         //console.log("Line 85", data);
         getAllEvents();
-        //updateState();
         setIsGoing(true);
-      })
-      .then(() => {
-        //setUserRsvp(rsvps);
-        //console.log(rsvps);
       })
       .catch((err) => {
         console.error("68 REQUEST FAILED", err);
       });
   };
-
+  /////////////??????????GETS THE RSVP COUNT FOR A USER?????////////////////
   const getUserRsvpCount = () => {
     axios
       .get(`/api/rsvps/${id}`, {
@@ -101,7 +85,7 @@ const Event = ({
       })
       .then(({ data }) => {
         console.log("count for user rsvps", data);
-        setRsvpCount((state: any) => state + data.length);
+        setRsvpCount(data.length);
         if (data.length > 0) {
           setIsGoing(true);
         } else {
@@ -113,20 +97,7 @@ const Event = ({
       });
   };
 
-  // //console.log("User Rsvp events LINE 80", rsvps);
-  // const isUserGoing = (event: any) => {
-  //   const onlyOneRsvp = rsvps.find(
-  //     (rsvp: any) => rsvp.userId === id && rsvp.eventId === event.id
-  //   );
-  //   console.log(onlyOneRsvp, `${event.eventName}  rsvp`);
-
-  //   if (onlyOneRsvp) {
-  //     setIsGoing(true);
-  //   } else {
-  //     setIsGoing(false);
-  //   }
-  // };
-
+  /////////////////???GETS THE COUNT OF ALL RSVPS IN DB ????///////////
   const totalEventRsvps = () => {
     axios
       .get(`/api/rsvps/total/${event.id}`, { params: { eventId: event.id } })
@@ -139,17 +110,13 @@ const Event = ({
       });
   };
 
-  console.log(isGoing, "Line 106");
-  //delete request for deleteting an event in the database
+  //??????DELETES EVENT ??????/////////////////////////
   const deleteEvent = () => {
-    //console.log("LINE 81", user.id, " and ", event.id);
     axios
       .delete(`/api/events/${event.id}`, {
         params: { id: event.id },
       })
       .then((data) => {
-        //console.log("87 LINE ", data);
-        // updateState();
         getAllEvents();
       })
       .catch((err) => {
@@ -157,13 +124,30 @@ const Event = ({
       });
   };
 
+  //////?????????DELETE RSVP???????????????????///////
+  const deleteRsvpsEvent = () => {
+    // console.log("LINE 81", id, " and ", eventId);
+    axios
+      .delete(`/api/rsvp/delete/${id}`, {
+        params: { userId: id, eventId: event.id },
+      })
+      .then((data) => {
+        setUpdateCounter(updateCounter + 1);
+        console.log("52 LINE ", data);
+      })
+      .catch((err) => {
+        console.error("91 REQUEST FAILED", err);
+      });
+  };
+
+  ////////////////////////////////////////////
   useEffect(() => {
     if (user.roleId < 4) {
       getUserRsvpCount();
     } else {
       totalEventRsvps();
     }
-  }, []);
+  }, [updateCounter]);
 
   return (
     <Card
@@ -196,7 +180,10 @@ const Event = ({
       </CardContent>
       <CardContent>
         {/* // setup map that returns all product info */}
-        <Typography paragraph> {event.description}</Typography>
+        <Typography paragraph>
+          {" "}
+          {`Description: ${event.description}`}
+        </Typography>
         <Typography paragraph>
           {user.roleId < 4
             ? `${
@@ -204,7 +191,7 @@ const Event = ({
                   ? "one person is attending"
                   : `${rsvpCount} people are attending`
               }`
-            : totalRsvp}
+            : `RSVPS: ${totalRsvp}`}
         </Typography>
         <Typography paragraph>
           {" "}
@@ -221,7 +208,7 @@ const Event = ({
           <ExpandMore sx={{ color: "green" }} expand={expanded}>
             {roleId < 4 && (
               <Button onClick={handRSVPosts} color="success">
-                Click to Go
+                RSVP
               </Button>
             )}
           </ExpandMore>
@@ -233,6 +220,15 @@ const Event = ({
               onClick={() => handleEditClick(event.id)}
             >
               <EditIcon sx={{ color: "green" }} />
+            </ExpandMore>
+          )}
+          {roleId < 4 && (
+            <ExpandMore
+              sx={{ color: "green" }}
+              expand={expanded}
+              onClick={() => deleteRsvpsEvent()}
+            >
+              <DeleteIcon sx={{ color: "green" }} />
             </ExpandMore>
           )}
           <ExpandMore

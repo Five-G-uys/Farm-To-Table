@@ -46,7 +46,7 @@ const RSVPLIST = ({
   const deleteRsvpsEvent = () => {
     console.log("LINE 81", id, " and ", eventId);
     axios
-      .delete('/api/rsvps', {
+      .delete("/api/rsvps", {
         params: { userId: id, eventId: eventId },
       })
       .then((data) => {
@@ -71,7 +71,7 @@ const RSVPLIST = ({
                 <h1 className="user-event-type">{eventType}</h1>
                 <h4 className="user-event-date">{eventDate}</h4>
                 <h4 className="user-event-loc">{location}</h4>
-                <button onClick={deleteRsvpsEvent}>cancel rsvp</button>
+                <button onClick={deleteRsvpsEvent}>cancel</button>
               </Typography>
             </CardContent>
           </Box>

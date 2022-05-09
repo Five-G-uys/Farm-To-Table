@@ -103,10 +103,13 @@ rsvpRouter.delete("/api/rsvps", (req: Request, res: Response) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID - RSVP ROUTE
-rsvpRouter.delete("/api/rsvps/:id", (req: Request, res: Response) => {
-  RSVP.destroy({ where: req.params })
+rsvpRouter.delete("/api/rsvp/delete/:id", (req: Request, res: Response) => {
+  console.log("Line 107 ", req);
+  RSVP.destroy({
+    where: { eventId: req.query.eventId, userId: req.query.userId },
+  })
     .then((data: any) => {
-      // console.log("RSVP DELETION SUCCESSFUL: ", data);
+      console.log("RSVP DELETION SUCCESSFUL: ", data);
       res.sendStatus(200);
     })
     .catch((err: any) => {

@@ -13,8 +13,16 @@ const eventRouter: Router = Router();
 
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE EVENT ROUTE
 eventRouter.post("/api/events", (req: Request, res: Response) => {
-  const { eventName, description, thumbnail, eventDate, eventType, location } =
-    req.body.event;
+  const {
+    eventName,
+    description,
+    thumbnail,
+    eventDate,
+    eventType,
+    monthTitle,
+    seasonTitle,
+    address,
+  } = req.body.event;
 
   console.log("162 Request object postEvent", req.body);
   Events.create({
@@ -23,7 +31,9 @@ eventRouter.post("/api/events", (req: Request, res: Response) => {
     thumbnail,
     eventDate,
     eventType,
-    location,
+    address,
+    monthTitle,
+    seasonTitle,
   })
     .then((data: any) => {
       //console.log("Return Events Route || Post Request", data);

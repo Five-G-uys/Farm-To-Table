@@ -53,7 +53,9 @@ const EventsPage = () => {
     thumbnail: "",
     eventDate: "",
     eventType: "Farmers market",
-    location: "",
+    address: "",
+    seasonTitle: "",
+    monthTitle: "",
   });
 
   //state that controls the form
@@ -80,7 +82,9 @@ const EventsPage = () => {
       thumbnail: "",
       eventDate: "",
       eventType: "",
-      location: "",
+      address: "",
+      seasonTitle: "",
+      monthTitle: "",
     });
   };
 
@@ -91,8 +95,10 @@ const EventsPage = () => {
     thumbnail,
     eventDate,
     eventType,
-    location,
+    address,
     id,
+    monthTitle,
+    seasonTitle,
   } = event;
 
   const postEvent = (e: any) => {
@@ -106,7 +112,9 @@ const EventsPage = () => {
           thumbnail: thumbnail,
           eventDate: eventDate,
           eventType: eventType,
-          location: location,
+          address: address,
+          monthTitle: monthTitle,
+          seasonTitle: seasonTitle,
         },
       })
       .then(({ data }) => {
@@ -127,8 +135,8 @@ const EventsPage = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     border: 1,
-    padding: '20px',
-    borderRadius: '2.5rem',
+    padding: "20px",
+    borderRadius: "2.5rem",
     boxShadow: 3,
   };
 
@@ -356,7 +364,7 @@ const EventsPage = () => {
                         fullWidth
                         id="filled-basic"
                         variant="filled"
-                        value={location}
+                        value={address}
                         name="location"
                         label="Address"
                         // id='fullWidth'
@@ -371,6 +379,32 @@ const EventsPage = () => {
                         variant="filled"
                         value={eventDate}
                         name="eventDate"
+                        label="Event Date"
+                        // id='fullWidth'
+                        placeholder="Date of event"
+                        onChange={handelTextInput}
+                      />
+                      <br></br>
+                      <br></br>
+                      <TextField
+                        fullWidth
+                        id="filled-basic"
+                        variant="filled"
+                        value={monthTitle}
+                        name="monthTitle"
+                        label="Event Date"
+                        // id='fullWidth'
+                        placeholder="Date of event"
+                        onChange={handelTextInput}
+                      />
+                      <br></br>
+                      <br></br>
+                      <TextField
+                        fullWidth
+                        id="filled-basic"
+                        variant="filled"
+                        value={seasonTitle}
+                        name="seasonTitle"
                         label="Event Date"
                         // id='fullWidth'
                         placeholder="Date of event"

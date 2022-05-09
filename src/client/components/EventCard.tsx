@@ -4,14 +4,14 @@ import React, { useState, useEffect, useContext } from "react";
 import Event from "./Event";
 import axios from "axios";
 import { UserContext } from "./App";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { Header } from "@mui/material";
 
 //import RSVPS from "./RSVPS";
 const useStyles = makeStyles({
   gridContainer: {
-    paddingTop: "40px",
+    paddingTop: "150px",
     paddingLeft: "4rem",
     paddingRight: "4rem",
   },
@@ -33,14 +33,17 @@ const EventCard = ({
   return (
     <>
       <div>
-        <h1 align-text="center">Spring Season Events</h1>
+        <Typography variant="h2" fontWeight="600" align="center">
+          Spring Season Events
+        </Typography>
       </div>
 
       <Grid
         container
         spacing={8}
+        direction="row"
+        alignItems="center"
         className={classes.gridContainer}
-        // justify='center'
       >
         {Array.isArray(allEvents) &&
           allEvents.map((event: any) => {
