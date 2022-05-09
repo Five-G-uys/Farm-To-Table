@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 // MUI IMPORTS
 import Fab from '@mui/material/Fab';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -299,6 +300,23 @@ const SubscriptionsPage = () => {
   return (
     <div style={{ marginTop: '10vh' }}>
       <div>
+        <Typography
+          component='h1'
+          variant='h2'
+          align='center'
+          color='text.primary'
+          gutterBottom
+        >
+          Knock, Knock Tomatoes
+        </Typography>
+        <Typography
+          variant='h5'
+          align='center'
+          color='text.secondary'
+          paragraph
+        >
+          Subscribe now to start receiving the freshest of the fresh!
+        </Typography>
         <SubscriptionsContainer
           style={commonStyles}
           subscriptions={subscriptions}
