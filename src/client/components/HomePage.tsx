@@ -89,6 +89,8 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             >
               <Button
                 variant='contained'
+                color='success'
+                sx={{ color: 'white' }}
                 onClick={() => navigate('/subscriptions-page')}
               >
                 Sign Up

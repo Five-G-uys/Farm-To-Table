@@ -217,12 +217,24 @@ const SubscriptionsAdmin = ({
                   />
                   <br></br>
                   <br></br>
-                  <Button variant='contained' size='large' onClick={showWidget}>
+                  <Button
+                    variant='contained'
+                    size='large'
+                    color='success'
+                    sx={{ color: 'white' }}
+                    onClick={showWidget}
+                  >
                     Add Subscription Image
                   </Button>
                   <br></br>
                   <br></br>
-                  <Button variant='contained' size='large' type='submit'>
+                  <Button
+                    variant='contained'
+                    size='large'
+                    color='success'
+                    type='submit'
+                    sx={{ color: 'white' }}
+                  >
                     {handleInputSubscription ? 'SAVE' : 'UPDATE'}
                   </Button>
                 </form>

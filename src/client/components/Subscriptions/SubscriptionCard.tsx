@@ -78,7 +78,7 @@ const SubscriptionCard = ({
     <div>
       <Card
         sx={{
-          minWidth: 275,
+          minWidth: 300,
           borderRadius: '2.5rem',
           fontWeight: 'medium',
           boxShadow: 24,
