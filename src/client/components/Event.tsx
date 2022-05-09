@@ -141,6 +141,7 @@ const Event = ({
       .then((data) => {
         setUpdateCounter(updateCounter + 1);
         console.log("52 LINE ", data);
+        getUserRsvpCount();
       })
       .catch((err) => {
         console.error("91 REQUEST FAILED", err);
