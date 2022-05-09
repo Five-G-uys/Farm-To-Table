@@ -21,7 +21,7 @@ import { padding } from '@mui/system';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
-  const { id } = user;
+  const { id, roleId } = user;
   // const navigate = useNavigate();
 
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -300,7 +300,7 @@ const SubscriptionsPage = () => {
     <div style={{ marginTop: '10vh' }}>
       <div>
         <SubscriptionsContainer
-          // style={commonStyles}
+          style={commonStyles}
           subscriptions={subscriptions}
           subscription={subscription}
           getAllSubscriptions={getAllSubscriptions}
@@ -337,23 +337,25 @@ const SubscriptionsPage = () => {
           // setValue={setValue}
           // handleRadioBtn={handleRadioBtn}
         />
-        <Fab
-          onClick={handleCreateForm}
-          size='large'
-          // color='secondary'
-          aria-label='add'
-          style={{
-            transform: 'scale(1.5)',
-            backgroundColor: 'lightgreen',
-          }}
-          sx={{
-            position: 'fixed',
-            bottom: (theme) => theme.spacing(8),
-            right: (theme) => theme.spacing(8),
-          }}
-        >
-          <AddIcon style={{ color: '#FFFFFF' }} />
-        </Fab>
+        {roleId > 3 && (
+          <Fab
+            onClick={handleCreateForm}
+            size='large'
+            // color='secondary'
+            aria-label='add'
+            style={{
+              transform: 'scale(1.5)',
+              backgroundColor: 'lightgreen',
+            }}
+            sx={{
+              position: 'fixed',
+              bottom: (theme) => theme.spacing(8),
+              right: (theme) => theme.spacing(8),
+            }}
+          >
+            <AddIcon style={{ color: '#FFFFFF' }} />
+          </Fab>
+        )}
       </div>
     </div>
   );

@@ -104,10 +104,10 @@ const SubscriptionsAdmin = ({
               <Box
                 sx={{
                   ...commonStyles,
-                  // flexWrap: 'wrap',
-                  // display: 'flex',
-                  // justifyContent: 'center',
-                  // borderRadius: '16px',
+                  flexWrap: 'wrap',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  borderRadius: '16px',
                 }}
               >
                 <form

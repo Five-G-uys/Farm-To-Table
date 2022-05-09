@@ -24,7 +24,7 @@ import EventsRecords from './Records/EventsRecords';
 // import FarmsRecords from './Records/FarmsRecords';
 import OrdersRecords from './Records/OrdersRecords';
 import ProductsRecords from './Records/ProductsRecords';
-import SubscriptionEntriesRecords from './Records/SubscriitionEntriesRecords';
+import SubscriptionEntriesRecords from './Records/SubscriptionEntriesRecords';
 import SubscriptionsRecords from './Records/SubscriptionsRecords';
 import UsersRecords from './Records/UsersRecords';
 import VendorsRecords from './Records/VendorsRecords';
@@ -297,7 +297,7 @@ const App = () => {
             color='text.secondary'
             component='p'
           >
-            Who's there? Farm freshness!
+            Who's There? Farm Freshness!
           </Typography>
           <Copyright />
         </Box>
