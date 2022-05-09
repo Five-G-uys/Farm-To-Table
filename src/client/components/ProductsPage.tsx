@@ -121,7 +121,7 @@ const ProductsPage = () => {
         },
       })
       .catch((err) => {
-        console.log('LINE 124: ', err)
+        console.log('LINE 124: ', err);
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((data) => {
@@ -131,7 +131,7 @@ const ProductsPage = () => {
         // <Navigate to='/admin/edit-products' />; // ???
       })
       .catch((err) => {
-        console.log('LINE 134: ', err)
+        console.log('LINE 134: ', err);
       });
   };
 

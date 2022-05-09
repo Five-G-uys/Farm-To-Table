@@ -1,5 +1,5 @@
 * {
-  font-family: "Fira Sans", sans-serif;
+  font-family: 'Fira Sans', sans-serif;
 }
 /*Events Section Start*/
 /* body {
@@ -10,6 +10,22 @@
 body {
   /* background-image: url("/src/BackGROUND.jpg"); */
   background-color: #c8bebe34;
+}
+
+.map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.newNavBar {
+  position: fixed;
+  margin: 5vh;
+  padding: 5vh;
 }
 
 .event {
@@ -46,7 +62,7 @@ body {
   border-radius: 5px;
   border: 1px solid gray;
   padding: 15px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .radio-title {
@@ -63,7 +79,7 @@ body {
   border-radius: 10px;
   border: 1px solid gray;
   padding: 15px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 .input {
   width: 100%;
@@ -73,7 +89,7 @@ body {
   border-radius: 5px;
   border: 1px solid gray;
   padding: 15px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 .card {
   margin-top: 80px;
@@ -159,7 +175,7 @@ body {
 .weatherCard {
   width: 400px;
   height: 200px;
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
   position: relative;
 }
 .currentTemp {
@@ -222,7 +238,7 @@ body {
 }
 .rain::before {
   display: block;
-  content: "\f04e";
+  content: '\f04e';
   font-family: weathericons;
   font-size: 40px;
   left: 6px;
@@ -238,7 +254,7 @@ body {
 }
 .wind::before {
   display: block;
-  content: "\f050";
+  content: '\f050';
   font-family: weathericons;
   font-size: 25px;
   left: -10px;
