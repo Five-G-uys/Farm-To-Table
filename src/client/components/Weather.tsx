@@ -12,7 +12,7 @@ const Weather = ({ lat, lon }) => {
     axios
       .get(`/weather/${lat}/${lon}`)
       .then((response) => {
-        console.log('Weather Data Response', response.data);
+        //console.log('Weather Data Response', response.data);
         setCity(response.data.name);
         setTemp(response.data.main.temp);
         setHumid(response.data.main.humidity);

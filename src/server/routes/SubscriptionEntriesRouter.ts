@@ -3,12 +3,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 // Import Dependencies
-import { Router } from 'express';
-import express, { Express, Request, Response } from 'express';
-import axios from 'axios';
+import { Router } from "express";
+import express, { Express, Request, Response } from "express";
+import axios from "axios";
 
 // Import Models
-import { SubscriptionEntries, Orders } from '../db/models';
+import { SubscriptionEntries, Orders } from "../db/models";
 
 // Set Up Router
 const subscriptionEntriesRouter: Router = Router();
@@ -65,18 +65,18 @@ subscriptionEntriesRouter.post(
                   // console.log('LINE 318 || SERVER INDEX ||', data);
                 })
                 .catch((err: any) => {
-                  console.log('LINE 73 || SERVER INDEX || ERROR', err);
+                  console.log("LINE 73 || SERVER INDEX || ERROR", err);
                 });
             }
           })
           .catch((err: any) => {
-            console.error('LINE 327', err);
+            console.error("LINE 327", err);
           });
       };
 
       await addSubscription();
       // console.log('LINE 332 || INDEXTS SUB POST');
-      res.status(201).send('Subscribed!');
+      res.status(201).send("Subscribed!");
     } catch (err) {
       res.status(500).json(err);
     }
@@ -99,23 +99,23 @@ subscriptionEntriesRouter.post(
 // });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL SubscriptionEntries ROUTE
-subscriptionEntriesRouter.get('/api/subscription-entries', (req, res) => {
+subscriptionEntriesRouter.get("/api/subscription-entries", (req, res) => {
   SubscriptionEntries.findAll()
     .then((response: any) => {
-      console.log('FIND ALL SubscriptionEntries RESPONSE: ', response);
+      console.log("FIND ALL SubscriptionEntries RESPONSE: ", response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('FIND ALL SubscriptionEntries ERROR: ', err);
+      console.log("FIND ALL SubscriptionEntries ERROR: ", err);
       res.sendStatus(404);
     });
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID SubscriptionEntry ROUTE
 subscriptionEntriesRouter.patch(
-  '/api/subscription-entries/:id',
+  "/api/subscription-entries/:id",
   async (req: Request, res: Response) => {
-    console.log('UPDATE SubscriptionEntries REQUEST BODY: ', req.body);
+    console.log("UPDATE SubscriptionEntries REQUEST BODY: ", req.body);
     try {
       const updatedSubscriptionEntry = await SubscriptionEntries.update(
         req.body,
@@ -124,10 +124,10 @@ subscriptionEntriesRouter.patch(
           returning: true,
         }
       );
-      console.log('SubscriptionEntry UPDATE INFO: ', updatedSubscriptionEntry);
+      console.log("SubscriptionEntry UPDATE INFO: ", updatedSubscriptionEntry);
       res.status(204).json(updatedSubscriptionEntry);
     } catch (err) {
-      console.error('SubscriptionEntry UPDATE WAS NOT SUCCESSFUL: ', err);
+      console.error("SubscriptionEntry UPDATE WAS NOT SUCCESSFUL: ", err);
       res.status(500).json(err);
     }
   }
@@ -135,15 +135,15 @@ subscriptionEntriesRouter.patch(
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID SubscriptionEntry ROUTE
 subscriptionEntriesRouter.delete(
-  '/api/subscription-entries/:id',
+  "/api/subscription-entries/:id",
   (req: Request, res: Response) => {
     SubscriptionEntries.destroy({ where: req.params })
       .then((data: any) => {
-        console.log('SubscriptionEntry DELETION SUCCESSFUL: ', data);
+        console.log("SubscriptionEntry DELETION SUCCESSFUL: ", data);
         res.sendStatus(200);
       })
       .catch((err: any) => {
-        console.error('SubscriptionEntry DELETION WAS NOT SUCCESSFUL: ', err);
+        console.error("SubscriptionEntry DELETION WAS NOT SUCCESSFUL: ", err);
         res.sendStatus(400);
       });
   }
