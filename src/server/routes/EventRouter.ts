@@ -19,9 +19,9 @@ eventRouter.post("/api/events", (req: Request, res: Response) => {
     thumbnail,
     eventDate,
     eventType,
-    monthTitle,
-    seasonTitle,
-    address,
+    // monthTitle,
+    // seasonTitle,
+    location,
   } = req.body.event;
 
   console.log("162 Request object postEvent", req.body);
@@ -31,9 +31,9 @@ eventRouter.post("/api/events", (req: Request, res: Response) => {
     thumbnail,
     eventDate,
     eventType,
-    address,
-    monthTitle,
-    seasonTitle,
+    location,
+    // monthTitle,
+    // seasonTitle,
   })
     .then((data: any) => {
       //console.log("Return Events Route || Post Request", data);

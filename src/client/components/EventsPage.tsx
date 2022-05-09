@@ -53,7 +53,7 @@ const EventsPage = () => {
     thumbnail: "",
     eventDate: "",
     eventType: "Farmers market",
-    address: "",
+    location: "",
     seasonTitle: "",
     monthTitle: "",
   });
@@ -82,7 +82,7 @@ const EventsPage = () => {
       thumbnail: "",
       eventDate: "",
       eventType: "",
-      address: "",
+      location: "",
       seasonTitle: "",
       monthTitle: "",
     });
@@ -95,7 +95,7 @@ const EventsPage = () => {
     thumbnail,
     eventDate,
     eventType,
-    address,
+    location,
     id,
     monthTitle,
     seasonTitle,
@@ -112,7 +112,7 @@ const EventsPage = () => {
           thumbnail: thumbnail,
           eventDate: eventDate,
           eventType: eventType,
-          address: address,
+          location: location,
           monthTitle: monthTitle,
           seasonTitle: seasonTitle,
         },
@@ -364,8 +364,8 @@ const EventsPage = () => {
                         fullWidth
                         id="filled-basic"
                         variant="filled"
-                        value={address}
-                        name="address"
+                        value={location}
+                        name="location"
                         label="Address"
                         // id='fullWidth'
                         placeholder="Address for event"
@@ -384,7 +384,7 @@ const EventsPage = () => {
                         placeholder="Date of event"
                         onChange={handelTextInput}
                       />
-                      <br></br>
+                      {/* <br></br>
                       <br></br>
                       <TextField
                         fullWidth
@@ -409,7 +409,7 @@ const EventsPage = () => {
                         // id='fullWidth'
                         placeholder="Season of events"
                         onChange={handelTextInput}
-                      />
+                      /> */}
                       <br></br>
                       <br></br>
                       <Box>

@@ -26,10 +26,10 @@ const Events = db.define("events", {
   //   references: { model: Farms, key: "id" },
   // },
   eventDate: { type: DataTypes.STRING, allowNull: false },
-  address: { type: DataTypes.STRING, allowNull: false },
+  location: { type: DataTypes.STRING, allowNull: false },
   eventType: { type: DataTypes.STRING, allowNull: false },
-  seasonTitle: { type: DataTypes.STRING, allowNull: false },
-  monthTitle: { type: DataTypes.STRING, allowNull: false },
+  // seasonTitle: { type: DataTypes.STRING, allowNull: false },
+  // monthTitle: { type: DataTypes.STRING, allowNull: false },
 });
 
 export default Events;
