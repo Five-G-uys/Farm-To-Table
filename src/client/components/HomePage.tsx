@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // import Farms from './Farms';
 import { stringify } from 'querystring';
@@ -20,19 +21,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-// function Copyright() {
-//   return (
-//     <Typography variant='body2' color='text.secondary' align='center'>
-//       {'Copyright © '}
-//       <Link color='inherit' href='https://mui.com/'>
-//         www.knockknocktomatoes.com
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
