@@ -8,7 +8,7 @@ import VendorsModel from './Vendors';
 import ProductsModel from './Products';
 import SubscriptionsModel from './Subscriptions';
 import SubscriptionEntriesModel from './SubscriptionEntries';
-import DietaryRestrictionsModel from './DietaryRestrictions';
+// import DietaryRestrictionsModel from './DietaryRestrictions';
 import OrdersModel from './Orders';
 import RSVPModel from './Rsvps';
 import OrderContentsModel from './OrderContents';
@@ -89,7 +89,6 @@ export const syncModels = async (dropTables = false) => {
     await OrdersModel.belongsToMany(ProductsModel, {
       through: OrderContentsModel,
     });
-    
   } catch (err) {
     console.error(err);
   }
