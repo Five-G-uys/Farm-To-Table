@@ -76,7 +76,15 @@ const SubscriptionCard = ({
 
   return (
     <div>
-      <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>
+      <Card
+        sx={{
+          minWidth: 300,
+          borderRadius: '2.5rem',
+          fontWeight: 'medium',
+          boxShadow: 24,
+          fontSize: 35,
+        }}
+      >
         <CardHeader
           subheader={`Harvest Year ${year}`}
           // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
@@ -88,27 +96,43 @@ const SubscriptionCard = ({
           image={
             thumbnail
               ? thumbnail
-              : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sloveg.com%2Ffresh-spring-harvest%2F&psig=AOvVaw0YMqaUPyUqS39AwMZlEsSp&ust=1651508751266000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKCr9dfbvvcCFQAAAAAdAAAAABAD'
+              : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg'
           }
         />
         <CardContent>
-          <Typography variant='body2' color='text.secondary'>
+          <Typography
+            sx={{ fontSize: 20 }}
+            variant='body2'
+            color='text.secondary'
+          >
             {`Flat Price: $${flat_price}`}
           </Typography>
         </CardContent>
         <CardContent>
-          <Typography variant='body2' color='text.secondary'>
+          <Typography
+            sx={{ fontSize: 20 }}
+            variant='body2'
+            color='text.secondary'
+          >
             {`Weekly Price: $${weekly_price}`}
           </Typography>
         </CardContent>
 
         <CardContent>
-          <Typography variant='body2' color='text.secondary'>
+          <Typography
+            sx={{ fontSize: 20 }}
+            variant='body2'
+            color='text.secondary'
+          >
             {`Start Date: ${start_date}`}
           </Typography>
         </CardContent>
         <CardContent>
-          <Typography variant='body2' color='text.secondary'>
+          <Typography
+            sx={{ fontSize: 20 }}
+            variant='body2'
+            color='text.secondary'
+          >
             {`End Date: ${end_date}`}
           </Typography>
         </CardContent>
@@ -144,10 +168,11 @@ const SubscriptionCard = ({
           </Stack>
           {roleId < 4 && (
             <Button
-              variant='text'
+              variant='contained'
+              color='success'
               size='small'
               // type='submit'
-              sx={{ color: 'green' }}
+              sx={{ color: 'white' }}
               onClick={() => handleAddressForm(id)}
             >
               SUBSCRIBE

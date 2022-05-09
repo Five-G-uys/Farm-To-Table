@@ -48,6 +48,15 @@ import { amber, blueGrey, grey } from '@mui/material/colors';
 //   },
 // }));
 
+function Copyright() {
+  return (
+    <Typography variant='body2' color='text.secondary' align='center'>
+      {'Copyright © www.knockknocktomatoes.com'} {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
 export const UserContext: any = createContext(null);
 
 const App = () => {
@@ -277,9 +286,6 @@ const App = () => {
             </Routes>
           </UserContext.Provider>
         </div>
-        {/* </Grid>
-          </Container> */}
-        {/* </Paper> */}
         {/* Footer */}
         <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
           <Typography variant='h6' align='center' gutterBottom>
@@ -291,10 +297,14 @@ const App = () => {
             color='text.secondary'
             component='p'
           >
-            Who's there? Farm freshness!
+            Who's There? Farm Freshness!
           </Typography>
+          <Copyright />
         </Box>
         {/* End footer */}
+        {/* </Grid>
+          </Container> */}
+        {/* </Paper> */}
       </ThemeProvider>
       {/* </ColorModeContext.Provider> */}
     </>

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 // MUI IMPORTS
 import Fab from '@mui/material/Fab';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -18,11 +19,11 @@ import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
 import AddressForm from './AddressForm';
 import { padding } from '@mui/system';
-import { CssBaseline, Box, Container, Typography } from '@mui/material';
+import { CssBaseline, Box, Container } from '@mui/material';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
-  const { id } = user;
+  const { id, roleId } = user;
   // const navigate = useNavigate();
 
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -300,37 +301,37 @@ const SubscriptionsPage = () => {
   return (
     <div>
       <CssBaseline />
-        {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth='sm'>
-            <Typography
-              component='h1'
-              variant='h2'
-              align='center'
-              color='text.primary'
-              gutterBottom
-            >
-              Sign Up Now!
-            </Typography>
-            <Typography
-              variant='h5'
-              align='center'
-              color='text.secondary'
-              paragraph
-            >
-              Sign up for a 14 week subscription of some of the best veggies and home made good you'll ever have!
-            </Typography>
-          </Container>
-        </Box>
+      {/* Hero unit */}
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          pt: 8,
+          pb: 6,
+        }}
+      ></Box>
       <div>
+        <Container maxWidth='sm'>
+          <Typography
+            component='h1'
+            variant='h2'
+            align='center'
+            color='text.primary'
+            gutterBottom
+          >
+            Your bounty awaits...
+          </Typography>
+          <Typography
+            variant='h5'
+            align='center'
+            color='text.secondary'
+            paragraph
+          >
+            Sign up now for a 14 week subscription and start receiving bountiful
+            boxes of farm freshness today!
+          </Typography>
+        </Container>
         <SubscriptionsContainer
-          // style={commonStyles}
+          style={commonStyles}
           subscriptions={subscriptions}
           subscription={subscription}
           getAllSubscriptions={getAllSubscriptions}
@@ -363,27 +364,26 @@ const SubscriptionsPage = () => {
           handleEditClick={handleEditClick}
           inEditMode={inEditMode}
           handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-          // value={value}
-          // setValue={setValue}
-          // handleRadioBtn={handleRadioBtn}
         />
-        <Fab
-          onClick={handleCreateForm}
-          size='large'
-          // color='secondary'
-          aria-label='add'
-          style={{
-            transform: 'scale(1.5)',
-            backgroundColor: 'lightgreen',
-          }}
-          sx={{
-            position: 'fixed',
-            bottom: (theme) => theme.spacing(8),
-            right: (theme) => theme.spacing(8),
-          }}
-        >
-          <AddIcon style={{ color: '#FFFFFF' }} />
-        </Fab>
+        {roleId > 3 && (
+          <Fab
+            onClick={handleCreateForm}
+            size='large'
+            // color='secondary'
+            aria-label='add'
+            style={{
+              transform: 'scale(1.5)',
+              backgroundColor: 'lightgreen',
+            }}
+            sx={{
+              position: 'fixed',
+              bottom: (theme) => theme.spacing(8),
+              right: (theme) => theme.spacing(8),
+            }}
+          >
+            <AddIcon style={{ color: '#FFFFFF' }} />
+          </Fab>
+        )}
       </div>
     </div>
   );
