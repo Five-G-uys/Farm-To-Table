@@ -139,7 +139,12 @@ const App = () => {
       </div> */}
       {/* <ColorModeContext.Provider value={colorMode}> */}
       <ThemeProvider theme={theme}>
-        <NewNavBar user={user} mode={mode} setMode={changeMode} />
+        <NewNavBar
+          className='newNavBar'
+          user={user}
+          mode={mode}
+          setMode={changeMode}
+        />
         {/* <Paper sx={{ height: '100%' }}> */}
         {/* <Container>
             <Grid

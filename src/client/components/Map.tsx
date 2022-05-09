@@ -197,7 +197,7 @@ import * as turf from '@turf/turf';
 import dayjs from 'dayjs';
 
 mapboxgl.accessToken =
-  'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A';
+  'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg';
 
 const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
   const mapContainerRef = useRef(null);
