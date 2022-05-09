@@ -307,7 +307,7 @@ const SubscriptionsPage = () => {
           color='text.primary'
           gutterBottom
         >
-          Knock, Knock Tomatoes
+          Your bounty awaits...
         </Typography>
         <Typography
           variant='h5'
@@ -315,7 +315,7 @@ const SubscriptionsPage = () => {
           color='text.secondary'
           paragraph
         >
-          Subscribe now to start receiving the freshest of the fresh!
+          Subscribe today and start receiving farm freshness!
         </Typography>
         <SubscriptionsContainer
           style={commonStyles}

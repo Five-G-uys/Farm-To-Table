@@ -75,12 +75,11 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               color='text.secondary'
               paragraph
             >
-              Join your local CSA today! Community Supported Agriculture is a
-              way for farms to serve their communities and a chance for their
-              communities to serve them. It is a beautifully organized and
-              structured delivery system that is designed to compliment both the
-              farmers and the eaters where both parties have a chance to learn
-              and work with each other.
+              Community Supported Agriculture is a way for farms to serve their
+              communities & for their communities to serve them. It's a
+              beautifully organized delivery system designed to compliment both
+              the farmers & the eaters so both parties have a chance to learn,
+              work, & grow with each other.
             </Typography>
             <Stack
               sx={{ pt: 4 }}
