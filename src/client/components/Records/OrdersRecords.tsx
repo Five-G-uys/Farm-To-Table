@@ -7,7 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Input from "@material-ui/core/Input";
 import EditIcon from '@mui/icons-material/Edit';
+import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
@@ -39,6 +41,9 @@ const OrdersRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
+  const [editing, setEditing] = useState(false);
+  const [rowColumnId, setRowColumnId] = useState({});
+  const [deleteCount, setDeleteCount] = useState(0);
 
   const getOrders = () => {
     axios
@@ -52,14 +57,33 @@ const OrdersRecords = () => {
       });
   };
 
-  // const handleDelete = () => {
-  //   axios.delete("/api/orders/delete")
-  //     .then((data)) =>
-  // }
+  const patchOrders = async (orderId: string, updatedOrder: any) => {
+    try {
+      const { data } = await axios.patch(`/api/orders/${orderId}`, updatedOrder);
+      return data
+    } catch (err) {
+      console.error(err)
+      return {
+        error: err
+      }
+    }
+  }
+
+  const deleteOrders = async (orderId: string) => {
+    try {
+      const {data} = await axios.delete(`/api/products/${orderId}`);
+      return data;
+    } catch (err) {
+      console.error(err)
+      return {
+        error: err
+      }
+    }
+  }
 
   useEffect(() => {
     getOrders();
-  }, []);
+  }, [deleteCount]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -69,6 +93,38 @@ const OrdersRecords = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const onChange = (e, row) => {
+    // if (!previous[row.id]) {
+    //   setPrevious(state => ({ ...state, [row.id]: row }));
+    // }
+    const value = e.target.value;
+    const name = e.target.name;
+    const { id } = row;
+    const newRows = rows.map((row: any) => {
+      if (row.id === id) {
+        return { ...row, [name]: value };
+      }
+      return row;
+    });
+    console.log();
+    setRows(newRows);
+  };
+
+  const onDone = (row: object) => {
+    console.log(row)
+    setEditing(!editing)
+    patchOrders(row.id, row);
+  }
+
+  const onEdit = () => {
+    setEditing(!editing)
+  }
+
+  const onDelete = (row: object) => {
+    setDeleteCount(deleteCount + 1)
+    deleteOrders(row.id)
+  }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -91,23 +147,38 @@ const OrdersRecords = () => {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
+                        {editing ? (
+                          <Input
+                            // type={String}
+                            defaultValue={value}
+                            name={column.id}
+                            onChange={e => onChange(e, row)} />
+                        ) : (
+                          column.format && typeof value === 'number'
+                            ? column.format(value)
+                            : value
+                        )}
                       </TableCell>
                     );
                   })}
-                  <TableCell>
-                    <EditIcon onClick={} />
-                  </TableCell>
-                  <TableCell>
-                    <DeleteIcon onClick={() => console.log(rows)} />
-                  </TableCell>
+                  {editing ? (
+                    <DoneIcon onClick={() => onDone(row)} />
+                  ) :
+                    <>
+                      <TableCell>
+                        <EditIcon onClick={() => onEdit()} />
+                      </TableCell>
+                      <TableCell>
+                        <DeleteIcon onClick={() => onDelete(row)} />
+                      </TableCell>
+                    </>
+                  }
+
                 </TableRow>
               ))}
           </TableBody>

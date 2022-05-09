@@ -125,30 +125,21 @@ syncModels(true)
     // });
 
     // // Roles Seed Data
-    await Roles.findOrCreate({
-      where: { id: 1 },
-      defaults: {
+    await Roles.create({
         id: 1,
-        role: "user",
-      },
+        role: 'user',
     });
-    await Roles.findOrCreate({
-      where: { id: 2 },
-      defaults: {
+    await Roles.create({
         id: 2,
-        role: "subscriber",
-      },
+        role: 'subscriber',
     });
     await Roles.create({
       id: 3,
       role: "employee",
     });
-    await Roles.findOrCreate({
-      where: { id: 4 },
-      defaults: {
+    await Roles.create({
         id: 4,
-        role: "admin",
-      },
+        role: 'admin',
     });
 
     // Vendors Seed Data

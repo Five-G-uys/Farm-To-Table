@@ -22,28 +22,23 @@ import RecordsPage from './Records/RecordsPage';
 import DileveryZonesRecords from './Records/DeliveryZonesRecords';
 import EventsRecords from './Records/EventsRecords';
 // import FarmsRecords from './Records/FarmsRecords';
-import OrdersRecords from "./Records/OrdersRecords";
-import ProductsRecords from "./Records/ProductsRecords";
-import SubscriptionEntriesRecords from "./Records/SubscriitionEntriesRecords";
-import SubscriptionsRecords from "./Records/SubscriptionsRecords";
-import UsersRecords from "./Records/UsersRecords";
-import VendorsRecords from "./Records/VendorsRecords";
-import DeliveryRoutesPage from "./DeliveryRoutes/DeliveryRoutesPage";
-import PackingListPage from "./PackingListPage";
-import UserRecordsPage from "./Users/UsersRecordsPage";
-import Weather from "./Weather";
+import OrdersRecords from './Records/OrdersRecords';
+import ProductsRecords from './Records/ProductsRecords';
+import SubscriptionEntriesRecords from './Records/SubscriptionEntriesRecords';
+import SubscriptionsRecords from './Records/SubscriptionsRecords';
+import UsersRecords from './Records/UsersRecords';
+import VendorsRecords from './Records/VendorsRecords';
+import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
+import PackingListPage from './PackingListPage';
+import UserRecordsPage from './Users/UsersRecordsPage';
+import Weather from './Weather';
 
 //material UI IMPORTS
-//import { createTheme, PaletteMode } from "@mui/material";
-//import { Container, Grid, Paper, Switch } from "@mui/material";
-//import { ThemeProvider } from "@mui/material";
-//import { Typography } from "@mui/material";
-import { amber, blueGrey, grey, blue } from "@mui/material/colors";
-import { createTheme, PaletteMode } from "@mui/material";
-import { Container, Grid, Paper, Switch } from "@mui/material";
-import { ThemeProvider, ColorModeContext } from "@mui/material";
-import { Typography } from "@mui/material";
-//import { amber, blueGrey, grey } from '@mui/material/colors';
+import { Box, createTheme, PaletteMode } from '@mui/material';
+import { Container, Grid, Paper, Switch } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
+import { Typography } from '@mui/material';
+import { amber, blueGrey, grey } from '@mui/material/colors';
 
 // const useStyles = makeStyles((theme: any) => ({
 //   root: {
@@ -52,6 +47,15 @@ import { Typography } from "@mui/material";
 //     [theme.breakpoints.down("xs")]: { paddingTop: theme.spacing(2) },
 //   },
 // }));
+
+function Copyright() {
+  return (
+    <Typography variant='body2' color='text.secondary' align='center'>
+      {'Copyright © www.knockknocktomatoes.com'} {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 export const UserContext: any = createContext(null);
 
@@ -134,7 +138,12 @@ const App = () => {
       </div> */}
       {/* <ColorModeContext.Provider value={colorMode}> */}
       <ThemeProvider theme={theme}>
-        <NewNavBar user={user} mode={mode} setMode={changeMode} />
+        <NewNavBar
+          className='newNavBar'
+          user={user}
+          mode={mode}
+          setMode={changeMode}
+        />
         {/* <Paper sx={{ height: '100%' }}> */}
         {/* <Container>
             <Grid
@@ -276,6 +285,22 @@ const App = () => {
             </Routes>
           </UserContext.Provider>
         </div>
+        {/* Footer */}
+        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
+          <Typography variant='h6' align='center' gutterBottom>
+            Knock, Knock Tomatoes
+          </Typography>
+          <Typography
+            variant='subtitle1'
+            align='center'
+            color='text.secondary'
+            component='p'
+          >
+            Who's There? Farm Freshness!
+          </Typography>
+          <Copyright />
+        </Box>
+        {/* End footer */}
         {/* </Grid>
           </Container> */}
         {/* </Paper> */}

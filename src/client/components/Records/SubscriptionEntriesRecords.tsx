@@ -12,17 +12,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import { CssBaseline, Box, Container, Typography } from '@mui/material';
+import { CssBaseline, Box, Container, Typography, Container } from '@mui/material';
 
 interface Column {
-  id:
-  | 'id'
-  | 'googleId'
-  | 'name'
-  | 'email'
-  | 'street_address'
-  | 'roleId'
-  | 'delivery_zone';
+  id: 'id' | 'userId' | 'subscriptionId';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -31,36 +24,15 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'id', label: 'ID', minWidth: 170 },
-  { id: 'googleId', label: 'Season', minWidth: 100 },
   {
-    id: 'name',
-    label: 'Name',
+    id: 'subscriptionId',
+    label: 'Subscription ID',
     minWidth: 170,
-  },
-  {
-    id: 'email',
-    label: 'Email',
-    minWidth: 170,
-  },
-  {
-    id: 'street_address',
-    label: 'Address',
-    minWidth: 170,
-  },
-
-  {
-    id: 'roleId',
-    label: 'Role ID',
-    minWidth: 170,
-  },
-  {
-    id: 'delivery_zone',
-    label: 'Delivery Zone',
-    minWidth: 170,
+    align: 'right',
   },
 ];
 
-const UsersRecords = () => {
+const SubscriptionEntriesRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
@@ -68,8 +40,9 @@ const UsersRecords = () => {
   const [rowColumnId, setRowColumnId] = useState({});
   const [deleteCount, setDeleteCount] = useState(0);
 
-  const getUsers = () => {
-    axios.get('/api/users')
+  const getSubscriptionEntries = () => {
+    axios
+      .get('/api/subscription-entries')
       .then((data) => {
         // console.log(data.data);
         setRows(data.data);
@@ -79,9 +52,9 @@ const UsersRecords = () => {
       });
   };
 
-  const patchUsers = async (userId: string, updatedUser: any) => {
+  const patchSubscriptionEntries = async (subscriptionEntrieId: string, updatedSubscriptionEntrie: any) => {
     try {
-      const { data } = await axios.patch(`/api/users/${userId}`, updatedUser);
+      const { data } = await axios.patch(`/api/subscription-entries/${subscriptionEntrieId}`, updatedSubscriptionEntrie);
       return data
     } catch (err) {
       console.error(err)
@@ -91,10 +64,10 @@ const UsersRecords = () => {
     }
   }
 
-  const deleteUser = async (userId: string) => {
+  const deleteSubscriptionEntries = async (subscriptionEntrieId: string) => {
     try {
-      const {data} = await axios.delete(`/api/users/${userId}`);
-      return data;
+      const { data } = await axios.delete(`/api/subscription-entries/${subscriptionEntrieId}`);
+      return data
     } catch (err) {
       console.error(err)
       return {
@@ -104,8 +77,8 @@ const UsersRecords = () => {
   }
 
   useEffect(() => {
-    getUsers()
-  }, [deleteCount]);
+    getSubscriptionEntries();
+  }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -132,11 +105,11 @@ const UsersRecords = () => {
     console.log();
     setRows(newRows);
   };
-  
+
   const onDone = (row: object) => {
     console.log(row)
     setEditing(!editing)
-    patchUsers(row.id, row);
+    patchSubscriptionEntries(row.id, row);
   }
 
   const onEdit = () => {
@@ -145,7 +118,7 @@ const UsersRecords = () => {
 
   const onDelete = (row: object) => {
     setDeleteCount(deleteCount + 1)
-    deleteUser(row.id)
+    deleteSubscriptionEntries(row.id)
   }
 
   return (
@@ -167,7 +140,7 @@ const UsersRecords = () => {
               color='text.primary'
               gutterBottom
             >
-              User Records
+              Subscription Records
             </Typography>
           </Container>
         </Box>
@@ -240,4 +213,4 @@ const UsersRecords = () => {
   );
 };
 
-export default UsersRecords;
+export default SubscriptionEntriesRecords;
