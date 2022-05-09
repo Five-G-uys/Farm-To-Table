@@ -315,7 +315,7 @@ const SubscriptionsPage = () => {
           color='text.secondary'
           paragraph
         >
-          Subscribe today and start receiving farm freshness!
+          Subscribe today to start receiving farm freshness!
         </Typography>
         <SubscriptionsContainer
           style={commonStyles}
@@ -351,9 +351,6 @@ const SubscriptionsPage = () => {
           handleEditClick={handleEditClick}
           inEditMode={inEditMode}
           handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-          // value={value}
-          // setValue={setValue}
-          // handleRadioBtn={handleRadioBtn}
         />
         {roleId > 3 && (
           <Fab

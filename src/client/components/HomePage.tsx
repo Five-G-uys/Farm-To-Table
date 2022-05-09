@@ -123,7 +123,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                       Season Subscription
                     </Typography>
                     <Typography>
-                      A 4 month subscription of weekly boxes filled with the
+                      A 4-month subscription of weekly boxes filled with the
                       freshest produce from our farm.
                     </Typography>
                   </CardContent>

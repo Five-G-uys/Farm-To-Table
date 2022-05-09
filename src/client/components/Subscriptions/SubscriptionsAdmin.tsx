@@ -97,17 +97,17 @@ const SubscriptionsAdmin = ({
       }}
       className='add_x_form_modal'
     >
-      <Fade in={open}>
+      <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
         {
           <div>
             <div>
               <Box
                 sx={{
                   ...commonStyles,
-                  flexWrap: 'wrap',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  borderRadius: '16px',
+                  // flexWrap: 'wrap',
+                  // display: 'flex',
+                  // justifyContent: 'center',
+                  // borderRadius: '16px',
                 }}
               >
                 <form
@@ -118,14 +118,12 @@ const SubscriptionsAdmin = ({
                   }
                 >
                   <br></br>
-                  {thumbnail && <img width={300} src={thumbnail} />}
+                  {thumbnail && (
+                    <img width={'100%'} src={thumbnail} border-radius='2rem' />
+                  )}
                   <br></br>
                   <Box>
-                    <FormControl
-                      fullWidth
-                      sx={{ m: 1, color: '#fff' }}
-                      variant='standard'
-                    >
+                    <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
                       {' '}
                       <FormLabel id='demo-radio-buttons-group-label'>
                         <h3 className='create-subscription'>Create Season</h3>
