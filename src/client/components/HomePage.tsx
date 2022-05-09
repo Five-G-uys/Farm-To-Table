@@ -88,7 +88,10 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               spacing={2}
               justifyContent='center'
             >
-              <Button variant='contained' onClick={getAllSubscriptions}>
+              <Button
+                variant='contained'
+                onClick={() => navigate('/subscriptions-page')}
+              >
                 Sign Up
               </Button>
               {/* <Button variant='outlined'>Secondary action</Button> */}
