@@ -34,7 +34,7 @@ const EventCard = ({
     <>
       <div>
         <Typography variant="h2" fontWeight="600" align="center">
-          Spring Season Events
+          Events for the Month of May
         </Typography>
       </div>
 

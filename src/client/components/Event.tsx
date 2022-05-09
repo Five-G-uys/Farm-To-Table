@@ -178,7 +178,7 @@ const Event = ({
       )}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {`Address: ${event.address}`}
+          {`Address: ${event.location}`}
         </Typography>
       </CardContent>
       <CardContent>
