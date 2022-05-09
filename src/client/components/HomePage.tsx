@@ -29,6 +29,7 @@ const theme = createTheme();
 const HomePage = ({ getAllSubscriptions }: any) => {
   // interface Farms {name: string, description: string, id: number, farmArray: any}
   const [farms, setFarms] = useState([]);
+  const navigate = useNavigate();
 
   const getFarms = () => {
     axios
