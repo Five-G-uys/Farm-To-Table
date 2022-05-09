@@ -206,7 +206,7 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
   const [distance, setDistance] = useState(0);
   // const [lng, setLng] = useState(lon);
   // const [latt, setLatt] = useState(lat);
-  const [zoom, setZoom] = useState(14);
+  const [zoom, setZoom] = useState(13);
   console.log('LINE 209', mode);
   const routeCoordinatesArray = routeCoordinates
     .split(';')
