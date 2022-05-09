@@ -60,7 +60,7 @@ const Event = ({
   const [updateCounter, setUpdateCounter] = useState(0);
   const { roleId } = user;
   console.log("Event Line 73 and ", rsvpCount);
-////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
+  ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
     axios
       .post("/api/rsvps/", {
@@ -110,6 +110,13 @@ const Event = ({
       });
   };
 
+  const check = () => {
+    if (user.roleId < 4) {
+      isGoing ? "You are going" : "Not going";
+    } else {
+      return null;
+    }
+  };
   //??????DELETES EVENT ??????/////////////////////////
   const deleteEvent = () => {
     axios
@@ -170,7 +177,7 @@ const Event = ({
       )}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {`Address: ${event.location}`}
+          {`Address: ${event.address}`}
         </Typography>
       </CardContent>
       <CardContent>
@@ -180,10 +187,7 @@ const Event = ({
       </CardContent>
       <CardContent>
         {/* // setup map that returns all product info */}
-        <Typography paragraph>
-          {" "}
-          {`Description: ${event.description}`}
-        </Typography>
+
         <Typography paragraph>
           {user.roleId < 4
             ? `${
@@ -195,7 +199,9 @@ const Event = ({
         </Typography>
         <Typography paragraph>
           {" "}
-          {isGoing ? "You are Going" : " Not going"}
+          {user.roleId > 3
+            ? null
+            : `${isGoing ? "You are Going" : " Not going"}`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
@@ -242,7 +248,13 @@ const Event = ({
           </ExpandMore>
         </Stack>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit></Collapse>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        {" "}
+        <Typography paragraph>
+          {" "}
+          {`Description: ${event.description}`}
+        </Typography>
+      </Collapse>
     </Card>
   );
 };
