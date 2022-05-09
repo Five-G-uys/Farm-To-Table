@@ -17,8 +17,7 @@ const subscriptionEntriesRouter: Router = Router();
 subscriptionEntriesRouter.post(
   `/api/add_subscription_entry/:id`,
   async (req: Request, res: Response) => {
-    console.log('LINE 284 || SERVER INDEX.TS', req.body, req.params);
-    const { subscriptionId, streetAddress, city, state, zip } = req.body;
+    const { subscriptionId, streetAddress, city, state, zip, phone } = req.body;
 
     const address: any = `${streetAddress} ${city}`;
     try {
@@ -26,10 +25,7 @@ subscriptionEntriesRouter.post(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg`
       );
 
-      console.log('LINE 293 || INDEX SERVER SUB POST', data.geometry);
-
       const addSubscription = () => {
-        console.log('LINE 288 || INDEXSERVER || SUBSCRIPTION ENTRY POST ROUTE');
         SubscriptionEntries.create({
           // CHANGED REQ.PARMS.ID TO NUMBER, USED TO BE STRING
           userId: Number(req.params.id),
@@ -40,10 +36,9 @@ subscriptionEntriesRouter.post(
           zip,
           lat: data.features[0].geometry.coordinates[1],
           lon: data.features[0].geometry.coordinates[0],
+          phone,
         })
           .then((data: any) => {
-            console.log('LINE 301 || SERVER ||', data.dataValues.id);
-
             // CHANGE TODAY TO FIRST DAY OF SEASON START DATE
             const today: Date = new Date();
             // iterate over number of orders
@@ -57,17 +52,20 @@ subscriptionEntriesRouter.post(
                 );
                 return nextwk;
               };
-              // console.log('LINE 218 || NEXTWEEK', nextWeek());
+              // console.log(
+              //   'LINE 61 || NEXTWEEK',
+              //   nextWeek().toJSON().slice(0, 10)
+              // );
               Orders.create({
                 // subscriptionId: data.dataValues.subscriptionId,
                 subscriptionEntryId: data.dataValues.id,
-                delivery_date: nextWeek(),
+                delivery_date: nextWeek().toJSON().slice(0, 10),
               })
                 .then((data: any) => {
                   // console.log('LINE 318 || SERVER INDEX ||', data);
                 })
                 .catch((err: any) => {
-                  console.log('LINE 326 || SERVER INDEX || ERROR', err);
+                  console.log('LINE 73 || SERVER INDEX || ERROR', err);
                 });
             }
           })

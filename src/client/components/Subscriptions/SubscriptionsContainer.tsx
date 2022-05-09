@@ -17,7 +17,6 @@ const SubscriptionsContainer = ({
   getAllSubscriptions,
   handleEditClick,
   inEditMode,
-  // handleSubscriptionDeleteSubmit,
   handleAddressForm,
   subscription,
   deleteSubscription,
@@ -49,7 +48,6 @@ const SubscriptionsContainer = ({
               subscription={subscription}
               subscriptions={subscriptions}
               getAllSubscriptions={getAllSubscriptions}
-              // handleSubscriptionDeleteSubmit={handleSubscriptionDeleteSubmit}
               handleAddressForm={handleAddressForm}
               deleteSubscription={deleteSubscription}
             />

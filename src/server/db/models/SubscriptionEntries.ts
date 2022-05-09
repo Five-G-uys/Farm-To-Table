@@ -30,6 +30,9 @@ const SubscriptionEntries = db.define('subscriptionEntries', {
   lon: {
     type: DataTypes.STRING,
   },
+  phone: {
+    type: DataTypes.STRING,
+  },
   subscriptionId: {
     type: DataTypes.INTEGER,
     unique: false,

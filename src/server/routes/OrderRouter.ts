@@ -4,7 +4,7 @@
 
 // Import Dependencies
 import { Router } from 'express';
-import { Op } from 'sequelize';
+import { Op, or } from 'sequelize';
 import express, { Express, Request, Response } from 'express';
 
 // Import Models
@@ -13,13 +13,11 @@ import { Orders, SubscriptionEntries } from '../db/models';
 // Set Up Router
 const orderRouter: Router = Router();
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////// CREATE ONE Order ROUTE
 orderRouter.post('/api/order', (req, res) => {
   // console.log(req.body)
-  const { subscriptionEntryId, deliveryDate } =
-    req.body;
-    Orders.create({ subscriptionEntryId, deliveryDate })
+  const { subscriptionEntryId, deliveryDate } = req.body;
+  Orders.create({ subscriptionEntryId, deliveryDate })
     .then((data: any) => {
       res.status(201).send(data);
     })
@@ -35,6 +33,47 @@ orderRouter.get('/api/order', (req, res) => {
     .then((response: any) => {
       // console.log('FIND ALL Orders RESPONSE: ', response);
       res.status(200).send(response);
+    })
+    .catch((err: object) => {
+      // console.log('FIND ALL Orders ERROR: ', err);
+      res.sendStatus(404);
+    });
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////// GET TODAYS ORDER COORDINATES
+orderRouter.get('/api/order/todaysOrders', (req, res) => {
+  // console.log('LINE 45 || ORDER ROUTER', req.query);
+
+  Orders.findAll({ where: req.query })
+    .then((response: any) => {
+      const subscriptionEntryIds = response.map((order: any) => {
+        return { id: order.dataValues.subscriptionEntryId };
+      });
+      // console.log('LINE 52 || ORDER ROUTER', subscriptionEntryIds);
+
+      // FIND SUBSCRIPTION ENTRIES WITH THE ID ARRAY
+      SubscriptionEntries.findAll({
+        where: {
+          [Op.or]: subscriptionEntryIds,
+        },
+      })
+        .then((data: any) => {
+          // console.log('LINE 61 || ORDER ROUTER', data);
+          const orderLocations = data.map((subscriptionEntry: any) => {
+            return {
+              streetAddress: subscriptionEntry.streetAddress,
+              city: subscriptionEntry.city,
+              state: subscriptionEntry.state,
+              zip: subscriptionEntry.zip,
+              lat: subscriptionEntry.lat,
+              lon: subscriptionEntry.lon,
+            };
+          });
+          res.json(orderLocations);
+        })
+        .catch((err: any) => {
+          console.error('LINE 64 || ORDER ROUTER', err);
+        });
     })
     .catch((err: object) => {
       // console.log('FIND ALL Orders ERROR: ', err);
@@ -84,23 +123,20 @@ orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Orders ROUTE
-orderRouter.patch(
-  '/api/order/:id',
-  async (req: Request, res: Response) => {
-    // console.log('UPDATE Order REQUEST BODY: ', req.body);
-    try {
-      const updatedOrder = await Orders.update(req.body, {
-        where: { id: req.params.id },
-        returning: true,
-      });
-      // console.log('Order UPDATE INFO: ', updatedOrder);
-      res.status(204).json(updatedOrder);
-    } catch (err) {
-      // console.error('Order UPDATE WAS NOT SUCCESSFUL: ', err);
-      res.status(500).json(err);
-    }
+orderRouter.patch('/api/order/:id', async (req: Request, res: Response) => {
+  // console.log('UPDATE Order REQUEST BODY: ', req.body);
+  try {
+    const updatedOrder = await Orders.update(req.body, {
+      where: { id: req.params.id },
+      returning: true,
+    });
+    // console.log('Order UPDATE INFO: ', updatedOrder);
+    res.status(204).json(updatedOrder);
+  } catch (err) {
+    // console.error('Order UPDATE WAS NOT SUCCESSFUL: ', err);
+    res.status(500).json(err);
   }
-);
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Order ROUTE
 orderRouter.delete('/api/order/:id', (req: Request, res: Response) => {
