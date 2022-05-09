@@ -4,6 +4,7 @@ import axios from "axios";
 import Button from '@mui/material/Button';
 import {Routes, Route, Link, Navigate} from 'react-router-dom' 
 import ProductsRecords from './ProductsRecords';
+import { CssBaseline, Box, Container, Typography } from "@mui/material";
 // import DietaryRestrictionsRecords from "./DietaryRestrictions/DietaryRestrictionsRecords";
 // import DeliveryZones from "./DileveryZones/DeliveryZonesRecords";
 // import Events from "./Events/EventsRecords";
@@ -33,9 +34,35 @@ const RecordsPage = () => {
 
   return (
     <div>
-      <br/>
-      <br/>
-      <br/>
+      <CssBaseline />
+        {/* Hero unit */}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth='sm'>
+            <Typography
+              component='h1'
+              variant='h2'
+              align='center'
+              color='text.primary'
+              gutterBottom
+            >
+              Admin Records Table
+            </Typography>
+            <Typography
+              variant='h5'
+              align='center'
+              color='text.secondary'
+              paragraph
+            >
+              One stop shop for all of our farm records.
+            </Typography>
+          </Container>
+        </Box>
       <Button component={Link} to='/delivery-zones-records' variant='contained' color='primary'>get deliveryZones</Button>
       <br/>
       <Button component={Link} to='/events-records' variant='contained' color='primary'>get events</Button>

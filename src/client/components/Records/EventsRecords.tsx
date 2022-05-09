@@ -12,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import { CssBaseline, Box, Container, Typography } from '@mui/material';
 
 interface Column {
   id: 'id' | 'eventName' | 'description' | 'eventDate' | 'location' | 'eventType' 
@@ -141,6 +142,27 @@ const EventsRecords = () => {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+       <CssBaseline />
+        {/* Hero unit */}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth='sm'>
+            <Typography
+              component='h1'
+              variant='h2'
+              align='center'
+              color='text.primary'
+              gutterBottom
+            >
+              Event Records
+            </Typography>
+          </Container>
+        </Box>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>

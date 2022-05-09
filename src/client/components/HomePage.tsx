@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -59,7 +60,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
   // console.log("farms", 22, farms)
 
   return (
-    <ThemeProvider theme={theme}>
+    <div>
       <CssBaseline />
       <main>
         {/* Hero unit */}
@@ -162,7 +163,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
         <Copyright />
       </Box>
       {/* End footer */}
-    </ThemeProvider>
+    </div>
   );
 };
 

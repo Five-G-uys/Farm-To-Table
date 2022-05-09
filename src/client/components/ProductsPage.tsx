@@ -18,7 +18,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
-import { Slide, Stack } from '@mui/material';
+import { Container, CssBaseline, Slide, Stack } from '@mui/material';
 import Divider from '@mui/material/Divider';
 
 // Component Imports
@@ -247,6 +247,35 @@ const ProductsPage = () => {
 
   return (
     <div>
+      <CssBaseline />
+        {/* Hero unit */}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth='sm'>
+            <Typography
+              component='h1'
+              variant='h2'
+              align='center'
+              color='text.primary'
+              gutterBottom
+            >
+              Farm Products
+            </Typography>
+            <Typography
+              variant='h5'
+              align='center'
+              color='text.secondary'
+              paragraph
+            >
+              Check out all of our farm goodies. From eggplant to okra, its all here. If your interested and not already a member be sure to visit our sign up page and become one today!
+            </Typography>
+          </Container>
+        </Box>
       <ProductsContainer
         products={products}
         getAllProducts={getAllProducts}
