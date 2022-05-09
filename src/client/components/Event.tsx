@@ -59,7 +59,7 @@ const Event = ({
   const [totalRsvp, setTotalRsvp] = useState(0);
   const [updateCounter, setUpdateCounter] = useState(0);
   const { roleId } = user;
-  console.log("Event Line 73 and ", rsvpCount);
+
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
     axios
@@ -68,7 +68,7 @@ const Event = ({
         eventId: event.id,
       })
       .then(({ data }: any) => {
-        // setRsvpCount(data);
+        setRsvpCount(data);
         //console.log("Line 85", data);
         getAllEvents();
         setIsGoing(true);

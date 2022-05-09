@@ -33,7 +33,7 @@ const EventCard = ({
   return (
     <>
       <div>
-        <Typography variant="h2" fontWeight="600" align="center">
+        <Typography variant="h3" fontWeight="600" align="center">
           Events for the Month of May
         </Typography>
       </div>
