@@ -13,16 +13,16 @@ syncModels(true)
     console.log("Models successfully synced!");
     // })
 
-    //     // // Farm Seed Data
-    //     // await Farms.findOrCreate({
-    //     //   where: { id: 1 },
-    //     //   defaults: {
-    //     //     id: 1,
-    //     //     name: "Cinco Gajues Farm",
-    //     //     description:
-    //     //       "Cinco Gajues Farm is a 20 acre family farm on the south shore of Lake Ponchatrain. We deliver our fresh seasonal all-natural produce straight to your doorstep",
-    //     //   },
-    //     // });
+    // //     // // Farm Seed Data
+    // //     // await Farms.findOrCreate({
+    // //     //   where: { id: 1 },
+    // //     //   defaults: {
+    // //     //     id: 1,
+    // //     //     name: "Cinco Gajues Farm",
+    // //     //     description:
+    // //     //       "Cinco Gajues Farm is a 20 acre family farm on the south shore of Lake Ponchatrain. We deliver our fresh seasonal all-natural produce straight to your doorstep",
+    // //     //   },
+    // //     // });
 
     // // Events Seed Data
     await Events.findOrCreate({
@@ -35,7 +35,9 @@ syncModels(true)
           "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg",
         eventDate: "13/ 05/ 2022",
         eventType: "Farmers market",
-        location: "2456 Exposicao Feira St",
+        address: "9032 Ops Park St",
+        monthTitle: "Events for April",
+        seasonTitle: "Spring Seasson Events",
       },
     });
     // Events Seed Data
@@ -50,7 +52,9 @@ syncModels(true)
           "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg",
         eventDate: "20/ 05/ 2022",
         eventType: "Customer's Day",
-        location: "2309 Berry Hills St",
+        address: "9032 Ops Park St",
+        monthTitle: "Events for April",
+        seasonTitle: "Spring Seasson Events",
       },
     });
 
@@ -66,7 +70,9 @@ syncModels(true)
           "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg",
         eventDate: "27/ 05/ 2022",
         eventType: "Farmers market",
-        location: "9032 Ops Park St",
+        address: "9032 Ops Park St",
+        monthTitle: "Events for April",
+        seasonTitle: "Fall Seasson Events",
       },
     });
     // Events Seed Data
@@ -80,7 +86,41 @@ syncModels(true)
           "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg",
         eventDate: "27/ 05/ 2022",
         eventType: "Community volunteering",
-        location: "9032 Ops Park St",
+        address: "9032 Ops Park St",
+        monthTitle: "Events for April",
+        seasonTitle: "Winter Seasson Events",
+      },
+    });
+    // Events Seed Data
+    await Events.findOrCreate({
+      where: { id: 5 },
+      defaults: {
+        id: 5,
+        eventName: "Cook out",
+        description: "Come join us for a meal and music and other activities",
+        thumbnail:
+          "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg",
+        eventDate: "27/ 05/ 2022",
+        eventType: "Community volunteering",
+        address: "9032 Ops Park St",
+        monthTitle: "Events for April",
+        seasonTitle: "Spring Seasson Events",
+      },
+    });
+    // Events Seed Data
+    await Events.findOrCreate({
+      where: { id: 6 },
+      defaults: {
+        id: 6,
+        eventName: "Cook out",
+        description: "Come join us for a meal and music and other activities",
+        thumbnail:
+          "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg",
+        eventDate: "27/ 05/ 2022",
+        eventType: "Community volunteering",
+        address: "9032 Ops Park St",
+        monthTitle: "Events for April",
+        seasonTitle: "Spring Seasson Events",
       },
     });
 
@@ -161,10 +201,10 @@ syncModels(true)
       },
     });
 
-    //////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
     // Products Seed Data
     await Products.findOrCreate({
       where: { id: 1 },
@@ -290,51 +330,51 @@ syncModels(true)
       },
     });
 
-    // // // Subscriptions Seed Data
-    // await Subscriptions.findOrCreate({
-    //   where: { id: 1 },
-    //   defaults: {
-    //     id: 1,
-    //     season: "Spring",
-    //     year: 2022,
-    //     flat_price: 520,
-    //     weekly_price: 40,
-    //     description:
-    //       "All your Spring favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of fresh blueberries as well.  Pears and and other seasonal goodies will make their usual Summer appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly",
-    //     start_date: "April 26th",
-    //     end_date: "July 29th",
-    //   },
-    // });
+    // // Subscriptions Seed Data
+    await Subscriptions.findOrCreate({
+      where: { id: 1 },
+      defaults: {
+        id: 1,
+        season: "Spring",
+        year: 2022,
+        flat_price: 520,
+        weekly_price: 40,
+        description:
+          "All your Spring favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of fresh blueberries as well.  Pears and and other seasonal goodies will make their usual Summer appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly",
+        start_date: "April 26th",
+        end_date: "July 29th",
+      },
+    });
 
-    // await Subscriptions.findOrCreate({
-    //   where: { id: 2 },
-    //   defaults: {
-    //     id: 2,
-    //     season: "Fall",
-    //     year: 2022,
-    //     flat_price: 520,
-    //     weekly_price: 40,
-    //     description:
-    //       "All your Fall favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of specialty fall crops as well.  Citrus and and other seasonal goodies will make their usual Late Fall appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly",
-    //     start_date: "September 5th",
-    //     end_date: "December 16th",
-    //   },
-    // });
+    await Subscriptions.findOrCreate({
+      where: { id: 2 },
+      defaults: {
+        id: 2,
+        season: "Fall",
+        year: 2022,
+        flat_price: 520,
+        weekly_price: 40,
+        description:
+          "All your Fall favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of specialty fall crops as well.  Citrus and and other seasonal goodies will make their usual Late Fall appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly",
+        start_date: "September 5th",
+        end_date: "December 16th",
+      },
+    });
 
-    // await Subscriptions.findOrCreate({
-    //   where: { id: 3 },
-    //   defaults: {
-    //     id: 3,
-    //     season: "Winter",
-    //     year: 2022,
-    //     flat_price: 520,
-    //     weekly_price: 40,
-    //     description:
-    //       "All your Winter favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of specialty fall crops as well.  Citrus and and other seasonal goodies will make their usual Late Fall appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly",
-    //     start_date: "December 19th",
-    //     end_date: "March 10th",
-    //   },
-    // });
+    await Subscriptions.findOrCreate({
+      where: { id: 3 },
+      defaults: {
+        id: 3,
+        season: "Winter",
+        year: 2022,
+        flat_price: 520,
+        weekly_price: 40,
+        description:
+          "All your Winter favorites will be there, from crispy lettuces to zucchini and all types of peppers, and if we’re lucky we’re sure to get at least 6 weeks of specialty fall crops as well.  Citrus and and other seasonal goodies will make their usual Late Fall appearances, along with weekly whole grains artisan breads from the bakery and delectable lagniappes from the farm kitchen.  Of course the creamery will also be in full swing, with fresh Greek Yogurt and Aged Cheddar cheese available weekly",
+        start_date: "December 19th",
+        end_date: "March 10th",
+      },
+    });
   })
   .catch((err) => {
     console.log(err);

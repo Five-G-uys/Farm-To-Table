@@ -365,10 +365,10 @@ const EventsPage = () => {
                         id="filled-basic"
                         variant="filled"
                         value={address}
-                        name="location"
+                        name="address"
                         label="Address"
                         // id='fullWidth'
-                        placeholder="location of event"
+                        placeholder="Address for event"
                         onChange={handelTextInput}
                       />
                       <br></br>
@@ -392,7 +392,7 @@ const EventsPage = () => {
                         variant="filled"
                         value={monthTitle}
                         name="monthTitle"
-                        label="Event Date"
+                        label="Month of the events"
                         // id='fullWidth'
                         placeholder="Date of event"
                         onChange={handelTextInput}
@@ -405,9 +405,9 @@ const EventsPage = () => {
                         variant="filled"
                         value={seasonTitle}
                         name="seasonTitle"
-                        label="Event Date"
+                        label="Season of the events"
                         // id='fullWidth'
-                        placeholder="Date of event"
+                        placeholder="Season of events"
                         onChange={handelTextInput}
                       />
                       <br></br>
