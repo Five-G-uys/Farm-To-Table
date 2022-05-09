@@ -17,7 +17,7 @@ eventRouter.post('/api/events', (req, res) => {
   const { eventName, description, thumbnail, eventDate, eventType, location } =
     req.body.event;
 
-  console.log('162 Request object postEvent', req.body);
+  // console.log('162 Request object postEvent', req.body);
   Events.create({
     eventName,
     description,
@@ -36,7 +36,6 @@ eventRouter.post('/api/events', (req, res) => {
     });
 });
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL EVENTs ROUTE
 eventRouter.get('/api/events', (req, res) => {
   Events.findAll()
@@ -51,26 +50,23 @@ eventRouter.get('/api/events', (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE ONE EVENT ROUTE
-eventRouter.patch(
-  '/api/events/:id',
-  async (req: Request, res: Response) => {
-    console.log('LINE 146 || UPDATE EVENT', req.body);
+eventRouter.patch('/api/events/:id', async (req: Request, res: Response) => {
+  // console.log('LINE 146 || UPDATE EVENT', req.body);
 
-    try {
-      // update product model with async query and assign the result of that promise to a variable to res.send back
-      const updatedEvent = await Events.update(req.body, {
-        where: { id: req.params.id },
-        returning: true,
-      });
-      console.log('LINE 155 || UPDATE EVENT', updatedEvent);
+  try {
+    // update product model with async query and assign the result of that promise to a variable to res.send back
+    const updatedEvent = await Events.update(req.body, {
+      where: { id: req.params.id },
+      returning: true,
+    });
+    // console.log('LINE 155 || UPDATE EVENT', updatedEvent);
 
-      res.status(204).json(updatedEvent);
-    } catch (err) {
-      console.error('LINE 159 || UPDATE EVENTS', err);
-      res.status(500).json(err);
-    }
+    res.status(204).json(updatedEvent);
+  } catch (err) {
+    console.error('LINE 159 || UPDATE EVENTS', err);
+    res.status(500).json(err);
   }
-);
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE ONE EVENT ROUTE
 eventRouter.delete('/api/events/:id', (req: Request, res: Response) => {

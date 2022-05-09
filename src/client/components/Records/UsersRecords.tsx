@@ -7,12 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Input from "@material-ui/core/Input";
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import { Input } from '@mui/material';
-import { FormControlUnstyledContext } from '@mui/base';
 
 interface Column {
   id:
@@ -65,7 +64,8 @@ const UsersRecords = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
   const [editing, setEditing] = useState(false);
-  const [previous, setPrevious] = useState({});
+  const [rowColumnId, setRowColumnId] = useState({});
+  const [deleteCount, setDeleteCount] = useState(0);
 
   const getUsers = () => {
     axios.get('/api/users')
@@ -78,27 +78,33 @@ const UsersRecords = () => {
       });
   };
 
-  const patchUsers = async (userId: number, updatedUser: any ) => {
+  const patchUsers = async (userId: string, updatedUser: any) => {
     try {
       const { data } = await axios.patch(`/api/users/${userId}`, updatedUser);
-      console.log('patch data', data);
       return data
     } catch (err) {
       console.error(err)
       return {
         error: err
       }
-    } 
+    }
   }
 
-  // const handleDelete = () => {
-  //   axios.delete("/api/orders/delete")
-  //     .then((data)) =>
-  // }
+  const deleteUser = async (userId: string) => {
+    try {
+      const {data} = await axios.delete(`/api/users/${userId}`);
+      return data;
+    } catch (err) {
+      console.error(err)
+      return {
+        error: err
+      }
+    }
+  }
 
   useEffect(() => {
     getUsers()
-  }, []);
+  }, [deleteCount]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -110,9 +116,9 @@ const UsersRecords = () => {
   };
 
   const onChange = (e, row) => {
-    if (!previous[row.id]) {
-      setPrevious(state => ({ ...state, [row.id]: row }));
-    }
+    // if (!previous[row.id]) {
+    //   setPrevious(state => ({ ...state, [row.id]: row }));
+    // }
     const value = e.target.value;
     const name = e.target.name;
     const { id } = row;
@@ -134,6 +140,11 @@ const UsersRecords = () => {
 
   const onEdit = () => {
     setEditing(!editing)
+  }
+
+  const onDelete = (row: object) => {
+    setDeleteCount(deleteCount + 1)
+    deleteUser(row.id)
   }
 
   return (
@@ -164,8 +175,9 @@ const UsersRecords = () => {
                       <TableCell key={column.id} align={column.align}>
                         {editing ? (
                           <Input
-                            value={value}
-                            name={column.label}
+                            // type={String}
+                            defaultValue={value}
+                            name={column.id}
                             onChange={e => onChange(e, row)} />
                         ) : (
                           column.format && typeof value === 'number'
@@ -178,11 +190,14 @@ const UsersRecords = () => {
                   {editing ? (
                     <DoneIcon onClick={() => onDone(row)} />
                   ) :
-                  <><TableCell>
-                      <EditIcon onClick={() => onEdit()} />
-                    </TableCell><TableCell>
-                        <DeleteIcon onClick={() => console.log(rows)} />
-                      </TableCell></>
+                    <>
+                      <TableCell>
+                        <EditIcon onClick={() => onEdit()} />
+                      </TableCell>
+                      <TableCell>
+                        <DeleteIcon onClick={() => onDelete(row)} />
+                      </TableCell>
+                    </>
                   }
 
                 </TableRow>

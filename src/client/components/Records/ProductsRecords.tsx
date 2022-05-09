@@ -94,11 +94,6 @@ const ProductsRecords = () => {
     }
   }
 
-  // const handleDelete = () => {
-  //   axios.delete("/api/orders/delete")
-  //     .then((data)) =>
-  // }
-
   useEffect(() => {
     getProducts();
   }, [deleteCount]);
