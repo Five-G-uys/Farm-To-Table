@@ -19,6 +19,7 @@ import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
 import AddressForm from './AddressForm';
 import { padding } from '@mui/system';
+import { CssBaseline, Box, Container } from '@mui/material';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
@@ -298,25 +299,37 @@ const SubscriptionsPage = () => {
   };
 
   return (
-    <div style={{ marginTop: '10vh' }}>
+    <div>
+      <CssBaseline />
+      {/* Hero unit */}
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          pt: 8,
+          pb: 6,
+        }}
+      ></Box>
       <div>
-        <Typography
-          component='h1'
-          variant='h2'
-          align='center'
-          color='text.primary'
-          gutterBottom
-        >
-          Your bounty awaits...
-        </Typography>
-        <Typography
-          variant='h5'
-          align='center'
-          color='text.secondary'
-          paragraph
-        >
-          Subscribe today to start receiving farm freshness!
-        </Typography>
+        <Container maxWidth='sm'>
+          <Typography
+            component='h1'
+            variant='h2'
+            align='center'
+            color='text.primary'
+            gutterBottom
+          >
+            Your bounty awaits...
+          </Typography>
+          <Typography
+            variant='h5'
+            align='center'
+            color='text.secondary'
+            paragraph
+          >
+            Sign up now for a 14 week subscription and start receiving bountiful
+            boxes of farm freshness today!
+          </Typography>
+        </Container>
         <SubscriptionsContainer
           style={commonStyles}
           subscriptions={subscriptions}

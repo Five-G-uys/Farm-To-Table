@@ -34,10 +34,10 @@ import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
 
 //material UI IMPORTS
-import { createTheme, PaletteMode } from '@mui/material';
+import { Box, createTheme, PaletteMode } from '@mui/material';
 import { Container, Grid, Paper, Switch } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
-import { Typography, Box } from '@mui/material';
+import { Typography } from '@mui/material';
 import { amber, blueGrey, grey } from '@mui/material/colors';
 
 // const useStyles = makeStyles((theme: any) => ({

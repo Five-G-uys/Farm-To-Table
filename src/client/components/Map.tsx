@@ -195,6 +195,7 @@ import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 import * as turf from '@turf/turf';
 // import axios from 'axios';
 import dayjs from 'dayjs';
+import axios from 'axios';
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg';
@@ -284,10 +285,20 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
     try {
       // lon is first (-90ish)
       // for one way trips add source=first&destination=last& before access token
+
+
+      // CALLL BACK END HERE
+
+      // const query: any = await axios.get(`/map/${lat}/${lon}/${routeCoordinates}`)
+      // console.log('QUERY RESULTS FROM BACKEND!: ', query.body)
+
+
       const query = await fetch(
         `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${lon},${lat};${routeCoordinates}?steps=true&geometries=geojson&roundtrip=true&access_token=${mapboxgl.accessToken}`,
         { method: 'GET' }
       );
+
+      // console.log('QUERY RESULTS FROM FRONTEND!: ', query)
       // const matrixTime = await fetch(
       //   `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${lon},${lat};${routeCoordinates}?&access_token=${mapboxgl.accessToken}`,
       //   { method: 'GET' }
@@ -314,7 +325,9 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
       };
 
       // if the route already exists on the map, we'll reset it using setData
+      // setTimeout(() => {
       if (map.current.getSource('route')) {
+        if (!map.current) return;
         map.current.getSource('route').setData(geojson);
       }
       // otherwise, we'll make a new request
@@ -374,6 +387,7 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
           'waterway-label'
         );
       }
+      // }, 5000);
 
       for (let i = 0; i < waypoints.length; i++) {
         console.log('LINE 120 || MAP', waypoints[i]);

@@ -6,6 +6,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import OrdersList from './OrdersList';
 import { UserContext } from './App';
+import { CssBaseline, Box, Container, Typography } from '@mui/material';
 
 const OrdersPage = () => {
   const user: any = useContext(UserContext);
@@ -41,7 +42,35 @@ const OrdersPage = () => {
 
   return (
     <div>
-      <div>User ID: {id}</div>
+         <CssBaseline />
+        {/* Hero unit */}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth='sm'>
+            <Typography
+              component='h1'
+              variant='h2'
+              align='center'
+              color='text.primary'
+              gutterBottom
+            >
+              Upcoming Orders
+            </Typography>
+            <Typography
+              variant='h5'
+              align='center'
+              color='text.secondary'
+              paragraph
+            >
+              Here are all your upcoming CSA produce orders. If you'd like to change or add to your order please contact us to let us know.
+            </Typography>
+          </Container>
+        </Box>
       <OrdersList orders={orders} />
     </div>
   );

@@ -30,6 +30,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import dayjs from 'dayjs';
+import { CssBaseline, Box, Container } from '@mui/material';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -88,7 +89,28 @@ const Profile = () => {
 
   return (
     <div className='page-wrap'>
-      <h1>My Profile</h1>
+         <CssBaseline />
+        {/* Hero unit */}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth='sm'>
+            <Typography
+              component='h1'
+              variant='h2'
+              align='center'
+              color='text.primary'
+              gutterBottom
+            >
+              User Profile
+            </Typography>
+
+          </Container>
+        </Box>
       <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>
         <CardHeader
           avatar={
@@ -118,7 +140,7 @@ const Profile = () => {
           </Typography>
         </CardContent>
         <CardContent>
-          <button onClick={handleLogout}>Logout</button>
+          <Button variant='contained' onClick={handleLogout}>Logout</Button>
         </CardContent>
 
         <CardActions disableSpacing sx={{ justifyContent: 'center' }}>

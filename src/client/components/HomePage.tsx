@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +49,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
   // console.log("farms", 22, farms)
 
   return (
-    <ThemeProvider theme={theme}>
+    <div>
       <CssBaseline />
       <main>
         {/* Hero unit */}
@@ -122,11 +123,11 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant='h5' component='h2'>
-                      Season Subscription
+                      Knock, Knock
                     </Typography>
                     <Typography>
-                      A 4-month subscription of weekly boxes filled with the
-                      freshest produce from our farm.
+                      Who's There? A 4-month subscription of weekly boxes filled
+                      with the freshest produce from our farm.
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -139,7 +140,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
           </Grid>
         </Container>
       </main>
-    </ThemeProvider>
+    </div>
   );
 };
 

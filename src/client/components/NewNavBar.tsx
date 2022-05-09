@@ -51,26 +51,27 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
     { name: 'Home', path: '/' },
     { name: 'Sign Up!', path: '/subscriptions-page' },
     { name: 'Products ', path: '/edit-products' },
-    { name: 'Weather', path: '/weather-page' },
     { name: 'Farm events', path: '/events-page' },
     { name: 'About Us', path: '/about-us-page' },
   ];
 
   if (user.roleId === 4) {
     const settings = [
-      { name: 'Orders', path: '/orders-page' },
       { name: 'Records', path: '/records' },
-      { name: 'Packing List', path: '/packing-lists' },
-      { name: 'Delivery Routes', path: '/delivery-routes' },
+      // { name: 'Packing List', path: '/packing-lists' },
+      // { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Delivery Map', path: '/delivery-map' },
-      { name: 'Edit User Role', path: '/edit-users' },
+      { name: 'Weather', path: '/weather-page' },
+      // { name: 'Edit User Role', path: '/edit-users' },
       { name: 'Profile', path: '/profile-page' },
       // { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
     ];
   } else if (user.roleId === 3) {
     const settings = [
-      { name: 'Packing List', path: '/packing-lists' },
-      { name: 'Delivery Routes', path: '/delivery-routes' },
+      // { name: 'Packing List', path: '/packing-lists' },
+      // { name: 'Delivery Routes', path: '/delivery-routes' },
+      { name: 'Delivery Map', path: '/delivery-map' },
+      { name: 'Weather', path: '/weather-page' },
       { name: 'Profile', path: '/profile-page' },
       // { name: 'Logout', path: '/auth/api/logout' },
     ];
@@ -218,8 +219,8 @@ const NewNavBar = ({ user, mode, setMode }: any, props: Props) => {
                       style={{
                         // EDITED AVATAR HEIGHT EXPERIMENT
                         border: '2px solid lightgray',
-                        width: '4.9rem',
-                        height: '4.9rem',
+                        width: '5.0rem',
+                        height: '5.0rem',
                         alignSelf: 'right',
                       }}
                       component={Paper}

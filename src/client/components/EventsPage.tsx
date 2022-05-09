@@ -27,6 +27,7 @@ import RSVPS from './RSVPS';
 
 // can import getallproducts after migrating it to apicalls file
 import { updatedEvent } from '../apiCalls/eventCalls';
+import { CssBaseline, Container } from '@mui/material';
 
 const EventsPage = () => {
   const user: any = useContext(UserContext);
@@ -250,6 +251,37 @@ const EventsPage = () => {
 
   return (
     <>
+      <CssBaseline />
+      {/* Hero unit */}
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          pt: 8,
+          pb: 6,
+        }}
+      >
+        <Container maxWidth='sm'>
+          <Typography
+            component='h1'
+            variant='h2'
+            align='center'
+            color='text.primary'
+            gutterBottom
+          >
+            Farm Events
+          </Typography>
+          <Typography
+            variant='h5'
+            align='center'
+            color='text.secondary'
+            paragraph
+          >
+            We have regular Saturday farmer's markets and our seasonal Customer
+            Appreciation Day is just around the corner. RSVP below and come join
+            the fun!
+          </Typography>
+        </Container>
+      </Box>
       <EventCard
         getAllEvents={getAllEvents}
         allEvents={allEvents}
