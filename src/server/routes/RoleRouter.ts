@@ -32,11 +32,11 @@ roleRouter.post('/api/roles', (req, res) => {
 roleRouter.get('/api/roles', (req, res) => {
   Roles.findAll()
     .then((response: any) => {
-      console.log('FIND ALL Roles RESPONSE: ', response);
+      // console.log('FIND ALL Roles RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('FIND ALL Roles RESPONSE: ', err);
+      console.error('FIND ALL Roles RESPONSE: ', err);
       res.sendStatus(404);
     });
 });
@@ -44,13 +44,13 @@ roleRouter.get('/api/roles', (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Role ROUTE
 roleRouter.patch('/api/roles/:id',
   async (req: Request, res: Response) => {
-    console.log('UPDATE Role REQUEST BODY: ', req.body);
+    // console.log('UPDATE Role REQUEST BODY: ', req.body);
     try {
       const updatedRole = await Roles.update(req.body, {
         where: { id: req.params.id },
         returning: true,
       });
-      console.log('Role UPDATE INFO: ', updatedRole);
+      // console.log('Role UPDATE INFO: ', updatedRole);
       res.status(204).json(updatedRole);
     } catch (err) {
       console.error('Role UPDATE WAS NOT SUCCESSFUL: ', err);
@@ -63,7 +63,7 @@ roleRouter.patch('/api/roles/:id',
 roleRouter.delete('/api/roles/:id', (req: Request, res: Response) => {
   Roles.destroy({ where: req.params })
     .then((data: any) => {
-      console.log("Role DELETION SUCCESSFUL: ", data);
+      // console.log("Role DELETION SUCCESSFUL: ", data);
       res.sendStatus(200);
     })
     .catch((err: any) => {

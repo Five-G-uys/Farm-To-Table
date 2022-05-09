@@ -34,9 +34,9 @@ import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
 
 //material UI IMPORTS
-import { createTheme, PaletteMode } from '@mui/material';
+import { Box, createTheme, PaletteMode } from '@mui/material';
 import { Container, Grid, Paper, Switch } from '@mui/material';
-import { ThemeProvider, ColorModeContext } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
 import { amber, blueGrey, grey } from '@mui/material/colors';
 
@@ -280,6 +280,21 @@ const App = () => {
         {/* </Grid>
           </Container> */}
         {/* </Paper> */}
+        {/* Footer */}
+        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
+          <Typography variant='h6' align='center' gutterBottom>
+            Knock, Knock Tomatoes
+          </Typography>
+          <Typography
+            variant='subtitle1'
+            align='center'
+            color='text.secondary'
+            component='p'
+          >
+            Who's there? Farm freshness!
+          </Typography>
+        </Box>
+        {/* End footer */}
       </ThemeProvider>
       {/* </ColorModeContext.Provider> */}
     </>

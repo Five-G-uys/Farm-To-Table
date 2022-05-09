@@ -18,6 +18,7 @@ import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
 import AddressForm from './AddressForm';
 import { padding } from '@mui/system';
+import { CssBaseline, Box, Container, Typography } from '@mui/material';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
@@ -297,7 +298,36 @@ const SubscriptionsPage = () => {
   };
 
   return (
-    <div style={{ marginTop: '10vh' }}>
+    <div>
+      <CssBaseline />
+        {/* Hero unit */}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth='sm'>
+            <Typography
+              component='h1'
+              variant='h2'
+              align='center'
+              color='text.primary'
+              gutterBottom
+            >
+              Sign Up Now!
+            </Typography>
+            <Typography
+              variant='h5'
+              align='center'
+              color='text.secondary'
+              paragraph
+            >
+              Sign up for a 14 week subscription of some of the best veggies and home made good you'll ever have!
+            </Typography>
+          </Container>
+        </Box>
       <div>
         <SubscriptionsContainer
           // style={commonStyles}
