@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from "axios";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import RSVPLIST from "./RSVPLIST";
 import { UserContext } from "./App";
-import { CardContent, Typography } from "@mui/material";
+import { CardContent, Typography, Grid, Container, Paper } from "@mui/material";
 import Reminders from "@mui/material";
 //import Profile ""
 
@@ -44,58 +44,64 @@ const RSVPS = () => {
   }, []);
 
   return (
-    <div>
-      {roleId < 4 && (
-        <Typography variant="h4" component="h5">
-          Reminders
-        </Typography>
-      )}
-      {roleId >= 4 ? (
-        <CardContent>
-          Total RSVPS
-          <br></br>
-          <Typography variant="h4" component="h5">
-            {rsvpsCount}
-          </Typography>
-        </CardContent>
-      ) : (
-        rsvps.length > 0 &&
-        rsvps.map(
-          (event: {
-            eventName: string;
-            description: string;
-            thumbnail: React.ImgHTMLAttributes<string>;
-            eventType: string;
-            eventDate: string;
-            id: number;
-            location: string;
-          }) => {
-            const {
-              eventName,
-              eventDate,
-              eventType,
-              description,
-              id,
-              thumbnail,
-              location,
-            } = event;
-            return (
-              <RSVPLIST
-                eventName={eventName}
-                eventType={eventType}
-                thumbnail={thumbnail}
-                description={description}
-                eventDate={eventDate}
-                eventId={id}
-                key={id | roleId}
-                location={location}
-                getAllRSVPSEvents={getAllRSVPSEvents}
-              />
-            );
-          }
-        )
-      )}
-    </div>
+    <Grid>
+      <Container background-color="success">
+        <Paper>
+          <div>
+            {roleId < 4 && (
+              <Typography variant="h4" component="h5" fontWeight="600">
+                Reminders
+              </Typography>
+            )}
+            {roleId >= 4 ? (
+              <CardContent>
+                Total RSVPS
+                <br></br>
+                <Typography variant="h4" component="h5">
+                  {rsvpsCount}
+                </Typography>
+              </CardContent>
+            ) : (
+              rsvps.length > 0 &&
+              rsvps.map(
+                (event: {
+                  eventName: string;
+                  description: string;
+                  thumbnail: React.ImgHTMLAttributes<string>;
+                  eventType: string;
+                  eventDate: string;
+                  id: number;
+                  location: string;
+                }) => {
+                  const {
+                    eventName,
+                    eventDate,
+                    eventType,
+                    description,
+                    id,
+                    thumbnail,
+                    location,
+                  } = event;
+                  return (
+                    <RSVPLIST
+                      eventName={eventName}
+                      eventType={eventType}
+                      thumbnail={thumbnail}
+                      description={description}
+                      eventDate={eventDate}
+                      eventId={id}
+                      key={id | roleId}
+                      location={location}
+                      getAllRSVPSEvents={getAllRSVPSEvents}
+                    />
+                  );
+                }
+              )
+            )}
+          </div>
+        </Paper>
+      </Container>
+    </Grid>
   );
 };
 

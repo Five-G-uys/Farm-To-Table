@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import { UserContext } from "./App";
 
 // import { styled } from '@mui/material/styles';
-// import Card from '@mui/material/Card';
+import Card from "@mui/material/Card";
 // import CardHeader from '@mui/material/CardHeader';
 // import CardMedia from '@mui/material/CardMedia';
 import CardContent from "@mui/material/CardContent";
@@ -63,19 +63,15 @@ const RSVPLIST = ({
       {userRole > 3 ? (
         <div>{rsvpsCount} TOTAL RSVP RESPONSES</div>
       ) : (
-        <section className="user-rsvps">
-          <Box>
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                <h1 className="user-event-name">{eventName}</h1>
-                <h1 className="user-event-type">{eventType}</h1>
-                <h4 className="user-event-date">{eventDate}</h4>
-                <h4 className="user-event-loc">{location}</h4>
-                <button onClick={deleteRsvpsEvent}>cancel</button>
-              </Typography>
-            </CardContent>
-          </Box>
-        </section>
+        <Card>
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              <h1 className="user-event-name">{eventName}</h1>
+              <h4 className="user-event-loc">{location}</h4>
+              <button onClick={deleteRsvpsEvent}>cancel</button>
+            </Typography>
+          </CardContent>
+        </Card>
       )}
     </div>
   );

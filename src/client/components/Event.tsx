@@ -59,8 +59,8 @@ const Event = ({
   const [totalRsvp, setTotalRsvp] = useState(0);
   const [updateCounter, setUpdateCounter] = useState(0);
   const { roleId } = user;
-  console.log("Event Line 73 and ", rsvpCount);
-////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
+
+  ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
     axios
       .post("/api/rsvps/", {
@@ -68,7 +68,7 @@ const Event = ({
         eventId: event.id,
       })
       .then(({ data }: any) => {
-        // setRsvpCount(data);
+        setRsvpCount(data);
         //console.log("Line 85", data);
         getAllEvents();
         setIsGoing(true);
@@ -97,7 +97,7 @@ const Event = ({
       });
   };
 
-  /////////////////???GETS THE COUNT OF ALL RSVPS IN DB ????///////////
+  /////////////////???GETS THE COUNT OF ALL RSVPS IN DB For upMin ????///////////
   const totalEventRsvps = () => {
     axios
       .get(`/api/rsvps/total/${event.id}`, { params: { eventId: event.id } })
@@ -110,6 +110,13 @@ const Event = ({
       });
   };
 
+  const check = () => {
+    if (user.roleId < 4) {
+      isGoing ? "You are going" : "Not going";
+    } else {
+      return null;
+    }
+  };
   //??????DELETES EVENT ??????/////////////////////////
   const deleteEvent = () => {
     axios
@@ -134,6 +141,7 @@ const Event = ({
       .then((data) => {
         setUpdateCounter(updateCounter + 1);
         console.log("52 LINE ", data);
+        getUserRsvpCount();
       })
       .catch((err) => {
         console.error("91 REQUEST FAILED", err);
@@ -180,22 +188,21 @@ const Event = ({
       </CardContent>
       <CardContent>
         {/* // setup map that returns all product info */}
-        <Typography paragraph>
-          {" "}
-          {`Description: ${event.description}`}
-        </Typography>
+
         <Typography paragraph>
           {user.roleId < 4
             ? `${
                 rsvpCount === 1
                   ? "one person is attending"
-                  : `${rsvpCount} people are attending`
+                  : `${totalRsvp} people are attending`
               }`
             : `RSVPS: ${totalRsvp}`}
         </Typography>
         <Typography paragraph>
           {" "}
-          {isGoing ? "You are Going" : " Not going"}
+          {user.roleId > 3
+            ? null
+            : `${isGoing ? "Status: going" : " Status: maybe"}`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
@@ -242,7 +249,13 @@ const Event = ({
           </ExpandMore>
         </Stack>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit></Collapse>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        {" "}
+        <Typography paragraph margin="2.3rem">
+          {" "}
+          {`Description: ${event.description}`}
+        </Typography>
+      </Collapse>
     </Card>
   );
 };
