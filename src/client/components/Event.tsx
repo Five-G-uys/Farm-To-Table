@@ -202,7 +202,7 @@ const Event = ({
           {" "}
           {user.roleId > 3
             ? null
-            : `${isGoing ? "You are Going" : " Not going"}`}
+            : `${isGoing ? "Status: going" : " Status: maybe"}`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
