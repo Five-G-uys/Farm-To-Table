@@ -97,7 +97,7 @@ const Event = ({
       });
   };
 
-  /////////////////???GETS THE COUNT OF ALL RSVPS IN DB ????///////////
+  /////////////////???GETS THE COUNT OF ALL RSVPS IN DB For upMin ????///////////
   const totalEventRsvps = () => {
     axios
       .get(`/api/rsvps/total/${event.id}`, { params: { eventId: event.id } })
@@ -194,7 +194,7 @@ const Event = ({
             ? `${
                 rsvpCount === 1
                   ? "one person is attending"
-                  : `${rsvpCount} people are attending`
+                  : `${totalRsvp} people are attending`
               }`
             : `RSVPS: ${totalRsvp}`}
         </Typography>
@@ -251,7 +251,7 @@ const Event = ({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {" "}
-        <Typography paragraph>
+        <Typography paragraph margin="2.3rem">
           {" "}
           {`Description: ${event.description}`}
         </Typography>
