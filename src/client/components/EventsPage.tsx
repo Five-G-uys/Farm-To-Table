@@ -20,6 +20,14 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import {
+  amber,
+  blueGrey,
+  grey,
+  orange,
+  purple,
+  deepPurple,
+} from "@mui/material/colors";
 //import Button from "@mui/material/Button";
 
 //Component import
@@ -27,8 +35,8 @@ import EventCard from "./EventCard";
 import RSVPS from "./RSVPS";
 
 // can import getallproducts after migrating it to apicalls file
-import { updatedEvent } from '../apiCalls/eventCalls';
-import { CssBaseline, Container } from '@mui/material';
+import { updatedEvent } from "../apiCalls/eventCalls";
+import { CssBaseline, Container } from "@mui/material";
 
 const EventsPage = () => {
   const user: any = useContext(UserContext);
@@ -43,7 +51,11 @@ const EventsPage = () => {
 
   const [value, setValue] = React.useState("");
   const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    //event.preventDefault();
+    setValue((event.target as HTMLInputElement).value);
+
+    console.log("line 49 What's value here", value);
+    console.log("Event with all properties", event);
   };
 
   //event state variable;
@@ -53,12 +65,12 @@ const EventsPage = () => {
     description: "",
     thumbnail: "",
     eventDate: "",
-    eventType: "Farmers market",
+    eventType: "",
     location: "",
     seasonTitle: "",
     monthTitle: "",
   });
-
+  console.log("line 64", event.eventType);
   //state that controls the form
   const [open, setOpen] = useState(false);
 
@@ -72,6 +84,8 @@ const EventsPage = () => {
     setUpdateCounter((updateCounter) => updateCounter + 1);
   };
 
+  console.log("LINE 77, All events", event);
+  console.log("LINE 79", value);
   // Handlers for backdrop control
   const handleClose = () => {
     setOpen(false);
@@ -98,8 +112,8 @@ const EventsPage = () => {
     eventType,
     location,
     id,
-    monthTitle,
-    seasonTitle,
+    // monthTitle,
+    // seasonTitle,
   } = event;
 
   const postEvent = (e: any) => {
@@ -114,8 +128,8 @@ const EventsPage = () => {
           eventDate: eventDate,
           eventType: eventType,
           location: location,
-          monthTitle: monthTitle,
-          seasonTitle: seasonTitle,
+          // monthTitle: monthTitle,
+          // seasonTitle: seasonTitle,
         },
       })
       .then(({ data }) => {
@@ -274,25 +288,25 @@ const EventsPage = () => {
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          bgcolor: "background.paper",
           pt: 8,
           pb: 6,
         }}
       >
-        <Container maxWidth='sm'>
+        <Container maxWidth="sm">
           <Typography
-            component='h1'
-            variant='h2'
-            align='center'
-            color='text.primary'
+            component="h1"
+            variant="h2"
+            align="center"
+            color="text.primary"
             gutterBottom
           >
             Farm Events
           </Typography>
           <Typography
-            variant='h5'
-            align='center'
-            color='text.secondary'
+            variant="h5"
+            align="center"
+            color="text.secondary"
             paragraph
           >
             We have regular Saturday farmer's markets and our seasonal Customer
@@ -318,7 +332,7 @@ const EventsPage = () => {
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           sx={{
-            color: "#fff",
+            color: purple,
             zIndex: (theme) => theme.zIndex.drawer + 1,
             //borderRadius: "2.5rem",
             boxShadow: 24,
@@ -444,37 +458,37 @@ const EventsPage = () => {
                       /> */}
                       <br></br>
                       <br></br>
-                      <Box>
-                        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                          {" "}
-                          <FormLabel id="demo-radio-buttons-group-label">
-                            Type of Event
-                          </FormLabel>
-                          <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            name="controlled-radio-buttons-group"
-                            defaultValue="Farmers Market"
-                            value={value}
-                            onChange={handleRadioBtn}
-                          >
-                            <FormControlLabel
-                              control={<Radio size="small" />}
-                              value="Farmers Market"
-                              label="Farmers Market"
-                            />
-                            <FormControlLabel
-                              control={<Radio size="small" />}
-                              value="Community Volunteering"
-                              label="Community Volunteering"
-                            />
-                            <FormControlLabel
-                              control={<Radio size="small" />}
-                              value="Customer Day"
-                              label="Customer Day"
-                            />
-                          </RadioGroup>
-                        </FormControl>
-                      </Box>
+                      {/* <Box> */}
+                      <FormControl>
+                        {" "}
+                        <FormLabel id="eventType-for-event">
+                          Type of Event
+                        </FormLabel>
+                        <RadioGroup
+                          aria-labelledby="eventType-for-event"
+                          name="eventType"
+                          // defaultValue="Farmers Market"
+                          value={value}
+                          onChange={handleRadioBtn}
+                        >
+                          <FormControlLabel
+                            control={<Radio color={"secondary"} />}
+                            value="Farmers Market"
+                            label="Farmers Market"
+                          />
+                          <FormControlLabel
+                            control={<Radio />}
+                            value="Community Volunteering"
+                            label="Community Volunteering"
+                          />
+                          <FormControlLabel
+                            control={<Radio />}
+                            value="Customer Day"
+                            label="Customer Day"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                      {/* </Box> */}
                       <br></br>
                       <br></br>
                       <Button variant="contained" size="large" type="submit">
