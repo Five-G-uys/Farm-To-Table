@@ -35,7 +35,7 @@ eventRouter.post("/api/events", (req: Request, res: Response) => {
     // monthTitle,
     // seasonTitle,
   })
-    .then((data: any) => {
+    .then((data: []) => {
       //console.log("Return Events Route || Post Request", data);
       res.status(201).send(data);
     })
@@ -48,7 +48,7 @@ eventRouter.post("/api/events", (req: Request, res: Response) => {
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL EVENTs ROUTE
 eventRouter.get("/api/events", (req: Request, res: Response) => {
   Events.findAll()
-    .then((response: any) => {
+    .then((response: []) => {
       //console.log(response, "This is line 186 events gotten");
       res.status(200).send(response);
     })
@@ -60,7 +60,7 @@ eventRouter.get("/api/events", (req: Request, res: Response) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE ONE EVENT ROUTE
 eventRouter.patch("/api/events/:id", async (req: Request, res: Response) => {
-  console.log("LINE 146 || UPDATE EVENT", req.body);
+  //console.log("LINE 146 || UPDATE EVENT", req.body);
 
   try {
     // update product model with async query and assign the result of that promise to a variable to res.send back
@@ -68,7 +68,7 @@ eventRouter.patch("/api/events/:id", async (req: Request, res: Response) => {
       where: { id: req.params.id },
       returning: true,
     });
-    console.log("LINE 155 || UPDATE EVENT", updatedEvent);
+    //console.log("LINE 155 || UPDATE EVENT", updatedEvent);
 
     res.status(204).json(updatedEvent);
   } catch (err) {
@@ -84,11 +84,11 @@ eventRouter.delete("/api/events/:id", (req: Request, res: Response) => {
   Events.destroy({
     where: req.params,
   })
-    .then((data: any) => {
+    .then(() => {
       //console.log("125 deletion was successful!", data);
       res.sendStatus(200);
     })
-    .catch((err: any) => {
+    .catch((err: string) => {
       console.error("128 Deletion was not successful", err);
       res.sendStatus(400);
     });
