@@ -50,9 +50,8 @@ const Event = ({
     setExpanded(!expanded);
   };
 
-  const user: any = useContext(UserContext);
+  const user: { roleId: number; id: number } = useContext(UserContext);
   const { id } = user;
-  console.log("USER ID", id);
   const [expanded, setExpanded] = useState(false);
   const [rsvpCount, setRsvpCount] = useState(0);
   const [isGoing, setIsGoing] = useState(false);
@@ -69,7 +68,6 @@ const Event = ({
       })
       .then(({ data }: any) => {
         setRsvpCount(data);
-        //console.log("Line 85", data);
         getAllEvents();
         setIsGoing(true);
       })
@@ -84,7 +82,6 @@ const Event = ({
         params: { userId: id, eventId: event.id },
       })
       .then(({ data }) => {
-        console.log("count for user rsvps", data);
         setRsvpCount(data.length);
         if (data.length > 0) {
           setIsGoing(true);
@@ -102,7 +99,6 @@ const Event = ({
     axios
       .get(`/api/rsvps/total/${event.id}`, { params: { eventId: event.id } })
       .then((data) => {
-        console.log("Line 132 total rsvps", data.data.length);
         setTotalRsvp(data.data.length);
       })
       .catch((err) => {
@@ -130,10 +126,8 @@ const Event = ({
         console.error("91 REQUEST FAILED", err);
       });
   };
-
   //////?????????DELETE RSVP???????????????????///////
   const deleteRsvpsEvent = () => {
-    // console.log("LINE 81", id, " and ", eventId);
     axios
       .delete(`/api/rsvp/delete/${id}`, {
         params: { userId: id, eventId: event.id },
@@ -187,8 +181,6 @@ const Event = ({
         </Typography>
       </CardContent>
       <CardContent>
-        {/* // setup map that returns all product info */}
-
         <Typography paragraph>
           {user.roleId < 4
             ? `${
@@ -219,7 +211,6 @@ const Event = ({
               </Button>
             )}
           </ExpandMore>
-
           {roleId > 3 && (
             <ExpandMore
               sx={{ color: "green" }}

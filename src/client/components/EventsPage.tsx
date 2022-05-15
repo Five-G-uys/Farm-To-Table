@@ -39,9 +39,8 @@ import { updatedEvent } from "../apiCalls/eventCalls";
 import { CssBaseline, Container } from "@mui/material";
 
 const EventsPage = () => {
-  const user: any = useContext(UserContext);
+  const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId } = user;
-  //console.log("THIS IS WORKING", user);
 
   const [updateCounter, setUpdateCounter] = useState(0);
   // cerate state var events array (set to result of get req)
@@ -49,7 +48,7 @@ const EventsPage = () => {
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState("Farmers Market");
   const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
     //event.preventDefault();
     setValue(event.target.value);
@@ -116,7 +115,7 @@ const EventsPage = () => {
     // seasonTitle,
   } = event;
 
-  const postEvent = (e: any) => {
+  const postEvent = (e: { preventDefault(): void }) => {
     //console.log("LINE 108");
     e.preventDefault();
     axios
@@ -156,15 +155,13 @@ const EventsPage = () => {
   };
 
   // create function to handle update form submission
-  const handleEventUpdateSubmit = async (e: any) => {
+  const handleEventUpdateSubmit = async (e: { preventDefault(): void }) => {
     e.preventDefault();
     try {
       const result = await updatedEvent(event.id, event);
       // keep in try so it doesn't rerender on error
       setUpdateCounter(updateCounter + 1);
       handleClose();
-
-      // console.log("LINE 162 || PRODUCTS PAGE", result);
     } catch (err) {
       console.error("LINE 164 || PRODUCTS PAGE ", err);
     }
@@ -187,7 +184,6 @@ const EventsPage = () => {
   };
 
   // Cloudinary handling
-  // console.log(process.env.CLOUD_PRESET2);
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
@@ -201,7 +197,10 @@ const EventsPage = () => {
         // AND ACCESS PHOTOS MORE EASILY
         tags: [id],
       },
-      (error: any, result: { event: string; info: { url: string } }) => {
+      (
+        error: { error: string },
+        result: { event: string; info: { url: string } }
+      ) => {
         if (!error && result && result.event === "success") {
           console.log("LINE 56", result.info.url);
           setEvent((state) => {
@@ -210,7 +209,6 @@ const EventsPage = () => {
               thumbnail: result.info.url,
             };
           });
-          //console.log("LINE 63", result.info.url);
         }
         //console.log("LINE 135 || CLOUDINARY", error);
       }
@@ -221,16 +219,13 @@ const EventsPage = () => {
   const getAllEvents = () => {
     axios
       .get("/api/events")
-
       .then(({ data }) => {
-        //console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
         setAllEvents(data);
       })
       .catch((error) => {
         console.log("sorry, request failed", error);
       });
   };
-  //const [rsvpCount, setRsvpCount] = useState(0);
 
   const [rsvps, setRsvps] = useState<string[]>([]);
   const getUserRsvps = () => {
@@ -248,18 +243,25 @@ const EventsPage = () => {
   ////////////////Radio Button handle function///////////////////////////
 
   // handle click + edit form functionality for edit button in Product Card component
-  const handleEditClick = (id: any) => {
-    //console.log("LINE 185 || PRODUCTS PAGE CLICKED", id);
+  const handleEditClick = (id: number) => {
     //handle searches for a clicked event in order to update
-    const clickedEvent: any = allEvents.find(
+    const clickedEvent: {
+      eventName: string;
+      id: number;
+      description: string;
+      thumbnail: string;
+      eventDate: number;
+      eventType: string;
+      location: string;
+    } = allEvents.find(
       // find mutates original array values
-      (event: any) => event.id === id
+      (event: { id: number }) => event.id === id
     );
     clickedEvent.thumbnail = clickedEvent.thumbnail
       ? clickedEvent.thumbnail
       : "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg";
 
-    setEvent((state) => {
+    setEvent((state: any) => {
       return {
         ...state,
         id: id,

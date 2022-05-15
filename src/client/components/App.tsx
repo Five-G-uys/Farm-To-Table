@@ -153,11 +153,6 @@ const App = () => {
   return (
     <>
       {/* <div>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
       </div> */}
       {/* <ColorModeContext.Provider value={colorMode}> */}
       <ThemeProvider theme={theme}>

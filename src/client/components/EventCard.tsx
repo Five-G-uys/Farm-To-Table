@@ -8,6 +8,16 @@ import { Grid, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { Header } from "@mui/material";
 
+interface AppProps {
+  handleEditClick(): void;
+  allEvents: [];
+  updateCounter: number;
+  inEditMode: boolean;
+  getAllEvents(): void;
+  rsvps: [];
+  rsvpCount: number;
+  updateState(): void;
+}
 //import RSVPS from "./RSVPS";
 const useStyles = makeStyles({
   gridContainer: {
@@ -26,17 +36,17 @@ const EventCard = ({
   rsvps,
   rsvpCount,
   updateState,
-}: any) => {
-  const user: any = useContext(UserContext);
+}: AppProps) => {
+  const user: { roleId: number; id: number } = useContext(UserContext);
 
   const classes = useStyles();
   return (
     <>
-      <div>
+      {/* <div>
         <Typography variant="h3" fontWeight="600" align="center">
           Events for the Month of May
         </Typography>
-      </div>
+      </div> */}
 
       <Grid
         container
@@ -46,17 +56,9 @@ const EventCard = ({
         className={classes.gridContainer}
       >
         {Array.isArray(allEvents) &&
-          allEvents.map((event: any) => {
+          allEvents.map((event: { id: number; eventName: string }) => {
             return (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                lg={3}
-                xl={3}
-                key={event.eventName + event.id}
-              >
+              <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={event.id}>
                 <Event
                   event={event}
                   updateCounter={updateCounter}
