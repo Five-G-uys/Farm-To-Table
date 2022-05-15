@@ -52,7 +52,7 @@ const EventsPage = () => {
   const [value, setValue] = React.useState("");
   const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
     //event.preventDefault();
-    setValue((event.target as HTMLInputElement).value);
+    setValue(event.target.value);
 
     console.log("line 49 What's value here", value);
     console.log("Event with all properties", event);
@@ -477,12 +477,12 @@ const EventsPage = () => {
                             label="Farmers Market"
                           />
                           <FormControlLabel
-                            control={<Radio />}
+                            control={<Radio color="secondary" />}
                             value="Community Volunteering"
                             label="Community Volunteering"
                           />
                           <FormControlLabel
-                            control={<Radio />}
+                            control={<Radio color="secondary" />}
                             value="Customer Day"
                             label="Customer Day"
                           />
