@@ -26,7 +26,7 @@ interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
 
-// PASS EXPANDMORE THROUGH PROPS FROM PARENT: ALSO USED IN product CARD COMPONENT
+//PASS EXPANDMORE THROUGH PROPS FROM PARENT
 const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -38,7 +38,6 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
   event,
   handleEditClick,
@@ -53,7 +52,6 @@ const Event = ({
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { id } = user;
   const [expanded, setExpanded] = useState(false);
-  const [rsvpCount, setRsvpCount] = useState(0);
   const [isGoing, setIsGoing] = useState(false);
   const [totalRsvp, setTotalRsvp] = useState(0);
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -67,9 +65,11 @@ const Event = ({
         eventId: event.id,
       })
       .then(({ data }: any) => {
-        setRsvpCount(data);
-        getAllEvents();
         setIsGoing(true);
+      })
+      .then(() => {
+        totalEventRsvps();
+        getAllEvents();
       })
       .catch((err) => {
         console.error("68 REQUEST FAILED", err);
@@ -82,7 +82,6 @@ const Event = ({
         params: { userId: id, eventId: event.id },
       })
       .then(({ data }) => {
-        setRsvpCount(data.length);
         if (data.length > 0) {
           setIsGoing(true);
         } else {
@@ -94,7 +93,7 @@ const Event = ({
       });
   };
 
-  /////////////////???GETS THE COUNT OF ALL RSVPS IN DB For upMin ????///////////
+  /////???GETS THE COUNT OF ALL RSVPS FOR A GIVEN EVENT IN DB????///////////
   const totalEventRsvps = () => {
     axios
       .get(`/api/rsvps/total/${event.id}`, { params: { eventId: event.id } })
@@ -106,14 +105,7 @@ const Event = ({
       });
   };
 
-  const check = () => {
-    if (user.roleId < 4) {
-      isGoing ? "You are going" : "Not going";
-    } else {
-      return null;
-    }
-  };
-  //??????DELETES EVENT ??????/////////////////////////
+  //??????DELETES A GIVEN EVENT ??????/////////////////////////
   const deleteEvent = () => {
     axios
       .delete(`/api/events/${event.id}`, {
@@ -126,7 +118,7 @@ const Event = ({
         console.error("91 REQUEST FAILED", err);
       });
   };
-  //////?????????DELETE RSVP???????????????????///////
+  //////?????????DELETE User RSVP???????????????????///////
   const deleteRsvpsEvent = () => {
     axios
       .delete(`/api/rsvp/delete/${id}`, {
@@ -134,8 +126,7 @@ const Event = ({
       })
       .then((data) => {
         setUpdateCounter(updateCounter + 1);
-        console.log("52 LINE ", data);
-        getUserRsvpCount();
+        totalEventRsvps();
       })
       .catch((err) => {
         console.error("91 REQUEST FAILED", err);
@@ -144,11 +135,8 @@ const Event = ({
 
   ////////////////////////////////////////////
   useEffect(() => {
-    if (user.roleId < 4) {
-      getUserRsvpCount();
-    } else {
-      totalEventRsvps();
-    }
+    getUserRsvpCount();
+    totalEventRsvps();
   }, [updateCounter]);
 
   return (
@@ -184,9 +172,9 @@ const Event = ({
         <Typography paragraph>
           {user.roleId < 4
             ? `${
-                rsvpCount === 1
-                  ? "one person is attending"
-                  : `${totalRsvp} people are attending`
+                totalRsvp === 1
+                  ? "one person/family is attending"
+                  : `${totalRsvp} people/Families are attending`
               }`
             : `RSVPS: ${totalRsvp}`}
         </Typography>
@@ -277,3 +265,11 @@ export default Event;
 //     {event.eventName[0]}
 //   </Avatar>
 // }
+
+// const check = () => {
+//   if (user.roleId < 4) {
+//     isGoing ? "You are going" : "Not going";
+//   } else {
+//     return null;
+//   }
+// };

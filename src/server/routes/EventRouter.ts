@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import { Request, Response, Router } from "express";
 
@@ -24,7 +20,7 @@ eventRouter.post("/api/events", (req: Request, res: Response) => {
     location,
   } = req.body.event;
 
-  console.log("162 Request object postEvent", req.body);
+  //console.log("162 Request object postEvent", req.body);
   Events.create({
     eventName,
     description,

@@ -6,7 +6,6 @@ import axios from "axios";
 import { UserContext } from "./App";
 import { Grid, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-import { Header } from "@mui/material";
 
 interface AppProps {
   handleEditClick(): void;
