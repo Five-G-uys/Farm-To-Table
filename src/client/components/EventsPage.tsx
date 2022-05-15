@@ -21,18 +21,18 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import {
-  amber,
-  blueGrey,
-  grey,
-  orange,
+  // amber,
+  // blueGrey,
+  // grey,
+  // orange,
   purple,
-  deepPurple,
+  // deepPurple,
 } from "@mui/material/colors";
 //import Button from "@mui/material/Button";
 
 //Component import
 import EventCard from "./EventCard";
-import RSVPS from "./RSVPS";
+//import RSVPS from "./RSVPS";
 
 // can import getallproducts after migrating it to apicalls file
 import { updatedEvent } from "../apiCalls/eventCalls";
@@ -66,8 +66,8 @@ const EventsPage = () => {
     eventDate: "",
     eventType: "",
     location: "",
-    seasonTitle: "",
-    monthTitle: "",
+    // seasonTitle: "",
+    // monthTitle: "",
   });
   console.log("line 64", event.eventType);
   //state that controls the form
@@ -97,8 +97,8 @@ const EventsPage = () => {
       eventDate: "",
       eventType: "",
       location: "",
-      seasonTitle: "",
-      monthTitle: "",
+      // seasonTitle: "",
+      // monthTitle: "",
     });
   };
 
@@ -125,7 +125,7 @@ const EventsPage = () => {
           description: description,
           thumbnail: thumbnail,
           eventDate: eventDate,
-          eventType: eventType,
+          eventType: value,
           location: location,
           // monthTitle: monthTitle,
           // seasonTitle: seasonTitle,
@@ -187,7 +187,6 @@ const EventsPage = () => {
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
-    console.log("LINE 115 || CLOUDINARY");
     const widget = window.cloudinary.createUploadWidget(
       {
         cloudName: CLOUD_NAME,
