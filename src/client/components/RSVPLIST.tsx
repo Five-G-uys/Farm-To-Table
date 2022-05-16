@@ -73,7 +73,7 @@ const RSVPLIST = ({
         >
           {/* Added Link tag to events in the profile page */}
           <Button href={`${pages[0].path}`} color="secondary">
-            Details
+            Event Details
           </Button>
           <CardContent>
             <Typography variant="body2" color="text.secondary">
