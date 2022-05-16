@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // React Imports
-import React, { useState, useEffect, createContext } from 'react';
-import axios, { AxiosResponse } from 'axios';
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import React, { useState, useEffect, createContext } from "react";
+import axios, { AxiosResponse } from "axios";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 
 // MUI Imports
 import HomePage from './HomePage';
@@ -78,7 +78,7 @@ const App = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get('/auth/api/userProfile')
+      .get("/auth/api/userProfile")
       .then(({ data }: AxiosResponse) => {
         // console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
@@ -87,19 +87,18 @@ const App = () => {
   }, []);
 
   ////********************DARK MODE HERE *********************////
-  const [mode, setMode] = React.useState<PaletteMode>('light');
-  // The light theme is used by default
-  // const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [mode, setMode] = React.useState<PaletteMode>("light");
+
   const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
       mode,
-      ...(mode === 'light'
+      ...(mode === "light"
         ? {
             // palette values for light mode
             primary: amber,
             divider: amber[200],
             text: {
-              primary: grey[900],
+              primary: blueGrey[700],
               secondary: grey[800],
             },
           }
@@ -112,7 +111,7 @@ const App = () => {
               paper: blueGrey[900],
             },
             text: {
-              primary: '#fff',
+              primary: "#fff",
               secondary: grey[500],
             },
           }),
@@ -122,7 +121,7 @@ const App = () => {
   // Update the theme only if the mode changes
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
   const changeMode = (color: any) => {
-    setMode((color) => (color === 'dark' ? 'light' : 'dark'));
+    setMode((color) => (color === "dark" ? "light" : "dark"));
   };
   const isLoggedIn = (user: any) => user.roleId > 0;
   const isEmployee = (user: any) => user.roleId > 2;

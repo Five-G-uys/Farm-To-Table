@@ -8,7 +8,7 @@ import VendorsModel from './Vendors';
 import ProductsModel from './Products';
 import SubscriptionsModel from './Subscriptions';
 import SubscriptionEntriesModel from './SubscriptionEntries';
-// import DietaryRestrictionsModel from './DietaryRestrictions';
+import DietaryRestrictionsModel from './DietaryRestrictions';
 import OrdersModel from './Orders';
 import RSVPModel from './Rsvps';
 import OrderContentsModel from './OrderContents';
@@ -24,8 +24,8 @@ export const syncModels = async (dropTables = false) => {
     await DeliveryZonesModel.sync(options);
     await EventsModel.sync(options);
     await VendorsModel.sync(options);
-    await ProductsModel.sync(options);
     await SubscriptionsModel.sync(options);
+    await ProductsModel.sync(options);
     await SubscriptionEntriesModel.sync(options);
     await DietaryRestrictionsModel.sync(options);
     await OrdersModel.sync(options);

@@ -28,6 +28,8 @@ const Events = db.define("events", {
   eventDate: { type: DataTypes.STRING, allowNull: false },
   location: { type: DataTypes.STRING, allowNull: false },
   eventType: { type: DataTypes.STRING, allowNull: false },
+  // seasonTitle: { type: DataTypes.STRING, allowNull: false },
+  // monthTitle: { type: DataTypes.STRING, allowNull: false },
 });
 
 export default Events;

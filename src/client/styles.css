@@ -1,5 +1,5 @@
-* {
-  font-family: 'Fira Sans', sans-serif;
+/* * {
+  font-family: "Fira Sans", sans-serif;
 }
 /*Events Section Start*/
 /* body {
@@ -9,7 +9,7 @@
 } */
 body {
   /* background-image: url("/src/BackGROUND.jpg"); */
-  background-color: #c8bebe34;
+  /* background-color: #c8bebe34; */
 }
 
 .map-container {

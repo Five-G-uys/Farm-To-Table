@@ -185,14 +185,14 @@
 // export default Map;
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from "react";
 
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 // import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-import MapboxTraffic from '@mapbox/mapbox-gl-traffic';
-import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
-import * as turf from '@turf/turf';
+import MapboxTraffic from "@mapbox/mapbox-gl-traffic";
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
+import * as turf from "@turf/turf";
 // import axios from 'axios';
 import dayjs from 'dayjs';
 import axios from 'axios';
@@ -208,11 +208,11 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
   // const [lng, setLng] = useState(lon);
   // const [latt, setLatt] = useState(lat);
   const [zoom, setZoom] = useState(14);
-  console.log('LINE 209', mode);
+  console.log("LINE 209", mode);
   const routeCoordinatesArray = routeCoordinates
-    .split(';')
+    .split(";")
     .map((coordinate: any) => {
-      return coordinate.split(',');
+      return coordinate.split(",");
     });
   // Initialize map when component mounts
   useEffect(() => {
@@ -224,16 +224,16 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style:
-        Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
-          ? 'mapbox://styles/mapbox/traffic-night-v2'
-          : 'mapbox://styles/mapbox/streets-v11',
+        Number(dayjs().format("H")) > 6 || Number(dayjs().format("H")) <= 18 //mode === 'light'
+          ? "mapbox://styles/mapbox/traffic-night-v2"
+          : "mapbox://styles/mapbox/streets-v11",
       center: [lon, lat],
       zoom: zoom,
     });
 
     // Add navigation control (the +/- zoom buttons)
-    map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
-    map.current.addControl(new MapboxTraffic(), 'bottom-left');
+    map.current.addControl(new mapboxgl.NavigationControl(), "bottom-left");
+    map.current.addControl(new MapboxTraffic(), "bottom-left");
     map.current.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -242,9 +242,9 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
         trackUserLocation: true,
         showUserHeading: true,
       }),
-      'bottom-left'
+      "bottom-left"
     );
-    console.log('LINE 222 || MAP.CURRENT', map.current);
+    console.log("LINE 222 || MAP.CURRENT", map.current);
     // // Add directions start/destination widget (box to enter starting location and destination)
     // map.current.addControl(
     //   new MapboxDirections({
@@ -266,12 +266,12 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
   useEffect(() => {
     if (!map.current) return;
 
-    map.current.on('move', () => {
+    map.current.on("move", () => {
       updateCoords(
         map.current.getCenter().lat.toFixed(2),
         map.current.getCenter().lng.toFixed(2)
       );
-      console.log('q');
+      console.log("q");
       // setLng(map.getCenter().lng.toFixed(lon));
       // setLatt(map.getCenter().lat.toFixed(latt));
       setZoom(map.current.getZoom().toFixed(5));
@@ -295,7 +295,7 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
 
       const query = await fetch(
         `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${lon},${lat};${routeCoordinates}?steps=true&geometries=geojson&roundtrip=true&access_token=${mapboxgl.accessToken}`,
-        { method: 'GET' }
+        { method: "GET" }
       );
 
       // console.log('QUERY RESULTS FROM FRONTEND!: ', query)
@@ -310,16 +310,16 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
         throw json;
       }
       const waypoints: any = json.waypoints;
-      console.log('LINE 80 || MAP COMPONENT', json);
+      console.log("LINE 80 || MAP COMPONENT", json);
       // console.log('LINE 81 || MAP COMPONENT', lat, lon);
       const data = json.trips[0];
 
       const route = data.geometry.coordinates;
       const geojson = {
-        type: 'Feature',
+        type: "Feature",
         properties: {},
         geometry: {
-          type: 'LineString',
+          type: "LineString",
           coordinates: route,
         },
       };
@@ -333,77 +333,77 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
       // otherwise, we'll make a new request
       else {
         map.current.addLayer({
-          id: 'route',
-          type: 'line',
+          id: "route",
+          type: "line",
           source: {
-            type: 'geojson',
+            type: "geojson",
             data: geojson,
           },
           layout: {
-            'line-join': 'round',
-            'line-cap': 'round',
+            "line-join": "round",
+            "line-cap": "round",
           },
           paint: {
-            'line-color': '#3887be',
-            'line-width': 5,
-            'line-opacity': 0.75,
+            "line-color": "#3887be",
+            "line-width": 5,
+            "line-opacity": 0.75,
           },
         });
 
         map.current.addLayer(
           {
-            id: 'routearrows',
-            type: 'symbol',
-            source: 'route',
+            id: "routearrows",
+            type: "symbol",
+            source: "route",
             layout: {
-              'symbol-placement': 'line',
-              'text-field': '▶',
-              'text-size': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
+              "symbol-placement": "line",
+              "text-field": "▶",
+              "text-size": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
                 12,
                 24,
                 22,
                 60,
               ],
-              'symbol-spacing': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
+              "symbol-spacing": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
                 12,
                 30,
                 22,
                 160,
               ],
-              'text-keep-upright': false,
+              "text-keep-upright": false,
             },
             paint: {
-              'text-color': '#3887be',
-              'text-halo-color': 'hsl(55, 11%, 96%)',
-              'text-halo-width': 3,
+              "text-color": "#3887be",
+              "text-halo-color": "hsl(55, 11%, 96%)",
+              "text-halo-width": 3,
             },
           },
-          'waterway-label'
+          "waterway-label"
         );
       }
       // }, 5000);
 
       for (let i = 0; i < waypoints.length; i++) {
-        console.log('LINE 120 || MAP', waypoints[i]);
+        console.log("LINE 120 || MAP", waypoints[i]);
         const marker1: any = new mapboxgl.Marker({
           color:
             i === 0
-              ? 'lightgreen'
+              ? "lightgreen"
               : i === waypoints.length - 1
-              ? 'red'
-              : 'grey',
+              ? "red"
+              : "grey",
         })
           .setLngLat([waypoints[i].location[0], waypoints[i].location[1]])
           .addTo(map.current);
       }
     } catch (err: any) {
-      console.error('LINE 94 || MAP ERROR', err);
+      console.error("LINE 94 || MAP ERROR", err);
     }
 
     // add turn instructions here at the end
@@ -464,49 +464,49 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
   useEffect(() => {
     if (!map.current) return;
 
-    map.current.on('load', () => {
+    map.current.on("load", () => {
       map.current.addLayer({
-        id: 'warehouse',
-        type: 'circle',
+        id: "warehouse",
+        type: "circle",
         source: {
           data: warehouse,
-          type: 'geojson',
+          type: "geojson",
         },
         paint: {
-          'circle-radius': 20,
-          'circle-color': 'white',
-          'circle-stroke-color': '#3887be',
-          'circle-stroke-width': 3,
+          "circle-radius": 20,
+          "circle-color": "white",
+          "circle-stroke-color": "#3887be",
+          "circle-stroke-width": 3,
         },
       });
       // Create a symbol layer on top of circle layer
       map.current.addLayer({
-        id: 'warehouse-symbol',
-        type: 'symbol',
+        id: "warehouse-symbol",
+        type: "symbol",
         source: {
           data: warehouse,
-          type: 'geojson',
+          type: "geojson",
         },
         layout: {
-          'icon-image': 'grocery-15',
-          'icon-size': 1,
+          "icon-image": "grocery-15",
+          "icon-size": 1,
         },
         paint: {
-          'text-color': '#3887be',
+          "text-color": "#3887be",
         },
       });
       // Create a layer for all dropoff points
       map.current.addLayer({
-        id: 'dropoffs-symbol',
-        type: 'symbol',
+        id: "dropoffs-symbol",
+        type: "symbol",
         source: {
           data: dropoffs,
-          type: 'geojson',
+          type: "geojson",
         },
         layout: {
-          'icon-allow-overlap': true,
-          'icon-ignore-placement': true,
-          'icon-image': 'marker-15',
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": true,
+          "icon-image": "marker-15",
         },
       });
     });
@@ -514,8 +514,8 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
 
   return (
     <div>
-      <div className='map-container' ref={mapContainerRef}>
-        <div className='sidebar'>
+      <div className="map-container" ref={mapContainerRef}>
+        <div className="sidebar">
           <div>
             Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
           </div>

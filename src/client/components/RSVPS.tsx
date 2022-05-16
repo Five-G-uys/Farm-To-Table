@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from "axios";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import RSVPLIST from './RSVPLIST';
-import { UserContext } from './App';
-import { CardContent, Typography } from '@mui/material';
+import RSVPLIST from "./RSVPLIST";
+import { UserContext } from "./App";
+import { CardContent, Typography } from "@mui/material";
+import Reminders from "@mui/material";
 //import Profile ""
 
 const RSVPS = () => {
@@ -19,7 +20,7 @@ const RSVPS = () => {
     axios
       .get(`/api/rsvps/user-id/${id}`)
       .then(({ data }) => {
-        console.log('LINE 33 FrontEND request', data);
+        console.log("LINE 33 FrontEND request", data);
         const newArr = data
           .map((eventObj: any) => {
             return eventObj.value;
@@ -31,13 +32,13 @@ const RSVPS = () => {
         setRsvpsCount(newArr.length);
       })
       .catch((err) => {
-        console.log('LINE 48 FAILED', err);
+        console.log("LINE 48 FAILED", err);
       });
   };
 
-  console.log('LINE 75 ', rsvps + 'and' + rsvpsCount + 'number');
+  console.log("LINE 75 ", rsvps + "and" + rsvpsCount + "number");
 
-  console.log('LINE 45', rsvps);
+  console.log("LINE 45", rsvps);
   useEffect(() => {
     getAllRSVPSEvents();
   }, []);
@@ -45,15 +46,15 @@ const RSVPS = () => {
   return (
     <div>
       {roleId < 4 && (
-        <Typography variant='h4' component='h5'>
-          My Events to Attend
+        <Typography variant="h4" component="h5">
+          Reminders
         </Typography>
       )}
       {roleId >= 4 ? (
         <CardContent>
           Total RSVPS
           <br></br>
-          <Typography variant='h4' component='h5'>
+          <Typography variant="h4" component="h5">
             {rsvpsCount}
           </Typography>
         </CardContent>
