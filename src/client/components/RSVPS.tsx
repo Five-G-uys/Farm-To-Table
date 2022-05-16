@@ -90,7 +90,7 @@ const RSVPS = () => {
                       description={description}
                       eventDate={eventDate}
                       eventId={id}
-                      key={id | roleId}
+                      key={description}
                       location={location}
                       getAllRSVPSEvents={getAllRSVPSEvents}
                     />

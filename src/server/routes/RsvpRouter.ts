@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import { Router } from "express";
-import express, { Express, Request, Response } from "express";
+import { Request, Response } from "express";
 
 // Import Models
 import { RSVP, Events } from "../db/models";
@@ -17,8 +13,8 @@ rsvpRouter.post("/api/rsvps", (req: Request, res: Response) => {
   // console.log(req.body)
   const { userId, eventId } = req.body;
   RSVP.create({ userId, eventId })
-    .then((data: any) => {
-      RSVP.findAll({ where: { eventId } }).then((data: any) => {
+    .then(() => {
+      RSVP.findAll({ where: { eventId } }).then((data: []) => {
         console.log("LINE 22 Three", data.length);
         res.json(data.length);
       });
@@ -32,7 +28,7 @@ rsvpRouter.post("/api/rsvps", (req: Request, res: Response) => {
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL - RSVPs ROUTE
 rsvpRouter.get("/api/rsvps", (req: Request, res: Response) => {
   RSVP.findAll()
-    .then((response: any) => {
+    .then((response: { data: [] }) => {
       // console.log('FIND ALL RSVPs RESPONSE: ', response);
       res.status(200).send(response);
     })
@@ -47,24 +43,26 @@ rsvpRouter.get("/api/rsvps/user-id/:userId", (req: Request, res: Response) => {
   RSVP.findAll({
     where: { userId: req.params.userId },
   })
-    .then(async (posts: any) => {
+    .then(async (posts: []) => {
       try {
         //console.log("LINE 199", posts);
-        const promises = posts.map((rsvp: any) => {
-          //console.log("LINE 197", rsvp.eventId);
-          return Events.findAll({ where: { id: rsvp.eventId } });
-        });
+        const promises = posts.map(
+          (rsvp: { userId: number; eventId: number }) => {
+            //console.log("LINE 197", rsvp.eventId);
+            return Events.findAll({ where: { id: rsvp.eventId } });
+          }
+        );
         Promise.allSettled(promises)
-          .then(async (event: any) => {
+          .then(async (event: object[]) => {
             //console.log("LINE 200, EVENTS FOR USER", event[0].value);
             res.status(200).send(event);
           })
-          .catch((err: any) => console.log(err));
+          .catch((err: object) => console.log(err));
       } catch {
         console.log("Failed to promisify");
       }
     })
-    .catch((err: any) => {
+    .catch((err: object) => {
       console.log("ERROR FAILED REQ", err);
     });
 });
@@ -79,7 +77,7 @@ rsvpRouter.patch("/api/rsvps/:id", async (req: Request, res: Response) => {
     });
     // console.log('RSVP UPDATE INFO: ', updatedRSVP);
     res.status(204).json(updatedRSVP);
-  } catch (err) {
+  } catch (err: any) {
     console.error("RSVP UPDATE WAS NOT SUCCESSFUL: ", err);
     res.status(500).json(err);
   }
@@ -92,7 +90,7 @@ rsvpRouter.delete("/api/rsvps", (req: Request, res: Response) => {
   RSVP.destroy({
     where: { userId: req.query.userId, eventId: req.query.eventId },
   })
-    .then((data: any) => {
+    .then(() => {
       // console.log("LINE 96 ALL THE RESPONSES FROM RSVP", data);
       res.sendStatus(200);
     })
@@ -104,7 +102,7 @@ rsvpRouter.delete("/api/rsvps", (req: Request, res: Response) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID - RSVP ROUTE
 rsvpRouter.delete("/api/rsvp/delete/:id", (req: Request, res: Response) => {
-  console.log("Line 107 ", req);
+  //console.log("Line 107 ", req);
   RSVP.destroy({
     where: { eventId: req.query.eventId, userId: req.query.userId },
   })
@@ -120,30 +118,30 @@ rsvpRouter.delete("/api/rsvp/delete/:id", (req: Request, res: Response) => {
 
 //Get by id from RSVP table
 rsvpRouter.get("/api/rsvps/:id", (req: Request, res: Response) => {
-  console.log("Line 149", req.query);
+  //console.log("Line 149", req.query);
   RSVP.findAll({
     where: { eventId: req.query.eventId, userId: req.query.userId },
   })
-    .then((data: any) => {
+    .then((data: []) => {
       console.log("LINE 228 ALL THE RESPONSES FROM RSVP", data);
       res.status(200).send(data);
     })
-    .catch((err: any) => {
+    .catch((err: string) => {
       console.log("FAILED REQUEST", err);
       res.sendStatus(500);
     });
 });
 //Get by id from RSVP table
 rsvpRouter.get("/api/rsvps/total/:eventId", (req: Request, res: Response) => {
-  console.log("Query object in the request", req.query);
+  //console.log("Query object in the request", req.query);
   RSVP.findAll({
     where: { eventId: req.query.eventId },
   })
-    .then((data: any) => {
+    .then((data: []) => {
       console.log("LINE 140 ALL THE RESPONSES FROM RSVP", data.length);
       res.send(data);
     })
-    .catch((err: any) => {
+    .catch((err: string) => {
       console.log("FAILED REQUEST", err);
       res.sendStatus(500);
     });

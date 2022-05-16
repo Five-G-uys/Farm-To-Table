@@ -1,14 +1,6 @@
-/* * {
-  font-family: "Fira Sans", sans-serif;
-}
-/*Events Section Start*/
-/* body {
-  margin: 0;
-  height: 100vh;
-  font-family: "Inter", sans-serif;
-} */
 body {
-  /* background-image: url("/src/BackGROUND.jpg"); */
+  /* background-image: url("/src/client/components/groundImage.png"); */
+  size-adjust: absolute;
   /* background-color: #c8bebe34; */
 }
 
@@ -28,141 +20,6 @@ body {
   padding: 5vh;
 }
 
-.event {
-  padding-right: 500px;
-  padding-left: 500px;
-  display: flex;
-  flex-direction: column;
-}
-.form-event {
-  /* width: 180px; */
-  background-color: white;
-  padding: 40px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.75);
-}
-
-.form--submit {
-  width: 30%;
-  font-size: 20px;
-  padding: 20px;
-  border-radius: 5px;
-  background-color: rgb(141, 219, 110);
-  border: none;
-  cursor: pointer;
-}
-.text-form {
-  width: 100%;
-  height: 30px;
-  margin-bottom: 10px;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid gray;
-  padding: 15px;
-  font-family: 'Inter', sans-serif;
-}
-
-.radio-title {
-  font-weight: 700px;
-}
-.text-card {
-  align-items: flex-start;
-}
-.form-input {
-  width: 100%;
-  height: 30px;
-  margin-bottom: 20px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid gray;
-  padding: 15px;
-  font-family: 'Inter', sans-serif;
-}
-.input {
-  width: 100%;
-  height: 30px;
-  margin-bottom: 20px;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid gray;
-  padding: 15px;
-  font-family: 'Inter', sans-serif;
-}
-.card {
-  margin-top: 80px;
-  display: flex;
-  justify-content: center;
-  gap: 80px;
-}
-.title-card {
-  font-size: 30px;
-  text-align: center;
-}
-.nav {
-  background-color: rgb(163, 229, 137);
-  align-content: center;
-}
-
-.nav-event {
-  font-weight: bolder;
-  font-size: 40px;
-  height: 70px;
-  padding: 20px 36px;
-  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.sect-event {
-  flex-basis: 225px;
-  box-shadow: 1px 1px 8px rgba(17, 6, 134, 0.25);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  padding: 13px;
-  padding-bottom: 20px;
-  background-color: white;
-}
-.event-img {
-  max-width: 400px;
-  height: auto;
-  align-self: center;
-  border-radius: 5px;
-  object-fit: cover;
-}
-
-.event-name {
-  font-weight: 700;
-  font-size: 25px;
-}
-
-.input-btn {
-  align-items: 60px;
-  width: 30%;
-  font-size: 20px;
-  padding: 20px;
-  border-radius: 5px;
-  background-color: rgb(128, 213, 95);
-  border: none;
-  cursor: pointer;
-}
-.create-event {
-  font-size: 30px;
-}
-
-/* .user-rsvps {
-  flex-basis: 225px;
-  box-shadow: 1px 1px 8px rgba(17, 6, 134, 0.25);
-  border-radius: 15px;
-  flex-direction: column;
-  padding: 20px;
-  padding-bottom: 40px;
-  background-color: rgb(255, 255, 255);
-} */
-/*Event section end */
-
 /*///////////////////////////////////////////////////// WEATHER WIDGET /////////////////////////////////////////////////////*/
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
@@ -175,7 +32,7 @@ body {
 .weatherCard {
   width: 400px;
   height: 200px;
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   position: relative;
 }
 .currentTemp {
@@ -238,7 +95,7 @@ body {
 }
 .rain::before {
   display: block;
-  content: '\f04e';
+  content: "\f04e";
   font-family: weathericons;
   font-size: 40px;
   left: 6px;
@@ -254,7 +111,7 @@ body {
 }
 .wind::before {
   display: block;
-  content: '\f050';
+  content: "\f050";
   font-family: weathericons;
   font-size: 25px;
   left: -10px;
