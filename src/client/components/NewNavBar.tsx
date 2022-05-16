@@ -192,10 +192,7 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
                   ))}
                 </Menu>
               </Box>
-              <Switch
-                onChange={() => changeMode(mode)}
-                color="secondary"
-              ></Switch>
+              <Switch onChange={() => changeMode(mode)} color="error"></Switch>
               <Typography
                 variant="h6"
                 noWrap

@@ -309,6 +309,7 @@ const EventsPage = () => {
             align="center"
             color="text.secondary"
             paragraph
+            marginBottom="12px"
           >
             We have regular Saturday farmer's markets and our seasonal Customer
             Appreciation Day is just around the corner. RSVP below and come join
@@ -473,17 +474,17 @@ const EventsPage = () => {
                           onChange={handleRadioBtn}
                         >
                           <FormControlLabel
-                            control={<Radio color={"secondary"} />}
+                            control={<Radio color={"success"} />}
                             value="Farmers Market"
                             label="Farmers Market"
                           />
                           <FormControlLabel
-                            control={<Radio color="secondary" />}
+                            control={<Radio color="success" />}
                             value="Community Volunteering"
                             label="Community Volunteering"
                           />
                           <FormControlLabel
-                            control={<Radio color="secondary" />}
+                            control={<Radio color="success" />}
                             value="Customer Day"
                             label="Customer Day"
                           />

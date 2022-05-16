@@ -143,13 +143,14 @@ const Event = ({
     <Card
       sx={{
         minWidth: 300,
-        borderRadius: "1.5rem",
+        borderRadius: "1.2rem",
         boxShadow: 24,
         size: "large",
       }}
     >
       <CardHeader
         subheader={`Date of Event: ${event.eventDate}`}
+        fontWeight="700"
         subtitle={`Type of Event: ${event.eventType}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
         title={event.eventName}
@@ -161,30 +162,40 @@ const Event = ({
         ""
       )}
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          fontWeight="700"
+          fontSize="20px"
+        >
           {`Address: ${event.location}`}
         </Typography>
       </CardContent>
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          fontWeight="700"
+          fontSize="20px"
+        >
           {`${event.eventType}`}
         </Typography>
       </CardContent>
       <CardContent>
-        <Typography paragraph>
+        <Typography paragraph fontWeight="700" fontSize="20px">
           {user.roleId < 4
             ? `${
                 totalRsvp === 1
-                  ? "one person/family is attending"
-                  : `${totalRsvp} people/Families are attending`
+                  ? `Already attending:  ${totalRsvp}`
+                  : `Already attending:  ${totalRsvp}`
               }`
             : `RSVPS: ${totalRsvp}`}
         </Typography>
-        <Typography paragraph>
+        <Typography paragraph fontWeight="700" fontSize="20px">
           {" "}
           {user.roleId > 3
             ? null
-            : `${isGoing ? "Status: going" : " Status: maybe"}`}
+            : `${isGoing ? "My status: attending" : " Status: maybe"}`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
@@ -232,7 +243,7 @@ const Event = ({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {" "}
-        <Typography paragraph margin="2.3rem">
+        <Typography paragraph margin="2.3rem" fontWeight="700" fontSize="20px">
           {" "}
           {`Description: ${event.description}`}
         </Typography>
