@@ -42,7 +42,7 @@ import { amber, blueGrey, grey, lightBlue, orange } from "@mui/material/colors";
 
 import { Dispatch, SetStateAction } from "react";
 
-import { useEventListener } from "usehooks-ts";
+// import { useEventListener } from "usehooks-ts";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 function Copyright() {
@@ -157,6 +157,7 @@ const App = () => {
     window.localStorage.setItem("mode", newMode);
     setMode((newMode) => (newMode === "dark" ? "light" : "dark"));
   };
+
   const isLoggedIn = (user: any) => user.roleId > 0;
   const isEmployee = (user: any) => user.roleId > 2;
   const isAdmin = (user: any) => user.roleId > 3;
