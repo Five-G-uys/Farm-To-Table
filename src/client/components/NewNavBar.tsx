@@ -185,14 +185,17 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
                   {pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                       {/* // link tags are anchor tags under the hood */}
-                      <Link to={page.path}>
+                      <Button href={`${page.path}`}>
                         <Typography textAlign="center">{page.name}</Typography>
-                      </Link>
+                      </Button>
                     </MenuItem>
                   ))}
                 </Menu>
               </Box>
-              <Switch onChange={() => changeMode(mode)}></Switch>
+              <Switch
+                onChange={() => changeMode(mode)}
+                color="secondary"
+              ></Switch>
               <Typography
                 variant="h6"
                 noWrap
@@ -249,11 +252,11 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
                 >
                   {settings.map((setting) => (
                     <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                      <Link to={setting.path}>
+                      <Button href={setting.path} color="secondary">
                         <Typography textAlign="center">
                           {setting.name}
                         </Typography>
-                      </Link>
+                      </Button>
                     </MenuItem>
                   ))}
                 </Menu>

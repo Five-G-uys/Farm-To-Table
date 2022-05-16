@@ -17,7 +17,7 @@ import Typography from "@mui/material/Typography";
 // import ShareIcon from '@mui/icons-material/Share';
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
-// import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 // import Stack from '@mui/material/Stack';
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
@@ -72,9 +72,9 @@ const RSVPLIST = ({
           }}
         >
           {/* Added Link tag to events in the profile page */}
-          <Link to={pages[0].path} color="brown">
-            Details here
-          </Link>
+          <Button href={`${pages[0].path}`} color="secondary">
+            Details
+          </Button>
           <CardContent>
             <Typography variant="body2" color="text.secondary">
               {eventName}
