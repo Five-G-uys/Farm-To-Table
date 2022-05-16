@@ -428,7 +428,7 @@ const EventsPage = () => {
                         name="eventDate"
                         label="Event Date"
                         // id='fullWidth'
-                        placeholder="Date of event"
+                        placeholder="05/29/2022"
                         onChange={handelTextInput}
                       />
                       {/* <br></br>

@@ -143,7 +143,7 @@ const Event = ({
     <Card
       sx={{
         minWidth: 300,
-        borderRadius: "2.5rem",
+        borderRadius: "1.5rem",
         boxShadow: 24,
         size: "large",
       }}
