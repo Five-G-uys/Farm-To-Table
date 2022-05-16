@@ -134,11 +134,13 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
               }}
             >
               {/* removed disableGutters attribute from toolbar */}
+              {/* added a color prop for app name on navbar */}
               <Typography
                 variant="h6"
                 noWrap
                 component="div"
                 sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                color="red"
               >
                 Knock, Knock Tomatoes
               </Typography>

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
 import { UserContext } from "./App";
+import { Link } from "react-router-dom";
 
 // import { styled } from '@mui/material/styles';
 import Card from "@mui/material/Card";
@@ -23,6 +23,7 @@ import Typography from "@mui/material/Typography";
 // import EditIcon from '@mui/icons-material/Edit';
 // import { loadCSS } from 'fg-loadcss';
 import Box from "@mui/material/Box";
+import axios from "axios";
 //import { green } from "@mui/material/colors";
 // import Icon from '@mui/material/Icon';
 
@@ -31,26 +32,24 @@ import Box from "@mui/material/Box";
 
 const RSVPLIST = ({
   eventName,
-  eventType,
-  eventDate,
   eventId,
-  userRole,
   rsvpsCount,
   location,
   getAllRSVPSEvents,
 }: any) => {
-  const user: any = useContext(UserContext);
+  const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId, id } = user;
+  const pages = [{ name: "Events", path: "/events-page" }];
 
   //patch request for deleteting an event in the database
   const deleteRsvpsEvent = () => {
-    console.log("LINE 81", id, " and ", eventId);
+    //console.log("LINE 81", id, " and ", eventId);
     axios
       .delete("/api/rsvps", {
         params: { userId: id, eventId: eventId },
       })
       .then((data) => {
-        console.log("52 LINE ", data);
+        //console.log("52 LINE ", data);
         getAllRSVPSEvents();
       })
       .catch((err) => {
@@ -59,21 +58,34 @@ const RSVPLIST = ({
   };
 
   return (
-    <div>
-      {userRole > 3 ? (
+    <Box>
+      {roleId > 3 ? (
         <div>{rsvpsCount} TOTAL RSVP RESPONSES</div>
       ) : (
-        <Card>
+        <Card
+          sx={{
+            minWidth: 300,
+            borderRadius: "2rem",
+            boxShadow: 15,
+            size: "large",
+            marginLeft: "18px",
+          }}
+        >
+          {/* Added Link tag to events in the profile page */}
+          <Link to={pages[0].path} color="brown">
+            Details here
+          </Link>
           <CardContent>
             <Typography variant="body2" color="text.secondary">
-              <h1 className="user-event-name">{eventName}</h1>
-              <h4 className="user-event-loc">{location}</h4>
+              {eventName}
+              {location}
+              <br></br>
               <button onClick={deleteRsvpsEvent}>cancel</button>
             </Typography>
           </CardContent>
         </Card>
       )}
-    </div>
+    </Box>
   );
 };
 

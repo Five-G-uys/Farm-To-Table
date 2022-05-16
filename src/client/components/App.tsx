@@ -38,7 +38,7 @@ import { Box, createTheme, PaletteMode } from "@mui/material";
 import { Container, Grid, Paper, Switch } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import { Typography } from "@mui/material";
-import { amber, blueGrey, grey, orange } from "@mui/material/colors";
+import { amber, blueGrey, grey, lightBlue, orange } from "@mui/material/colors";
 
 import { Dispatch, SetStateAction } from "react";
 
@@ -85,6 +85,7 @@ const App = () => {
 
   ////********************DARK MODE HERE *********************////
   const [mode, setMode] = React.useState<PaletteMode>("light");
+  //Not functional yet
   const image = "https://www.pexels.com/photo/brown-wooden-surface-129722/";
   const styles = {
     paperContainer: {
@@ -107,6 +108,16 @@ const App = () => {
             text: {
               primary: blueGrey[700],
               secondary: grey[800],
+              // action: {
+              //   active: lightBlue[200],
+              //   activeOpacity: 1,
+              //   hover: grey[100],
+              //   hoverOpacity: 0.7,
+              //   focus: grey[600],
+              //   focusOpacity: 1,
+              //   selected: grey[300],
+              //   selectedOpacity: 1,
+              // },
             },
           }
         : {
@@ -127,7 +138,7 @@ const App = () => {
 
   /////////////////Local Storage for Darkmode/ LightMode////////////////////////////
   // Set dark mode based on media query
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  //const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   useEffect(() => {
     const mode = window.localStorage.getItem("mode");
@@ -142,7 +153,7 @@ const App = () => {
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   const changeMode = (newMode: any) => {
-    console.log(window.localStorage.setItem("mode", newMode));
+    //console.log(window.localStorage.setItem("mode", newMode));
     window.localStorage.setItem("mode", newMode);
     setMode((newMode) => (newMode === "dark" ? "light" : "dark"));
   };

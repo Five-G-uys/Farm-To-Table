@@ -150,9 +150,11 @@ const Event = ({
     >
       <CardHeader
         subheader={`Date of Event: ${event.eventDate}`}
+        subtitle={`Type of Event: ${event.eventType}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
         title={event.eventName}
       />
+
       {event.thumbnail ? (
         <CardMedia component="img" height="300" image={event.thumbnail} />
       ) : (
