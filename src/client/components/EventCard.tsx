@@ -4,24 +4,23 @@ import React, { useState, useEffect, useContext } from "react";
 import Event from "./Event";
 import axios from "axios";
 import { UserContext } from "./App";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 
-//import RSVPS from "./RSVPS";
 interface AppProps {
-  eventName: string;
-  description: string;
-  thumbnail: React.ImgHTMLAttributes<string>;
-  eventType: string;
-  eventDate: string;
-  eventId: number;
-  getAllEvents: () => void;
-  location: string;
-  handleEditClick: () => void;
+  handleEditClick(): void;
+  allEvents: [];
+  updateCounter: number;
+  inEditMode: boolean;
+  getAllEvents(): void;
+  rsvps: [];
+  rsvpCount: number;
+  updateState(): void;
 }
+//import RSVPS from "./RSVPS";
 const useStyles = makeStyles({
   gridContainer: {
-    paddingTop: "40px",
+    paddingTop: "150px",
     paddingLeft: "4rem",
     paddingRight: "4rem",
   },
@@ -32,44 +31,48 @@ const EventCard = ({
   allEvents,
   updateCounter,
   inEditMode,
-  updateState,
   getAllEvents,
-}: AppProps | any) => {
-  const user: any = useContext(UserContext);
+  rsvps,
+  rsvpCount,
+  updateState,
+}: AppProps) => {
+  const user: { roleId: number; id: number } = useContext(UserContext);
 
-  //console.log("line 32", allEvents);
   const classes = useStyles();
   return (
-    <Grid
-      container
-      spacing={12}
-      className={classes.gridContainer}
-      // justify='center'
-    >
-      {Array.isArray(allEvents) &&
-        allEvents.map((event: any) => {
-          return (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              xl={3}
-              key={event.eventName + event.id}
-            >
-              <Event
-                event={event}
-                updateCounter={updateCounter}
-                handleEditClick={handleEditClick}
-                inEditMode={inEditMode}
-                updateState={updateState}
-                getAllEvents={getAllEvents}
-              />
-            </Grid>
-          );
-        })}
-    </Grid>
+    <>
+      {/* <div>
+        <Typography variant="h3" fontWeight="600" align="center">
+          Events for the Month of May
+        </Typography>
+      </div> */}
+
+      <Grid
+        container
+        spacing={8}
+        direction="row"
+        alignItems="center"
+        className={classes.gridContainer}
+      >
+        {Array.isArray(allEvents) &&
+          allEvents.map((event: { id: number; eventName: string }) => {
+            return (
+              <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={event.id}>
+                <Event
+                  event={event}
+                  updateCounter={updateCounter}
+                  handleEditClick={handleEditClick}
+                  inEditMode={inEditMode}
+                  getAllEvents={getAllEvents}
+                  rsvps={rsvps}
+                  rsvpCount={rsvpCount}
+                  //updateState={updateState}
+                />
+              </Grid>
+            );
+          })}
+      </Grid>
+    </>
   );
 };
 

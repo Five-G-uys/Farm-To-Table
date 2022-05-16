@@ -97,7 +97,7 @@ const SubscriptionsAdmin = ({
       }}
       className='add_x_form_modal'
     >
-      <Fade in={open}>
+      <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
         {
           <div>
             <div>
@@ -118,14 +118,12 @@ const SubscriptionsAdmin = ({
                   }
                 >
                   <br></br>
-                  {thumbnail && <img width={300} src={thumbnail} />}
+                  {thumbnail && (
+                    <img width={'100%'} src={thumbnail} border-radius='2rem' />
+                  )}
                   <br></br>
                   <Box>
-                    <FormControl
-                      fullWidth
-                      sx={{ m: 1, color: '#fff' }}
-                      variant='standard'
-                    >
+                    <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
                       {' '}
                       <FormLabel id='demo-radio-buttons-group-label'>
                         <h3 className='create-subscription'>Create Season</h3>
@@ -219,12 +217,24 @@ const SubscriptionsAdmin = ({
                   />
                   <br></br>
                   <br></br>
-                  <Button variant='contained' size='large' onClick={showWidget}>
+                  <Button
+                    variant='contained'
+                    size='large'
+                    color='success'
+                    sx={{ color: 'white' }}
+                    onClick={showWidget}
+                  >
                     Add Subscription Image
                   </Button>
                   <br></br>
                   <br></br>
-                  <Button variant='contained' size='large' type='submit'>
+                  <Button
+                    variant='contained'
+                    size='large'
+                    color='success'
+                    type='submit'
+                    sx={{ color: 'white' }}
+                  >
                     {handleInputSubscription ? 'SAVE' : 'UPDATE'}
                   </Button>
                 </form>
