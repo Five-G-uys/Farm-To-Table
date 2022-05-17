@@ -3,12 +3,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 // Import Dependencies
-import { Router } from "express";
-import express, { Express, Request, Response } from "express";
-import axios from "axios";
-
+import { Router } from 'express';
+import express, { Express, Request, Response } from 'express';
+import axios from 'axios';
+import dayjs from 'dayjs';
 // Import Models
-import { SubscriptionEntries, Orders } from "../db/models";
+import { SubscriptionEntries, Orders } from '../db/models';
+import { start } from 'repl';
 
 // Set Up Router
 const subscriptionEntriesRouter: Router = Router();
@@ -17,7 +18,15 @@ const subscriptionEntriesRouter: Router = Router();
 subscriptionEntriesRouter.post(
   `/api/add_subscription_entry/:id`,
   async (req: Request, res: Response) => {
-    const { subscriptionId, streetAddress, city, state, zip, phone } = req.body;
+    const {
+      subscriptionId,
+      streetAddress,
+      city,
+      state,
+      zip,
+      phone,
+      start_date,
+    } = req.body;
 
     const address: any = `${streetAddress} ${city}`;
     try {
@@ -40,43 +49,33 @@ subscriptionEntriesRouter.post(
         })
           .then((data: any) => {
             // CHANGE TODAY TO FIRST DAY OF SEASON START DATE
-            const today: Date = new Date();
             // iterate over number of orders
             for (let i = 1; i < 15; i++) {
-              const nextWeek = () => {
-                const today = new Date();
-                const nextwk = new Date(
-                  today.getFullYear(),
-                  today.getMonth(),
-                  today.getDate() + 7 * i
-                );
-                return nextwk;
-              };
-              // console.log(
-              //   'LINE 61 || NEXTWEEK',
-              //   nextWeek().toJSON().slice(0, 10)
-              // );
+              const today: any = dayjs(start_date)
+                .add(7 * i, 'day')
+                .format('YYYY-MM-DD');
+
               Orders.create({
                 // subscriptionId: data.dataValues.subscriptionId,
                 subscriptionEntryId: data.dataValues.id,
-                delivery_date: nextWeek().toJSON().slice(0, 10),
+                delivery_date: today,
               })
                 .then((data: any) => {
                   // console.log('LINE 318 || SERVER INDEX ||', data);
                 })
                 .catch((err: any) => {
-                  console.log("LINE 73 || SERVER INDEX || ERROR", err);
+                  console.log('LINE 73 || SERVER INDEX || ERROR', err);
                 });
             }
           })
           .catch((err: any) => {
-            console.error("LINE 327", err);
+            console.error('LINE 327', err);
           });
       };
 
       await addSubscription();
       // console.log('LINE 332 || INDEXTS SUB POST');
-      res.status(201).send("Subscribed!");
+      res.status(201).send('Subscribed!');
     } catch (err) {
       res.status(500).json(err);
     }
@@ -99,23 +98,23 @@ subscriptionEntriesRouter.post(
 // });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL SubscriptionEntries ROUTE
-subscriptionEntriesRouter.get("/api/subscription-entries", (req, res) => {
+subscriptionEntriesRouter.get('/api/subscription-entries', (req, res) => {
   SubscriptionEntries.findAll()
     .then((response: any) => {
-      console.log("FIND ALL SubscriptionEntries RESPONSE: ", response);
+      console.log('FIND ALL SubscriptionEntries RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log("FIND ALL SubscriptionEntries ERROR: ", err);
+      console.log('FIND ALL SubscriptionEntries ERROR: ', err);
       res.sendStatus(404);
     });
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID SubscriptionEntry ROUTE
 subscriptionEntriesRouter.patch(
-  "/api/subscription-entries/:id",
+  '/api/subscription-entries/:id',
   async (req: Request, res: Response) => {
-    console.log("UPDATE SubscriptionEntries REQUEST BODY: ", req.body);
+    console.log('UPDATE SubscriptionEntries REQUEST BODY: ', req.body);
     try {
       const updatedSubscriptionEntry = await SubscriptionEntries.update(
         req.body,
@@ -124,10 +123,10 @@ subscriptionEntriesRouter.patch(
           returning: true,
         }
       );
-      console.log("SubscriptionEntry UPDATE INFO: ", updatedSubscriptionEntry);
+      console.log('SubscriptionEntry UPDATE INFO: ', updatedSubscriptionEntry);
       res.status(204).json(updatedSubscriptionEntry);
     } catch (err) {
-      console.error("SubscriptionEntry UPDATE WAS NOT SUCCESSFUL: ", err);
+      console.error('SubscriptionEntry UPDATE WAS NOT SUCCESSFUL: ', err);
       res.status(500).json(err);
     }
   }
@@ -135,15 +134,15 @@ subscriptionEntriesRouter.patch(
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID SubscriptionEntry ROUTE
 subscriptionEntriesRouter.delete(
-  "/api/subscription-entries/:id",
+  '/api/subscription-entries/:id',
   (req: Request, res: Response) => {
     SubscriptionEntries.destroy({ where: req.params })
       .then((data: any) => {
-        console.log("SubscriptionEntry DELETION SUCCESSFUL: ", data);
+        console.log('SubscriptionEntry DELETION SUCCESSFUL: ', data);
         res.sendStatus(200);
       })
       .catch((err: any) => {
-        console.error("SubscriptionEntry DELETION WAS NOT SUCCESSFUL: ", err);
+        console.error('SubscriptionEntry DELETION WAS NOT SUCCESSFUL: ', err);
         res.sendStatus(400);
       });
   }

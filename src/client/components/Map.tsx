@@ -1,198 +1,12 @@
-// import React, { useRef, useEffect, useState } from 'react';
-
-// import mapboxgl from 'mapbox-gl';
-// import 'mapbox-gl/dist/mapbox-gl.css';
-// import axios from 'axios';
-// import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-// import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
-
-// mapboxgl.accessToken =
-//   'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A';
-
-// const Map = ({ lat, lon, updateCoords, routeCoordinates }: any) => {
-//   const mapContainerRef = useRef(null);
-//   const map: any = useRef(null);
-
-//   // const [lng, setLng] = useState(lon);
-//   // const [latt, setLatt] = useState(lat);
-//   const [zoom, setZoom] = useState(11);
-
-//   // Initialize map when component mounts
-//   useEffect(() => {
-//     if (!lat && !lon) return;
-//     if (map.current) return;
-
-//     map.current = new mapboxgl.Map({
-//       container: mapContainerRef.current,
-//       style: 'mapbox://styles/mapbox/streets-v11',
-//       center: [lon, lat],
-//       zoom: zoom,
-//     });
-
-//     // Add navigation control (the +/- zoom buttons)
-//     map.current.addControl(new mapboxgl.NavigationControl(), 'top-left');
-//     // Add directions start/destination widget (box to enter starting location and destination)
-//     map.current.addControl(
-//       new MapboxDirections({
-//         unit: 'metric',
-//         profile: 'mapbox/driving',
-//         accessToken: mapboxgl.accessToken,
-//         // coordinates,
-//       }),
-//       'top-left'
-//     );
-//     // Clean up on unmount
-//     return () => map.remove();
-//   }, [lat, lon, zoom]);
-
-//   useEffect(() => {
-//     if (!map.current) return;
-
-//     map.current.on('move', () => {
-//       updateCoords(
-//         map.current.getCenter().lat.toFixed(2),
-//         map.current.getCenter().lng.toFixed(2)
-//       );
-//       console.log('q');
-//       // setLng(map.getCenter().lng.toFixed(lon));
-//       // setLatt(map.getCenter().lat.toFixed(latt));
-//       setZoom(map.current.getZoom().toFixed(5));
-//     });
-//   }, [map]);
-
-//   //   useEffect(() => {
-//   //     axios.post(
-//   //       `https://api.mapbox.com/matching/v5/mapbox/driving?access_token=${mapboxgl.accessToken}
-//   // `,
-//   //       {}
-//   //     );
-//   //   }, []);
-//   // useEffect(() => {
-//   //   const address = '8319 Apricot Street New Orleans';
-
-//   //   axios
-//   //     .get(
-//   //       `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A`
-//   //     )
-//   //     .then((data) => {
-//   //       console.log('LINE 76', data);
-//   //     })
-//   //     .catch((err) => {
-//   //       console.error('LINE 79', err);
-//   //     });
-//   // }, []);
-
-//   // create a function to make a directions request
-//   async function getRoute() {
-//     // make a directions request using cycling profile
-//     // an arbitrary start will always be the same
-//     // only the end or destination will change
-//     try {
-//       // lon is first (-90ish)
-//       // for one way trips add source=first&destination=last& before access token
-//       const query = await fetch(
-//         `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${lon},${lat};${routeCoordinates}?steps=true&geometries=geojson&roundtrip=true&access_token=${mapboxgl.accessToken}`,
-//         { method: 'GET' }
-//       );
-//       const matrixTime = await fetch(
-//         `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${lon},${lat};${routeCoordinates}?&access_token=${mapboxgl.accessToken}`,
-//         { method: 'GET' }
-//       );
-//       console.log('LINE 101 || MATRIX TIME', matrixTime);
-
-//       const json = await query.json();
-//       if (!json.trips || !json.waypoints) {
-//         throw json;
-//       }
-//       const waypoints: any = json.waypoints;
-//       // console.log('LINE 80 || MAP COMPONENT', json);
-//       // console.log('LINE 81 || MAP COMPONENT', lat, lon);
-//       const data = json.trips[0];
-
-//       const route = data.geometry.coordinates;
-//       const geojson = {
-//         type: 'Feature',
-//         properties: {},
-//         geometry: {
-//           type: 'LineString',
-//           coordinates: route,
-//         },
-//       };
-
-//       // if the route already exists on the map, we'll reset it using setData
-//       if (map.current.getSource('route')) {
-//         map.current.getSource('route').setData(geojson);
-//       }
-//       // otherwise, we'll make a new request
-//       else {
-//         map.current.addLayer({
-//           id: 'route',
-//           type: 'line',
-//           source: {
-//             type: 'geojson',
-//             data: geojson,
-//           },
-//           layout: {
-//             'line-join': 'round',
-//             'line-cap': 'round',
-//           },
-//           paint: {
-//             'line-color': '#3887be',
-//             'line-width': 5,
-//             'line-opacity': 0.75,
-//           },
-//         });
-//       }
-
-//       for (let i = 0; i < waypoints.length; i++) {
-//         console.log('LINE 120 || MAP', waypoints[i]);
-//         const marker1: any = new mapboxgl.Marker({
-//           color:
-//             i === 0
-//               ? 'lightgreen'
-//               : i === waypoints.length - 1
-//               ? 'red'
-//               : 'grey',
-//         })
-//           .setLngLat([waypoints[i].location[0], waypoints[i].location[1]])
-//           .addTo(map.current);
-//       }
-//     } catch (err: any) {
-//       console.error('LINE 94 || MAP ERROR', err);
-//     }
-
-//     // add turn instructions here at the end
-//   }
-
-//   useEffect(() => {
-//     if (!lat || !lon) return;
-//     console.log('LINE 125 || MAP', lat, lon);
-//     getRoute();
-//   }, [lat, lon]);
-
-//   return (
-//     <div>
-//       <div className='sidebarStyle'>
-//         <div>
-//           Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
-//         </div>
-//       </div>
-//       <div className='map-container' ref={mapContainerRef} />
-//     </div>
-//   );
-// };
-
-// export default Map;
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from 'react';
 
-import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 // import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-import MapboxTraffic from "@mapbox/mapbox-gl-traffic";
-import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
-import * as turf from "@turf/turf";
+import MapboxTraffic from '@mapbox/mapbox-gl-traffic';
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
+import * as turf from '@turf/turf';
 // import axios from 'axios';
 import dayjs from 'dayjs';
 import axios from 'axios';
@@ -200,40 +14,48 @@ import axios from 'axios';
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg';
 
-const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
+const Map = ({
+  lat,
+  lon,
+  updateCoords,
+  routeCoordinates,
+  updateCounter,
+  mode,
+  routeData,
+}: any) => {
   const mapContainerRef = useRef(null);
   const map: any = useRef(null);
   let warehouse: any;
   const [distance, setDistance] = useState(0);
   // const [lng, setLng] = useState(lon);
   // const [latt, setLatt] = useState(lat);
-  const [zoom, setZoom] = useState(14);
-  console.log("LINE 209", mode);
+  const [zoom, setZoom] = useState(13);
+  console.log('LINE 33', mode);
   const routeCoordinatesArray = routeCoordinates
-    .split(";")
+    .split(';')
     .map((coordinate: any) => {
-      return coordinate.split(",");
+      return coordinate.split(',');
     });
   // Initialize map when component mounts
   useEffect(() => {
     if (!lat && !lon) return;
-    if (routeCoordinatesArray.length < 2) return;
+    // if (routeCoordinatesArray.length < 2) return;
 
     if (map.current) return;
 
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style:
-        Number(dayjs().format("H")) > 6 || Number(dayjs().format("H")) <= 18 //mode === 'light'
-          ? "mapbox://styles/mapbox/traffic-night-v2"
-          : "mapbox://styles/mapbox/streets-v11",
+        Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
+          ? 'mapbox://styles/mapbox/traffic-night-v2'
+          : 'mapbox://styles/mapbox/streets-v11',
       center: [lon, lat],
       zoom: zoom,
     });
 
     // Add navigation control (the +/- zoom buttons)
-    map.current.addControl(new mapboxgl.NavigationControl(), "bottom-left");
-    map.current.addControl(new MapboxTraffic(), "bottom-left");
+    map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+    map.current.addControl(new MapboxTraffic(), 'bottom-left');
     map.current.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -242,9 +64,9 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
         trackUserLocation: true,
         showUserHeading: true,
       }),
-      "bottom-left"
+      'bottom-left'
     );
-    console.log("LINE 222 || MAP.CURRENT", map.current);
+    console.log('LINE 69 || MAP.CURRENT', map.current);
     // // Add directions start/destination widget (box to enter starting location and destination)
     // map.current.addControl(
     //   new MapboxDirections({
@@ -266,12 +88,12 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
   useEffect(() => {
     if (!map.current) return;
 
-    map.current.on("move", () => {
+    map.current.on('move', () => {
       updateCoords(
         map.current.getCenter().lat.toFixed(2),
         map.current.getCenter().lng.toFixed(2)
       );
-      console.log("q");
+      console.log('q');
       // setLng(map.getCenter().lng.toFixed(lon));
       // setLatt(map.getCenter().lat.toFixed(latt));
       setZoom(map.current.getZoom().toFixed(5));
@@ -279,24 +101,15 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
   }, [map]);
 
   async function getRoute() {
+    console.log('LINE 103 MAP', routeData);
     // make a directions request using cycling profile
     // an arbitrary start will always be the same
     // only the end or destination will change
     try {
-      // lon is first (-90ish)
-      // for one way trips add source=first&destination=last& before access token
-
-
-      // CALLL BACK END HERE
-
-      // const query: any = await axios.get(`/map/${lat}/${lon}/${routeCoordinates}`)
-      // console.log('QUERY RESULTS FROM BACKEND!: ', query.body)
-
-
-      const query = await fetch(
-        `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${lon},${lat};${routeCoordinates}?steps=true&geometries=geojson&roundtrip=true&access_token=${mapboxgl.accessToken}`,
-        { method: "GET" }
-      );
+      //   const query = await fetch(
+      //     `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${lon},${lat};${routeCoordinates}?steps=true&geometries=geojson&roundtrip=true&access_token=${mapboxgl.accessToken}`,
+      //     { method: 'GET' }
+      //   );
 
       // console.log('QUERY RESULTS FROM FRONTEND!: ', query)
       // const matrixTime = await fetch(
@@ -305,21 +118,21 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
       // );
       // console.log('LINE 101 || MATRIX TIME', matrixTime);
 
-      const json = await query.json();
-      if (!json.trips || !json.waypoints) {
-        throw json;
+      // const json = await query.json();
+      if (!routeData.trips || !routeData.waypoints) {
+        throw routeData;
       }
-      const waypoints: any = json.waypoints;
-      console.log("LINE 80 || MAP COMPONENT", json);
+      const waypoints: any = routeData.waypoints;
+      console.log('LINE 117 || MAP COMPONENT', routeData);
       // console.log('LINE 81 || MAP COMPONENT', lat, lon);
-      const data = json.trips[0];
+      const data = routeData.trips[0];
 
       const route = data.geometry.coordinates;
       const geojson = {
-        type: "Feature",
+        type: 'Feature',
         properties: {},
         geometry: {
-          type: "LineString",
+          type: 'LineString',
           coordinates: route,
         },
       };
@@ -333,77 +146,77 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
       // otherwise, we'll make a new request
       else {
         map.current.addLayer({
-          id: "route",
-          type: "line",
+          id: 'route',
+          type: 'line',
           source: {
-            type: "geojson",
+            type: 'geojson',
             data: geojson,
           },
           layout: {
-            "line-join": "round",
-            "line-cap": "round",
+            'line-join': 'round',
+            'line-cap': 'round',
           },
           paint: {
-            "line-color": "#3887be",
-            "line-width": 5,
-            "line-opacity": 0.75,
+            'line-color': '#3887be',
+            'line-width': 5,
+            'line-opacity': 0.75,
           },
         });
 
         map.current.addLayer(
           {
-            id: "routearrows",
-            type: "symbol",
-            source: "route",
+            id: 'routearrows',
+            type: 'symbol',
+            source: 'route',
             layout: {
-              "symbol-placement": "line",
-              "text-field": "▶",
-              "text-size": [
-                "interpolate",
-                ["linear"],
-                ["zoom"],
+              'symbol-placement': 'line',
+              'text-field': '▶',
+              'text-size': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
                 12,
                 24,
                 22,
                 60,
               ],
-              "symbol-spacing": [
-                "interpolate",
-                ["linear"],
-                ["zoom"],
+              'symbol-spacing': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
                 12,
                 30,
                 22,
                 160,
               ],
-              "text-keep-upright": false,
+              'text-keep-upright': false,
             },
             paint: {
-              "text-color": "#3887be",
-              "text-halo-color": "hsl(55, 11%, 96%)",
-              "text-halo-width": 3,
+              'text-color': '#3887be',
+              'text-halo-color': 'hsl(55, 11%, 96%)',
+              'text-halo-width': 3,
             },
           },
-          "waterway-label"
+          'waterway-label'
         );
       }
       // }, 5000);
 
       for (let i = 0; i < waypoints.length; i++) {
-        console.log("LINE 120 || MAP", waypoints[i]);
+        console.log('LINE 120 || MAP', waypoints[i]);
         const marker1: any = new mapboxgl.Marker({
           color:
             i === 0
-              ? "lightgreen"
+              ? 'lightgreen'
               : i === waypoints.length - 1
-              ? "red"
-              : "grey",
+              ? 'red'
+              : 'grey',
         })
           .setLngLat([waypoints[i].location[0], waypoints[i].location[1]])
           .addTo(map.current);
       }
     } catch (err: any) {
-      console.error("LINE 94 || MAP ERROR", err);
+      console.error('LINE 217 || MAP ERROR', err);
     }
 
     // add turn instructions here at the end
@@ -416,106 +229,86 @@ const Map = ({ lat, lon, updateCoords, routeCoordinates, mode }: any) => {
 */
 
   let dropoffs: any;
-
+  // let warehouse: any;
   // useEffect to get route and apply it to map whenever the lat or lon change
   useEffect(() => {
-    if (!lat || !lon) return;
-    if (routeCoordinatesArray.length < 2) return;
-    // console.log('LINE 125 || MAP', lat, lon);
+    console.log('LINE 235', routeData, lat, lon, map.current);
+    if (!lat || !lon || !map.current || !routeData.trips) return;
+    // if (routeCoordinatesArray.length < 2) return;
     // create hypothetical warehouse location coordinate. Set to current location of device for now. Will hardcode
     // once a permanent location is decided
     const warehouseLocation = [lon, lat];
+    console.log('LINE 241 || MAP', lat, lon);
     // Turning warehouse coordinate (or potentially a series of coordinates) into a GeoJSON feature collection.
     warehouse = turf.featureCollection([turf.point(warehouseLocation)]);
-    // console.log('LINE 371 || WAREHOUSE', warehouse);
-
+    console.log('LINE 244 || WAREHOUSE', warehouse.features[0]);
+    warehouse = warehouse.features[0];
     // Creating empty feature collection to store all order points
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     dropoffs = turf.featureCollection([
       turf.point([lon, lat]),
       ...routeCoordinatesArray.map((coordinate: any) => turf.point(coordinate)),
     ]);
-
-    // console.log('LINE 362', dropoffs);
-
-    // FOR EACH ORDER COORDINATE CREATE A POINT FEATURE
-
-    // Add layer for drop off locations
-    // map.current.addLayer({
-    //   id: 'dropoffs-symbol',
-    //   type: 'symbol',
-    //   source: {
-    //     data: dropoffs,
-    //     type: 'geojson',
-    //   },
-    //   layout: {
-    //     'icon-allow-overlap': true,
-    //     'icon-ignore-placement': true,
-    //     'icon-image': 'marker-15',
-    //   },
-    // });
-    // dropoffs = turf.featureCollection([]);
-
-    // Invoking getRoute function to get the route layer from mapbox
+    console.log('LINE 252', dropoffs);
     getRoute();
-  }, [lat, lon]);
+  }, [lat, lon, updateCounter]);
 
   // useEffect to drop warehouse icon once map and warehouse var load
   useEffect(() => {
     if (!map.current) return;
 
-    map.current.on("load", () => {
+    map.current.on('load', () => {
       map.current.addLayer({
-        id: "warehouse",
-        type: "circle",
+        id: 'warehouse',
+        type: 'circle',
         source: {
           data: warehouse,
-          type: "geojson",
+          type: 'geojson',
         },
         paint: {
-          "circle-radius": 20,
-          "circle-color": "white",
-          "circle-stroke-color": "#3887be",
-          "circle-stroke-width": 3,
+          'circle-radius': 20,
+          'circle-color': 'white',
+          'circle-stroke-color': '#3887be',
+          'circle-stroke-width': 3,
         },
       });
       // Create a symbol layer on top of circle layer
       map.current.addLayer({
-        id: "warehouse-symbol",
-        type: "symbol",
+        id: 'warehouse-symbol',
+        type: 'symbol',
         source: {
           data: warehouse,
-          type: "geojson",
+          type: 'geojson',
         },
         layout: {
-          "icon-image": "grocery-15",
-          "icon-size": 1,
+          'icon-image': 'grocery-15',
+          'icon-size': 1,
         },
         paint: {
-          "text-color": "#3887be",
+          'text-color': '#3887be',
         },
       });
       // Create a layer for all dropoff points
       map.current.addLayer({
-        id: "dropoffs-symbol",
-        type: "symbol",
+        id: 'dropoffs-symbol',
+        type: 'symbol',
         source: {
           data: dropoffs,
-          type: "geojson",
+          type: 'geojson',
         },
         layout: {
-          "icon-allow-overlap": true,
-          "icon-ignore-placement": true,
-          "icon-image": "marker-15",
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true,
+          'icon-image': 'marker-15',
         },
       });
     });
-  }, [lat, lon]);
+  }, [map.current, routeCoordinatesArray]);
 
   return (
     <div>
-      <div className="map-container" ref={mapContainerRef}>
-        <div className="sidebar">
+      <div className='map-container' ref={mapContainerRef}>
+        <div className='sidebar'>
           <div>
             Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
           </div>

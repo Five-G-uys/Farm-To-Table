@@ -1,5 +1,5 @@
 // React Imports
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // MUI Imports
 import { styled } from '@mui/material/styles';
@@ -21,7 +21,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
+import axios from 'axios';
 import dayjs from 'dayjs';
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -40,7 +40,13 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const ProductCard = ({ product, handleEditClick }: any) => {
+const ProductCard = ({
+  product,
+  handleEditClick,
+  updateCounter,
+  getAllProducts,
+  setUpdateCounter,
+}: any) => {
   // expanded state var
   const [expanded, setExpanded] = useState(false);
 
@@ -48,8 +54,24 @@ const ProductCard = ({ product, handleEditClick }: any) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   const { name, id, description, plant_date, harvest_date, img_url } = product;
+
+  const handleProductDelete = (productId: any) => {
+    axios
+      .delete(`/api/products/${id}`)
+      .then(({ data }: any) => {
+        console.log('LINE 57', id);
+        console.log('LINE 55 ', data);
+        setUpdateCounter(updateCounter + 1);
+      })
+      .catch((err: any) => {
+        console.error('LINE 59 ERROR');
+      });
+  };
+  useEffect(() => {
+    getAllProducts();
+  }, [updateCounter]);
+
   // console.log('LINE 53 || PRODUCT CARD', id);
   return (
     <Card
@@ -88,7 +110,11 @@ const ProductCard = ({ product, handleEditClick }: any) => {
 
       <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
         <Stack spacing={5} direction='row' id='product_card_stack'>
-          <ExpandMore sx={{ color: 'green' }} expand={expanded}>
+          <ExpandMore
+            sx={{ color: 'green' }}
+            expand={expanded}
+            onClick={() => handleProductDelete(id)}
+          >
             <DeleteIcon sx={{ color: 'green' }} />
           </ExpandMore>
           <ExpandMore

@@ -33,7 +33,7 @@ import subscriptionRouter from './routes/SubscriptionsRouter';
 import userRouter from './routes/UserRouter';
 import vendorRouter from './routes/VendorRouter';
 import weatherRouter from './routes/WeatherRouter';
-
+import orderContentRouter from './routes/OrderContentRouter';
 // Import Interfaces
 import UserInterface from '../types/UserInterface';
 import Profile from 'src/client/components/ProfilePage';
@@ -80,12 +80,21 @@ app.use('', subscriptionRouter);
 app.use('', userRouter);
 app.use('', vendorRouter);
 app.use('', weatherRouter);
+app.use('', orderContentRouter);
 
 // KEEP AT BOTTOM OF GET REQUESTS
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.resolve(dist, 'index.html'));
 });
 
+// error handle middleware
+app.use((err: any, req: Request, res: Response, next: any) => {
+  console.log('LINE 92 || SEVER INDEX', err, res.statusCode);
+
+  res.status(res.statusCode === 200 ? 500 : res.statusCode);
+  // res.statusCode();
+  res.json({ message: err.message });
+});
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at ${process.env.SERVER_URL}`);
 });

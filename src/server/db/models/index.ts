@@ -106,4 +106,5 @@ export const Products = ProductsModel;
 export const DietaryRestrictions = DietaryRestrictionsModel;
 export const SubscriptionEntries = SubscriptionEntriesModel;
 export const Orders = OrdersModel;
+export const OrderContents = OrderContentsModel;
 export const RSVP = RSVPModel;
