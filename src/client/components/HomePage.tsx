@@ -46,7 +46,6 @@ const HomePage = ({ getAllSubscriptions }: any) => {
   useEffect(() => {
     getFarms();
   }, []);
-  // console.log("farms", 22, farms)
 
   return (
     <div>
