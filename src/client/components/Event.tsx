@@ -26,7 +26,7 @@ interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
 
-// PASS EXPANDMORE THROUGH PROPS FROM PARENT: ALSO USED IN product CARD COMPONENT
+//PASS EXPANDMORE THROUGH PROPS FROM PARENT
 const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -38,7 +38,6 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Event = ({
   event,
   handleEditClick,
@@ -50,17 +49,15 @@ const Event = ({
     setExpanded(!expanded);
   };
 
-  const user: any = useContext(UserContext);
+  const user: { roleId: number; id: number } = useContext(UserContext);
   const { id } = user;
-  console.log("USER ID", id);
   const [expanded, setExpanded] = useState(false);
-  const [rsvpCount, setRsvpCount] = useState(0);
   const [isGoing, setIsGoing] = useState(false);
   const [totalRsvp, setTotalRsvp] = useState(0);
   const [updateCounter, setUpdateCounter] = useState(0);
   const { roleId } = user;
-  console.log("Event Line 73 and ", rsvpCount);
-////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
+
+  ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
     axios
       .post("/api/rsvps/", {
@@ -68,10 +65,11 @@ const Event = ({
         eventId: event.id,
       })
       .then(({ data }: any) => {
-        // setRsvpCount(data);
-        //console.log("Line 85", data);
-        getAllEvents();
         setIsGoing(true);
+      })
+      .then(() => {
+        totalEventRsvps();
+        getAllEvents();
       })
       .catch((err) => {
         console.error("68 REQUEST FAILED", err);
@@ -84,8 +82,6 @@ const Event = ({
         params: { userId: id, eventId: event.id },
       })
       .then(({ data }) => {
-        console.log("count for user rsvps", data);
-        setRsvpCount(data.length);
         if (data.length > 0) {
           setIsGoing(true);
         } else {
@@ -97,12 +93,11 @@ const Event = ({
       });
   };
 
-  /////////////////???GETS THE COUNT OF ALL RSVPS IN DB ????///////////
+  /////???GETS THE COUNT OF ALL RSVPS FOR A GIVEN EVENT IN DB????///////////
   const totalEventRsvps = () => {
     axios
       .get(`/api/rsvps/total/${event.id}`, { params: { eventId: event.id } })
       .then((data) => {
-        console.log("Line 132 total rsvps", data.data.length);
         setTotalRsvp(data.data.length);
       })
       .catch((err) => {
@@ -110,7 +105,7 @@ const Event = ({
       });
   };
 
-  //??????DELETES EVENT ??????/////////////////////////
+  //??????DELETES A GIVEN EVENT ??????/////////////////////////
   const deleteEvent = () => {
     axios
       .delete(`/api/events/${event.id}`, {
@@ -123,17 +118,15 @@ const Event = ({
         console.error("91 REQUEST FAILED", err);
       });
   };
-
-  //////?????????DELETE RSVP???????????????????///////
+  //////?????????DELETE User RSVP???????????????????///////
   const deleteRsvpsEvent = () => {
-    // console.log("LINE 81", id, " and ", eventId);
     axios
       .delete(`/api/rsvp/delete/${id}`, {
         params: { userId: id, eventId: event.id },
       })
       .then((data) => {
         setUpdateCounter(updateCounter + 1);
-        console.log("52 LINE ", data);
+        totalEventRsvps();
       })
       .catch((err) => {
         console.error("91 REQUEST FAILED", err);
@@ -142,11 +135,8 @@ const Event = ({
 
   ////////////////////////////////////////////
   useEffect(() => {
-    if (user.roleId < 4) {
-      getUserRsvpCount();
-    } else {
-      totalEventRsvps();
-    }
+    getUserRsvpCount();
+    totalEventRsvps();
   }, [updateCounter]);
 
   return (
@@ -160,9 +150,11 @@ const Event = ({
     >
       <CardHeader
         subheader={`Date of Event: ${event.eventDate}`}
+        subtitle={`Type of Event: ${event.eventType}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
         title={event.eventName}
       />
+
       {event.thumbnail ? (
         <CardMedia component="img" height="300" image={event.thumbnail} />
       ) : (
@@ -179,23 +171,20 @@ const Event = ({
         </Typography>
       </CardContent>
       <CardContent>
-        {/* // setup map that returns all product info */}
-        <Typography paragraph>
-          {" "}
-          {`Description: ${event.description}`}
-        </Typography>
         <Typography paragraph>
           {user.roleId < 4
             ? `${
-                rsvpCount === 1
-                  ? "one person is attending"
-                  : `${rsvpCount} people are attending`
+                totalRsvp === 1
+                  ? "one person/family is attending"
+                  : `${totalRsvp} people/Families are attending`
               }`
             : `RSVPS: ${totalRsvp}`}
         </Typography>
         <Typography paragraph>
           {" "}
-          {isGoing ? "You are Going" : " Not going"}
+          {user.roleId > 3
+            ? null
+            : `${isGoing ? "Status: going" : " Status: maybe"}`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
@@ -212,7 +201,6 @@ const Event = ({
               </Button>
             )}
           </ExpandMore>
-
           {roleId > 3 && (
             <ExpandMore
               sx={{ color: "green" }}
@@ -242,7 +230,13 @@ const Event = ({
           </ExpandMore>
         </Stack>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit></Collapse>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        {" "}
+        <Typography paragraph margin="2.3rem">
+          {" "}
+          {`Description: ${event.description}`}
+        </Typography>
+      </Collapse>
     </Card>
   );
 };
@@ -273,3 +267,11 @@ export default Event;
 //     {event.eventName[0]}
 //   </Avatar>
 // }
+
+// const check = () => {
+//   if (user.roleId < 4) {
+//     isGoing ? "You are going" : "Not going";
+//   } else {
+//     return null;
+//   }
+// };
