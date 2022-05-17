@@ -12,7 +12,14 @@ const useStyles = makeStyles({
   },
 });
 
-const ProductsContainer = ({ products, handleEditClick, inEditMode }: any) => {
+const ProductsContainer = ({
+  products,
+  handleEditClick,
+  inEditMode,
+  getAllProducts,
+  updateCounter,
+  setUpdateCounter,
+}: any) => {
   // console.log('LINE 5 || PRODUCTSCONTAINER', products);
   const classes = useStyles();
   return (
@@ -38,6 +45,10 @@ const ProductsContainer = ({ products, handleEditClick, inEditMode }: any) => {
               key={product.name + product.id}
               handleEditClick={handleEditClick}
               inEditMode={inEditMode}
+              products={products}
+              getAllProducts={getAllProducts}
+              updateCounter={updateCounter}
+              setUpdateCounter={setUpdateCounter}
             />
           </Grid>
         );

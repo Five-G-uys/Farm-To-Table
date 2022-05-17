@@ -79,6 +79,7 @@ productRouter.patch(
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Role ROUTE
 productRouter.delete('/api/products/:id', (req: Request, res: Response) => {
+  console.log('LINE 82', req);
   Products.destroy({ where: req.params })
     .then((data: any) => {
       console.log('Products DELETION SUCCESSFUL: ', data);

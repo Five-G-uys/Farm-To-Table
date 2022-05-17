@@ -283,6 +283,8 @@ const ProductsPage = () => {
         getAllProducts={getAllProducts}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
+        updateCounter={updateCounter}
+        setUpdateCounter={setUpdateCounter}
       />
       {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
       <Modal

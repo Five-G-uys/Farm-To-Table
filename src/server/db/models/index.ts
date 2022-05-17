@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 // import FarmsModel from "./Farms";
-import RolesModel from "./Roles";
-import UsersModel from "./Users";
-import DeliveryZonesModel from "./DeliveryZones";
-import EventsModel from "./Events";
-import VendorsModel from "./Vendors";
-import ProductsModel from "./Products";
-import SubscriptionsModel from "./Subscriptions";
-import SubscriptionEntriesModel from "./SubscriptionEntries";
-import DietaryRestrictionsModel from "./DietaryRestrictions";
-import OrdersModel from "./Orders";
-import RSVPModel from "./Rsvps";
-import OrderContentsModel from "./OrderContents";
+import RolesModel from './Roles';
+import UsersModel from './Users';
+import DeliveryZonesModel from './DeliveryZones';
+import EventsModel from './Events';
+import VendorsModel from './Vendors';
+import ProductsModel from './Products';
+import SubscriptionsModel from './Subscriptions';
+import SubscriptionEntriesModel from './SubscriptionEntries';
+import DietaryRestrictionsModel from './DietaryRestrictions';
+import OrdersModel from './Orders';
+import RSVPModel from './Rsvps';
+import OrderContentsModel from './OrderContents';
 // const { dummyFarm } = require('./dummyUser');
 // const { dummyRole } = require('./dummyUser');
 // const { dummyUser } = require('./dummyUser');
@@ -31,7 +31,7 @@ export const syncModels = async (dropTables = false) => {
     await OrdersModel.sync(options);
     await RSVPModel.sync(options);
     await OrderContentsModel.sync(options);
-    console.log("models synced!");
+    console.log('models synced!');
 
     await UsersModel.belongsToMany(EventsModel, { through: RSVPModel });
     await EventsModel.belongsToMany(UsersModel, { through: RSVPModel });
@@ -40,45 +40,45 @@ export const syncModels = async (dropTables = false) => {
 
     //////////////////////////////////////////////////////////////////////
     await RolesModel.hasMany(UsersModel, {
-      foreignKey: "roleId",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      foreignKey: 'roleId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
     await UsersModel.belongsTo(RolesModel, {
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
     //////////////////////////////////////////////////////////////////////
 
     await SubscriptionsModel.hasMany(SubscriptionEntriesModel, {
-      foreignKey: "subscriptionId",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      foreignKey: 'subscriptionId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
     await SubscriptionEntriesModel.belongsTo(SubscriptionsModel, {
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
     //////////////////////////////////////////////////////////////////////
 
     await SubscriptionEntriesModel.hasMany(OrdersModel, {
-      foreignKey: "subscriptionEntryId",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      foreignKey: 'subscriptionEntryId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
     await OrdersModel.belongsTo(SubscriptionEntriesModel, {
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
     //////////////////////////////////////////////////////////////////////
     await UsersModel.hasMany(SubscriptionEntriesModel, {
-      foreignKey: "userId",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      foreignKey: 'userId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
     await SubscriptionEntriesModel.belongsTo(UsersModel, {
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
 
     //////////////////////////////////////////////////////////////////////
@@ -106,4 +106,5 @@ export const Products = ProductsModel;
 export const DietaryRestrictions = DietaryRestrictionsModel;
 export const SubscriptionEntries = SubscriptionEntriesModel;
 export const Orders = OrdersModel;
+export const OrderContents = OrderContentsModel;
 export const RSVP = RSVPModel;
