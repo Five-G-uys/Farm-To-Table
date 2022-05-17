@@ -173,7 +173,7 @@ const SubscriptionCard = ({
               size='small'
               // type='submit'
               sx={{ color: 'white' }}
-              onClick={() => handleAddressForm(id)}
+              onClick={() => handleAddressForm(sub)}
             >
               SUBSCRIBE
             </Button>

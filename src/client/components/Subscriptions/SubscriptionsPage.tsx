@@ -85,7 +85,10 @@ const SubscriptionsPage = () => {
   //////////////////////////////////////////////////////////////////////////////////////////////
 
   // create state var for each address component (street, city, state, zip)
-  const [selectedSubscriptionId, setSelectedSubscriptionId] = useState(null);
+  const [selectedSubscription, setSelectedSubscription] = useState({
+    id: null,
+    start_date: null,
+  });
 
   const [address, setAddress] = useState({
     streetAddress: '',
@@ -98,8 +101,8 @@ const SubscriptionsPage = () => {
   // state var for address form control
   const [addressOpen, setAddressOpen] = useState(false);
   // handle open address form
-  const handleAddressForm = (subId: any) => {
-    setSelectedSubscriptionId(subId);
+  const handleAddressForm = (sub: any) => {
+    setSelectedSubscription(sub);
     setAddressOpen(true);
   };
   // set address state vars and handle close address form
@@ -135,12 +138,12 @@ const SubscriptionsPage = () => {
     // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
     axios
       .post(`/api/add_subscription_entry/${id}`, {
-        subscriptionId: selectedSubscriptionId, // change season to number season id on server side
+        subscriptionId: selectedSubscription.id, // change season to number season id on server side
         streetAddress: address.streetAddress,
         city: address.city,
         state: address.state,
         zip: address.zip,
-        phone: address.phone,
+        start_date: selectedSubscription.start_date,
       })
       .then((data) => {
         console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);

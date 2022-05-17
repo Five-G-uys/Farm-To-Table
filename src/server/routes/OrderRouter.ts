@@ -10,6 +10,8 @@ import express, { Express, Request, Response } from 'express';
 // Import Models
 import { Orders, SubscriptionEntries } from '../db/models';
 
+// Import Helper Functions
+import { getRoute } from '../utils/mapbox';
 // Set Up Router
 const orderRouter: Router = Router();
 
@@ -42,42 +44,47 @@ orderRouter.get('/api/order', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// GET TODAYS ORDER COORDINATES
 orderRouter.get('/api/order/todaysOrders', (req, res) => {
-  // console.log('LINE 45 || ORDER ROUTER', req.query);
-
-  Orders.findAll({ where: req.query })
+  console.log('LINE 47 || ORDER ROUTER', req.query);
+  const { lat, lon, delivery_date } = req.query;
+  Orders.findAll({ where: { delivery_date } })
     .then((response: any) => {
+      console.log('LINE 51 || ORDERROUTER', response);
       const subscriptionEntryIds = response.map((order: any) => {
         return { id: order.dataValues.subscriptionEntryId };
       });
-      // console.log('LINE 52 || ORDER ROUTER', subscriptionEntryIds);
+      console.log('LINE 52 || ORDER ROUTER', subscriptionEntryIds);
 
       // FIND SUBSCRIPTION ENTRIES WITH THE ID ARRAY
-      SubscriptionEntries.findAll({
+      return SubscriptionEntries.findAll({
         where: {
           [Op.or]: subscriptionEntryIds,
         },
-      })
-        .then((data: any) => {
-          // console.log('LINE 61 || ORDER ROUTER', data);
-          const orderLocations = data.map((subscriptionEntry: any) => {
-            return {
-              streetAddress: subscriptionEntry.streetAddress,
-              city: subscriptionEntry.city,
-              state: subscriptionEntry.state,
-              zip: subscriptionEntry.zip,
-              lat: subscriptionEntry.lat,
-              lon: subscriptionEntry.lon,
-            };
-          });
-          res.json(orderLocations);
-        })
-        .catch((err: any) => {
-          console.error('LINE 64 || ORDER ROUTER', err);
-        });
+      });
+    })
+    .then((data: any) => {
+      console.log('LINE 64 || ORDER ROUTER', data);
+      const orderLocations = data.map((subscriptionEntry: any) => {
+        return {
+          streetAddress: subscriptionEntry.streetAddress,
+          city: subscriptionEntry.city,
+          state: subscriptionEntry.state,
+          zip: subscriptionEntry.zip,
+          lat: subscriptionEntry.lat,
+          lon: subscriptionEntry.lon,
+        };
+      });
+      return getRoute(lat, lon, orderLocations);
+    })
+    .then((route: any) => {
+      if (route.message) {
+        throw route.err;
+      }
+      console.log('LINE 82 || ORDERROUTER', route.data);
+      res.json(route.data);
     })
     .catch((err: object) => {
-      // console.log('FIND ALL Orders ERROR: ', err);
-      res.sendStatus(404);
+      console.log('LINE 85, FIND ALL Orders ERROR: ', err);
+      res.status(404).json(err);
     });
 });
 
