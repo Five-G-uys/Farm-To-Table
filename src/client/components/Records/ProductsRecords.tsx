@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Input from "@material-ui/core/Input";
+import Input from '@material-ui/core/Input';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -15,7 +15,8 @@ import axios from 'axios';
 import { CssBaseline, Box, Container, Typography } from '@mui/material';
 
 interface Column {
-  id: 'id' | 'name' | 'description' | 'subscriptionId' | 'plant_date' | 'harvest_date';
+  // id: 'id' | 'name' | 'description' | 'subscriptionId' | 'plant_date' | 'harvest_date';
+  id: 'id' | 'name' | 'description' | 'harvest_dates';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -31,24 +32,24 @@ const columns: readonly Column[] = [
     minWidth: 170,
     align: 'right',
   },
+  // {
+  //   id: 'subscriptionId',
+  //   label: 'Subscription ID',
+  //   minWidth: 170,
+  //   align: 'right',
+  // },
+  // {
+  //   id: 'plant_date',
+  //   label: 'Plant Date',
+  //   minWidth: 170,
+  //   align: 'right',
+  // },
   {
-    id: 'subscriptionId',
-    label: 'Subscription ID',
+    id: 'harvest_dates',
+    label: 'Harvest Dates',
     minWidth: 170,
     align: 'right',
   },
-  {
-    id: 'plant_date',
-    label: 'Plant Date',
-    minWidth: 170,
-    align: 'right'
-  },
-  {
-    id: 'harvest_date',
-    label: 'Harvest Date',
-    minWidth: 170,
-    align: 'right'
-  }
 ];
 
 const ProductsRecords = () => {
@@ -73,27 +74,30 @@ const ProductsRecords = () => {
 
   const patchProducts = async (productId: string, updatedProduct: any) => {
     try {
-      const { data } = await axios.patch(`/api/products/${productId}`, updatedProduct);
-      return data
+      const { data } = await axios.patch(
+        `/api/products/${productId}`,
+        updatedProduct,
+      );
+      return data;
     } catch (err) {
-      console.error(err)
+      console.error(err);
       return {
-        error: err
-      }
+        error: err,
+      };
     }
-  }
+  };
 
   const deleteProduct = async (productId: string) => {
     try {
-      const {data} = await axios.delete(`/api/products/${productId}`);
+      const { data } = await axios.delete(`/api/products/${productId}`);
       return data;
     } catch (err) {
-      console.error(err)
+      console.error(err);
       return {
-        error: err
-      }
+        error: err,
+      };
     }
-  }
+  };
 
   useEffect(() => {
     getProducts();
@@ -126,43 +130,43 @@ const ProductsRecords = () => {
   };
 
   const onDone = (row: object) => {
-    console.log(row)
-    setEditing(!editing)
+    console.log(row);
+    setEditing(!editing);
     patchProducts(row.id, row);
-  }
+  };
 
   const onEdit = () => {
-    setEditing(!editing)
-  }
+    setEditing(!editing);
+  };
 
   const onDelete = (row: object) => {
-    setDeleteCount(deleteCount + 1)
-    deleteProduct(row.id)
-  }
+    setDeleteCount(deleteCount + 1);
+    deleteProduct(row.id);
+  };
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-         <CssBaseline />
-        {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth='sm'>
-            <Typography
-              component='h1'
-              variant='h2'
-              align='center'
-              color='text.primary'
-              gutterBottom
-            >
-              Product Records
-            </Typography>
-          </Container>
-        </Box>
+      <CssBaseline />
+      {/* Hero unit */}
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          pt: 8,
+          pb: 6,
+        }}
+      >
+        <Container maxWidth='sm'>
+          <Typography
+            component='h1'
+            variant='h2'
+            align='center'
+            color='text.primary'
+            gutterBottom
+          >
+            Product Records
+          </Typography>
+        </Container>
+      </Box>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
@@ -192,18 +196,19 @@ const ProductsRecords = () => {
                             // type={String}
                             defaultValue={value}
                             name={column.id}
-                            onChange={e => onChange(e, row)} />
+                            onChange={(e) => onChange(e, row)}
+                          />
+                        ) : column.format && typeof value === 'number' ? (
+                          column.format(value)
                         ) : (
-                          column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value
+                          value
                         )}
                       </TableCell>
                     );
                   })}
                   {editing ? (
                     <DoneIcon onClick={() => onDone(row)} />
-                  ) :
+                  ) : (
                     <>
                       <TableCell>
                         <EditIcon onClick={() => onEdit()} />
@@ -212,8 +217,7 @@ const ProductsRecords = () => {
                         <DeleteIcon onClick={() => onDelete(row)} />
                       </TableCell>
                     </>
-                  }
-
+                  )}
                 </TableRow>
               ))}
           </TableBody>
