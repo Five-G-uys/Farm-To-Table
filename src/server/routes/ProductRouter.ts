@@ -18,19 +18,21 @@ productRouter.post('/api/products', (req: Request, res: Response) => {
     img_url,
     name,
     description,
-    plant_date,
-    harvest_date,
-    subscriptionId,
+    quantity,
+    // plant_date,
+    harvest_dates,
+    // subscriptionId,
   } = req.body.product;
 
   // console.log('162 Request object postEvent', req.body);
   Products.create({
     name,
     description,
+    quantity,
     img_url,
-    plant_date,
-    harvest_date,
-    subscriptionId,
+    // plant_date,
+    harvest_dates,
+    // subscriptionId,
   })
     .then((data: any) => {
       console.log('LINE 187 || Product Post Request', data);
@@ -74,7 +76,7 @@ productRouter.patch(
       console.error('LINE 274 || UPDATE PRODUCTS', err);
       res.status(500).json(err);
     }
-  }
+  },
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Role ROUTE

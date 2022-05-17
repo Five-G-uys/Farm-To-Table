@@ -32,7 +32,7 @@ body {
 .weatherCard {
   width: 400px;
   height: 200px;
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
   position: relative;
 }
 .currentTemp {
@@ -95,7 +95,7 @@ body {
 }
 .rain::before {
   display: block;
-  content: "\f04e";
+  content: '\f04e';
   font-family: weathericons;
   font-size: 40px;
   left: 6px;
@@ -111,7 +111,7 @@ body {
 }
 .wind::before {
   display: block;
-  content: "\f050";
+  content: '\f050';
   font-family: weathericons;
   font-size: 25px;
   left: -10px;
@@ -127,4 +127,12 @@ body {
   right: 0;
   height: 100vh;
   width: 100vw;
+}
+
+.texture2 {
+  color: #e2f2d9;
+  background-color: #91ef8f;
+  backdrop-filter: blur(8px);
+  background-image: url('https://www.transparenttextures.com/patterns/exclusive-paper.png');
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }

@@ -9,8 +9,9 @@ import { UserContext } from './App';
 import { CssBaseline, Box, Container, Typography } from '@mui/material';
 
 const OrdersPage = () => {
-  const user: any = useContext(UserContext);
-  const id: any = user.id;
+  const user: { id: number } = useContext(UserContext);
+  console.log('LINE 13 || ORDERSPAGE', user);
+  const id = user.id;
   // NEED TO MAKE GET REQ ON PAGE RENDER FOR ALL UPCOMING ORDERS ORGANIZED FROM SOONEST TO FURTHEST
 
   // state var for subscription entry id
@@ -19,6 +20,8 @@ const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect((): void => {
+    // put if condition if user is undefined exit useeffect
+    if (!user.id) return;
     axios
       .get(`/api/upcoming_orders/${id}`, { params: { id } })
       .then((data: any) => {
@@ -28,7 +31,7 @@ const OrdersPage = () => {
       .catch((error: any) => {
         console.log('LINE 29 || ORDERSPAGE', error);
       });
-  }, []);
+  }, [user]);
 
   // axios
   //   .get(`/upcoming_orders/${id}`, { params: { id } })
@@ -42,35 +45,36 @@ const OrdersPage = () => {
 
   return (
     <div>
-         <CssBaseline />
-        {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth='sm'>
-            <Typography
-              component='h1'
-              variant='h2'
-              align='center'
-              color='text.primary'
-              gutterBottom
-            >
-              Upcoming Orders
-            </Typography>
-            <Typography
-              variant='h5'
-              align='center'
-              color='text.secondary'
-              paragraph
-            >
-              Here are all your upcoming CSA produce orders. If you'd like to change or add to your order please contact us to let us know.
-            </Typography>
-          </Container>
-        </Box>
+      <CssBaseline />
+      {/* Hero unit */}
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          pt: 8,
+          pb: 6,
+        }}
+      >
+        <Container maxWidth='sm'>
+          <Typography
+            component='h1'
+            variant='h2'
+            align='center'
+            color='text.primary'
+            gutterBottom
+          >
+            Upcoming Orders
+          </Typography>
+          <Typography
+            variant='h5'
+            align='center'
+            color='text.secondary'
+            paragraph
+          >
+            Here are all your upcoming CSA produce orders. If you'd like to
+            change or add to your order please contact us to let us know.
+          </Typography>
+        </Container>
+      </Box>
       <OrdersList orders={orders} />
     </div>
   );

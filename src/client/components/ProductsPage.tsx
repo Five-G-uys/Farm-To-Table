@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
 import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
+import FilledInput from '@mui/material/FilledInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import Modal from '@mui/material/Modal';
@@ -42,9 +43,10 @@ const ProductsPage = () => {
     img_url: '',
     name: '',
     description: '',
-    plant_date: '',
-    harvest_date: '',
-    subscriptionId: '',
+    quantity: '',
+    // plant_date: '',
+    harvest_dates: '',
+    // subscriptionId: '',
   });
   // state var for backdrop
   const [open, setOpen] = useState(false);
@@ -63,9 +65,10 @@ const ProductsPage = () => {
       img_url: '',
       name: '',
       description: '',
-      plant_date: '',
-      harvest_date: '',
-      subscriptionId: '',
+      quantity: '',
+      // plant_date: '',
+      harvest_dates: '',
+      // subscriptionId: '',
     });
   };
   // const handleToggle = () => {
@@ -73,6 +76,8 @@ const ProductsPage = () => {
 
   // Box component styles
   const commonStyles = {
+    width: '40vw',
+    minWidth: '500px',
     bgcolor: 'background.paper',
     borderColor: 'text.primary',
     m: 1,
@@ -100,9 +105,10 @@ const ProductsPage = () => {
     img_url,
     name,
     description,
-    plant_date,
-    harvest_date,
-    subscriptionId,
+    quantity,
+    // plant_date,
+    harvest_dates,
+    // subscriptionId,
   } = product;
 
   // create post req to send product form data
@@ -114,10 +120,11 @@ const ProductsPage = () => {
         product: {
           name: name,
           description: description,
+          quantity: quantity,
           img_url: img_url,
-          plant_date: plant_date,
-          harvest_date: harvest_date,
-          subscriptionId: Number(subscriptionId),
+          // // plant_date: plant_date,
+          harvest_dates: harvest_dates,
+          // // subscriptionId: Number(subscriptionId),
         },
       })
       .catch((err) => {
@@ -155,7 +162,7 @@ const ProductsPage = () => {
   const handelTextInput = (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setProduct((state) => {
@@ -180,7 +187,7 @@ const ProductsPage = () => {
         folder: name,
         // WE NEED TO CONSIDER ADDING A 2 DIGIT YEAR NUMBER AT THE END OF EACH SEASON TO IDENTIFY
         // AND ACCESS PHOTOS MORE EASILY
-        tags: [subscriptionId],
+        // tags: [subscriptionId],
       },
       (error: any, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
@@ -194,7 +201,7 @@ const ProductsPage = () => {
           // console.log('LINE 63', result.info.url);
         }
         // console.log('LINE 135 || CLOUDINARY', error);
-      }
+      },
     );
     widget.open();
   };
@@ -219,7 +226,7 @@ const ProductsPage = () => {
 
     const clickedProduct: any = products.find(
       // find mutates original array values
-      (prod: any) => prod.id === productId
+      (prod: any) => prod.id === productId,
     );
     clickedProduct.img_url = clickedProduct.img_url
       ? clickedProduct.img_url
@@ -233,9 +240,10 @@ const ProductsPage = () => {
       img_url: clickedProduct.img_url,
       name: clickedProduct.name,
       description: clickedProduct.description,
-      plant_date: clickedProduct.plant_date,
-      harvest_date: clickedProduct.harvest_date,
-      subscriptionId: clickedProduct.subscriptionId,
+      quantity: clickedProduct.quantity,
+      // // plant_date: clickedProduct.plant_date,
+      harvest_dates: clickedProduct.harvest_dates,
+      // // subscriptionId: clickedProduct.subscriptionId,
     });
     setInEditMode(true);
     setOpen(true);
@@ -326,34 +334,47 @@ const ProductsPage = () => {
                     {img_url && (
                       <img width={'100%'} src={img_url} border-radius='2rem' />
                     )}
-                    <br></br>
-                    <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
-                      <InputLabel htmlFor='standard-adornment-amount'>
+                    {/* <FormControl fullWidth variant='filled'>
+                      <InputLabel htmlFor='filled-adornment-amount'>
                         Amount
                       </InputLabel>
-                      <Input
+                      <FilledInput
                         name='name'
                         value={name}
                         id='Product Name'
                         // id='fullWidth'
                         placeholder='Avocado'
                         onChange={handelTextInput}
+                        // startAdornment={
+                        //   <InputAdornment position='start'>$</InputAdornment>
+                        // }
+                      />
+                    </FormControl>
+                    <FormControl fullWidth variant='filled'>
+                      <InputLabel htmlFor='filled-adornment-amount'>
+                        Amount
+                      </InputLabel>
+                      <FilledInput
+                        id='filled-adornment-amount'
+                        // value={values.amount}
+                        // onChange={handleChange('amount')}
                         startAdornment={
                           <InputAdornment position='start'>$</InputAdornment>
                         }
                       />
-                    </FormControl>
+                    </FormControl> */}
+                    <br></br>
                     <TextField
                       // width='75%'
                       // type={{ width: '75%' }}
+                      fullWidth
                       border-radius='1rem'
-                      id='filled-basic'
+                      id='fullWidth'
                       variant='filled'
                       // label='Filled'
                       value={name}
                       name='name'
                       label='Product Name'
-                      fullWidth
                       placeholder='Avocado'
                       onChange={handelTextInput}
                     />
@@ -376,41 +397,55 @@ const ProductsPage = () => {
                       fullWidth
                       id='filled-basic'
                       variant='filled'
-                      value={plant_date}
-                      name='plant_date'
+                      value={quantity}
+                      name='quantity'
+                      label='Product Quantity'
+                      // id='fullWidth'
+                      placeholder='Quantity'
+                      onChange={handelTextInput}
+                    />
+                    {/*
+                    <br></br>
+                    <br></br>
+                     <TextField
+                      fullWidth
+                      id='filled-basic'
+                      variant='filled'
+                      // value={plant_date}
+                      // name='plant_date'
                       label='Plant Date'
                       // id='fullWidth'
                       placeholder='Plant Date'
                       onChange={handelTextInput}
-                    />
+                    /> */}
                     <br></br>
                     <br></br>
                     <TextField
                       fullWidth
                       id='filled-basic'
                       variant='filled'
-                      value={harvest_date}
-                      name='harvest_date'
-                      label='Harvest Date'
+                      value={harvest_dates}
+                      name='harvest_dates'
+                      label='Harvest Dates'
                       // id='fullWidth'
                       placeholder='Projected Harvest Date'
                       onChange={handelTextInput}
                     />
                     <br></br>
                     <br></br>
-                    <TextField
+                    {/* <TextField
                       fullWidth
                       id='filled-basic'
                       variant='filled'
-                      value={subscriptionId}
-                      name='subscriptionId'
+                      // value={subscriptionId}
+                      // name='subscriptionId'
                       label='Season'
                       // id='fullWidth'
                       placeholder='Season'
                       onChange={handelTextInput}
                     />
                     <br></br>
-                    <br></br>
+                    <br></br> */}
                     <Stack
                       direction='row'
                       // divider={
@@ -440,7 +475,6 @@ const ProductsPage = () => {
                         {inEditMode ? 'UPDATE' : 'SAVE'}
                       </Button>
                     </Stack>
-                    <br></br>
                     {/* <button type='submit' className='form--submit'>
                 Save Product
               </button> */}
