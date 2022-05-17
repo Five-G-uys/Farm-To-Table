@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // import Farms from './Farms';
 import { stringify } from 'querystring';
@@ -21,19 +23,6 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function Copyright() {
-  return (
-    <Typography variant='body2' color='text.secondary' align='center'>
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        www.knockknocktomatoes.com
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
@@ -41,6 +30,7 @@ const theme = createTheme();
 const HomePage = ({ getAllSubscriptions }: any) => {
   // interface Farms {name: string, description: string, id: number, farmArray: any}
   const [farms, setFarms] = useState([]);
+  const navigate = useNavigate();
 
   const getFarms = () => {
     axios
@@ -59,7 +49,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
   // console.log("farms", 22, farms)
 
   return (
-    <ThemeProvider theme={theme}>
+    <div>
       <CssBaseline />
       <main>
         {/* Hero unit */}
@@ -86,12 +76,11 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               color='text.secondary'
               paragraph
             >
-              Join your local CSA today! Community Supported Agriculture is a
-              way for farms to serve their communities and a chance for their
-              communities to serve them. It is a beautifully organized and
-              structured delivery system that is designed to compliment both the
-              farmers and the eaters where both parties have a chance to learn
-              and work with each other.
+              Community Supported Agriculture is a way for farms to serve their
+              communities & for their communities to serve them. It's a
+              beautifully organized delivery system designed to compliment both
+              the farmers & the eaters so both parties have a chance to learn,
+              work, & grow with each other.
             </Typography>
             <Stack
               sx={{ pt: 4 }}
@@ -99,7 +88,12 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               spacing={2}
               justifyContent='center'
             >
-              <Button variant='contained' onClick={getAllSubscriptions}>
+              <Button
+                variant='contained'
+                color='success'
+                sx={{ color: 'white' }}
+                onClick={() => navigate('/subscriptions-page')}
+              >
                 Sign Up
               </Button>
               {/* <Button variant='outlined'>Secondary action</Button> */}
@@ -129,11 +123,11 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant='h5' component='h2'>
-                      Season Subscription
+                      Knock, Knock
                     </Typography>
                     <Typography>
-                      A 4 month subscription of weekly boxes filled with the
-                      freshest produce from our farm.
+                      Who's There? A 4-month subscription of weekly boxes filled
+                      with the freshest produce from our farm.
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -146,23 +140,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
-        <Typography variant='h6' align='center' gutterBottom>
-          Knock, Knock Tomatoes
-        </Typography>
-        <Typography
-          variant='subtitle1'
-          align='center'
-          color='text.secondary'
-          component='p'
-        >
-          Who's there? Farm freshness!
-        </Typography>
-        <Copyright />
-      </Box>
-      {/* End footer */}
-    </ThemeProvider>
+    </div>
   );
 };
 

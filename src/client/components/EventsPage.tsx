@@ -1,36 +1,38 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { UserContext } from './App';
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { UserContext } from "./App";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 //mateiral UI
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import Button from '@mui/material/Button';
-import Backdrop from '@mui/material/Backdrop';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
-import Fade from '@mui/material/Fade';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+import Backdrop from "@mui/material/Backdrop";
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import Fade from "@mui/material/Fade";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+//import Button from "@mui/material/Button";
 
 //Component import
-import EventCard from './EventCard';
-import RSVPS from './RSVPS';
+import EventCard from "./EventCard";
+import RSVPS from "./RSVPS";
 
 // can import getallproducts after migrating it to apicalls file
 import { updatedEvent } from '../apiCalls/eventCalls';
+import { CssBaseline, Container } from '@mui/material';
 
 const EventsPage = () => {
   const user: any = useContext(UserContext);
-  const { roleId, id } = user;
+  const { roleId } = user;
   //console.log("THIS IS WORKING", user);
 
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -39,24 +41,22 @@ const EventsPage = () => {
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
-  const [value, setValue] = React.useState('');
-  // console.log("LINE 265 VALUE", value);
-  // const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   //console.log("LINE 267 VALUE", value);
-  //   setValue(event.target.value);
-  // };
-
-  //get rsvps from DB
+  const [value, setValue] = React.useState("");
+  const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
 
   //event state variable;
   const [event, setEvent] = useState({
     id: 0,
-    eventName: '',
-    description: '',
-    thumbnail: '',
-    eventDate: '',
-    eventType: value,
-    location: '',
+    eventName: "",
+    description: "",
+    thumbnail: "",
+    eventDate: "",
+    eventType: "Farmers market",
+    location: "",
+    seasonTitle: "",
+    monthTitle: "",
   });
 
   //state that controls the form
@@ -78,12 +78,14 @@ const EventsPage = () => {
     setInEditMode(false);
     setEvent({
       id: 0,
-      eventName: '',
-      description: '',
-      thumbnail: '',
-      eventDate: '',
-      eventType: '',
-      location: '',
+      eventName: "",
+      description: "",
+      thumbnail: "",
+      eventDate: "",
+      eventType: "",
+      location: "",
+      seasonTitle: "",
+      monthTitle: "",
     });
   };
 
@@ -96,13 +98,15 @@ const EventsPage = () => {
     eventType,
     location,
     id,
+    monthTitle,
+    seasonTitle,
   } = event;
 
   const postEvent = (e: any) => {
     //console.log("LINE 108");
     e.preventDefault();
     axios
-      .post('/api/events', {
+      .post("/api/events", {
         event: {
           eventName: eventName,
           description: description,
@@ -110,10 +114,12 @@ const EventsPage = () => {
           eventDate: eventDate,
           eventType: eventType,
           location: location,
+          monthTitle: monthTitle,
+          seasonTitle: seasonTitle,
         },
       })
       .then(({ data }) => {
-        console.log('LINE 107 saved!', data);
+        console.log("LINE 107 saved!", data);
         setUpdateCounter((updateCounter) => updateCounter + 1);
         handleClose();
       })
@@ -122,16 +128,16 @@ const EventsPage = () => {
 
   // Box component styles
   const commonStyles = {
-    bgcolor: 'background.paper',
-    borderColor: 'text.primary',
+    bgcolor: "background.paper",
+    borderColor: "text.primary",
     m: 1,
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     border: 1,
-    padding: '20px',
-    borderRadius: '2.5rem',
+    padding: "20px",
+    borderRadius: "2.5rem",
     boxShadow: 3,
   };
 
@@ -146,7 +152,7 @@ const EventsPage = () => {
 
       // console.log("LINE 162 || PRODUCTS PAGE", result);
     } catch (err) {
-      console.error('LINE 164 || PRODUCTS PAGE ', err);
+      console.error("LINE 164 || PRODUCTS PAGE ", err);
     }
   };
 
@@ -160,7 +166,7 @@ const EventsPage = () => {
     setEvent((state) => {
       return {
         ...state,
-        [name]: type === 'checkbox' ? checked : value,
+        [name]: type === "checkbox" ? checked : value,
       };
     });
     // console.log(event);
@@ -171,7 +177,7 @@ const EventsPage = () => {
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
-    console.log('LINE 115 || CLOUDINARY');
+    console.log("LINE 115 || CLOUDINARY");
     const widget = window.cloudinary.createUploadWidget(
       {
         cloudName: CLOUD_NAME,
@@ -182,17 +188,17 @@ const EventsPage = () => {
         tags: [id],
       },
       (error: any, result: { event: string; info: { url: string } }) => {
-        if (!error && result && result.event === 'success') {
-          console.log('LINE 56', result.info.url);
+        if (!error && result && result.event === "success") {
+          console.log("LINE 56", result.info.url);
           setEvent((state) => {
             return {
               ...state,
               thumbnail: result.info.url,
             };
           });
-          console.log('LINE 63', result.info.url);
+          //console.log("LINE 63", result.info.url);
         }
-        console.log('LINE 135 || CLOUDINARY', error);
+        //console.log("LINE 135 || CLOUDINARY", error);
       }
     );
     widget.open();
@@ -200,23 +206,36 @@ const EventsPage = () => {
 
   const getAllEvents = () => {
     axios
-      .get('/api/events')
+      .get("/api/events")
 
       .then(({ data }) => {
         //console.log("EVENT CARD COMPONENT SUCESSFULLY FECTHED DATA", data);
         setAllEvents(data);
       })
       .catch((error) => {
-        console.log('sorry, request failed', error);
+        console.log("sorry, request failed", error);
       });
   };
+  //const [rsvpCount, setRsvpCount] = useState(0);
 
+  const [rsvps, setRsvps] = useState<string[]>([]);
+  const getUserRsvps = () => {
+    axios
+      .get("/api/rsvps")
+      .then(({ data }: any) => {
+        console.log("Rsvps get all Response ", data);
+        setRsvps(data);
+        //setRsvpCount(data.length);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   ////////////////Radio Button handle function///////////////////////////
 
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (id: any) => {
     //console.log("LINE 185 || PRODUCTS PAGE CLICKED", id);
-
     //handle searches for a clicked event in order to update
     const clickedEvent: any = allEvents.find(
       // find mutates original array values
@@ -224,7 +243,7 @@ const EventsPage = () => {
     );
     clickedEvent.thumbnail = clickedEvent.thumbnail
       ? clickedEvent.thumbnail
-      : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+      : "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg";
 
     setEvent((state) => {
       return {
@@ -244,30 +263,64 @@ const EventsPage = () => {
 
   useEffect((): void => {
     getAllEvents();
+    getUserRsvps();
   }, [updateCounter]);
 
   //console.log("line 244 in EventsPage", event);
 
   return (
     <>
+      <CssBaseline />
+      {/* Hero unit */}
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          pt: 8,
+          pb: 6,
+        }}
+      >
+        <Container maxWidth='sm'>
+          <Typography
+            component='h1'
+            variant='h2'
+            align='center'
+            color='text.primary'
+            gutterBottom
+          >
+            Farm Events
+          </Typography>
+          <Typography
+            variant='h5'
+            align='center'
+            color='text.secondary'
+            paragraph
+          >
+            We have regular Saturday farmer's markets and our seasonal Customer
+            Appreciation Day is just around the corner. RSVP below and come join
+            the fun!
+          </Typography>
+        </Container>
+      </Box>
       <EventCard
         getAllEvents={getAllEvents}
         allEvents={allEvents}
-        updateCounter={updateCounter}
         handleEditClick={handleEditClick}
         inEditMode={inEditMode}
         updateState={updateState}
+        rsvps={rsvps}
+        //rsvpCount={rsvpCount}
+        //updateState={updateState}
       />
 
       <div>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
         <Modal
-          aria-labelledby='transition-modal-title'
-          aria-describedby='transition-modal-description'
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
           sx={{
-            color: '#fff',
+            color: "#fff",
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            borderRadius: '2.5rem',
+            //borderRadius: "2.5rem",
             boxShadow: 24,
           }}
           open={open}
@@ -277,7 +330,7 @@ const EventsPage = () => {
           BackdropProps={{
             timeout: 750,
           }}
-          className='add_x_form_modal'
+          className="add_x_form_modal"
         >
           <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
             {
@@ -297,10 +350,10 @@ const EventsPage = () => {
                         inEditMode ? handleEventUpdateSubmit : postEvent
                       }
                     >
-                      --{' '}
+                      --{" "}
                       <Button
-                        variant='contained'
-                        size='large'
+                        variant="contained"
+                        size="large"
                         onClick={showWidget}
                       >
                         Add Event Image
@@ -308,97 +361,124 @@ const EventsPage = () => {
                       <br></br>
                       {thumbnail && <img width={300} src={thumbnail} />}
                       <br></br>
-                      <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
-                        <InputLabel htmlFor='standard-adornment-amount'>
+                      <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                        <InputLabel htmlFor="standard-adornment-amount">
                           Name of Event
                         </InputLabel>
                         <Input
-                          name='eventName'
+                          name="eventName"
                           value={eventName}
-                          id='Event Name'
+                          id="Event Name"
                           // id='fullWidth'
-                          placeholder='Name of Event'
+                          placeholder="Name of Event"
                           onChange={handelTextInput}
                           startAdornment={
-                            <InputAdornment position='start'></InputAdornment>
+                            <InputAdornment position="start"></InputAdornment>
                           }
                         />
                       </FormControl>
                       <TextField
                         // width='75%'
                         // type={{ width: '75%' }}
-                        id='filled-basic'
-                        variant='filled'
+                        id="filled-basic"
+                        variant="filled"
                         // label='Filled'
                         value={description}
-                        name='description'
-                        label='Event Description'
+                        name="description"
+                        label="Event Description"
                         // id='fullWidth'
-                        placeholder='Event Description'
+                        placeholder="Event Description"
                         onChange={handelTextInput}
                       />
                       <br></br>
                       <br></br>
                       <TextField
                         fullWidth
-                        id='filled-basic'
-                        variant='filled'
+                        id="filled-basic"
+                        variant="filled"
                         value={location}
-                        name='location'
-                        label='location'
+                        name="location"
+                        label="Address"
                         // id='fullWidth'
-                        placeholder='location of event'
+                        placeholder="Address for event"
                         onChange={handelTextInput}
                       />
                       <br></br>
                       <br></br>
                       <TextField
                         fullWidth
-                        id='filled-basic'
-                        variant='filled'
+                        id="filled-basic"
+                        variant="filled"
                         value={eventDate}
-                        name='eventDate'
-                        label='Event Date'
+                        name="eventDate"
+                        label="Event Date"
                         // id='fullWidth'
-                        placeholder='Date of event'
+                        placeholder="Date of event"
                         onChange={handelTextInput}
                       />
+                      {/* <br></br>
+                      <br></br>
+                      <TextField
+                        fullWidth
+                        id="filled-basic"
+                        variant="filled"
+                        value={monthTitle}
+                        name="monthTitle"
+                        label="Month of the events"
+                        // id='fullWidth'
+                        placeholder="Date of event"
+                        onChange={handelTextInput}
+                      />
+                      <br></br>
+                      <br></br>
+                      <TextField
+                        fullWidth
+                        id="filled-basic"
+                        variant="filled"
+                        value={seasonTitle}
+                        name="seasonTitle"
+                        label="Season of the events"
+                        // id='fullWidth'
+                        placeholder="Season of events"
+                        onChange={handelTextInput}
+                      /> */}
                       <br></br>
                       <br></br>
                       <Box>
-                        <FormControl>
-                          <FormLabel id='demo-controlled-radio-buttons-group'>
+                        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                          {" "}
+                          <FormLabel id="demo-radio-buttons-group-label">
                             Type of Event
                           </FormLabel>
                           <RadioGroup
-                            aria-labelledby='demo-controlled-radio-buttons-group'
-                            name='controlled-radio-buttons-group'
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            name="controlled-radio-buttons-group"
+                            defaultValue="Farmers Market"
                             value={value}
-                            onChange={(e) => setValue(e.target.value)}
+                            onChange={handleRadioBtn}
                           >
                             <FormControlLabel
-                              value='Community Volunteering'
-                              control={<Radio text-color='success' />}
-                              label='Community Volunteering'
-                              color='success'
+                              control={<Radio size="small" />}
+                              value="Farmers Market"
+                              label="Farmers Market"
                             />
                             <FormControlLabel
-                              value='Customers Day'
-                              control={<Radio color='success' />}
-                              label='Customers Day'
+                              control={<Radio size="small" />}
+                              value="Community Volunteering"
+                              label="Community Volunteering"
                             />
                             <FormControlLabel
-                              value='Farmers Market'
-                              control={<Radio color='success' />}
-                              label='Farmers Market'
+                              control={<Radio size="small" />}
+                              value="Customer Day"
+                              label="Customer Day"
                             />
                           </RadioGroup>
                         </FormControl>
                       </Box>
                       <br></br>
                       <br></br>
-                      <Button variant='contained' size='large' type='submit'>
-                        {inEditMode ? 'UPDATE' : 'SAVE'}
+                      <Button variant="contained" size="large" type="submit">
+                        {inEditMode ? "UPDATE" : "SAVE"}
                       </Button>
                     </form>
                   </Box>
@@ -410,17 +490,17 @@ const EventsPage = () => {
         {roleId > 3 && (
           <Fab
             onClick={handleCreateForm}
-            size='small'
+            size="small"
             // color='secondary'
-            aria-label='add'
-            style={{ transform: 'scale(2.5)', backgroundColor: '#80D55F' }}
+            aria-label="add"
+            style={{ transform: "scale(2.5)", backgroundColor: "#80D55F" }}
             sx={{
-              position: 'fixed',
+              position: "fixed",
               bottom: (theme) => theme.spacing(8),
               right: (theme) => theme.spacing(8),
             }}
           >
-            <AddIcon style={{ color: '#FFFFFF' }} />
+            <AddIcon style={{ color: "#FFFFFF" }} />
           </Fab>
         )}
       </div>

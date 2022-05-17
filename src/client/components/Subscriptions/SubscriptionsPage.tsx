@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 // MUI IMPORTS
 import Fab from '@mui/material/Fab';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -18,10 +19,11 @@ import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
 import AddressForm from './AddressForm';
 import { padding } from '@mui/system';
+import { CssBaseline, Box, Container } from '@mui/material';
 
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
-  const { id } = user;
+  const { id, roleId } = user;
   // const navigate = useNavigate();
 
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -83,7 +85,10 @@ const SubscriptionsPage = () => {
   //////////////////////////////////////////////////////////////////////////////////////////////
 
   // create state var for each address component (street, city, state, zip)
-  const [selectedSubscriptionId, setSelectedSubscriptionId] = useState(null);
+  const [selectedSubscription, setSelectedSubscription] = useState({
+    id: null,
+    start_date: null,
+  });
 
   const [address, setAddress] = useState({
     streetAddress: '',
@@ -96,8 +101,8 @@ const SubscriptionsPage = () => {
   // state var for address form control
   const [addressOpen, setAddressOpen] = useState(false);
   // handle open address form
-  const handleAddressForm = (subId: any) => {
-    setSelectedSubscriptionId(subId);
+  const handleAddressForm = (sub: any) => {
+    setSelectedSubscription(sub);
     setAddressOpen(true);
   };
   // set address state vars and handle close address form
@@ -133,12 +138,12 @@ const SubscriptionsPage = () => {
     // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
     axios
       .post(`/api/add_subscription_entry/${id}`, {
-        subscriptionId: selectedSubscriptionId, // change season to number season id on server side
+        subscriptionId: selectedSubscription.id, // change season to number season id on server side
         streetAddress: address.streetAddress,
         city: address.city,
         state: address.state,
         zip: address.zip,
-        phone: address.phone,
+        start_date: selectedSubscription.start_date,
       })
       .then((data) => {
         console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
@@ -297,10 +302,39 @@ const SubscriptionsPage = () => {
   };
 
   return (
-    <div style={{ marginTop: '10vh' }}>
+    <div>
+      <CssBaseline />
+      {/* Hero unit */}
+      <Box
+        sx={{
+          bgcolor: 'background.paper',
+          pt: 8,
+          pb: 6,
+        }}
+      ></Box>
       <div>
+        <Container maxWidth='sm'>
+          <Typography
+            component='h1'
+            variant='h2'
+            align='center'
+            color='text.primary'
+            gutterBottom
+          >
+            Your bounty awaits...
+          </Typography>
+          <Typography
+            variant='h5'
+            align='center'
+            color='text.secondary'
+            paragraph
+          >
+            Sign up now for a 14 week subscription and start receiving bountiful
+            boxes of farm freshness today!
+          </Typography>
+        </Container>
         <SubscriptionsContainer
-          // style={commonStyles}
+          style={commonStyles}
           subscriptions={subscriptions}
           subscription={subscription}
           getAllSubscriptions={getAllSubscriptions}
@@ -333,27 +367,26 @@ const SubscriptionsPage = () => {
           handleEditClick={handleEditClick}
           inEditMode={inEditMode}
           handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-          // value={value}
-          // setValue={setValue}
-          // handleRadioBtn={handleRadioBtn}
         />
-        <Fab
-          onClick={handleCreateForm}
-          size='large'
-          // color='secondary'
-          aria-label='add'
-          style={{
-            transform: 'scale(1.5)',
-            backgroundColor: 'lightgreen',
-          }}
-          sx={{
-            position: 'fixed',
-            bottom: (theme) => theme.spacing(8),
-            right: (theme) => theme.spacing(8),
-          }}
-        >
-          <AddIcon style={{ color: '#FFFFFF' }} />
-        </Fab>
+        {roleId > 3 && (
+          <Fab
+            onClick={handleCreateForm}
+            size='large'
+            // color='secondary'
+            aria-label='add'
+            style={{
+              transform: 'scale(1.5)',
+              backgroundColor: 'lightgreen',
+            }}
+            sx={{
+              position: 'fixed',
+              bottom: (theme) => theme.spacing(8),
+              right: (theme) => theme.spacing(8),
+            }}
+          >
+            <AddIcon style={{ color: '#FFFFFF' }} />
+          </Fab>
+        )}
       </div>
     </div>
   );

@@ -24,8 +24,8 @@ export const syncModels = async (dropTables = false) => {
     await DeliveryZonesModel.sync(options);
     await EventsModel.sync(options);
     await VendorsModel.sync(options);
-    await ProductsModel.sync(options);
     await SubscriptionsModel.sync(options);
+    await ProductsModel.sync(options);
     await SubscriptionEntriesModel.sync(options);
     await DietaryRestrictionsModel.sync(options);
     await OrdersModel.sync(options);
@@ -89,7 +89,6 @@ export const syncModels = async (dropTables = false) => {
     await OrdersModel.belongsToMany(ProductsModel, {
       through: OrderContentsModel,
     });
-    
   } catch (err) {
     console.error(err);
   }
@@ -107,4 +106,5 @@ export const Products = ProductsModel;
 export const DietaryRestrictions = DietaryRestrictionsModel;
 export const SubscriptionEntries = SubscriptionEntriesModel;
 export const Orders = OrdersModel;
+export const OrderContents = OrderContentsModel;
 export const RSVP = RSVPModel;

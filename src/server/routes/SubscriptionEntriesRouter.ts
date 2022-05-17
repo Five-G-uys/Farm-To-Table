@@ -6,9 +6,10 @@
 import { Router } from 'express';
 import express, { Express, Request, Response } from 'express';
 import axios from 'axios';
-
+import dayjs from 'dayjs';
 // Import Models
 import { SubscriptionEntries, Orders } from '../db/models';
+import { start } from 'repl';
 
 // Set Up Router
 const subscriptionEntriesRouter: Router = Router();
@@ -17,7 +18,15 @@ const subscriptionEntriesRouter: Router = Router();
 subscriptionEntriesRouter.post(
   `/api/add_subscription_entry/:id`,
   async (req: Request, res: Response) => {
-    const { subscriptionId, streetAddress, city, state, zip, phone } = req.body;
+    const {
+      subscriptionId,
+      streetAddress,
+      city,
+      state,
+      zip,
+      phone,
+      start_date,
+    } = req.body;
 
     const address: any = `${streetAddress} ${city}`;
     try {
@@ -40,26 +49,16 @@ subscriptionEntriesRouter.post(
         })
           .then((data: any) => {
             // CHANGE TODAY TO FIRST DAY OF SEASON START DATE
-            const today: Date = new Date();
             // iterate over number of orders
             for (let i = 1; i < 15; i++) {
-              const nextWeek = () => {
-                const today = new Date();
-                const nextwk = new Date(
-                  today.getFullYear(),
-                  today.getMonth(),
-                  today.getDate() + 7 * i
-                );
-                return nextwk;
-              };
-              // console.log(
-              //   'LINE 61 || NEXTWEEK',
-              //   nextWeek().toJSON().slice(0, 10)
-              // );
+              const today: any = dayjs(start_date)
+                .add(7 * i, 'day')
+                .format('YYYY-MM-DD');
+
               Orders.create({
                 // subscriptionId: data.dataValues.subscriptionId,
                 subscriptionEntryId: data.dataValues.id,
-                delivery_date: nextWeek().toJSON().slice(0, 10),
+                delivery_date: today,
               })
                 .then((data: any) => {
                   // console.log('LINE 318 || SERVER INDEX ||', data);

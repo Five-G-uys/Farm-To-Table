@@ -16,6 +16,7 @@ mapboxgl.accessToken =
 const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
   // STATE VAR FOR COORDINATE CHAIN STRING
   const [routeCoordinates, setRouteCoordinates] = useState('');
+  const [routeData, setRouteData] = useState({});
   const [updateCounter, setUpdateCounter] = useState(0);
   // SET VAR FOR TODAYS DATE THAT MATCHES DATABASE FORMAT
   const today = dayjs().add(7, 'day').format().slice(0, 10);
@@ -24,40 +25,46 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
   let tempStr = '';
   //FIRST FETCH ALL ORDERS FOR TODAY
   const getTodaysOrders = () => {
+    if (!lat || !lon) return;
     axios
-      .get('/api/order/todaysOrders', { params: { delivery_date: today } })
+      .get('/api/order/todaysOrders', {
+        params: { delivery_date: today, lat, lon },
+      })
       .then((data) => {
-        console.log('LINE 26 || DELIVERY PAGE', data.data);
-
-        tempStr = data.data
+        console.log('LINE 34 || DELIVERY PAGE', data.data.waypoints);
+        setRouteData(data.data);
+        tempStr = data.data.waypoints
           .map((location: any) => {
             // console.log(
             //   'LINE 33 || LOCATION MAP',
             //   `${location.lat},${location.lon}`
             // );
-            return `${location.lon},${location.lat}`;
+            return `${location.location[0]},${location.location[1]}`;
           })
           .join(';');
 
-        // console.log('LINE 42 || DELIVERY PAGE', tempStr);
+        console.log('LINE 46 || DELIVERY PAGE', tempStr);
         setRouteCoordinates(tempStr);
         setUpdateCounter(updateCounter + 1);
+        // setUpdateCounter(updateCounter + 1);
       })
       .catch((err) => {
-        console.error('LINE 29 || DELIVERY PAGE ERROR', err);
+        console.error('LINE 52 || DELIVERY PAGE ERROR', err);
       });
   };
-  useEffect(getTodaysOrders, []);
+  useEffect(getTodaysOrders, [lat, lon]);
 
-  console.log('LINE 52 || DELIVERY PAGE||', dayjs().format('H'));
+  console.log('LINE 57 || DELIVERY PAGE||', dayjs().format('H'));
 
-  console.log('LINE 49', routeCoordinates);
+  console.log('LINE 59', routeCoordinates);
   return (
     <div>
       <Map
         mode={mode}
         routeCoordinates={routeCoordinates}
+        routeData={routeData}
         updateCoords={updateCoords}
+        updateCounter={updateCounter}
         lat={lat}
         lon={lon}
       />

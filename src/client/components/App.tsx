@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // React Imports
-import React, { useState, useEffect, createContext } from 'react';
-import axios, { AxiosResponse } from 'axios';
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import React, { useState, useEffect, createContext } from "react";
+import axios, { AxiosResponse } from "axios";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 
 // MUI Imports
 import HomePage from './HomePage';
@@ -24,7 +24,7 @@ import EventsRecords from './Records/EventsRecords';
 // import FarmsRecords from './Records/FarmsRecords';
 import OrdersRecords from './Records/OrdersRecords';
 import ProductsRecords from './Records/ProductsRecords';
-import SubscriptionEntriesRecords from './Records/SubscriitionEntriesRecords';
+import SubscriptionEntriesRecords from './Records/SubscriptionEntriesRecords';
 import SubscriptionsRecords from './Records/SubscriptionsRecords';
 import UsersRecords from './Records/UsersRecords';
 import VendorsRecords from './Records/VendorsRecords';
@@ -34,9 +34,9 @@ import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
 
 //material UI IMPORTS
-import { createTheme, PaletteMode } from '@mui/material';
+import { Box, createTheme, PaletteMode } from '@mui/material';
 import { Container, Grid, Paper, Switch } from '@mui/material';
-import { ThemeProvider, ColorModeContext } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
 import { amber, blueGrey, grey } from '@mui/material/colors';
 
@@ -47,6 +47,15 @@ import { amber, blueGrey, grey } from '@mui/material/colors';
 //     [theme.breakpoints.down("xs")]: { paddingTop: theme.spacing(2) },
 //   },
 // }));
+
+function Copyright() {
+  return (
+    <Typography variant='body2' color='text.secondary' align='center'>
+      {'Copyright © www.knockknocktomatoes.com'} {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 export const UserContext: any = createContext(null);
 
@@ -69,7 +78,7 @@ const App = () => {
   useEffect((): void => {
     // TAKE THIS AXIOS CALL TO GET USER
     axios
-      .get('/auth/api/userProfile')
+      .get("/auth/api/userProfile")
       .then(({ data }: AxiosResponse) => {
         // console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
@@ -78,19 +87,18 @@ const App = () => {
   }, []);
 
   ////********************DARK MODE HERE *********************////
-  const [mode, setMode] = React.useState<PaletteMode>('light');
-  // The light theme is used by default
-  // const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [mode, setMode] = React.useState<PaletteMode>("light");
+
   const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
       mode,
-      ...(mode === 'light'
+      ...(mode === "light"
         ? {
             // palette values for light mode
             primary: amber,
             divider: amber[200],
             text: {
-              primary: grey[900],
+              primary: blueGrey[700],
               secondary: grey[800],
             },
           }
@@ -103,7 +111,7 @@ const App = () => {
               paper: blueGrey[900],
             },
             text: {
-              primary: '#fff',
+              primary: "#fff",
               secondary: grey[500],
             },
           }),
@@ -113,7 +121,7 @@ const App = () => {
   // Update the theme only if the mode changes
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
   const changeMode = (color: any) => {
-    setMode((color) => (color === 'dark' ? 'light' : 'dark'));
+    setMode((color) => (color === "dark" ? "light" : "dark"));
   };
   const isLoggedIn = (user: any) => user.roleId > 0;
   const isEmployee = (user: any) => user.roleId > 2;
@@ -277,6 +285,22 @@ const App = () => {
             </Routes>
           </UserContext.Provider>
         </div>
+        {/* Footer */}
+        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
+          <Typography variant='h6' align='center' gutterBottom>
+            Knock, Knock Tomatoes
+          </Typography>
+          <Typography
+            variant='subtitle1'
+            align='center'
+            color='text.secondary'
+            component='p'
+          >
+            Who's There? Farm Freshness!
+          </Typography>
+          <Copyright />
+        </Box>
+        {/* End footer */}
         {/* </Grid>
           </Container> */}
         {/* </Paper> */}

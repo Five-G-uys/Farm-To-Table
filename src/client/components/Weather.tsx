@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { CssBaseline, Box, Container, Typography } from "@mui/material";
 
 const Weather = ({ lat, lon }) => {
   const [city, setCity] = useState();
@@ -11,7 +12,7 @@ const Weather = ({ lat, lon }) => {
     axios
       .get(`/weather/${lat}/${lon}`)
       .then((response) => {
-        console.log('Weather Data Response', response.data);
+        //console.log('Weather Data Response', response.data);
         setCity(response.data.name);
         setTemp(response.data.main.temp);
         setHumid(response.data.main.humidity);
@@ -25,6 +26,27 @@ const Weather = ({ lat, lon }) => {
 
   return (
     <>
+      <CssBaseline />
+        {/* Hero unit */}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth='sm'>
+            <Typography
+              component='h1'
+              variant='h2'
+              align='center'
+              color='text.primary'
+              gutterBottom
+            >
+              Current Local Weather
+            </Typography>
+          </Container>
+        </Box>
       {!temp ? null : (
         <>
           <div id="weather_wrapper">
