@@ -90,14 +90,15 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// ORDERS GET ROUTE
 orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
-  console.log('LINE 184 || SERVER INDEX', req.params); // user id
+  console.log('LINE 93 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
   SubscriptionEntries.findAll({ where: { userId: Number(req.params.id) } })
     .then((data: Array<object>) => {
       const dataObj: Array<object> = [];
+      console.log('LINE 99 || ORDER ROUTER', data);
       data.forEach((subscriptionEntry: any) => {
-        // console.log('LINE 230', subscriptionEntry.dataValues);
+        console.log('LINE 100', subscriptionEntry.dataValues);
         if (subscriptionEntry.dataValues.userId === Number(req.params.id)) {
           dataObj.push(subscriptionEntry.dataValues.id);
         }
@@ -114,16 +115,16 @@ orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
         },
       })
         .then((data: any) => {
-          // console.log('LINE 241 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
+          console.log('LINE 117 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
           res.json(data);
         })
         .catch((err: any) => {
-          console.error('LINE 244 || SERVER INDEX', err);
+          console.error('LINE 121 || SERVER INDEX', err);
           res.send(err);
         });
     })
     .catch((err: any) => {
-      console.error('LINE 254', err);
+      console.error('LINE 126 || ORDER ROUTER || GET || ERROR', err);
     });
 
   // console.log('LINE 263 ||', dataObj);
