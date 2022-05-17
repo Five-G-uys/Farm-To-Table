@@ -154,14 +154,15 @@ const Profile = () => {
         </CardContent>
 
         <CardActions disableSpacing sx={{ justifyContent: "center" }}>
-          <Stack spacing={5} direction="row" id="user_card_stack">
-            <ExpandMore
+          <Stack spacing={5} direction="row" id="user_card_stack" fontSize={30}>
+            Reminders
+            {/* <ExpandMore
               sx={{ color: "green" }}
               expand={expanded}
               onClick={() => handleEditClick(id)}
             >
               <EditIcon sx={{ color: "green" }} />
-            </ExpandMore>
+            </ExpandMore> */}
             <ExpandMore
               sx={{ color: "green" }}
               expand={expanded}

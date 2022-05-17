@@ -21,6 +21,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { TextField } from "@mui/material";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -55,10 +56,36 @@ const Event = ({
   const [isGoing, setIsGoing] = useState(false);
   const [totalRsvp, setTotalRsvp] = useState(0);
   const [updateCounter, setUpdateCounter] = useState(0);
+  const [numAttend, setNumAttend] = useState(0);
   const { roleId } = user;
 
+  const handelTextInput = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value, type, checked } = event.target;
+    //console.log("NAME INSIDE OF HANDELTEXTINPUT", name, +" and " + value);
+    setNumAttend(Number(value));
+  };
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
+  const numbAtten = () => {
+    return (
+      <TextField
+        fullWidth
+        id="filled-basic"
+        variant="filled"
+        value={numAttend}
+        name="numAttend"
+        label="Number of attendees"
+        // id='fullWidth'
+        placeholder="Number of attendees"
+        onChange={handelTextInput}
+      />
+    );
+  };
   const handRSVPosts = () => {
+    numbAtten();
     axios
       .post("/api/rsvps/", {
         userId: id,
@@ -155,12 +182,6 @@ const Event = ({
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
         title={event.eventName}
       />
-
-      {event.thumbnail ? (
-        <CardMedia component="img" height="300" image={event.thumbnail} />
-      ) : (
-        ""
-      )}
       <CardContent>
         <Typography
           variant="body2"
@@ -181,6 +202,11 @@ const Event = ({
           {`${event.eventType}`}
         </Typography>
       </CardContent>
+      {event.thumbnail ? (
+        <CardMedia component="img" height="300" image={event.thumbnail} />
+      ) : (
+        ""
+      )}
       <CardContent>
         <Typography paragraph fontWeight="700" fontSize="20px">
           {user.roleId < 4
@@ -195,7 +221,7 @@ const Event = ({
           {" "}
           {user.roleId > 3
             ? null
-            : `${isGoing ? "My status: attending" : " Status: maybe"}`}
+            : `${isGoing ? "My status: attending" : " My status: maybe"}`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
@@ -207,7 +233,7 @@ const Event = ({
           </ExpandMore>
           <ExpandMore sx={{ color: "green" }} expand={expanded}>
             {roleId < 4 && (
-              <Button onClick={handRSVPosts} color="success">
+              <Button onClick={handRSVPosts} color="success" size="large">
                 RSVP
               </Button>
             )}
@@ -221,12 +247,14 @@ const Event = ({
               <EditIcon sx={{ color: "green" }} />
             </ExpandMore>
           )}
+
           {roleId < 4 && (
             <ExpandMore
               sx={{ color: "green" }}
               expand={expanded}
               onClick={() => deleteRsvpsEvent()}
             >
+              cancel
               <DeleteIcon sx={{ color: "green" }} />
             </ExpandMore>
           )}
@@ -237,13 +265,14 @@ const Event = ({
             aria-expanded={expanded}
             aria-label="show more"
           >
+            Description
             <ExpandMoreIcon />
           </ExpandMore>
         </Stack>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {" "}
-        <Typography paragraph margin="2.3rem" fontWeight="700" fontSize="20px">
+        <Typography paragraph margin="2.3rem" fontWeight="700" fontSize="18px">
           {" "}
           {`Description: ${event.description}`}
         </Typography>
