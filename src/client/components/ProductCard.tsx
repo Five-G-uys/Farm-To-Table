@@ -54,7 +54,7 @@ const ProductCard = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const { name, id, description, plant_date, harvest_date, img_url } = product;
+  const { name, id, description, harvest_dates, img_url } = product;
 
   const handleProductDelete = (productId: any) => {
     axios
@@ -76,13 +76,15 @@ const ProductCard = ({
   return (
     <Card
       sx={{
+        backgroundColor: '#e2f2d9',
         minWidth: '15rem',
         borderRadius: '2.5rem',
         // elevation: 2,
-        boxShadow: 1,
+        boxShadow: 8,
       }}
+      className='texture2'
     >
-      <CardHeader
+      {/* <CardHeader
         avatar={
           // MAKE AVATAR A SEASON LOGO
           <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
@@ -92,7 +94,7 @@ const ProductCard = ({
         subheader={`Planted on ${plant_date}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
         title={name}
-      />
+      /> */}
       <CardMedia
         component='img'
         height='194'
@@ -104,7 +106,7 @@ const ProductCard = ({
       />
       <CardContent>
         <Typography variant='body2' color='text.secondary'>
-          {`Harvested on ${harvest_date}`}
+          {`Harvested on ${harvest_dates}`}
         </Typography>
       </CardContent>
 
