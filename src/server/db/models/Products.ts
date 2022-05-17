@@ -27,10 +27,9 @@ const Products = db.define(
     //   allowNull: false,
     //   references: { model: Vendors, key: 'id' },
     // },
-    // quantity: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
+    quantity: {
+      type: DataTypes.STRING,
+    },
     img_url: {
       type: DataTypes.STRING,
       defaultValue:
@@ -45,25 +44,24 @@ const Products = db.define(
     //   allowNull: false,
     //   references: { model: Farms, key: 'id' },
     // },
-    plant_date: {
+    // plant_date: {
+    //   type: DataTypes.STRING,
+    // },
+    harvest_dates: {
       type: DataTypes.STRING,
     },
-    harvest_date: {
-      type: DataTypes.STRING,
-    },
-    subscriptionId: {
-      // foreign key to season/subscription id
-      // can only add to active subscription
-      // need to have dropdown with active or upcoming seasons/subscriptions mapped as options
-      // this way active AND inactive products will be retrieved separately
+    // subscriptionId: {
+    //   // foreign key to season/subscription id
+    //   // can only add to active subscription
+    //   // need to have dropdown with active or upcoming seasons/subscriptions mapped as options
+    //   // this way active AND inactive products will be retrieved separately
 
-      // NEED TO FORMAT SEASONAL DATES IN CREATE SUBSCRIPTION FORM SO I CAN USE THEM TO SORT PRODUCTS
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: { model: Subscriptions, key: 'id' },
-    },
+    //   // NEED TO FORMAT SEASONAL DATES IN CREATE SUBSCRIPTION FORM SO I CAN USE THEM TO SORT PRODUCTS
+    //   type: DataTypes.INTEGER,
+    //   references: { model: Subscriptions, key: 'id' },
+    // },
   },
-  { initialAutoIncrement: 7 }
+  // { initialAutoIncrement: 7 },
 );
 
 export default Products;
