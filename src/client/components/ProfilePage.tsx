@@ -65,7 +65,7 @@ const Profile = () => {
   };
 
   // handle click + edit form functionality for edit button in Product Card component
-  const handleEditClick = (userId: any) => {
+  const handleEditClick = (userId: number) => {
     console.log("LINE 171 || USER PAGE CLICKED", userId);
 
     const clickedUser: any = users.find(
@@ -187,3 +187,15 @@ const Profile = () => {
 };
 
 export default Profile;
+function setUser(arg0: {
+  id: number; googleId: any; name: any; email: any; address: any; picture: any;
+  // farm_id: clickedUser.farm_id,
+  roleId: any;
+}) {
+  throw new Error('Function not implemented.');
+}
+
+function setInEditMode(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+

@@ -77,10 +77,11 @@ const ProductCard = ({
     <Card
       sx={{
         minWidth: '15rem',
-        borderRadius: '2.5rem',
+        borderRadius: '1.2rem',
+        boxShadow: 8,
         // elevation: 2,
-        boxShadow: 1,
       }}
+      className='texture1'
     >
       <CardHeader
         avatar={

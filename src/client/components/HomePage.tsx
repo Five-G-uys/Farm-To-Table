@@ -110,7 +110,11 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
+                    borderRadius: '1.2rem',
+                    boxShadow: 8,
+                    fontColor: 'brown',
                   }}
+                  className='texture1'
                 >
                   <CardMedia
                     component='img'

@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { UserContext } from "./App";
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { UserContext } from './App';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 //mateiral UI
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
-import Backdrop from "@mui/material/Backdrop";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
-import Fade from "@mui/material/Fade";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
+import Backdrop from '@mui/material/Backdrop';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Fade from '@mui/material/Fade';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import {
   // amber,
   // blueGrey,
@@ -27,16 +27,16 @@ import {
   // orange,
   purple,
   // deepPurple,
-} from "@mui/material/colors";
+} from '@mui/material/colors';
 //import Button from "@mui/material/Button";
 
 //Component import
-import EventCard from "./EventCard";
+import EventCard from './EventCard';
 //import RSVPS from "./RSVPS";
 
 // can import getallproducts after migrating it to apicalls file
-import { updatedEvent } from "../apiCalls/eventCalls";
-import { CssBaseline, Container } from "@mui/material";
+import { updatedEvent } from '../apiCalls/eventCalls';
+import { CssBaseline, Container } from '@mui/material';
 
 const EventsPage = () => {
   const user: { roleId: number; id: number } = useContext(UserContext);
@@ -48,28 +48,24 @@ const EventsPage = () => {
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
-  const [value, setValue] = React.useState("Farmers Market");
+  const [value, setValue] = React.useState('Farmers Market');
   const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
     //event.preventDefault();
     setValue(event.target.value);
-
-    console.log("line 49 What's value here", value);
-    console.log("Event with all properties", event);
   };
 
   //event state variable;
   const [event, setEvent] = useState({
     id: 0,
-    eventName: "",
-    description: "",
-    thumbnail: "",
-    eventDate: "",
-    eventType: "",
-    location: "",
+    eventName: '',
+    description: '',
+    thumbnail: '',
+    eventDate: '',
+    eventType: '',
+    location: '',
     // seasonTitle: "",
     // monthTitle: "",
   });
-  console.log("line 64", event.eventType);
   //state that controls the form
   const [open, setOpen] = useState(false);
 
@@ -83,20 +79,18 @@ const EventsPage = () => {
     setUpdateCounter((updateCounter) => updateCounter + 1);
   };
 
-  console.log("LINE 77, All events", event);
-  console.log("LINE 79", value);
   // Handlers for backdrop control
   const handleClose = () => {
     setOpen(false);
     setInEditMode(false);
     setEvent({
       id: 0,
-      eventName: "",
-      description: "",
-      thumbnail: "",
-      eventDate: "",
-      eventType: "",
-      location: "",
+      eventName: '',
+      description: '',
+      thumbnail: '',
+      eventDate: '',
+      eventType: '',
+      location: '',
       // seasonTitle: "",
       // monthTitle: "",
     });
@@ -119,7 +113,7 @@ const EventsPage = () => {
     //console.log("LINE 108");
     e.preventDefault();
     axios
-      .post("/api/events", {
+      .post('/api/events', {
         event: {
           eventName: eventName,
           description: description,
@@ -132,7 +126,7 @@ const EventsPage = () => {
         },
       })
       .then(({ data }) => {
-        console.log("LINE 107 saved!", data);
+        //console.log('LINE 107 saved!', data);
         setUpdateCounter((updateCounter) => updateCounter + 1);
         handleClose();
       })
@@ -141,16 +135,16 @@ const EventsPage = () => {
 
   // Box component styles
   const commonStyles = {
-    bgcolor: "background.paper",
-    borderColor: "text.primary",
+    bgcolor: 'background.paper',
+    borderColor: 'text.primary',
     m: 1,
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     border: 1,
-    padding: "20px",
-    borderRadius: "2.5rem",
+    padding: '20px',
+    borderRadius: '2.5rem',
     boxShadow: 3,
   };
 
@@ -163,21 +157,21 @@ const EventsPage = () => {
       setUpdateCounter(updateCounter + 1);
       handleClose();
     } catch (err) {
-      console.error("LINE 164 || PRODUCTS PAGE ", err);
+      console.error('LINE 164 || PRODUCTS PAGE ', err);
     }
   };
 
   const handelTextInput = (
     event:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value, type, checked } = event.target;
     //console.log("NAME INSIDE OF HANDELTEXTINPUT", name, +" and " + value);
     setEvent((state) => {
       return {
         ...state,
-        [name]: type === "checkbox" ? checked : value,
+        [name]: type === 'checkbox' ? checked : value,
       };
     });
     // console.log(event);
@@ -198,10 +192,10 @@ const EventsPage = () => {
       },
       (
         error: { error: string },
-        result: { event: string; info: { url: string } }
+        result: { event: string; info: { url: string } },
       ) => {
-        if (!error && result && result.event === "success") {
-          console.log("LINE 56", result.info.url);
+        if (!error && result && result.event === 'success') {
+          console.log('LINE 56', result.info.url);
           setEvent((state) => {
             return {
               ...state,
@@ -210,28 +204,28 @@ const EventsPage = () => {
           });
         }
         //console.log("LINE 135 || CLOUDINARY", error);
-      }
+      },
     );
     widget.open();
   };
 
   const getAllEvents = () => {
     axios
-      .get("/api/events")
+      .get('/api/events')
       .then(({ data }) => {
         setAllEvents(data);
       })
       .catch((error) => {
-        console.log("sorry, request failed", error);
+        console.log('sorry, request failed', error);
       });
   };
 
   const [rsvps, setRsvps] = useState<string[]>([]);
   const getUserRsvps = () => {
     axios
-      .get("/api/rsvps")
-      .then(({ data }: any) => {
-        console.log("Rsvps get all Response ", data);
+      .get('/api/rsvps')
+      .then(({ data }) => {
+        console.log('Rsvps get all Response ', data);
         setRsvps(data);
         //setRsvpCount(data.length);
       })
@@ -242,23 +236,23 @@ const EventsPage = () => {
   ////////////////Radio Button handle function///////////////////////////
 
   // handle click + edit form functionality for edit button in Product Card component
-  const handleEditClick = (id: number) => {
+  const handleEditClick = (id: number | undefined) => {
     //handle searches for a clicked event in order to update
     const clickedEvent: {
-      eventName: string;
-      id: number;
-      description: string;
-      thumbnail: string;
-      eventDate: number;
-      eventType: string;
-      location: string;
+      eventName: string | undefined;
+      id: number | undefined;
+      description: string | undefined;
+      thumbnail: string | undefined;
+      eventDate: number | undefined;
+      eventType: string | undefined;
+      location: string | undefined;
     } = allEvents.find(
       // find mutates original array values
-      (event: { id: number }) => event.id === id
+      (event: { id: number }) => event.id === id,
     );
     clickedEvent.thumbnail = clickedEvent.thumbnail
       ? clickedEvent.thumbnail
-      : "http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg";
+      : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
 
     setEvent((state: any) => {
       return {
@@ -289,27 +283,27 @@ const EventsPage = () => {
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: "background.paper",
+          bgcolor: 'background.paper',
           pt: 8,
           pb: 6,
         }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth='sm'>
           <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="text.primary"
+            component='h1'
+            variant='h2'
+            align='center'
+            color='text.primary'
             gutterBottom
           >
             Farm Events
           </Typography>
           <Typography
-            variant="h5"
-            align="center"
-            color="text.secondary"
+            variant='h5'
+            align='center'
+            color='text.secondary'
             paragraph
-            marginBottom="12px"
+            marginBottom='12px'
           >
             We have regular Saturday farmer's markets and our seasonal Customer
             Appreciation Day is just around the corner. RSVP below and come join
@@ -331,8 +325,8 @@ const EventsPage = () => {
       <div>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
         <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
+          aria-labelledby='transition-modal-title'
+          aria-describedby='transition-modal-description'
           sx={{
             color: purple,
             zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -346,7 +340,7 @@ const EventsPage = () => {
           BackdropProps={{
             timeout: 750,
           }}
-          className="add_x_form_modal"
+          className='add_x_form_modal'
         >
           <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
             {
@@ -366,10 +360,10 @@ const EventsPage = () => {
                         inEditMode ? handleEventUpdateSubmit : postEvent
                       }
                     >
-                      --{" "}
+                      --{' '}
                       <Button
-                        variant="contained"
-                        size="large"
+                        variant='contained'
+                        size='large'
                         onClick={showWidget}
                       >
                         Add Event Image
@@ -377,59 +371,59 @@ const EventsPage = () => {
                       <br></br>
                       {thumbnail && <img width={300} src={thumbnail} />}
                       <br></br>
-                      <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                        <InputLabel htmlFor="standard-adornment-amount">
+                      <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
+                        <InputLabel htmlFor='standard-adornment-amount'>
                           Name of Event
                         </InputLabel>
                         <Input
-                          name="eventName"
+                          name='eventName'
                           value={eventName}
-                          id="Event Name"
+                          id='Event Name'
                           // id='fullWidth'
-                          placeholder="Name of Event"
+                          placeholder='Name of Event'
                           onChange={handelTextInput}
                           startAdornment={
-                            <InputAdornment position="start"></InputAdornment>
+                            <InputAdornment position='start'></InputAdornment>
                           }
                         />
                       </FormControl>
                       <TextField
                         // width='75%'
                         // type={{ width: '75%' }}
-                        id="filled-basic"
-                        variant="filled"
+                        id='filled-basic'
+                        variant='filled'
                         // label='Filled'
                         value={description}
-                        name="description"
-                        label="Event Description"
+                        name='description'
+                        label='Event Description'
                         // id='fullWidth'
-                        placeholder="Event Description"
+                        placeholder='Event Description'
                         onChange={handelTextInput}
                       />
                       <br></br>
                       <br></br>
                       <TextField
                         fullWidth
-                        id="filled-basic"
-                        variant="filled"
+                        id='filled-basic'
+                        variant='filled'
                         value={location}
-                        name="location"
-                        label="Address"
+                        name='location'
+                        label='Address'
                         // id='fullWidth'
-                        placeholder="Address for event"
+                        placeholder='Address for event'
                         onChange={handelTextInput}
                       />
                       <br></br>
                       <br></br>
                       <TextField
                         fullWidth
-                        id="filled-basic"
-                        variant="filled"
+                        id='filled-basic'
+                        variant='filled'
                         value={eventDate}
-                        name="eventDate"
-                        label="Event Date"
+                        name='eventDate'
+                        label='Event Date'
                         // id='fullWidth'
-                        placeholder="05/29/2022"
+                        placeholder='05/29/2022'
                         onChange={handelTextInput}
                       />
                       {/* <br></br>
@@ -462,39 +456,39 @@ const EventsPage = () => {
                       <br></br>
                       {/* <Box> */}
                       <FormControl>
-                        {" "}
-                        <FormLabel id="eventType-for-event">
+                        {' '}
+                        <FormLabel id='eventType-for-event'>
                           Type of Event
                         </FormLabel>
                         <RadioGroup
-                          aria-labelledby="eventType-for-event"
-                          name="eventType"
+                          aria-labelledby='eventType-for-event'
+                          name='eventType'
                           // defaultValue="Farmers Market"
                           value={value}
                           onChange={handleRadioBtn}
                         >
                           <FormControlLabel
-                            control={<Radio color={"success"} />}
-                            value="Farmers Market"
-                            label="Farmers Market"
+                            control={<Radio color={'success'} />}
+                            value='Farmers Market'
+                            label='Farmers Market'
                           />
                           <FormControlLabel
-                            control={<Radio color="success" />}
-                            value="Community Volunteering"
-                            label="Community Volunteering"
+                            control={<Radio color='success' />}
+                            value='Community Volunteering'
+                            label='Community Volunteering'
                           />
                           <FormControlLabel
-                            control={<Radio color="success" />}
-                            value="Customer Day"
-                            label="Customer Day"
+                            control={<Radio color='success' />}
+                            value='Customer Day'
+                            label='Customer Day'
                           />
                         </RadioGroup>
                       </FormControl>
                       {/* </Box> */}
                       <br></br>
                       <br></br>
-                      <Button variant="contained" size="large" type="submit">
-                        {inEditMode ? "UPDATE" : "SAVE"}
+                      <Button variant='contained' size='large' type='submit'>
+                        {inEditMode ? 'UPDATE' : 'SAVE'}
                       </Button>
                     </form>
                   </Box>
@@ -506,17 +500,17 @@ const EventsPage = () => {
         {roleId > 3 && (
           <Fab
             onClick={handleCreateForm}
-            size="small"
+            size='small'
             // color='secondary'
-            aria-label="add"
-            style={{ transform: "scale(2.5)", backgroundColor: "#80D55F" }}
+            aria-label='add'
+            style={{ transform: 'scale(2.5)', backgroundColor: '#80D55F' }}
             sx={{
-              position: "fixed",
+              position: 'fixed',
               bottom: (theme) => theme.spacing(8),
               right: (theme) => theme.spacing(8),
             }}
           >
-            <AddIcon style={{ color: "#FFFFFF" }} />
+            <AddIcon style={{ color: '#FFFFFF' }} />
           </Fab>
         )}
       </div>
