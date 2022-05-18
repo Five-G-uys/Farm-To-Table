@@ -114,7 +114,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
           position='sticky'
           // position='fixed'
           style={{
-            backgroundColor: 'lightgreen',
+            backgroundColor: '#e2f2d9',
             maxHeight: '5rem',
             // margin: '.4rem',
             justifySelf: 'center',
@@ -130,6 +130,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
             // marginLeft: '5vw',
             borderRadius: '50px',
           }}
+          className='texture2'
         >
           <Container>
             <Toolbar
