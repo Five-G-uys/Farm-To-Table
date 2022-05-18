@@ -43,14 +43,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const Profile = () => {
   const user: any = useContext(UserContext);
-  const { id, googleId, name, email, picture, roleId, delivery_zone } =
-    user; 
+  const { id, googleId, name, email, picture, roleId, delivery_zone } = user;
   const [expanded, setExpanded] = useState(false);
   const [newProfileUrl, setNewProfileUrl] = useState('');
   const [inEditMode, setInEditMode] = useState(false);
   const [open, setOpen] = useState(false);
-
-
 
   // toggle bool
   const handleExpandClick = () => {
@@ -64,16 +61,6 @@ const Profile = () => {
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
 
-  const handleProfilePhotoUpdate = () => {
-    axios.patch(`/api/users/${id}`, {picture: newProfileUrl})
-      .then((response) => {
-        console.log('Handle Profile Photo Update Response: ', response)
-      })
-      .catch((err) => {
-        console.error('Handle Profile Photo Update Error: ', err);
-      })
-  };
-
   const showWidget = () => {
     const widget = window.cloudinary.createUploadWidget(
       {
@@ -85,18 +72,31 @@ const Profile = () => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           setNewProfileUrl(result.info.url);
         }
-        handleProfilePhotoUpdate()
-      }
+      },
     );
     widget.open();
   };
 
+  const handleProfilePhotoUpdate = () => {
+    axios
+      .patch(`/api/users/${id}`, { picture: newProfileUrl })
+      .then((response) => {
+        console.log('Handle Profile Photo Update Response: ', response);
+      })
+      .catch((err) => {
+        console.error('Handle Profile Photo Update Error: ', err);
+      });
+  };
+
+  useEffect(() => {
+    if (newProfileUrl.length) {
+      handleProfilePhotoUpdate();
+    }
+  }, [newProfileUrl]);
   console.log('New Profile Url: ', newProfileUrl);
 
   return (
-    <Box 
-      className='page-wrap'
-      >
+    <Box className='page-wrap'>
       <CssBaseline />
       {/* Hero unit */}
       <Box
@@ -137,11 +137,8 @@ const Profile = () => {
           subheader={`Email: ${email}`}
           title={name}
         />
-        <CardContent >
-          <img 
-            className='profilePic' 
-            src={user.picture} >
-          </img>
+        <CardContent>
+          <img className='profilePic' src={user.picture}></img>
         </CardContent>
 
         <CardActions disableSpacing sx={{ justifyContent: "center" }}>
@@ -165,14 +162,15 @@ const Profile = () => {
             {/* <ExpandMore
               sx={{ color: 'green' }}
               expand={expanded}> */}
-              <Button 
-                variant='text'
-                size='large'
-                color='warning'
-                sx={{ color: 'red' }}
-                onClick={handleLogout} >
-                Logout
-              </Button>
+            <Button
+              variant='text'
+              size='large'
+              color='warning'
+              sx={{ color: 'red' }}
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
             {/* </ExpandMore> */}
             <ExpandMore
               sx={{ color: 'green' }}
@@ -197,8 +195,6 @@ const Profile = () => {
       <br></br>
       <br></br>
       <br></br>
-    
-
     </Box>
   );
 };
