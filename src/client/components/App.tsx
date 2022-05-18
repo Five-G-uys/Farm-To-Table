@@ -231,7 +231,8 @@ const App = () => {
               <Route
                 path='/orders-page'
                 element={
-                  isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
+                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
+                  <OrdersPage />
                 }
               />
               {/* Restricted Employ Routes */}

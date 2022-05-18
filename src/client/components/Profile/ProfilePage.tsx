@@ -141,11 +141,10 @@ const Profile = () => {
           <img className='profilePic' src={user.picture}></img>
         </CardContent>
 
-        <CardActions disableSpacing sx={{ justifyContent: "center" }}>
-          <Stack spacing={5} direction="row" id="user_card_stack" fontSize={30}>
-            Reminders
-            {/* <ExpandMore
-              sx={{ color: "green" }}
+        <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
+          <Stack spacing={5} direction='row' id='user_card_stack'>
+            <ExpandMore
+              sx={{ color: 'green' }}
               expand={expanded}
               // onClick={() => handleEditClick(id)}
             >
