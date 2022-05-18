@@ -36,7 +36,7 @@ import weatherRouter from './routes/WeatherRouter';
 import orderContentRouter from './routes/OrderContentRouter';
 // Import Interfaces
 import UserInterface from '../types/UserInterface';
-import Profile from 'src/client/components/ProfilePage';
+import Profile from 'src/client/components/Profile/ProfilePage';
 
 const app: Express = express();
 const port = process.env.LOCAL_PORT;

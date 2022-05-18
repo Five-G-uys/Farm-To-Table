@@ -19,7 +19,7 @@ import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { TextField } from '@mui/material';
-
+import CheckIcon from '@mui/icons-material/Check';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -37,7 +37,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 interface AppProps {
-  handleEditClick(): void;
+  handleEditClick(id): void;
   getAllEvents(): void;
   event: {
     eventName: string;
@@ -45,6 +45,8 @@ interface AppProps {
     id: number;
     eventDate: string;
     description: string;
+    location: string;
+    thumbnail: string;
   };
 }
 
@@ -154,13 +156,27 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
       }}
       className='texture1'
     >
-      <CardHeader
-        subheader={`Date of Event: ${event.eventDate}`}
-        fontWeight='700'
-        subtitle={`Type of Event: ${event.eventType}`}
-        // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
-        title={event.eventName}
-      />
+      <CardHeader fontWeight='700' title={event.eventName} />
+      <CardContent>
+        <Typography
+          variant='body2'
+          color='text.secondary'
+          fontWeight='700'
+          fontSize='20px'
+        >
+          {`Date of Event: ${event.eventDate}`}
+        </Typography>
+      </CardContent>
+      <CardContent>
+        <Typography
+          variant='body2'
+          color='text.secondary'
+          fontWeight='700'
+          fontSize='20px'
+        >
+          {`Type: ${event.eventType}`}
+        </Typography>
+      </CardContent>
       <CardContent>
         <Typography
           variant='body2'
@@ -171,16 +187,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           {`Address: ${event.location}`}
         </Typography>
       </CardContent>
-      <CardContent>
-        <Typography
-          variant='body2'
-          color='text.secondary'
-          fontWeight='700'
-          fontSize='20px'
-        >
-          {`${event.eventType}`}
-        </Typography>
-      </CardContent>
+
       {event.thumbnail ? (
         <CardMedia component='img' height='300' image={event.thumbnail} />
       ) : (
@@ -191,16 +198,10 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           {user.roleId < 4
             ? `${
                 totalRsvp === 1
-                  ? `Others attending:  ${totalRsvp}`
-                  : `Others attending:  ${totalRsvp}`
+                  ? `Going:  ${totalRsvp}`
+                  : `Going:  ${totalRsvp}`
               }`
             : `RSVPS: ${totalRsvp}`}
-        </Typography>
-        <Typography paragraph fontWeight='700' fontSize='20px'>
-          {' '}
-          {user.roleId > 3
-            ? null
-            : `${isGoing ? 'My status: attending' : ' My status: maybe'}`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
@@ -213,7 +214,11 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           <ExpandMore sx={{ color: 'green' }} expand={expanded}>
             {roleId < 4 && (
               <Button onClick={handRSVPosts} color='success' size='large'>
-                RSVP
+                {isGoing ? (
+                  <CheckIcon color='success' fontSize='large'></CheckIcon>
+                ) : (
+                  'RSVP'
+                )}
               </Button>
             )}
           </ExpandMore>

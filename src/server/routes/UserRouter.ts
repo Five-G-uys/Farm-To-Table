@@ -65,7 +65,7 @@ userRouter.get('/api/users', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE ONE USER ROUTE
 userRouter.patch('/api/users/:id', async (req: Request, res: Response) => {
-  // console.log('UPDATE USERS REQUEST BODY: ', req.body);
+  console.log('UPDATE USERS REQUEST BODY: ', req);
   try {
     const updatedUser = await Users.update(req.body, {
       where: { id: req.params.id },

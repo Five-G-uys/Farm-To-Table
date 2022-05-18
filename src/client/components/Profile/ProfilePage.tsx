@@ -4,9 +4,9 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import RSVPS from './RSVPS';
-import { UserContext } from './App';
-import UserCard from './Users/UserCard';
+import RSVPS from '../RSVPS';
+import { UserContext } from '../App';
+import UserCard from '../Users/UserCard';
 
 // MUI Imports
 import { styled } from '@mui/material/styles';
@@ -20,16 +20,9 @@ import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-
-import dayjs from 'dayjs';
 import { CssBaseline, Box, Container } from '@mui/material';
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -50,10 +43,14 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const Profile = () => {
   const user: any = useContext(UserContext);
-  const { id, googleId, name, email, address, picture, roleId, delivery_zone } =
-    user;
-
+  const { id, googleId, name, email, picture, roleId, delivery_zone } =
+    user; 
   const [expanded, setExpanded] = useState(false);
+  const [newProfileUrl, setNewProfileUrl] = useState('');
+  const [inEditMode, setInEditMode] = useState(false);
+  const [open, setOpen] = useState(false);
+
+
 
   // toggle bool
   const handleExpandClick = () => {
@@ -64,31 +61,42 @@ const Profile = () => {
     window.location.href = '/auth/api/logout';
   };
 
-  // handle click + edit form functionality for edit button in Product Card component
-  const handleEditClick = (userId: any) => {
-    console.log('LINE 171 || USER PAGE CLICKED', userId);
+  const CLOUD_NAME = process.env.CLOUD_NAME;
+  const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
 
-    const clickedUser: any = users.find(
-      // find mutates original array values
-      (usr: any) => usr.id === userId,
-    );
-
-    setUser({
-      id: userId,
-      googleId: clickedUser.googleId,
-      name: clickedUser.name,
-      email: clickedUser.email,
-      address: clickedUser.address,
-      picture: clickedUser.picture,
-      // farm_id: clickedUser.farm_id,
-      roleId: clickedUser.roleId,
-    });
-    setInEditMode(true);
-    setOpen(true);
+  const handleProfilePhotoUpdate = () => {
+    axios.patch(`/api/users/${id}`, {picture: newProfileUrl})
+      .then((response) => {
+        console.log('Handle Profile Photo Update Response: ', response)
+      })
+      .catch((err) => {
+        console.error('Handle Profile Photo Update Error: ', err);
+      })
   };
 
+  const showWidget = () => {
+    const widget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: CLOUD_NAME,
+        uploadPreset: CLOUD_PRESET2,
+      },
+      (error: unknown, result: any) => {
+        if (!error && result && result.event === 'success') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          setNewProfileUrl(result.info.url);
+        }
+        handleProfilePhotoUpdate()
+      }
+    );
+    widget.open();
+  };
+
+  console.log('New Profile Url: ', newProfileUrl);
+
   return (
-    <div className='page-wrap'>
+    <Box 
+      className='page-wrap'
+      >
       <CssBaseline />
       {/* Hero unit */}
       <Box
@@ -126,31 +134,14 @@ const Profile = () => {
               {name[0]}
             </Avatar>
           }
-          subheader={`Role: ${roleId === 4 ? 'Admin' : 'User'}`}
+          subheader={`Email: ${email}`}
           title={name}
         />
-        <CardContent>
-          <img className='profilePic' src={user.picture} />
-        </CardContent>
-        <CardContent>
-          <Typography variant='body2' color='text.secondary'>
-            {`Email: ${email}`}
-          </Typography>
-        </CardContent>
-        <CardContent>
-          <Typography variant='body2' color='text.secondary'>
-            {`Delivery Address: ${address || ''}`}
-          </Typography>
-        </CardContent>
-        <CardContent>
-          <Typography variant='body2' color='text.secondary'>
-            {`Delivery Zone: ${delivery_zone || ''}`}
-          </Typography>
-        </CardContent>
-        <CardContent>
-          <Button variant='contained' onClick={handleLogout}>
-            Logout
-          </Button>
+        <CardContent >
+          <img 
+            className='profilePic' 
+            src={user.picture} >
+          </img>
         </CardContent>
 
         <CardActions disableSpacing sx={{ justifyContent: "center" }}>
@@ -159,10 +150,30 @@ const Profile = () => {
             {/* <ExpandMore
               sx={{ color: "green" }}
               expand={expanded}
-              onClick={() => handleEditClick(id)}
+              // onClick={() => handleEditClick(id)}
             >
-              <EditIcon sx={{ color: "green" }} />
-            </ExpandMore> */}
+              <Button
+                variant='text'
+                size='large'
+                color='success'
+                sx={{ color: 'green' }}
+                onClick={showWidget}
+              >
+                Change User Image
+              </Button>
+            </ExpandMore>
+            {/* <ExpandMore
+              sx={{ color: 'green' }}
+              expand={expanded}> */}
+              <Button 
+                variant='text'
+                size='large'
+                color='warning'
+                sx={{ color: 'red' }}
+                onClick={handleLogout} >
+                Logout
+              </Button>
+            {/* </ExpandMore> */}
             <ExpandMore
               sx={{ color: 'green' }}
               expand={expanded}
@@ -182,7 +193,13 @@ const Profile = () => {
           </CardContent>
         </Collapse>
       </Card>
-    </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+    
+
+    </Box>
   );
 };
 

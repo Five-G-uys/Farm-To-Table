@@ -12,7 +12,7 @@ import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
 import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
 import OrdersPage from './OrdersPage';
 import EventsPage from './EventsPage';
-import ProfilePage from './ProfilePage';
+import ProfilePage from './Profile/ProfilePage';
 import AboutUsPage from './AboutUsPage';
 import Login from './Login';
 import NewNavBar from './NewNavBar';
@@ -27,7 +27,6 @@ import SubscriptionEntriesRecords from './Records/SubscriptionEntriesRecords';
 import SubscriptionsRecords from './Records/SubscriptionsRecords';
 import UsersRecords from './Records/UsersRecords';
 import VendorsRecords from './Records/VendorsRecords';
-import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
 import PackingListPage from './PackingListPage';
 import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
@@ -236,16 +235,6 @@ const App = () => {
                 }
               />
               {/* Restricted Employ Routes */}
-              <Route
-                path='/delivery-routes'
-                element={
-                  isEmployee(user) ? (
-                    <DeliveryRoutesPage lat={lat} lon={lon} />
-                  ) : (
-                    <Navigate to='/login' />
-                  )
-                }
-              />
               <Route
                 path='/delivery-map'
                 element={
