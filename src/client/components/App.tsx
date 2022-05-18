@@ -37,7 +37,6 @@ import Weather from './Weather';
 import { Box, createTheme, PaletteMode } from '@mui/material';
 import { Container, Grid, Paper, Switch } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
-<<<<<<< HEAD
 import { Typography, url, URL } from '@mui/material';
 import {
   amber,
@@ -47,10 +46,6 @@ import {
   orange,
   lightGreen,
 } from '@mui/material/colors';
-=======
-import { Typography } from '@mui/material';
-import { amber, blueGrey, grey, lightBlue, orange } from '@mui/material/colors';
->>>>>>> 2ce536f903c5ab8f472e2dec72e435136bad4d31
 
 import { Dispatch, SetStateAction } from 'react';
 
@@ -98,11 +93,7 @@ const App = () => {
   ////********************DARK MODE HERE *********************////
   const [mode, setMode] = React.useState<PaletteMode>('light');
   //Not functional yet
-<<<<<<< HEAD
   const image = 'https://www.transparenttextures.com/patterns/asfalt-dark.png';
-=======
-  const image = 'https://www.pexels.com/photo/brown-wooden-surface-129722/';
->>>>>>> 2ce536f903c5ab8f472e2dec72e435136bad4d31
   const styles = {
     paperContainer: {
       backgroundImage: `url(${image})`,
@@ -156,12 +147,10 @@ const App = () => {
 
   /////////////////Local Storage for Darkmode/ LightMode////////////////////////////
   // Set dark mode based on media query
-  //const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   useEffect(() => {
     const mode = window.localStorage.getItem('mode');
     // set mode
-    console.log(`get localStore ${mode}`);
     if (mode !== null) {
       setMode(mode === 'dark' ? 'light' : 'dark');
     }
@@ -243,12 +232,7 @@ const App = () => {
               <Route
                 path='/orders-page'
                 element={
-<<<<<<< HEAD
                   isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
-=======
-                  <OrdersPage />
-                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to="/login" />
->>>>>>> 2ce536f903c5ab8f472e2dec72e435136bad4d31
                 }
               />
               {/* Restricted Employ Routes */}

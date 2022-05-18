@@ -129,7 +129,6 @@ body {
   width: 100vw;
 }
 
-<<<<<<< HEAD
 /*CSS FOR CARD TEXTURE*/
 .texture1 {
   background-color: rgba(246, 250, 255, 0.9);
@@ -137,7 +136,6 @@ body {
   background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
 }
 /* This is mostly intended for prototyping; please download the pattern and re-host for produc}tion environments. Thank you! */
-=======
 .texture2 {
   color: #e2f2d9;
   background-color: #91ef8f;
@@ -145,4 +143,3 @@ body {
   background-image: url('https://www.transparenttextures.com/patterns/exclusive-paper.png');
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
->>>>>>> 2ce536f903c5ab8f472e2dec72e435136bad4d31

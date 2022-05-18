@@ -65,13 +65,8 @@ const Profile = () => {
   };
 
   // handle click + edit form functionality for edit button in Product Card component
-<<<<<<< HEAD
-  const handleEditClick = (userId: number) => {
-    console.log("LINE 171 || USER PAGE CLICKED", userId);
-=======
   const handleEditClick = (userId: any) => {
     console.log('LINE 171 || USER PAGE CLICKED', userId);
->>>>>>> 2ce536f903c5ab8f472e2dec72e435136bad4d31
 
     const clickedUser: any = users.find(
       // find mutates original array values
@@ -158,7 +153,6 @@ const Profile = () => {
           </Button>
         </CardContent>
 
-<<<<<<< HEAD
         <CardActions disableSpacing sx={{ justifyContent: "center" }}>
           <Stack spacing={5} direction="row" id="user_card_stack" fontSize={30}>
             Reminders
@@ -169,17 +163,6 @@ const Profile = () => {
             >
               <EditIcon sx={{ color: "green" }} />
             </ExpandMore> */}
-=======
-        <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
-          <Stack spacing={5} direction='row' id='user_card_stack'>
-            <ExpandMore
-              sx={{ color: 'green' }}
-              expand={expanded}
-              onClick={() => handleEditClick(id)}
-            >
-              <EditIcon sx={{ color: 'green' }} />
-            </ExpandMore>
->>>>>>> 2ce536f903c5ab8f472e2dec72e435136bad4d31
             <ExpandMore
               sx={{ color: 'green' }}
               expand={expanded}
