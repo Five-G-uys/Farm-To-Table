@@ -26,6 +26,7 @@ import {
   Fab,
   TextField,
   Box,
+  Stack,
 } from '@mui/material';
 
 const SubscriptionsAdmin = ({
@@ -62,7 +63,7 @@ const SubscriptionsAdmin = ({
             };
           });
         }
-      }
+      },
     );
     widget.open();
   };
@@ -80,6 +81,7 @@ const SubscriptionsAdmin = ({
 
   return (
     <Modal
+      disableScrollLock='true'
       aria-labelledby='transition-modal-title'
       aria-describedby='transition-modal-description'
       sx={{
@@ -104,10 +106,12 @@ const SubscriptionsAdmin = ({
               <Box
                 sx={{
                   ...commonStyles,
-                  // flexWrap: 'wrap',
-                  // display: 'flex',
-                  // justifyContent: 'center',
-                  // borderRadius: '16px',
+                  maxHeight: '90vh',
+                  flexWrap: 'wrap',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflowY: 'scroll',
+                  // overflow: 'hidden',
                 }}
               >
                 <form
@@ -133,6 +137,7 @@ const SubscriptionsAdmin = ({
                   <TextField
                     id='filled-basic'
                     variant='filled'
+                    fullWidth
                     value={season}
                     name='season'
                     label='Season'
@@ -144,6 +149,7 @@ const SubscriptionsAdmin = ({
                   <TextField
                     id='filled-basic'
                     variant='filled'
+                    fullWidth
                     value={year}
                     name='year'
                     label='Year'
@@ -159,7 +165,6 @@ const SubscriptionsAdmin = ({
                     value={flat_price}
                     name='flat_price'
                     label='Flat Price'
-                    // id='fullWidth'
                     placeholder='400'
                     onChange={handleInputSubscription}
                   />
@@ -172,7 +177,6 @@ const SubscriptionsAdmin = ({
                     value={weekly_price}
                     name='weekly_price'
                     label='Weekly Price'
-                    // id='fullWidth'
                     placeholder='40'
                     onChange={handleInputSubscription}
                   />
@@ -185,7 +189,6 @@ const SubscriptionsAdmin = ({
                     value={description}
                     name='description'
                     label='Description'
-                    // id='fullWidth'
                     placeholder='ex: A beautiful harvest of...'
                     onChange={handleInputSubscription}
                   />
@@ -198,7 +201,6 @@ const SubscriptionsAdmin = ({
                     value={start_date}
                     name='start_date'
                     label='Start Date'
-                    // id='fullWidth'
                     placeholder='MM/DD/YYYY'
                     onChange={handleInputSubscription}
                   />
@@ -211,32 +213,33 @@ const SubscriptionsAdmin = ({
                     value={end_date}
                     name='end_date'
                     label='End Date'
-                    // id='fullWidth'
                     placeholder='MM/DD/YYYY'
                     onChange={handleInputSubscription}
                   />
                   <br></br>
                   <br></br>
-                  <Button
-                    variant='contained'
-                    size='large'
-                    color='success'
-                    sx={{ color: 'white' }}
-                    onClick={showWidget}
-                  >
-                    Add Subscription Image
-                  </Button>
-                  <br></br>
-                  <br></br>
-                  <Button
-                    variant='contained'
-                    size='large'
-                    color='success'
-                    type='submit'
-                    sx={{ color: 'white' }}
-                  >
-                    {handleInputSubscription ? 'SAVE' : 'UPDATE'}
-                  </Button>
+                  <Stack direction='row' justifyContent='space-between'>
+                    <Button
+                      variant='text'
+                      size='large'
+                      color='success'
+                      sx={{ color: 'green' }}
+                      onClick={showWidget}
+                    >
+                      Add Subscription Image
+                    </Button>
+                    <br></br>
+                    <br></br>
+                    <Button
+                      variant='text'
+                      size='large'
+                      color='success'
+                      type='submit'
+                      sx={{ color: 'green' }}
+                    >
+                      {handleInputSubscription ? 'SAVE' : 'UPDATE'}
+                    </Button>
+                  </Stack>
                 </form>
               </Box>
             </div>
