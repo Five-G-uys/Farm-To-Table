@@ -282,8 +282,9 @@ const App = () => {
                   )
                 }
               />
-              <Route path="records" element={<RecordsPage />}>
+              <Route path="/records" element={<RecordsPage />}>
                 <Route path="products-records" element={<ProductsRecords />} />
+                <Route path="vendors-records" element={<VendorsRecords />} />
               </Route>
               <Route
                 path="delivery-zones-records"
