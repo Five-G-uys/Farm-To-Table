@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 
-// import * as dayjs from 'dayjs';
+// Other Module Imports;
 import dayjs from 'dayjs';
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -48,7 +48,16 @@ const OrderCard = ({ order }: any) => {
   // MAP OVER ALL PRODUCTS IN EACH ORDER INSIDE OF THE COLLAPSE
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{
+        backgroundColor: '#e2f2d9',
+        minWidth: '15rem',
+        borderRadius: '2.5rem',
+        // elevation: 2,
+        boxShadow: 8,
+      }}
+      className='texture2'
+    >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
@@ -70,7 +79,7 @@ const OrderCard = ({ order }: any) => {
           {dayjs(order.delivery_date.slice(0, 10)).format('dddd, MMMM D')}
         </Typography>
       </CardContent>
-
+      {/* NEED TO CONDITIONALLY RENDER EDIT & DELETE BUTTONS FOR ADMIN */}
       <CardActions disableSpacing>
         <ExpandMore
           expand={expanded}

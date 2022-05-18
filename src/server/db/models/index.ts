@@ -36,7 +36,7 @@ export const syncModels = async (dropTables = false) => {
     await UsersModel.belongsToMany(EventsModel, { through: RSVPModel });
     await EventsModel.belongsToMany(UsersModel, { through: RSVPModel });
 
-    await ProductsModel.belongsTo(SubscriptionsModel);
+    // await ProductsModel.belongsTo(VendorsModel);
 
     //////////////////////////////////////////////////////////////////////
     await RolesModel.hasMany(UsersModel, {

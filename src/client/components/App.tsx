@@ -12,7 +12,7 @@ import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
 import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
 import OrdersPage from './OrdersPage';
 import EventsPage from './EventsPage';
-import ProfilePage from './ProfilePage';
+import ProfilePage from './Profile/ProfilePage';
 import AboutUsPage from './AboutUsPage';
 import Login from './Login';
 import NewNavBar from './NewNavBar';
@@ -27,7 +27,6 @@ import SubscriptionEntriesRecords from './Records/SubscriptionEntriesRecords';
 import SubscriptionsRecords from './Records/SubscriptionsRecords';
 import UsersRecords from './Records/UsersRecords';
 import VendorsRecords from './Records/VendorsRecords';
-import DeliveryRoutesPage from './DeliveryRoutes/DeliveryRoutesPage';
 import PackingListPage from './PackingListPage';
 import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
@@ -37,8 +36,15 @@ import Weather from './Weather';
 import { Box, createTheme, PaletteMode } from '@mui/material';
 import { Container, Grid, Paper, Switch } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
-import { Typography } from '@mui/material';
-import { amber, blueGrey, grey, lightBlue, orange } from '@mui/material/colors';
+import { Typography, url, URL } from '@mui/material';
+import {
+  amber,
+  blueGrey,
+  grey,
+  lightBlue,
+  orange,
+  lightGreen,
+} from '@mui/material/colors';
 
 import { Dispatch, SetStateAction } from 'react';
 
@@ -86,7 +92,7 @@ const App = () => {
   ////********************DARK MODE HERE *********************////
   const [mode, setMode] = React.useState<PaletteMode>('light');
   //Not functional yet
-  const image = 'https://www.pexels.com/photo/brown-wooden-surface-129722/';
+  const image = 'https://www.transparenttextures.com/patterns/asfalt-dark.png';
   const styles = {
     paperContainer: {
       backgroundImage: `url(${image})`,
@@ -101,10 +107,12 @@ const App = () => {
             // palette values for light mode
             primary: amber,
             divider: amber[200],
-            // background: {
-            //   default: orange[100],
-            //   //paper: orange[100],
-            // },
+            background: {
+              default: '#F6FAFF',
+              //rgba(246, 250, 255, 0.9),
+              // backdrop-filter: blur(8px),
+              //backgroundImage: `url(${image})`,
+            },
             text: {
               primary: blueGrey[700],
               secondary: grey[800],
@@ -138,12 +146,10 @@ const App = () => {
 
   /////////////////Local Storage for Darkmode/ LightMode////////////////////////////
   // Set dark mode based on media query
-  //const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   useEffect(() => {
     const mode = window.localStorage.getItem('mode');
     // set mode
-    console.log(`get localStore ${mode}`);
     if (mode !== null) {
       setMode(mode === 'dark' ? 'light' : 'dark');
     }
@@ -225,20 +231,11 @@ const App = () => {
               <Route
                 path='/orders-page'
                 element={
-                  isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
+                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
+                  <OrdersPage />
                 }
               />
               {/* Restricted Employ Routes */}
-              <Route
-                path='/delivery-routes'
-                element={
-                  isEmployee(user) ? (
-                    <DeliveryRoutesPage lat={lat} lon={lon} />
-                  ) : (
-                    <Navigate to='/login' />
-                  )
-                }
-              />
               <Route
                 path='/delivery-map'
                 element={
