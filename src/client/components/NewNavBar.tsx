@@ -49,10 +49,10 @@ function HideOnScroll(props: Props) {
 const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
   const pages = [
     { name: "Home", path: "/" },
-    { name: "Sign Up!", path: "/subscriptions-page" },
+    { name: "Subscribe", path: "/subscriptions-page" },
     { name: "Products ", path: "/edit-products" },
     { name: "Events", path: "/events-page" },
-    { name: "About Us", path: "/about-us-page" },
+    { name: "About", path: "/about-us-page" },
   ];
 
   if (user.roleId === 4) {
@@ -64,7 +64,7 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
       { name: "Weather", path: "/weather-page" },
       // { name: 'Edit User Role', path: '/edit-users' },
       { name: "Profile", path: "/profile-page" },
-      // { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
+      { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
     ];
   } else if (user.roleId === 3) {
     const settings = [
@@ -73,16 +73,16 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
       { name: "Delivery Map", path: "/delivery-map" },
       { name: "Weather", path: "/weather-page" },
       { name: "Profile", path: "/profile-page" },
-      // { name: 'Logout', path: '/auth/api/logout' },
+      { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else if (user.roleId === 2 || user.roleId === 1) {
     const settings = [
       { name: "Orders", path: "/orders-page" },
       { name: "Profile", path: "/profile-page" },
-      // { name: 'Logout', path: '/auth/api/logout' },
+      { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else {
-    const settings = [{ name: "Login", path: "/login" }];
+    const settings = [{ name: "Login", path: "/auth/google" }];
   }
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -218,16 +218,24 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
 
               <Box sx={{ flexGrow: -1 }}>
                 <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <IconButton 
+                    onClick={handleOpenUserMenu} 
+                    sx={{ p: 0 }}
+                    style={{
+                      // position: "absolute",
+                      // alignSelf: "right",
+                      }}>
                     <Avatar
-                      alt="Rene M"
+                      // alt="Profile"
                       src={user.picture}
                       style={{
                         // EDITED AVATAR HEIGHT EXPERIMENT
-                        border: "2px solid lightgray",
-                        width: "5.0rem",
-                        height: "5.0rem",
-                        alignSelf: "right",
+                        // position: "absolute",
+                        border: "3px solid lightgray",
+                        width: "3.0rem",
+                        height: "3.0rem",
+                        // alignSelf: "right",
+                        // margin: "10px"
                       }}
                       component={Paper}
                       elevation={2}
