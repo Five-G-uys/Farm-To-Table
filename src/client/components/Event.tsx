@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './App';
+import GoogleCalendar from './Google calendar';
 
 //////////////////////MATERIAL UI/////////////////////////////////
 // MUI Imports
@@ -147,119 +148,128 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
   }, [updateCounter]);
 
   return (
-    <Card
-      sx={{
-        minWidth: 300,
-        borderRadius: '1.2rem',
-        boxShadow: 8,
-        size: 'large',
-      }}
-      className='texture1'
-    >
-      <CardHeader fontWeight='700' title={event.eventName} />
-      <CardContent>
-        <Typography
-          variant='body2'
-          color='text.secondary'
-          fontWeight='700'
-          fontSize='20px'
-        >
-          {`Date of Event: ${event.eventDate}`}
-        </Typography>
-      </CardContent>
-      <CardContent>
-        <Typography
-          variant='body2'
-          color='text.secondary'
-          fontWeight='700'
-          fontSize='20px'
-        >
-          {`Type: ${event.eventType}`}
-        </Typography>
-      </CardContent>
-      <CardContent>
-        <Typography
-          variant='body2'
-          color='text.secondary'
-          fontWeight='700'
-          fontSize='20px'
-        >
-          {`Address: ${event.location}`}
-        </Typography>
-      </CardContent>
-
-      {event.thumbnail ? (
-        <CardMedia component='img' height='300' image={event.thumbnail} />
-      ) : (
-        ''
-      )}
-      <CardContent>
-        <Typography paragraph fontWeight='700' fontSize='20px'>
-          {user.roleId < 4
-            ? `${
-                totalRsvp === 1
-                  ? `Going:  ${totalRsvp}`
-                  : `Going:  ${totalRsvp}`
-              }`
-            : `RSVPS: ${totalRsvp}`}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
-        <Stack spacing={5} direction='row' id='product_card_stack'>
-          <ExpandMore sx={{ color: 'green' }} expand={expanded}>
-            {roleId > 3 && (
-              <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
-            )}
-          </ExpandMore>
-          <ExpandMore sx={{ color: 'green' }} expand={expanded}>
-            {roleId < 4 && (
-              <Button onClick={handRSVPosts} color='success' size='large'>
-                {isGoing ? (
-                  <CheckIcon color='success' fontSize='large'></CheckIcon>
-                ) : (
-                  'RSVP'
-                )}
-              </Button>
-            )}
-          </ExpandMore>
-          {roleId > 3 && (
-            <ExpandMore
-              sx={{ color: 'green' }}
-              expand={expanded}
-              onClick={() => handleEditClick(event.id)}
-            >
-              <EditIcon sx={{ color: 'green' }} />
-            </ExpandMore>
-          )}
-
-          {roleId < 4 && (
-            <ExpandMore
-              sx={{ color: 'green' }}
-              expand={expanded}
-              onClick={() => deleteRsvpsEvent()}
-            >
-              <DeleteIcon sx={{ color: 'green' }} />
-            </ExpandMore>
-          )}
-          <ExpandMore
-            sx={{ color: 'green' }}
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label='show more'
+    <>
+      <Card
+        sx={{
+          minWidth: 300,
+          borderRadius: '1.2rem',
+          boxShadow: 8,
+          size: 'large',
+        }}
+        className='texture1'
+      >
+        <CardHeader fontWeight='700' title={event.eventName} />
+        <CardContent>
+          <Typography
+            variant='body2'
+            color='text.secondary'
+            fontWeight='700'
+            fontSize='20px'
           >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </Stack>
-      </CardActions>
-      <Collapse in={expanded} timeout='auto' unmountOnExit>
-        {' '}
-        <Typography paragraph margin='2.3rem' fontWeight='700' fontSize='18px'>
+            {`Date of Event: ${event.eventDate}`}
+          </Typography>
+        </CardContent>
+
+        <CardContent>
+          <Typography
+            variant='body2'
+            color='text.secondary'
+            fontWeight='700'
+            fontSize='20px'
+          >
+            {`Type: ${event.eventType}`}
+          </Typography>
+        </CardContent>
+        <CardContent>
+          <Typography
+            variant='body2'
+            color='text.secondary'
+            fontWeight='700'
+            fontSize='20px'
+          >
+            {`Address: ${event.location}`}
+          </Typography>
+        </CardContent>
+
+        {event.thumbnail ? (
+          <CardMedia component='img' height='300' image={event.thumbnail} />
+        ) : (
+          ''
+        )}
+        <CardContent>
+          <Typography paragraph fontWeight='700' fontSize='20px'>
+            {user.roleId < 4
+              ? `${
+                  totalRsvp === 1
+                    ? `Going:  ${totalRsvp}`
+                    : `Going:  ${totalRsvp}`
+                }`
+              : `RSVPS: ${totalRsvp}`}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
+          <Stack spacing={5} direction='row' id='product_card_stack'>
+            <ExpandMore sx={{ color: 'green' }} expand={expanded}>
+              {roleId > 3 && (
+                <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
+              )}
+            </ExpandMore>
+            <ExpandMore sx={{ color: 'green' }} expand={expanded}>
+              {roleId < 4 && (
+                <Button onClick={handRSVPosts} color='success' size='large'>
+                  {isGoing ? (
+                    <CheckIcon color='success' fontSize='large'></CheckIcon>
+                  ) : (
+                    'RSVP'
+                  )}
+                </Button>
+              )}
+            </ExpandMore>
+            {roleId > 3 && (
+              <ExpandMore
+                sx={{ color: 'green' }}
+                expand={expanded}
+                onClick={() => handleEditClick(event.id)}
+              >
+                <EditIcon sx={{ color: 'green' }} />
+              </ExpandMore>
+            )}
+
+            {roleId < 4 && (
+              <ExpandMore
+                sx={{ color: 'green' }}
+                expand={expanded}
+                onClick={() => deleteRsvpsEvent()}
+              >
+                <DeleteIcon sx={{ color: 'green' }} />
+              </ExpandMore>
+            )}
+            <ExpandMore
+              sx={{ color: 'green' }}
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label='show more'
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
+          </Stack>
+        </CardActions>
+        <Collapse in={expanded} timeout='auto' unmountOnExit>
           {' '}
-          {`Description: ${event.description}`}
-        </Typography>
-      </Collapse>
-    </Card>
+          <Typography
+            paragraph
+            margin='2.3rem'
+            fontWeight='700'
+            fontSize='18px'
+          >
+            {' '}
+            {`Description: ${event.description}`}
+          </Typography>
+        </Collapse>
+      </Card>
+      {/* <GoogleCalendar /> */}
+    </>
   );
 };
 

@@ -146,6 +146,7 @@ const EventsPage = () => {
     padding: '20px',
     borderRadius: '2.5rem',
     boxShadow: 3,
+    minWidth: '500px',
   };
 
   // create function to handle update form submission

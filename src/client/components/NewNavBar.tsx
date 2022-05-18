@@ -50,11 +50,11 @@ function HideOnScroll(props: Props) {
 
 const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
   const pages = [
-    { name: "Home", path: "/" },
-    { name: "Subscribe", path: "/subscriptions-page" },
-    { name: "Products ", path: "/edit-products" },
-    { name: "Events", path: "/events-page" },
-    { name: "About", path: "/about-us-page" },
+    { name: 'Home', path: '/' },
+    { name: 'Subscribe', path: '/subscriptions-page' },
+    { name: 'Products ', path: '/edit-products' },
+    { name: 'Events', path: '/events-page' },
+    { name: 'About', path: '/about-us-page' },
   ];
 
   if (user.roleId === 4) {
@@ -65,26 +65,26 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
       { name: 'Delivery Map', path: '/delivery-map' },
       { name: 'Weather', path: '/weather-page' },
       // { name: 'Edit User Role', path: '/edit-users' },
-      { name: "Profile", path: "/profile-page" },
+      { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
     ];
   } else if (user.roleId === 3) {
     const settings = [
       // { name: 'Packing List', path: '/packing-lists' },
       // { name: 'Delivery Routes', path: '/delivery-routes' },
-      { name: "Delivery Map", path: "/delivery-map" },
-      { name: "Weather", path: "/weather-page" },
-      { name: "Profile", path: "/profile-page" },
+      { name: 'Delivery Map', path: '/delivery-map' },
+      { name: 'Weather', path: '/weather-page' },
+      { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else if (user.roleId === 2 || user.roleId === 1) {
     const settings = [
-      { name: "Orders", path: "/orders-page" },
-      { name: "Profile", path: "/profile-page" },
+      { name: 'Orders', path: '/orders-page' },
+      { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else {
-    const settings = [{ name: "Login", path: "/auth/google" }];
+    const settings = [{ name: 'Login', path: '/auth/google' }];
   }
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -104,7 +104,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const [toggled, setToggled] = React.useState(false);
   return (
     <>
       <CssBaseline />
@@ -218,23 +218,26 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
               </Box>
 
               <Box sx={{ flexGrow: -1 }}>
-                <Tooltip title="Open settings">
-                  <IconButton 
-                    onClick={handleOpenUserMenu} 
+                <Tooltip title='Open settings'>
+                  <IconButton
+                    onClick={handleOpenUserMenu}
                     sx={{ p: 0 }}
-                    style={{
-                      // position: "absolute",
-                      // alignSelf: "right",
-                      }}>
+                    style={
+                      {
+                        // position: "absolute",
+                        // alignSelf: "right",
+                      }
+                    }
+                  >
                     <Avatar
                       // alt="Profile"
                       src={user.picture}
                       style={{
                         // EDITED AVATAR HEIGHT EXPERIMENT
                         // position: "absolute",
-                        border: "3px solid lightgray",
-                        width: "3.0rem",
-                        height: "3.0rem",
+                        border: '3px solid lightgray',
+                        width: '3.0rem',
+                        height: '3.0rem',
                         // alignSelf: "right",
                         // margin: "10px"
                       }}
