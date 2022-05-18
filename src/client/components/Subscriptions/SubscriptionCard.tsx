@@ -78,12 +78,13 @@ const SubscriptionCard = ({
     <div>
       <Card
         sx={{
-          minWidth: 300,
+          backgroundColor: '#e2f2d9',
+          minWidth: '15rem',
           borderRadius: '2.5rem',
-          fontWeight: 'medium',
-          boxShadow: 24,
-          fontSize: 35,
+          // elevation: 2,
+          boxShadow: 8,
         }}
+        className='texture2'
       >
         <CardHeader
           subheader={`Harvest Year ${year}`}

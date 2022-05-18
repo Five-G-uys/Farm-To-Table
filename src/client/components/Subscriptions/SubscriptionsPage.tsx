@@ -70,7 +70,7 @@ const SubscriptionsPage = () => {
   const handleInputSubscription = (
     event:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target;
     setSubscription((state) => {
@@ -120,7 +120,7 @@ const SubscriptionsPage = () => {
   const handleInputAddress = (
     event:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target;
     setAddress((state) => {
@@ -156,6 +156,8 @@ const SubscriptionsPage = () => {
 
   // Box component styles
   const commonStyles = {
+    width: '40vw',
+    minWidth: '500px',
     bgcolor: 'background.paper',
     borderColor: 'text.primary',
     m: 1,
@@ -169,6 +171,20 @@ const SubscriptionsPage = () => {
     padding: '20px',
     borderRadius: '2.5rem',
     boxShadow: 24,
+
+    // bgcolor: 'background.paper',
+    // borderColor: 'text.primary',
+    // m: 1,
+    // // to center elements absolutely inside parent
+    // // add event listener to window size to resize only when certain size bounds are crossed
+    // position: 'absolute',
+    // top: '50%',
+    // left: '50%',
+    // transform: 'translate(-50%, -50%)',
+    // border: 1,
+    // padding: '20px',
+    // borderRadius: '2.5rem',
+    // boxShadow: 24,
     // width: ,
     // minWidth: 500,
     // minHeight: 500,
@@ -213,7 +229,7 @@ const SubscriptionsPage = () => {
   const deleteSubscription = (subscriptionId: any) => {
     const clickedSubscription: any = subscriptions.find(
       // find mutates original array values
-      (sub: any) => sub.id === subscriptionId
+      (sub: any) => sub.id === subscriptionId,
     );
     axios
       .delete(`/api/subscriptions/${clickedSubscription.id}`, {
@@ -245,7 +261,7 @@ const SubscriptionsPage = () => {
   const handleEditClick = (subscriptionId: any) => {
     const clickedSubscription: any = subscriptions.find(
       // find mutates original array values
-      (sub: any) => sub.id === subscriptionId
+      (sub: any) => sub.id === subscriptionId,
     );
     clickedSubscription.thumbnail = clickedSubscription.thumbnail
       ? clickedSubscription.thumbnail
