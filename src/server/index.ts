@@ -51,7 +51,7 @@ app.use(
     httpOnly: true,
     signed: true,
     secure: process.env.NODE_ENV === 'production',
-  })
+  }),
 );
 
 app.use(cookieParser());

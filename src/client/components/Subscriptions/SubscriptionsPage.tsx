@@ -161,8 +161,6 @@ const SubscriptionsPage = () => {
     bgcolor: 'background.paper',
     borderColor: 'text.primary',
     m: 1,
-    // to center elements absolutely inside parent
-    // add event listener to window size to resize only when certain size bounds are crossed
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -171,26 +169,6 @@ const SubscriptionsPage = () => {
     padding: '20px',
     borderRadius: '2.5rem',
     boxShadow: 24,
-
-    // bgcolor: 'background.paper',
-    // borderColor: 'text.primary',
-    // m: 1,
-    // // to center elements absolutely inside parent
-    // // add event listener to window size to resize only when certain size bounds are crossed
-    // position: 'absolute',
-    // top: '50%',
-    // left: '50%',
-    // transform: 'translate(-50%, -50%)',
-    // border: 1,
-    // padding: '20px',
-    // borderRadius: '2.5rem',
-    // boxShadow: 24,
-    // width: ,
-    // minWidth: 500,
-    // minHeight: 500,
-    // maxWidth: 1800,
-    // maxHeight: 1800,
-    // display: 'flex',
   };
 
   const postSubscription = () => {

@@ -9,6 +9,7 @@ const useStyles = makeStyles({
     paddingTop: '40px',
     paddingLeft: '4rem',
     paddingRight: '4rem',
+    justifyContent: 'center',
   },
 });
 
@@ -23,12 +24,7 @@ const SubscriptionsContainer = ({
 }: any) => {
   const classes = useStyles();
   return (
-    <Grid
-      container
-      spacing={4}
-      className={classes.gridContainer}
-      // justify='center'
-    >
+    <Grid container spacing={4} className={classes.gridContainer}>
       {subscriptions.map((sub: any) => {
         return (
           <Grid

@@ -85,6 +85,13 @@ const SubscriptionCard = ({
           boxShadow: 8,
         }}
         className='texture2'
+        //   minWidth: 300,
+        //   borderRadius: '1.2rem',
+        //   boxShadow: 8,
+        //   fontWeight: 'medium',
+        //   fontSize: 35,
+        // }}
+        // className='texture1'
       >
         <CardHeader
           subheader={`Harvest Year ${year}`}
