@@ -84,17 +84,17 @@ const ProductCard = ({
       }}
       className='texture2'
     >
-      {/* <CardHeader
+      <CardHeader
         avatar={
           // MAKE AVATAR A SEASON LOGO
           <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
             {name[0]}
           </Avatar>
         }
-        subheader={`Planted on ${plant_date}`}
+        // subheader={`Planted on ${plant_date}`}
         // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
         title={name}
-      /> */}
+      />
       <CardMedia
         component='img'
         height='194'
