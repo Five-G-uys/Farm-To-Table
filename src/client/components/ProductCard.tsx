@@ -81,8 +81,9 @@ const ProductCard = ({
         borderRadius: '1.2rem',
         boxShadow: 8,
         // elevation: 2,
+        boxShadow: 8,
       }}
-      className='texture1'
+      className='texture2'
     >
       {/* <CardHeader
         avatar={
