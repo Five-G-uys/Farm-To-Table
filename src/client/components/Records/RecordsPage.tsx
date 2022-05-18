@@ -65,7 +65,7 @@ const RecordsPage = () => {
       <Box display="flex" alignItems="center" justifyContent="center">
         <Button
           component={Link}
-          to="/delivery-zones-records"
+          to="/records/delivery-zones-records"
           variant="contained"
           color="primary"
         >
@@ -73,7 +73,7 @@ const RecordsPage = () => {
         </Button>
         <Button
           component={Link}
-          to="/events-records"
+          to="/records/events-records"
           variant="contained"
           color="primary"
         >
@@ -81,7 +81,7 @@ const RecordsPage = () => {
         </Button>
         <Button
           component={Link}
-          to="/orders-records"
+          to="/records/orders-records"
           variant="contained"
           color="primary"
         >
@@ -89,7 +89,7 @@ const RecordsPage = () => {
         </Button>
         <Button
           component={Link}
-          to="/products-records"
+          to="/records/products-records"
           variant="contained"
           color="primary"
         >
@@ -97,7 +97,7 @@ const RecordsPage = () => {
         </Button>
         <Button
           component={Link}
-          to="/subscription-entries-records"
+          to="/records/subscription-entries-records"
           variant="contained"
           color="primary"
         >
@@ -105,7 +105,7 @@ const RecordsPage = () => {
         </Button>
         <Button
           component={Link}
-          to="/subscriptions-records"
+          to="/records/subscriptions-records"
           variant="contained"
           color="primary"
         >
@@ -113,7 +113,7 @@ const RecordsPage = () => {
         </Button>
         <Button
           component={Link}
-          to="/users-records"
+          to="/records/users-records"
           variant="contained"
           color="primary"
         >
