@@ -50,7 +50,7 @@ const OrdersRecords = () => {
     axios
       .get('/api/orders')
       .then((data) => {
-        // console.log(data.data);
+        console.log(data.data, "orders data!!!!!!!!!!!!!!!!!!!!!!!!!!");
         setRows(data.data);
       })
       .catch((error) => {
@@ -129,27 +129,6 @@ const OrdersRecords = () => {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-         <CssBaseline />
-        {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth='sm'>
-            <Typography
-              component='h1'
-              variant='h2'
-              align='center'
-              color='text.primary'
-              gutterBottom
-            >
-              Product Records
-            </Typography>
-          </Container>
-        </Box>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
