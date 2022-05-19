@@ -21,24 +21,21 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { Stack } from '@mui/material';
-import {
-  // amber,
-  // blueGrey,
-  // grey,
-  // orange,
-  purple,
-  // deepPurple,
-} from '@mui/material/colors';
-//import Button from "@mui/material/Button";
-
+import { purple } from '@mui/material/colors';
 //Component import
 import EventCard from './EventCard';
-//import RSVPS from "./RSVPS";
-
-// can import getallproducts after migrating it to apicalls file
 import { updatedEvent } from '../apiCalls/eventCalls';
 import { CssBaseline, Container } from '@mui/material';
 
+interface EventProps {
+  id: number;
+  eventName: string;
+  description: string;
+  thumbnail: string;
+  eventDate: string;
+  eventType: string;
+  location: string;
+}
 const EventsPage = () => {
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId } = user;
@@ -56,17 +53,7 @@ const EventsPage = () => {
   };
 
   //event state variable;
-  const [event, setEvent] = useState({
-    id: 0,
-    eventName: '',
-    description: '',
-    thumbnail: '',
-    eventDate: '',
-    eventType: '',
-    location: '',
-    // seasonTitle: "",
-    // monthTitle: "",
-  });
+  const [event, setEvent] = useState<EventProps>({} as EventProps);
   //state that controls the form
   const [open, setOpen] = useState(false);
 
@@ -276,8 +263,6 @@ const EventsPage = () => {
     getAllEvents();
     getUserRsvps();
   }, [updateCounter]);
-
-  //console.log("line 244 in EventsPage", event);
 
   return (
     <>

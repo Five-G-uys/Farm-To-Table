@@ -19,7 +19,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, TextField } from '@mui/material';
+import { Box } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -27,6 +27,7 @@ interface ExpandMoreProps extends IconButtonProps {
 
 //PASS EXPANDMORE THROUGH PROPS FROM PARENT
 const ExpandMore = styled((props: ExpandMoreProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
