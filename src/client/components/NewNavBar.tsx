@@ -18,6 +18,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
 import { Switch } from '@mui/material';
 import { blue } from '@mui/material/colors';
+import { HomeIcon } from '@mui/icons-material';
 
 interface Props {
   /**
@@ -191,7 +192,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                       {/* // link tags are anchor tags under the hood */}
                       <Button href={`${page.path}`}>
-                        <Typography textAlign='center' color='inherit'>
+                        <Typography textAlign='center' color='success'>
                           {page.name}
                         </Typography>
                       </Button>

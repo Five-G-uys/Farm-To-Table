@@ -1,23 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useContext } from 'react';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import axios, { AxiosResponse } from 'axios';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import axios from 'axios';
 import RSVPLIST from './RSVPLIST';
 import { UserContext } from './App';
 import {
-  CardContent,
-  Typography,
+  // CardContent,
+  // Typography,
   Grid,
   Container,
   Paper,
-  Card,
+  // Card,
   CardActions,
   Box,
 } from '@mui/material';
-import Reminders from '@mui/material';
-import Sidebar from './Sidebar';
-//import Profile ""
 
 const RSVPS = () => {
   const user: any = useContext(UserContext);
