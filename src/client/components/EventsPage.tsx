@@ -36,24 +36,44 @@ interface EventProps {
   eventType: string;
   location: string;
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface AppProps {
+  handleEditClick(): void;
+  allEvents: [];
+  updateCounter: number;
+  inEditMode: boolean;
+  getAllEvents(): void;
+  rsvps: [];
+  rsvpCount: number;
+  updateState(): void;
+}
+
 const EventsPage = () => {
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId } = user;
 
   const [updateCounter, setUpdateCounter] = useState(0);
   // cerate state var events array (set to result of get req)
-  const [allEvents, setAllEvents] = useState([]);
+  const [allEvents, setAllEvents] = useState<object[]>([]);
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
 
-  const [value, setValue] = React.useState('Farmers Market');
-  const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //event.preventDefault();
-    setValue(event.target.value);
-  };
+  // const [value, setValue] = React.useState('Farmers Market');
+  // const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setValue((event.target as HTMLInputElement).value);
+  // };
 
   //event state variable;
-  const [event, setEvent] = useState<EventProps>({} as EventProps);
+  //const [event, setEvent] = useState<EventProps>({} as EventProps);
+  const [event, setEvent] = useState<EventProps>({
+    id: 0,
+    eventName: '',
+    description: '',
+    thumbnail: '',
+    eventDate: '',
+    eventType: 'Farmers marke',
+    location: '',
+  });
   //state that controls the form
   const [open, setOpen] = useState(false);
 
@@ -227,22 +247,14 @@ const EventsPage = () => {
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (id: number | undefined) => {
     //handle searches for a clicked event in order to update
-    const clickedEvent: {
-      eventName: string | undefined;
-      id: number | undefined;
-      description: string | undefined;
-      thumbnail: string | undefined;
-      eventDate: number | undefined;
-      eventType: string | undefined;
-      location: string | undefined;
-    } = allEvents.find(
+    const clickedEvent: any = allEvents.find(
       // find mutates original array values
-      (event: { id: number }) => event.id === id,
+      (event: any) => event.id === id,
     );
     clickedEvent.thumbnail = clickedEvent.thumbnail
       ? clickedEvent.thumbnail
       : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
-
+    console.log('CLIECKED EVENT', clickedEvent);
     setEvent((state: any) => {
       return {
         ...state,
@@ -302,14 +314,11 @@ const EventsPage = () => {
         getAllEvents={getAllEvents}
         allEvents={allEvents}
         handleEditClick={handleEditClick}
-        inEditMode={inEditMode}
         updateState={updateState}
         rsvps={rsvps}
-        //rsvpCount={rsvpCount}
-        //updateState={updateState}
       />
 
-      <div>
+      <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
         <Modal
           aria-labelledby='transition-modal-title'
@@ -349,22 +358,27 @@ const EventsPage = () => {
                     >
                       <br></br>
                       {thumbnail && <img width={300} src={thumbnail} />}
-                      <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
+                      {/* <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
                         <InputLabel htmlFor='standard-adornment-amount'>
                           Name of Event
-                        </InputLabel>
-                        <Input
-                          name='eventName'
-                          value={eventName}
-                          id='Event Name'
-                          // id='fullWidth'
-                          placeholder='Name of Event'
-                          onChange={handelTextInput}
-                          // startAdornment={
-                          //   <InputAdornment position='start'></InputAdornment>
-                          // }
-                        />
-                      </FormControl>
+                        </InputLabel> */}
+                      <br></br>
+                      <TextField
+                        variant='filled'
+                        name='eventName'
+                        value={eventName}
+                        label='Name of Event'
+                        id='Event Name'
+                        // id='fullWidth'
+                        placeholder='Name of Event'
+                        onChange={handelTextInput}
+                        // startAdornment={
+                        //   <InputAdornment position='start'></InputAdornment>
+                        // }
+                      />
+                      {/* </FormControl> */}
+                      <br></br>
+                      <br></br>
                       <TextField
                         // width='75%'
                         // type={{ width: '75%' }}
@@ -386,7 +400,7 @@ const EventsPage = () => {
                         variant='filled'
                         value={location}
                         name='location'
-                        label='Address'
+                        label='Event Address'
                         // id='fullWidth'
                         placeholder='Address for event'
                         onChange={handelTextInput}
@@ -401,42 +415,42 @@ const EventsPage = () => {
                         name='eventDate'
                         label='Event Date'
                         // id='fullWidth'
-                        placeholder='05/29/2022'
+                        placeholder='05 / 29 / 2022'
                         onChange={handelTextInput}
                       />
                       <br></br>
                       <br></br>
-                      {/* <Box> */}
-                      <FormControl>
-                        {' '}
-                        <FormLabel id='eventType-for-event'>
-                          Type of Event
-                        </FormLabel>
-                        <RadioGroup
-                          aria-labelledby='eventType-for-event'
-                          name='eventType'
-                          // defaultValue="Farmers Market"
-                          value={value}
-                          onChange={handleRadioBtn}
-                        >
-                          <FormControlLabel
-                            control={<Radio color={'success'} />}
-                            value='Farmers Market'
-                            label='Farmers Market'
-                          />
-                          <FormControlLabel
-                            control={<Radio color='success' />}
-                            value='Community Volunteering'
-                            label='Community Volunteering'
-                          />
-                          <FormControlLabel
-                            control={<Radio color='success' />}
-                            value='Customer Day'
-                            label='Customer Day'
-                          />
-                        </RadioGroup>
-                      </FormControl>
-                      {/* </Box> */}
+                      <Box>
+                        <FormControl>
+                          {' '}
+                          <FormLabel id='eventType-for-event'>
+                            Type of Event
+                          </FormLabel>
+                          <RadioGroup
+                            aria-labelledby='eventType-for-event'
+                            name='eventType'
+                            defaultValue='Farmers Market'
+                            value={eventType}
+                            onChange={handelTextInput}
+                          >
+                            <FormControlLabel
+                              control={<Radio color={'success'} />}
+                              value='Farmers Market'
+                              label='Farmers Market'
+                            />
+                            <FormControlLabel
+                              control={<Radio color='success' />}
+                              value='Community Volunteering'
+                              label='Community Volunteering'
+                            />
+                            <FormControlLabel
+                              control={<Radio color='success' />}
+                              value='Customer Day'
+                              label='Customer Day'
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </Box>
                       <br></br>
                       <br></br>
                       <Stack direction='row' justifyContent='space-between'>
@@ -475,7 +489,7 @@ const EventsPage = () => {
             <AddIcon style={{ color: '#FFFFFF' }} />
           </Fab>
         )}
-      </div>
+      </Box>
     </>
   );
 };

@@ -39,7 +39,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 interface AppProps {
-  handleEditClick(id): void;
+  handleEditClick(id: number): void;
   getAllEvents(): void;
   event: {
     eventName: string;
