@@ -17,6 +17,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
 import { Switch } from '@mui/material';
+import { blue } from '@mui/material/colors';
 
 interface Props {
   /**
@@ -164,7 +165,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   aria-controls='menu-appbar'
                   aria-haspopup='true'
                   onClick={handleOpenNavMenu}
-                  color='inherit'
+                  color='success'
                 >
                   <MenuIcon />
                 </Button>
@@ -185,13 +186,14 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   sx={{
                     display: { xs: 'block', md: 'none' },
                   }}
-                  color='success'
                 >
                   {pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                       {/* // link tags are anchor tags under the hood */}
                       <Button href={`${page.path}`}>
-                        <Typography textAlign='center'>{page.name}</Typography>
+                        <Typography textAlign='center' color='inherit'>
+                          {page.name}
+                        </Typography>
                       </Button>
                     </MenuItem>
                   ))}
@@ -211,9 +213,15 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   <Button
                     key={page.name}
                     onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    sx={{
+                      my: 2,
+                      color: 'white',
+                      display: 'block',
+                    }}
                   >
-                    <Link to={page.path}>{page.name}</Link>
+                    <Button href={page.path} color='success'>
+                      {page.name}
+                    </Button>
                   </Button>
                 ))}
               </Box>

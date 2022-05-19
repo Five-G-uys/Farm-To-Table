@@ -190,7 +190,7 @@ const App = () => {
               // item
               xs={4}
             > */}
-        <div>
+        <Grid>
           <UserContext.Provider value={user}>
             <Routes>
               {/* Login/Logout Routes */}
@@ -311,7 +311,7 @@ const App = () => {
               />
             </Routes>
           </UserContext.Provider>
-        </div>
+        </Grid>
         {/* Footer */}
         <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
           <Typography variant='h6' align='center' gutterBottom>

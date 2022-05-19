@@ -20,6 +20,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { Stack } from '@mui/material';
 import {
   // amber,
   // blueGrey,
@@ -361,17 +362,8 @@ const EventsPage = () => {
                         inEditMode ? handleEventUpdateSubmit : postEvent
                       }
                     >
-                      --{' '}
-                      <Button
-                        variant='contained'
-                        size='large'
-                        onClick={showWidget}
-                      >
-                        Add Event Image
-                      </Button>
                       <br></br>
                       {thumbnail && <img width={300} src={thumbnail} />}
-                      <br></br>
                       <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
                         <InputLabel htmlFor='standard-adornment-amount'>
                           Name of Event
@@ -383,9 +375,9 @@ const EventsPage = () => {
                           // id='fullWidth'
                           placeholder='Name of Event'
                           onChange={handelTextInput}
-                          startAdornment={
-                            <InputAdornment position='start'></InputAdornment>
-                          }
+                          // startAdornment={
+                          //   <InputAdornment position='start'></InputAdornment>
+                          // }
                         />
                       </FormControl>
                       <TextField
@@ -427,32 +419,6 @@ const EventsPage = () => {
                         placeholder='05/29/2022'
                         onChange={handelTextInput}
                       />
-                      {/* <br></br>
-                      <br></br>
-                      <TextField
-                        fullWidth
-                        id="filled-basic"
-                        variant="filled"
-                        value={monthTitle}
-                        name="monthTitle"
-                        label="Month of the events"
-                        // id='fullWidth'
-                        placeholder="Date of event"
-                        onChange={handelTextInput}
-                      />
-                      <br></br>
-                      <br></br>
-                      <TextField
-                        fullWidth
-                        id="filled-basic"
-                        variant="filled"
-                        value={seasonTitle}
-                        name="seasonTitle"
-                        label="Season of the events"
-                        // id='fullWidth'
-                        placeholder="Season of events"
-                        onChange={handelTextInput}
-                      /> */}
                       <br></br>
                       <br></br>
                       {/* <Box> */}
@@ -488,9 +454,19 @@ const EventsPage = () => {
                       {/* </Box> */}
                       <br></br>
                       <br></br>
-                      <Button variant='contained' size='large' type='submit'>
-                        {inEditMode ? 'UPDATE' : 'SAVE'}
-                      </Button>
+                      <Stack direction='row' justifyContent='space-between'>
+                        <Button
+                          variant='contained'
+                          size='large'
+                          onClick={showWidget}
+                        >
+                          Add Event Image
+                        </Button>
+                        <br></br>{' '}
+                        <Button variant='contained' size='large' type='submit'>
+                          {inEditMode ? 'UPDATE' : 'SAVE'}
+                        </Button>
+                      </Stack>
                     </form>
                   </Box>
                 </div>

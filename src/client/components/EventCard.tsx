@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useState, useEffect, useContext } from "react";
-import Event from "./Event";
-import axios from "axios";
-import { UserContext } from "./App";
-import { Grid, Typography } from "@mui/material";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect, useContext } from 'react';
+import Event from './Event';
+import axios from 'axios';
+import { UserContext } from './App';
+import { Grid, Typography } from '@mui/material';
+import { makeStyles } from '@material-ui/core/styles';
 
 interface AppProps {
   handleEditClick(): void;
@@ -20,9 +20,12 @@ interface AppProps {
 //import RSVPS from "./RSVPS";
 const useStyles = makeStyles({
   gridContainer: {
-    paddingTop: "150px",
-    paddingLeft: "4rem",
-    paddingRight: "4rem",
+    paddingTop: '60px',
+    // paddingLeft: '4rem',
+    justifyContent: 'center',
+    // paddingRight: '4rem',
+    paddingLeft: '5vw',
+    paddingRight: '5vw',
   },
 });
 
@@ -50,8 +53,8 @@ const EventCard = ({
       <Grid
         container
         spacing={8}
-        direction="row"
-        alignItems="center"
+        direction='row'
+        alignItems='center'
         className={classes.gridContainer}
       >
         {Array.isArray(allEvents) &&

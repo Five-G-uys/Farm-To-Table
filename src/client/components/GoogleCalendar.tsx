@@ -27,7 +27,7 @@ const GoogleCalendar = () => {
         clientId: GOOGLE_CLIENT_ID_CALENDAR,
         discoveryDocs: DISCOVERY_DOC,
         scope: SCOPES,
-      })
+      });
       gapi.client.load('calendar', 'v3', () => console.log('bam!'));
       gapi.auth2
         .getAuthInstance()

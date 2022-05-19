@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './App';
-import GoogleCalendar from './Google calendar';
+import GoogleCalendar from './GoogleCalendar';
 
 //////////////////////MATERIAL UI/////////////////////////////////
 // MUI Imports
@@ -19,7 +19,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -148,13 +148,15 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
   }, [updateCounter]);
 
   return (
-    <>
+    //Reconfiguring the card margins
+    <Box marginTop='-130px'>
       <Card
         sx={{
-          minWidth: 300,
+          minWidth: '15rem',
           borderRadius: '1.2rem',
           boxShadow: 8,
           size: 'large',
+          marginTop: '100px',
         }}
         className='texture1'
       >
@@ -269,7 +271,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         </Collapse>
       </Card>
       {/* <GoogleCalendar /> */}
-    </>
+    </Box>
   );
 };
 
