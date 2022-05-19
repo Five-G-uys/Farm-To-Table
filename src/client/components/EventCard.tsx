@@ -5,14 +5,9 @@ import { Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 
 interface AppProps {
-  handleEditClick(): void;
+  handleEditClick(id: number): void;
   allEvents: [];
-  updateCounter: number;
-  inEditMode: boolean;
   getAllEvents(): void;
-  rsvps: [];
-  rsvpCount: number;
-  updateState(): void;
 }
 
 //import RSVPS from "./RSVPS";

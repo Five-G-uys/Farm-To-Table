@@ -55,16 +55,10 @@ const EventsPage = () => {
   const [updateCounter, setUpdateCounter] = useState(0);
   // cerate state var events array (set to result of get req)
   const [allEvents, setAllEvents] = useState<object[]>([]);
-  // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
+  // create a stateful boolean to monitor if updating
+  //existing event (in update mode) or creating a new event
   const [inEditMode, setInEditMode] = useState(false);
 
-  // const [value, setValue] = React.useState('Farmers Market');
-  // const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValue((event.target as HTMLInputElement).value);
-  // };
-
-  //event state variable;
-  //const [event, setEvent] = useState<EventProps>({} as EventProps);
   const [event, setEvent] = useState<EventProps>({
     id: 0,
     eventName: '',
@@ -314,8 +308,6 @@ const EventsPage = () => {
         getAllEvents={getAllEvents}
         allEvents={allEvents}
         handleEditClick={handleEditClick}
-        updateState={updateState}
-        rsvps={rsvps}
       />
 
       <Box>
