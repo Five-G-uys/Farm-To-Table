@@ -113,7 +113,7 @@ const ProductsPage = () => {
 
   // create post req to send product form data
   const postProduct = (e: any) => {
-    console.log('LINE 108');
+    // console.log('LINE 108');
     e.preventDefault();
     axios
       .post('/api/products', {
@@ -132,7 +132,7 @@ const ProductsPage = () => {
       })
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .then((data) => {
-        console.log('saved!', data);
+        // console.log('saved!', data);
         setUpdateCounter(updateCounter + 1);
         handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
@@ -152,7 +152,7 @@ const ProductsPage = () => {
       setUpdateCounter(updateCounter + 1);
       handleClose();
 
-      console.log('LINE 130 || PRODUCTS PAGE', result);
+      // console.log('LINE 130 || PRODUCTS PAGE', result);
     } catch (err) {
       console.error('LINE 132 || PRODUCTS PAGE ', err);
     }
@@ -179,7 +179,7 @@ const ProductsPage = () => {
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
   const showWidget = () => {
-    console.log('LINE 115 || CLOUDINARY');
+    // console.log('LINE 115 || CLOUDINARY');
     const widget = window.cloudinary.createUploadWidget(
       {
         cloudName: CLOUD_NAME,
@@ -211,7 +211,7 @@ const ProductsPage = () => {
     axios
       .get('/api/products')
       .then((data) => {
-        console.log('LINE 165 || GET ALL PRODUCTS', data);
+        // console.log('LINE 165 || GET ALL PRODUCTS', data);
         // set products state to allProducts array
         setProducts(data.data);
       })
@@ -222,7 +222,7 @@ const ProductsPage = () => {
 
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (productId: any) => {
-    console.log('LINE 185 || PRODUCTS PAGE CLICKED', productId);
+    // console.log('LINE 185 || PRODUCTS PAGE CLICKED', productId);
 
     const clickedProduct: any = products.find(
       // find mutates original array values

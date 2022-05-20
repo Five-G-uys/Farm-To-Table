@@ -12,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import { CssBaseline, Box, Container, Typography } from '@mui/material';
 
 interface Column {
   id: 'id' | 'subscriptionEntryId' | 'delivery_date';
@@ -49,7 +50,7 @@ const OrdersRecords = () => {
     axios
       .get('/api/orders')
       .then((data) => {
-        // console.log(data.data);
+        // console.log(data.data, "orders data!!!!!!!!!!!!!!!!!!!!!!!!!!");
         setRows(data.data);
       })
       .catch((error) => {
@@ -71,7 +72,7 @@ const OrdersRecords = () => {
 
   const deleteOrders = async (orderId: string) => {
     try {
-      const {data} = await axios.delete(`/api/products/${orderId}`);
+      const {data} = await axios.delete(`/api/orders/${orderId}`);
       return data;
     } catch (err) {
       console.error(err)
@@ -107,12 +108,12 @@ const OrdersRecords = () => {
       }
       return row;
     });
-    console.log();
+    // console.log();
     setRows(newRows);
   };
 
   const onDone = (row: object) => {
-    console.log(row)
+    // console.log(row)
     setEditing(!editing)
     patchOrders(row.id, row);
   }

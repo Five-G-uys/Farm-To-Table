@@ -277,26 +277,26 @@ const App = () => {
                   )
                 }
               />
-              <Route path='records' element={<RecordsPage />}>
+              <Route path='/records' element={<RecordsPage />}>
                 <Route path='products-records' element={<ProductsRecords />} />
+                <Route path='vendors-records' element={<VendorsRecords />} />
+                <Route
+                  path='delivery-zones-records'
+                  element={<DileveryZonesRecords />}
+                />
+                <Route path='events-records' element={<EventsRecords />} />
+                <Route path='orders-records' element={<OrdersRecords />} />
+                <Route path='products-records' element={<ProductsRecords />} />
+                <Route
+                  path='subscription-entries-records'
+                  element={<SubscriptionEntriesRecords />}
+                />
+                <Route
+                  path='subscriptions-records'
+                  element={<SubscriptionsRecords />}
+                />
+                <Route path='users-records' element={<UsersRecords />} />
               </Route>
-              <Route
-                path='delivery-zones-records'
-                element={<DileveryZonesRecords />}
-              />
-              <Route path='events-records' element={<EventsRecords />} />
-              <Route path='orders-records' element={<OrdersRecords />} />
-              <Route path='products-records' element={<ProductsRecords />} />
-              <Route
-                path='subscription-entries-records'
-                element={<SubscriptionEntriesRecords />}
-              />
-              <Route
-                path='subscriptions-records'
-                element={<SubscriptionsRecords />}
-              />
-              <Route path='users-records' element={<UsersRecords />} />
-              <Route path='vendors-records' element={<VendorsRecords />} />
               <Route
                 path='/records'
                 element={

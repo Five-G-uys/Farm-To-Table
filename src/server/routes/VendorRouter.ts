@@ -32,11 +32,11 @@ vendorRouter.post('/api/vendors', (req, res) => {
 vendorRouter.get('/api/vendors', (req, res) => {
   Vendors.findAll()
     .then((response: any) => {
-      console.log('FIND ALL Vendor RESPONSE: ', response);
+      // console.log('FIND ALL Vendor RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('SFIND ALL Vendor ERROR: ', err);
+      console.error('SFIND ALL Vendor ERROR: ', err);
       res.sendStatus(404);
     });
 });
@@ -45,13 +45,13 @@ vendorRouter.get('/api/vendors', (req, res) => {
 vendorRouter.patch(
   '/api/vendors/:id',
   async (req: Request, res: Response) => {
-    console.log('UPDATE Vendor REQUEST BODY: ', req.body);
+    // console.log('UPDATE Vendor REQUEST BODY: ', req.body);
     try {
       const updatedVendor = await Vendors.update(req.body, {
         where: { id: req.params.id },
         returning: true,
       });
-      console.log('Vendor UPDATE INFO: ', updatedVendor);
+      // console.log('Vendor UPDATE INFO: ', updatedVendor);
       res.status(204).json(updatedVendor);
     } catch (err) {
       console.error('Vendor UPDATE WAS NOT SUCCESSFUL: ', err);
@@ -64,7 +64,7 @@ vendorRouter.patch(
 vendorRouter.delete('/api/vendors/:id', (req: Request, res: Response) => {
   Vendors.destroy({ where: req.params })
     .then((data: any) => {
-      console.log("Vendor DELETION SUCCESSFUL: ", data);
+      // console.log("Vendor DELETION SUCCESSFUL: ", data);
       res.sendStatus(200);
     })
     .catch((err: any) => {

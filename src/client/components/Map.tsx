@@ -30,7 +30,7 @@ const Map = ({
   // const [lng, setLng] = useState(lon);
   // const [latt, setLatt] = useState(lat);
   const [zoom, setZoom] = useState(13);
-  console.log('LINE 33', mode);
+  // console.log('LINE 33', mode);
   const routeCoordinatesArray = routeCoordinates
     .split(';')
     .map((coordinate: any) => {
@@ -66,7 +66,7 @@ const Map = ({
       }),
       'bottom-left'
     );
-    console.log('LINE 69 || MAP.CURRENT', map.current);
+    // console.log('LINE 69 || MAP.CURRENT', map.current);
     // // Add directions start/destination widget (box to enter starting location and destination)
     // map.current.addControl(
     //   new MapboxDirections({
@@ -93,7 +93,7 @@ const Map = ({
         map.current.getCenter().lat.toFixed(2),
         map.current.getCenter().lng.toFixed(2)
       );
-      console.log('q');
+      // console.log('q');
       // setLng(map.getCenter().lng.toFixed(lon));
       // setLatt(map.getCenter().lat.toFixed(latt));
       setZoom(map.current.getZoom().toFixed(5));
@@ -101,7 +101,7 @@ const Map = ({
   }, [map]);
 
   async function getRoute() {
-    console.log('LINE 103 MAP', routeData);
+    // console.log('LINE 103 MAP', routeData);
     // make a directions request using cycling profile
     // an arbitrary start will always be the same
     // only the end or destination will change
@@ -123,7 +123,7 @@ const Map = ({
         throw routeData;
       }
       const waypoints: any = routeData.waypoints;
-      console.log('LINE 117 || MAP COMPONENT', routeData);
+      // console.log('LINE 117 || MAP COMPONENT', routeData);
       // console.log('LINE 81 || MAP COMPONENT', lat, lon);
       const data = routeData.trips[0];
 
@@ -203,7 +203,7 @@ const Map = ({
       // }, 5000);
 
       for (let i = 0; i < waypoints.length; i++) {
-        console.log('LINE 120 || MAP', waypoints[i]);
+        // console.log('LINE 120 || MAP', waypoints[i]);
         const marker1: any = new mapboxgl.Marker({
           color:
             i === 0
@@ -232,16 +232,16 @@ const Map = ({
   // let warehouse: any;
   // useEffect to get route and apply it to map whenever the lat or lon change
   useEffect(() => {
-    console.log('LINE 235', routeData, lat, lon, map.current);
+    // console.log('LINE 235', routeData, lat, lon, map.current);
     if (!lat || !lon || !map.current || !routeData.trips) return;
     // if (routeCoordinatesArray.length < 2) return;
     // create hypothetical warehouse location coordinate. Set to current location of device for now. Will hardcode
     // once a permanent location is decided
     const warehouseLocation = [lon, lat];
-    console.log('LINE 241 || MAP', lat, lon);
+    // console.log('LINE 241 || MAP', lat, lon);
     // Turning warehouse coordinate (or potentially a series of coordinates) into a GeoJSON feature collection.
     warehouse = turf.featureCollection([turf.point(warehouseLocation)]);
-    console.log('LINE 244 || WAREHOUSE', warehouse.features[0]);
+    // console.log('LINE 244 || WAREHOUSE', warehouse.features[0]);
     warehouse = warehouse.features[0];
     // Creating empty feature collection to store all order points
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -249,7 +249,7 @@ const Map = ({
       turf.point([lon, lat]),
       ...routeCoordinatesArray.map((coordinate: any) => turf.point(coordinate)),
     ]);
-    console.log('LINE 252', dropoffs);
+    // console.log('LINE 252', dropoffs);
     getRoute();
   }, [lat, lon, updateCounter]);
 
