@@ -125,12 +125,12 @@ const ProductsRecords = () => {
       }
       return row;
     });
-    console.log();
+    // console.log();
     setRows(newRows);
   };
 
   const onDone = (row: object) => {
-    console.log(row);
+    // console.log(row);
     setEditing(!editing);
     patchProducts(row.id, row);
   };

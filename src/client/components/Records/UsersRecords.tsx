@@ -50,7 +50,7 @@ const columns: readonly Column[] = [
 
   {
     id: 'roleId',
-    label: 'Role ID',
+    label: 'Role',
     minWidth: 170,
   },
   {
@@ -129,12 +129,12 @@ const UsersRecords = () => {
       }
       return row;
     });
-    console.log();
+    // console.log();
     setRows(newRows);
   };
   
   const onDone = (row: object) => {
-    console.log(row)
+    // console.log(row)
     setEditing(!editing)
     patchUsers(row.id, row);
   }

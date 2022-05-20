@@ -30,7 +30,7 @@ const RSVPS = () => {
     axios
       .get(`/api/rsvps/user-id/${id}`)
       .then(({ data }) => {
-        console.log("LINE 33 FrontEND request", data);
+        // console.log("LINE 33 FrontEND request", data);
         const newArr = data
           .map((eventObj: any) => {
             return eventObj.value;
@@ -46,9 +46,9 @@ const RSVPS = () => {
       });
   };
 
-  console.log("LINE 75 ", rsvps + "and" + rsvpsCount + "number");
+  // console.log("LINE 75 ", rsvps + "and" + rsvpsCount + "number");
 
-  console.log("LINE 45", rsvps);
+  // console.log("LINE 45", rsvps);
   useEffect(() => {
     getAllRSVPSEvents();
   }, []);

@@ -145,10 +145,10 @@ const SubscriptionsPage = () => {
         zip: address.zip,
         start_date: selectedSubscription.start_date,
       })
-      .then((data) => {
-        console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
-        // navigate('/subscriptions-page/confirmation-page');
-      })
+      // .then((data) => {
+      //   console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
+      //   // navigate('/subscriptions-page/confirmation-page');
+      // })
       .catch((err) => {
         console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
       });
@@ -262,38 +262,34 @@ const SubscriptionsPage = () => {
 
   const handleCheckout = () => {
     // console.log('Checkout');
-    window.location = 'https://buy.stripe.com/test_aEU6rr20K2Dl5DW3cc';
-    // fetch('/create-checkout-session', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   // Send along all the information about the items
-    //   body: JSON.stringify({
-    //     items: [
-    //       {
-    //         id: 1,
-    //         quantity: 2,
-    //       },
-    //       {
-    //         id: 2,
-    //         quantity: 1,
-    //       },
-    //     ],
-    //   }),
-    // })
-    //   .then((res) => {
-    //     if (res.ok) return res.json();
-    //     // If there is an error then make sure we catch that
-    //     return res.json().then((e) => Promise.reject(e));
-    //   })
-    //   .then(({ url }) => {
-    //     // On success redirect the customer to the returned URL
-    //     window.location = url;
-    //   })
-    //   .catch((e) => {
-    //     console.error(e.error);
-    //   });
+    // window.location = 'https://buy.stripe.com/test_aEU6rr20K2Dl5DW3cc';
+    fetch('/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Send along all the information about the items
+      body: JSON.stringify({
+        items: [
+          {
+            id: 1,
+            quantity: 1,
+          },
+        ],
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        // If there is an error then make sure we catch that
+        return res.json().then((e) => Promise.reject(e));
+      })
+      .then(({ url }) => {
+        // On success redirect the customer to the returned URL
+        window.location = url;
+      })
+      .catch((e) => {
+        console.error(e.error);
+      });
   };
 
   return (
