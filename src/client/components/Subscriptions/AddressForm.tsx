@@ -65,10 +65,6 @@ const AddressForm = ({
                 <Box
                   sx={{
                     ...commonStyles,
-                    // flexWrap: 'wrap',
-                    // display: 'flex',
-                    // justifyContent: 'center',
-                    // borderRadius: '16px',
                   }}
                 >
                   <form onSubmit={handleSubscribed}>

@@ -145,8 +145,7 @@ const SubscriptionsPage = () => {
         zip: address.zip,
         start_date: selectedSubscription.start_date,
       })
-      .then((data) => {
-        console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
+      .then(() => {
         // navigate('/subscriptions-page/confirmation-page');
       })
       .catch((err) => {
