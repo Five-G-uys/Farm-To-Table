@@ -33,7 +33,7 @@ orderRouter.post('/api/order', (req, res) => {
 orderRouter.get('/api/order', (req, res) => {
   Orders.findAll()
     .then((response: any) => {
-      // console.log('FIND ALL Orders RESPONSE: ', response);
+      console.log('FIND ALL Orders RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
