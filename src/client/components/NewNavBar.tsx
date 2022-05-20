@@ -274,7 +274,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                 >
                   {settings.map((setting) => (
                     <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                      <Button href={setting.path}>
+                      <Button href={setting.path} color='success'>
                         <Typography textAlign='center'>
                           {setting.name}
                         </Typography>
