@@ -32,11 +32,11 @@ dietaryRestrictionRouter.post('/api/dietary-restrictions', (req, res) => {
 dietaryRestrictionRouter.get('/api/dietary-restrictions', (req, res) => {
   DietaryRestrictions.findAll()
     .then((response: any) => {
-      console.log('FIND ALL DietaryRestrictions RESPONSE: ', response);
+      // console.log('FIND ALL DietaryRestrictions RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('FIND ALL DietaryRestrictions ERROR: ', err);
+      console.error('FIND ALL DietaryRestrictions ERROR: ', err);
       res.sendStatus(404);
     });
 });
@@ -45,13 +45,13 @@ dietaryRestrictionRouter.get('/api/dietary-restrictions', (req, res) => {
 dietaryRestrictionRouter.patch(
   '/api/dietary-restrictions/:id',
   async (req: Request, res: Response) => {
-    console.log('UPDATE DietaryRestriction REQUEST BODY: ', req.body);
+    // console.log('UPDATE DietaryRestriction REQUEST BODY: ', req.body);
     try {
       const updatedDietaryRestriction = await DietaryRestrictions.update(req.body, {
         where: { id: req.params.id },
         returning: true,
       });
-      console.log('DietaryRestriction UPDATE INFO: ', updatedDietaryRestriction);
+      // console.log('DietaryRestriction UPDATE INFO: ', updatedDietaryRestriction);
       res.status(204).json(updatedDietaryRestriction);
     } catch (err) {
       console.error('DietaryRestriction UPDATE WAS NOT SUCCESSFUL: ', err);

@@ -60,8 +60,8 @@ const ProductCard = ({
     axios
       .delete(`/api/products/${id}`)
       .then(({ data }: any) => {
-        console.log('LINE 57', id);
-        console.log('LINE 55 ', data);
+        // console.log('LINE 57', id);
+        // console.log('LINE 55 ', data);
         setUpdateCounter(updateCounter + 1);
       })
       .catch((err: any) => {

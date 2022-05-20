@@ -16,7 +16,7 @@ const getCurrentMap: any = (latt: any, long: any, rc: any) => {
     { method: 'GET' }
   )
     .then((response: any ) => {
-      console.log(response);
+      // console.log(response);
       return response
     }) //returns data object of current weather conditions
     .catch((err: any) => console.error('error in map api call: ', err));
@@ -25,7 +25,7 @@ const getCurrentMap: any = (latt: any, long: any, rc: any) => {
 ///////////////////////////////////////////////////////////////////////////////////////////// GET MAP ROUTE
 //sends location to weather api and responds with current weather
 mapRouter.get('/map/:lat/:lon/:routeCoordinates', (req: any, res: any) => {
-  console.log('TRIGGERED', req.params);
+  // console.log('TRIGGERED', req.params);
 
   const { lat, lon, routeCoordinates } = req.params;
   getCurrentMap(lat, lon, routeCoordinates)

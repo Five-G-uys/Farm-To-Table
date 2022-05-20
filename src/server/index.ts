@@ -89,7 +89,7 @@ app.get('*', (req: Request, res: Response) => {
 
 // error handle middleware
 app.use((err: any, req: Request, res: Response, next: any) => {
-  console.log('LINE 92 || SEVER INDEX', err, res.statusCode);
+  // console.log('LINE 92 || SEVER INDEX', err, res.statusCode);
 
   res.status(res.statusCode === 200 ? 500 : res.statusCode);
   // res.statusCode();

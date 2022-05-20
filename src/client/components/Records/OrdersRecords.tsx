@@ -50,7 +50,7 @@ const OrdersRecords = () => {
     axios
       .get('/api/orders')
       .then((data) => {
-        console.log(data.data, "orders data!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        // console.log(data.data, "orders data!!!!!!!!!!!!!!!!!!!!!!!!!!");
         setRows(data.data);
       })
       .catch((error) => {
@@ -108,12 +108,12 @@ const OrdersRecords = () => {
       }
       return row;
     });
-    console.log();
+    // console.log();
     setRows(newRows);
   };
 
   const onDone = (row: object) => {
-    console.log(row)
+    // console.log(row)
     setEditing(!editing)
     patchOrders(row.id, row);
   }

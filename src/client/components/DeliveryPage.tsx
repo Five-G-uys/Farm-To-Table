@@ -43,7 +43,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
           })
           .join(';');
 
-        console.log('LINE 46 || DELIVERY PAGE', tempStr);
+        // console.log('LINE 46 || DELIVERY PAGE', tempStr);
         setRouteCoordinates(tempStr);
         setUpdateCounter(updateCounter + 1);
         // setUpdateCounter(updateCounter + 1);
@@ -54,9 +54,9 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
   };
   useEffect(getTodaysOrders, [lat, lon]);
 
-  console.log('LINE 57 || DELIVERY PAGE||', dayjs().format('H'));
+  // console.log('LINE 57 || DELIVERY PAGE||', dayjs().format('H'));
 
-  console.log('LINE 59', routeCoordinates);
+  // console.log('LINE 59', routeCoordinates);
   return (
     <div>
       <Map

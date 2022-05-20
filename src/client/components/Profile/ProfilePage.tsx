@@ -80,9 +80,9 @@ const Profile = () => {
   const handleProfilePhotoUpdate = () => {
     axios
       .patch(`/api/users/${id}`, { picture: newProfileUrl })
-      .then((response) => {
-        console.log('Handle Profile Photo Update Response: ', response);
-      })
+      // .then((response) => {
+      //   console.log('Handle Profile Photo Update Response: ', response);
+      // })
       .catch((err) => {
         console.error('Handle Profile Photo Update Error: ', err);
       });
@@ -93,7 +93,7 @@ const Profile = () => {
       handleProfilePhotoUpdate();
     }
   }, [newProfileUrl]);
-  console.log('New Profile Url: ', newProfileUrl);
+  // console.log('New Profile Url: ', newProfileUrl);
 
   return (
     <Box className='page-wrap'>

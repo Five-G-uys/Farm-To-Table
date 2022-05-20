@@ -101,11 +101,11 @@ subscriptionEntriesRouter.post(
 subscriptionEntriesRouter.get('/api/subscription-entries', (req, res) => {
   SubscriptionEntries.findAll()
     .then((response: any) => {
-      console.log('FIND ALL SubscriptionEntries RESPONSE: ', response);
+      // console.log('FIND ALL SubscriptionEntries RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('FIND ALL SubscriptionEntries ERROR: ', err);
+      console.error('FIND ALL SubscriptionEntries ERROR: ', err);
       res.sendStatus(404);
     });
 });
@@ -114,7 +114,7 @@ subscriptionEntriesRouter.get('/api/subscription-entries', (req, res) => {
 subscriptionEntriesRouter.patch(
   '/api/subscription-entries/:id',
   async (req: Request, res: Response) => {
-    console.log('UPDATE SubscriptionEntries REQUEST BODY: ', req.body);
+    // console.log('UPDATE SubscriptionEntries REQUEST BODY: ', req.body);
     try {
       const updatedSubscriptionEntry = await SubscriptionEntries.update(
         req.body,
@@ -123,7 +123,7 @@ subscriptionEntriesRouter.patch(
           returning: true,
         }
       );
-      console.log('SubscriptionEntry UPDATE INFO: ', updatedSubscriptionEntry);
+      // console.log('SubscriptionEntry UPDATE INFO: ', updatedSubscriptionEntry);
       res.status(204).json(updatedSubscriptionEntry);
     } catch (err) {
       console.error('SubscriptionEntry UPDATE WAS NOT SUCCESSFUL: ', err);
@@ -138,7 +138,7 @@ subscriptionEntriesRouter.delete(
   (req: Request, res: Response) => {
     SubscriptionEntries.destroy({ where: req.params })
       .then((data: any) => {
-        console.log('SubscriptionEntry DELETION SUCCESSFUL: ', data);
+        // console.log('SubscriptionEntry DELETION SUCCESSFUL: ', data);
         res.sendStatus(200);
       })
       .catch((err: any) => {

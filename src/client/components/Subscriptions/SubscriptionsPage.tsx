@@ -145,10 +145,10 @@ const SubscriptionsPage = () => {
         zip: address.zip,
         start_date: selectedSubscription.start_date,
       })
-      .then((data) => {
-        console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
-        // navigate('/subscriptions-page/confirmation-page');
-      })
+      // .then((data) => {
+      //   console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
+      //   // navigate('/subscriptions-page/confirmation-page');
+      // })
       .catch((err) => {
         console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
       });
@@ -273,10 +273,6 @@ const SubscriptionsPage = () => {
         items: [
           {
             id: 1,
-            quantity: 2,
-          },
-          {
-            id: 2,
             quantity: 1,
           },
         ],

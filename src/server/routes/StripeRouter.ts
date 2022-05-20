@@ -15,8 +15,8 @@ const stripeRouter: Router = Router();
 // Stripe Setup
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY); // ** NEED TO TURN INTO IMPORT STATEMENT
 const storeItems = new Map([
-  [1, { priceInCents: 10000, name: 'Season Subscription' }],
-  [2, { priceInCents: 20000, name: 'Annual Subscription' }],
+  [1, { priceInCents: 480000, name: 'Season Subscription' }],
+  [2, { priceInCents: 480000, name: 'Annual Subscription' }],
 ]);
 
 // Create a post request for /create-checkout-session

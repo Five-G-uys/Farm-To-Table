@@ -15,7 +15,7 @@ const orderContentRouter: Router = Router();
 orderContentRouter.post(
   '/api/order-content',
   async (req: Request, res: Response, next: any) => {
-    console.log('LINE 18', req.body);
+    // console.log('LINE 18', req.body);
     // destructure product id array from req.body as well
     const { delivery_date } = req.body;
     try {
@@ -23,7 +23,7 @@ orderContentRouter.post(
       const orders = await Orders.findAll({
         where: { delivery_date },
       });
-      console.log('LINE 23 || ORDER CONTENTS ROUTER', orders);
+      // console.log('LINE 23 || ORDER CONTENTS ROUTER', orders);
 
       if (orders.length < 1) {
         // use throw to send custom error obj to catch block and call next
@@ -63,7 +63,7 @@ orderContentRouter.post(
 orderContentRouter.get('/api/order-content', (req, res) => {
   OrderContents.findAll()
     .then((response: any) => {
-      console.log('FINDALL USERS RESPONSE: ', response);
+      // console.log('FINDALL USERS RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
@@ -76,13 +76,13 @@ orderContentRouter.get('/api/order-content', (req, res) => {
 orderContentRouter.patch(
   '/api/order-content/:id',
   async (req: Request, res: Response) => {
-    console.log('UPDATE OrderContent REQUEST BODY: ', req.body);
+    // console.log('UPDATE OrderContent REQUEST BODY: ', req.body);
     try {
       const updatedUser = await OrderContents.update(req.body, {
         where: { id: req.params.id },
         returning: true,
       });
-      console.log('OrderContent UPDATE INFO: ', updatedUser);
+      // console.log('OrderContent UPDATE INFO: ', updatedUser);
       res.status(204).json(updatedUser);
     } catch (err) {
       console.error('OrderContents UPDATE WAS NOT SUCCESSFUL: ', err);
@@ -97,7 +97,7 @@ orderContentRouter.delete(
   (req: Request, res: Response) => {
     OrderContents.destroy({ where: req.params })
       .then((data: any) => {
-        console.log('OrderContent DELETION SUCCESSFUL: ', data);
+        // console.log('OrderContent DELETION SUCCESSFUL: ', data);
         res.sendStatus(200);
       })
       .catch((err: any) => {
