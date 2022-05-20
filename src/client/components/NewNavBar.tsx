@@ -191,10 +191,8 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   {pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                       {/* // link tags are anchor tags under the hood */}
-                      <Button href={`${page.path}`}>
-                        <Typography textAlign='center' color='success'>
-                          {page.name}
-                        </Typography>
+                      <Button href={`${page.path}`} color='success'>
+                        <Typography textAlign='center'>{page.name}</Typography>
                       </Button>
                     </MenuItem>
                   ))}
@@ -219,6 +217,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                       color: 'white',
                       display: 'block',
                     }}
+                    color='success'
                   >
                     <Button href={page.path} color='success'>
                       {page.name}
@@ -271,10 +270,11 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
+                  // color='success'
                 >
                   {settings.map((setting) => (
                     <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                      <Button href={setting.path} color='success'>
+                      <Button href={setting.path}>
                         <Typography textAlign='center'>
                           {setting.name}
                         </Typography>
