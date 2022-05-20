@@ -217,7 +217,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
                 <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
               )}
             </ExpandMore>
-            <ExpandMore sx={{ color: 'green' }} expand={expanded}>
+            {/* <ExpandMore sx={{ color: 'green' }} expand={expanded}> */}
               {roleId < 4 && (
                 <Button
                   sx={{
@@ -237,7 +237,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
                   )}
                 </Button>
               )}
-            </ExpandMore>
+            {/* </ExpandMore> */}
             {roleId > 3 && (
               <ExpandMore
                 sx={{ color: 'green' }}

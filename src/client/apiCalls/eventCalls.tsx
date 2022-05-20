@@ -8,7 +8,7 @@ export const updatedEvent = async (eventId: number, updatedEvent: any) => {
       `/api/events/${eventId}`,
       updatedEvent
     );
-    console.log("LINE 7 || EVENT CALLS", data);
+    // console.log("LINE 7 || EVENT CALLS", data);
     return data;
   } catch (err) {
     console.error("LINE 10 || EVENT CALLS", err);

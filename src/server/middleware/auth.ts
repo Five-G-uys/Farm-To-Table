@@ -9,7 +9,7 @@ export const isLoggedIn: any = (req: any, res: any, next: any) => {
 
 export const isEmployee: any = (req: any, res: any, next: any) => {
   if (req.user) {
-    console.log('User is an employee');
+    // console.log('User is an employee');
     next();
   } else {
     next(new Error('unauthorized'));

@@ -132,7 +132,7 @@ syncModels(true)
     });
     await Roles.create({
       id: 2,
-      role: 'subscriber',
+      role: 'volunteer',
     });
     await Roles.create({
       id: 3,
@@ -141,6 +141,10 @@ syncModels(true)
     await Roles.create({
       id: 4,
       role: 'admin',
+    });
+    await Roles.create({
+      id: 5,
+      role: 'developer',
     });
 
     // Vendors Seed Data

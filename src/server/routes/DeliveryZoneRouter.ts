@@ -30,11 +30,11 @@ deliveryZonesRouter.post('/api/delivery-zones', (req, res) => {
 deliveryZonesRouter.get('/api/delivery-zones', (req, res) => {
   DeliveryZones.findAll()
     .then((response: any) => {
-      console.log('FIND ALL DeliveryZones RESPONSE: ', response);
+      // console.log('FIND ALL DeliveryZones RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('FIND ALL DeliveryZones ERROR: ', err);
+      console.error('FIND ALL DeliveryZones ERROR: ', err);
       res.sendStatus(500);
     });
 });
@@ -49,7 +49,7 @@ deliveryZonesRouter.patch(
         where: { id: req.params.id },
         returning: true,
       });
-      console.log('DeliveryZones UPDATE INFO: ', updatedDeliveryZones);
+      // console.log('DeliveryZones UPDATE INFO: ', updatedDeliveryZones);
       res.status(204).json(updatedDeliveryZones);
     } catch (err) {
       console.error('DeliveryZones UPDATE WAS NOT SUCCESSFUL: ', err);
@@ -64,7 +64,7 @@ deliveryZonesRouter.delete(
   (req: Request, res: Response) => {
     DeliveryZones.destroy({ where: req.params })
       .then((data: any) => {
-        console.log('DeliveryZones DELETION SUCCESSFUL: ', data);
+        // console.log('DeliveryZones DELETION SUCCESSFUL: ', data);
         res.sendStatus(200);
       })
       .catch((err: any) => {

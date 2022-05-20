@@ -101,7 +101,7 @@ const UserRecordsPage = () => {
     try {
       // axios always has data property available on response obj so can destructure here
       const { data } = await axios.patch(`/api/users/${userId}`, updatedUser);
-      console.log('LINE 117 || USER CALLS', data);
+      // console.log('LINE 117 || USER CALLS', data);
       return data;
     } catch (err) {
       console.error('LINE 120 || USER CALLS', err);
@@ -119,7 +119,7 @@ const UserRecordsPage = () => {
       setUpdateCounter(updateCounter + 1);
       handleClose();
 
-      console.log('LINE 135 || USERS PAGE', result);
+      // console.log('LINE 135 || USERS PAGE', result);
     } catch (err) {
       console.error('LINE 137 || USERS PAGE ', err);
     }
@@ -145,7 +145,7 @@ const UserRecordsPage = () => {
     axios
       .get('/api/users')
       .then((data) => {
-        console.log('LINE 161 || GET ALL USERS', data);
+        // console.log('LINE 161 || GET ALL USERS', data);
         setUsers(data.data);
       })
       .catch((err) => {
@@ -155,7 +155,7 @@ const UserRecordsPage = () => {
 
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (userId: any) => {
-    console.log('LINE 198 || USER PAGE CLICKED', userId);
+    // console.log('LINE 198 || USER PAGE CLICKED', userId);
 
     const clickedUser: any = users.find(
       // find mutates original array values

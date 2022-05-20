@@ -198,7 +198,7 @@ const EventsPage = () => {
         result: { event: string; info: { url: string } },
       ) => {
         if (!error && result && result.event === 'success') {
-          console.log('LINE 56', result.info.url);
+          // console.log('LINE 56', result.info.url);
           setEvent((state) => {
             return {
               ...state,
@@ -228,7 +228,7 @@ const EventsPage = () => {
     axios
       .get('/api/rsvps')
       .then(({ data }) => {
-        console.log('Rsvps get all Response ', data);
+        // console.log('Rsvps get all Response ', data);
         setRsvps(data);
         //setRsvpCount(data.length);
       })

@@ -65,16 +65,16 @@ userRouter.get('/api/users', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE ONE USER ROUTE
 userRouter.patch('/api/users/:id', async (req: Request, res: Response) => {
-  console.log('UPDATE USERS REQUEST BODY: ', req);
-  console.log('UPDATE USERS REQUEST BODY: ', req.body);
-  console.log('UPDATE USERS REQUEST BODY: ', req.query);
-  console.log('UPDATE USERS REQUEST BODY: ', req.params);
+  // console.log('UPDATE USERS REQUEST BODY: ', req);
+  // console.log('UPDATE USERS REQUEST BODY: ', req.body);
+  // console.log('UPDATE USERS REQUEST BODY: ', req.query);
+  // console.log('UPDATE USERS REQUEST BODY: ', req.params);
   try {
     const updatedUser = await Users.update(req.body, {
       where: { id: req.params.id },
       returning: true,
     });
-    console.log('USER UPDATE INFO: ', updatedUser);
+    // console.log('USER UPDATE INFO: ', updatedUser);
     res.status(204).json(updatedUser);
   } catch (err) {
     console.error('USER UPDATE WAS NOT SUCCESSFUL: ', err);
@@ -86,7 +86,7 @@ userRouter.patch('/api/users/:id', async (req: Request, res: Response) => {
 userRouter.delete('/api/users/:id', (req: Request, res: Response) => {
   Users.destroy({ where: req.params })
     .then((data: any) => {
-      console.log('USER DELETION SUCCESSFUL: ', data);
+      // console.log('USER DELETION SUCCESSFUL: ', data);
       res.sendStatus(200);
     })
     .catch((err: any) => {

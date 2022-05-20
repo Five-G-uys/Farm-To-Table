@@ -35,7 +35,7 @@ import {
 
 const OrdersPage = () => {
   const user: { id: number } = useContext(UserContext);
-  console.log('LINE 13 || ORDERSPAGE', user);
+  // console.log('LINE 13 || ORDERSPAGE', user);
   const id = user.id;
   // NEED TO MAKE GET REQ ON PAGE RENDER FOR ALL UPCOMING ORDERS ORGANIZED FROM SOONEST TO FURTHEST
 
