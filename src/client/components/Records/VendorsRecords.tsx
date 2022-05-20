@@ -153,10 +153,15 @@ const VendorsRecords = () => {
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
-                      <TableCell key={column.id} align={column.align}>
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        color='white'
+                      >
                         {editing ? (
                           <Input
                             // type={String}
+                            color='primary'
                             defaultValue={value}
                             name={column.id}
                             onChange={(e) => onChange(e, row)}

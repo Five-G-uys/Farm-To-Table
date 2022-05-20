@@ -219,7 +219,17 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
             </ExpandMore>
             <ExpandMore sx={{ color: 'green' }} expand={expanded}>
               {roleId < 4 && (
-                <Button onClick={handRSVPosts} color='success' size='large'>
+                <Button
+                  sx={{
+                    '&:hover:before': { content: `"Going"` },
+                    position: 'top',
+                    width: 80, //necessary for replacing text
+                  }}
+                  onClick={handRSVPosts}
+                  color='success'
+                  size='medium'
+                  variant='outlined'
+                >
                   {isGoing ? (
                     <CheckIcon color='success' fontSize='large'></CheckIcon>
                   ) : (

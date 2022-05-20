@@ -63,7 +63,7 @@ const RecordsPage = () => {
           </Typography>
         </Container>
       </Box>
-      <Grid container alignItems='center'  justifyContent='center'>
+      <Grid container alignItems='center' justifyContent='center'>
         <Button
           component={Link}
           to='/records/delivery-zones-records'
