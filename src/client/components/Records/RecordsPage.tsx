@@ -70,7 +70,7 @@ const RecordsPage = () => {
           variant='contained'
           color='primary'
         >
-          get deliveryZones
+          DeliveryZones
         </Button>
         <Button
           component={Link}
@@ -78,7 +78,7 @@ const RecordsPage = () => {
           variant='contained'
           color='primary'
         >
-          get events
+          Events
         </Button>
         <Button
           component={Link}
@@ -86,7 +86,7 @@ const RecordsPage = () => {
           variant='contained'
           color='primary'
         >
-          get orders
+          Orders
         </Button>
         <Button
           component={Link}
@@ -94,7 +94,7 @@ const RecordsPage = () => {
           variant='contained'
           color='primary'
         >
-          get products
+          Products
         </Button>
         <Button
           component={Link}
@@ -102,7 +102,7 @@ const RecordsPage = () => {
           variant='contained'
           color='primary'
         >
-          get subscriptionEntries
+          SubscriptionEntries
         </Button>
         <Button
           component={Link}
@@ -110,7 +110,7 @@ const RecordsPage = () => {
           variant='contained'
           color='primary'
         >
-          get subscriptions
+          Subscriptions
         </Button>
         <Button
           component={Link}
@@ -118,7 +118,7 @@ const RecordsPage = () => {
           variant='contained'
           color='primary'
         >
-          get users
+          Users
         </Button>
         <Button
           component={Link}
@@ -126,7 +126,7 @@ const RecordsPage = () => {
           variant='contained'
           color='primary'
         >
-          get vendors
+          Vendors
         </Button>
         <Outlet />
       </Grid>

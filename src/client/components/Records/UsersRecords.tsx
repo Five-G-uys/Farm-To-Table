@@ -50,7 +50,7 @@ const columns: readonly Column[] = [
 
   {
     id: 'roleId',
-    label: 'Role ID',
+    label: 'Role',
     minWidth: 170,
   },
   {

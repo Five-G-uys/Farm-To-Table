@@ -2,9 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-// Import Env
-require('dotenv').config();
-
 // Import Dependencies
 import express, { Express, Request, Response } from 'express';
 import path from 'path';
@@ -22,7 +19,6 @@ import authRouter from './routes/AuthRouter';
 import deliveryZonesRouter from './routes/DeliveryZoneRouter';
 import dietaryRestrictionRouter from './routes/DietaryRestrictionRouter';
 import eventRouter from './routes/EventRouter';
-// import orderContentRouter from './routes/OrderContentRouter';
 import orderRouter from './routes/OrderRouter';
 import productRouter from './routes/ProductRouter';
 import roleRouter from './routes/RoleRouter';
@@ -34,16 +30,13 @@ import userRouter from './routes/UserRouter';
 import vendorRouter from './routes/VendorRouter';
 import weatherRouter from './routes/WeatherRouter';
 import orderContentRouter from './routes/OrderContentRouter';
-// Import Interfaces
-import UserInterface from '../types/UserInterface';
-import Profile from 'src/client/components/Profile/ProfilePage';
 
+// Set Up Server
 const app: Express = express();
 const port = process.env.LOCAL_PORT;
-
 const dist = path.resolve(__dirname, '..', '..', 'dist');
-// console.log('LINE 37 || INDEX.TSX', __dirname);
 
+// Auth Middleware
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000, //one day
@@ -53,8 +46,9 @@ app.use(
     secure: process.env.NODE_ENV === 'production',
   }),
 );
-
 app.use(cookieParser());
+
+// General Middleware
 app.use(express.json());
 app.use(express.static(dist));
 app.use(express.urlencoded({ extended: true }));
@@ -68,8 +62,6 @@ app.use('/auth', authRouter);
 app.use('', deliveryZonesRouter);
 app.use('', dietaryRestrictionRouter);
 app.use('', eventRouter);
-('/api/events');
-// app.use('/order-contents', orderContentRouter);
 app.use('', orderRouter);
 app.use('', productRouter);
 app.use('', roleRouter);
@@ -87,12 +79,10 @@ app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.resolve(dist, 'index.html'));
 });
 
-// error handle middleware
+// Error Handle Middleware
 app.use((err: any, req: Request, res: Response, next: any) => {
   // console.log('LINE 92 || SEVER INDEX', err, res.statusCode);
-
   res.status(res.statusCode === 200 ? 500 : res.statusCode);
-  // res.statusCode();
   res.json({ message: err.message });
 });
 app.listen(port, () => {

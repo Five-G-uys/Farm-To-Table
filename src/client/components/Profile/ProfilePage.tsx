@@ -143,24 +143,14 @@ const Profile = () => {
 
         <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
           <Stack spacing={5} direction='row' id='user_card_stack'>
-            <ExpandMore
+            <Button
+              variant='text'
+              size='large'
+              color='success'
               sx={{ color: 'green' }}
-              expand={expanded}
-              // onClick={() => handleEditClick(id)}
-            >
-              <Button
-                variant='text'
-                size='large'
-                color='success'
-                sx={{ color: 'green' }}
-                onClick={showWidget}
-              >
-                Change User Image
-              </Button>
-            </ExpandMore>
-            {/* <ExpandMore
-              sx={{ color: 'green' }}
-              expand={expanded}> */}
+              onClick={showWidget}>
+              Change User Image
+            </Button>
             <Button
               variant='text'
               size='large'
@@ -170,7 +160,6 @@ const Profile = () => {
             >
               Logout
             </Button>
-            {/* </ExpandMore> */}
             <ExpandMore
               sx={{ color: 'green' }}
               expand={expanded}

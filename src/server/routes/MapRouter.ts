@@ -3,8 +3,8 @@
 
 // Import Dependencies
 import { Router } from 'express';
-import axios from 'axios';
-require('dotenv').config();
+// import axios from 'axios';
+// require('dotenv').config();
 
 // Initialize Router
 const mapRouter = Router();

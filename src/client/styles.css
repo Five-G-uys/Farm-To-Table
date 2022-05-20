@@ -1,4 +1,6 @@
 body {
+  background-image: url("https://www.transparenttextures.com/patterns/tileable-wood-colored.png");
+
   /* background-image: url('/src/client/components/groundImage.png'); */
   size-adjust: absolute;
   /* background-color: #c8bebe34; */
@@ -135,11 +137,32 @@ body {
   backdrop-filter: blur(8px);
   background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
 }
-/* This is mostly intended for prototyping; please download the pattern and re-host for produc}tion environments. Thank you! */
+
 .texture2 {
   color: #e2f2d9;
   background-color: #e2f2d9;
   backdrop-filter: blur(8px);
   background-image: url('https://www.transparenttextures.com/patterns/exclusive-paper.png');
-  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
+
+/* Background Image Classes */
+
+.lightBackground1 {
+background-color: #e6b265;
+background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+}
+
+.darkBackground1 {
+background-color: #000000;
+background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+}
+
+.lightBackground2 {
+background-color: #ffffff;
+background-image: url("https://www.transparenttextures.com/patterns/tileable-wood-colored.png");
+}
+
+.darkBackground2{  
+  background-color: #000000;
+  background-image: url("https://www.transparenttextures.com/patterns/tileable-wood-colored.png");
+ }

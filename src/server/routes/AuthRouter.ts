@@ -6,7 +6,6 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-require('dotenv').config();
 
 // Import Models
 import { Users } from '../db/models';
