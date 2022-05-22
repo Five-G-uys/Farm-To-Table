@@ -33,7 +33,7 @@ import Weather from './Weather';
 //import Image from "src/client/components/groundImage.png";
 
 //material UI IMPORTS
-import { Box, createTheme, PaletteMode } from '@mui/material';
+import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
 import {
@@ -43,6 +43,7 @@ import {
   lightBlue,
   orange,
   lightGreen,
+  teal,
 } from '@mui/material/colors';
 
 import { Dispatch, SetStateAction } from 'react';
@@ -136,8 +137,8 @@ const App = () => {
               paper: blueGrey[900],
             },
             text: {
-              primary: '#fff',
-              secondary: grey[500],
+              primary: amber[600],
+              secondary: lightGreen[600],
             },
           }),
     },
@@ -189,7 +190,7 @@ const App = () => {
               // item
               xs={4}
             > */}
-        <div>
+        <Grid>
           <UserContext.Provider value={user}>
             <Routes>
               {/* Login/Logout Routes */}
@@ -325,7 +326,7 @@ const App = () => {
               />
             </Routes>
           </UserContext.Provider>
-        </div>
+        </Grid>
         {/* Footer */}
         <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
           <Typography variant='h6' align='center' gutterBottom>
