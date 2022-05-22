@@ -15,7 +15,7 @@ rsvpRouter.post("/api/rsvps", (req: Request, res: Response) => {
   RSVP.create({ userId, eventId })
     .then(() => {
       RSVP.findAll({ where: { eventId } }).then((data: []) => {
-        console.log("LINE 22 Three", data.length);
+        // console.log("LINE 22 Three", data.length);
         res.json(data.length);
       });
     })
@@ -107,7 +107,7 @@ rsvpRouter.delete("/api/rsvp/delete/:id", (req: Request, res: Response) => {
     where: { eventId: req.query.eventId, userId: req.query.userId },
   })
     .then((data: any) => {
-      console.log("RSVP DELETION SUCCESSFUL: ", data);
+      // console.log("RSVP DELETION SUCCESSFUL: ", data);
       res.sendStatus(200);
     })
     .catch((err: any) => {
@@ -123,7 +123,7 @@ rsvpRouter.get("/api/rsvps/:id", (req: Request, res: Response) => {
     where: { eventId: req.query.eventId, userId: req.query.userId },
   })
     .then((data: []) => {
-      console.log("LINE 228 ALL THE RESPONSES FROM RSVP", data);
+      // console.log("LINE 228 ALL THE RESPONSES FROM RSVP", data);
       res.status(200).send(data);
     })
     .catch((err: string) => {
@@ -138,7 +138,7 @@ rsvpRouter.get("/api/rsvps/total/:eventId", (req: Request, res: Response) => {
     where: { eventId: req.query.eventId },
   })
     .then((data: []) => {
-      console.log("LINE 140 ALL THE RESPONSES FROM RSVP", data.length);
+      // console.log("LINE 140 ALL THE RESPONSES FROM RSVP", data.length);
       res.send(data);
     })
     .catch((err: string) => {

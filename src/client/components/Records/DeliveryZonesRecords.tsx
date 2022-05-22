@@ -62,7 +62,7 @@ const DileveryZonesRecords = () => {
   const patchDeliveryZones = async (zonesId: string, updatedZones: any) => {
     try {
       const { data } = await axios.patch(`/api/delivery-zones/${zonesId}`, updatedZones);
-      console.log('patch data', data);
+      // console.log('patch data', data);
       return data
     } catch (err) {
       console.error(err)
@@ -110,12 +110,12 @@ const DileveryZonesRecords = () => {
       }
       return row;
     });
-    console.log();
+    // console.log();
     setRows(newRows);
   };
 
   const onDone = (row: object) => {
-    console.log(row)
+    // console.log(row)
     setEditing(!editing)
     patchProducts(row.id, row);
   }
@@ -131,27 +131,6 @@ const DileveryZonesRecords = () => {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <CssBaseline />
-        {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth='sm'>
-            <Typography
-              component='h1'
-              variant='h2'
-              align='center'
-              color='text.primary'
-              gutterBottom
-            >
-              Deliver Zones
-            </Typography>
-          </Container>
-        </Box>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>

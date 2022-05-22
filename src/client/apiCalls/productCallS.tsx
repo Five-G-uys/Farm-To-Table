@@ -9,7 +9,7 @@ export const updateProduct = async (productId: number, updatedProduct: any) => {
       `/api/products/${productId}`,
       updatedProduct
     );
-    console.log('LINE 7 || PRODUCT CALLS', data);
+    // console.log('LINE 7 || PRODUCT CALLS', data);
     return data;
   } catch (err) {
     console.error('LINE 10 || PRODUCT CALLS', err);

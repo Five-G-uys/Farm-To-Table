@@ -70,7 +70,7 @@ const SubscriptionsPage = () => {
   const handleInputSubscription = (
     event:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target;
     setSubscription((state) => {
@@ -120,7 +120,7 @@ const SubscriptionsPage = () => {
   const handleInputAddress = (
     event:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target;
     setAddress((state) => {
@@ -145,10 +145,10 @@ const SubscriptionsPage = () => {
         zip: address.zip,
         start_date: selectedSubscription.start_date,
       })
-      .then((data) => {
-        console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
-        // navigate('/subscriptions-page/confirmation-page');
-      })
+      // .then((data) => {
+      //   console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
+      //   // navigate('/subscriptions-page/confirmation-page');
+      // })
       .catch((err) => {
         console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
       });
@@ -156,11 +156,11 @@ const SubscriptionsPage = () => {
 
   // Box component styles
   const commonStyles = {
+    width: '40vw',
+    minWidth: '500px',
     bgcolor: 'background.paper',
     borderColor: 'text.primary',
     m: 1,
-    // to center elements absolutely inside parent
-    // add event listener to window size to resize only when certain size bounds are crossed
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -169,12 +169,6 @@ const SubscriptionsPage = () => {
     padding: '20px',
     borderRadius: '2.5rem',
     boxShadow: 24,
-    // width: ,
-    // minWidth: 500,
-    // minHeight: 500,
-    // maxWidth: 1800,
-    // maxHeight: 1800,
-    // display: 'flex',
   };
 
   const postSubscription = () => {
@@ -213,7 +207,7 @@ const SubscriptionsPage = () => {
   const deleteSubscription = (subscriptionId: any) => {
     const clickedSubscription: any = subscriptions.find(
       // find mutates original array values
-      (sub: any) => sub.id === subscriptionId
+      (sub: any) => sub.id === subscriptionId,
     );
     axios
       .delete(`/api/subscriptions/${clickedSubscription.id}`, {
@@ -245,7 +239,7 @@ const SubscriptionsPage = () => {
   const handleEditClick = (subscriptionId: any) => {
     const clickedSubscription: any = subscriptions.find(
       // find mutates original array values
-      (sub: any) => sub.id === subscriptionId
+      (sub: any) => sub.id === subscriptionId,
     );
     clickedSubscription.thumbnail = clickedSubscription.thumbnail
       ? clickedSubscription.thumbnail
@@ -268,38 +262,34 @@ const SubscriptionsPage = () => {
 
   const handleCheckout = () => {
     // console.log('Checkout');
-    window.location = 'https://buy.stripe.com/test_aEU6rr20K2Dl5DW3cc';
-    // fetch('/create-checkout-session', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   // Send along all the information about the items
-    //   body: JSON.stringify({
-    //     items: [
-    //       {
-    //         id: 1,
-    //         quantity: 2,
-    //       },
-    //       {
-    //         id: 2,
-    //         quantity: 1,
-    //       },
-    //     ],
-    //   }),
-    // })
-    //   .then((res) => {
-    //     if (res.ok) return res.json();
-    //     // If there is an error then make sure we catch that
-    //     return res.json().then((e) => Promise.reject(e));
-    //   })
-    //   .then(({ url }) => {
-    //     // On success redirect the customer to the returned URL
-    //     window.location = url;
-    //   })
-    //   .catch((e) => {
-    //     console.error(e.error);
-    //   });
+    // window.location = 'https://buy.stripe.com/test_aEU6rr20K2Dl5DW3cc';
+    fetch('/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Send along all the information about the items
+      body: JSON.stringify({
+        items: [
+          {
+            id: 1,
+            quantity: 1,
+          },
+        ],
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        // If there is an error then make sure we catch that
+        return res.json().then((e) => Promise.reject(e));
+      })
+      .then(({ url }) => {
+        // On success redirect the customer to the returned URL
+        window.location = url;
+      })
+      .catch((e) => {
+        console.error(e.error);
+      });
   };
 
   return (

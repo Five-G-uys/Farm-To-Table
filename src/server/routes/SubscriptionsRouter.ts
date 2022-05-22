@@ -56,7 +56,7 @@ subscriptionRouter.get('/api/subscriptions', (req, res) => {
 subscriptionRouter.put(
   `/api/subscriptions/:id`,
   (req: Request, res: Response) => {
-    console.log('LINE 390 Subscription PUT req', req.params.id);
+    // console.log('LINE 390 Subscription PUT req', req.params.id);
     Subscriptions.update(req.body, {
       where: {
         id: req.params.id,
@@ -99,7 +99,7 @@ subscriptionRouter.delete(
       where: { id: Number(req.params.subscriptionId) },
     })
       .then((data: any) => {
-        console.log('440 subscription delete was successful!!', data);
+        // console.log('440 subscription delete was successful!!', data);
         res.sendStatus(200);
       })
       .catch((err: any) => {

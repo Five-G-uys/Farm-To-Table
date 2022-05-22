@@ -114,12 +114,12 @@ const SubscriptionsRecords = () => {
       }
       return row;
     });
-    console.log();
+    // console.log();
     setRows(newRows);
   };
 
   const onDone = (row: object) => {
-    console.log(row)
+    // console.log(row)
     setEditing(!editing)
     patchSubscription(row.id, row);
   }
@@ -135,27 +135,6 @@ const SubscriptionsRecords = () => {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-         <CssBaseline />
-        {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth='sm'>
-            <Typography
-              component='h1'
-              variant='h2'
-              align='center'
-              color='text.primary'
-              gutterBottom
-            >
-              Seasons Records
-            </Typography>
-          </Container>
-        </Box>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>

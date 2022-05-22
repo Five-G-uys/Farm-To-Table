@@ -49,7 +49,7 @@ eventRouter.get("/api/events", (req: Request, res: Response) => {
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log("Something went wrong", err);
+      console.error("Something went wrong", err);
       res.sendStatus(404);
     });
 });

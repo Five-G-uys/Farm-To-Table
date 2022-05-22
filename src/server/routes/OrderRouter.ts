@@ -44,7 +44,7 @@ orderRouter.get('/api/order', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// GET TODAYS ORDER COORDINATES
 orderRouter.get('/api/order/todaysOrders', (req, res) => {
-  console.log('LINE 47 || ORDER ROUTER', req.query);
+  // console.log('LINE 47 || ORDER ROUTER', req.query);
   const { lat, lon, delivery_date } = req.query;
   // want to find all orders within 8 days of today.
   // create a delivery_date array of dates based of current delivery_date value using dayjs add 1 day 7 times
@@ -59,11 +59,11 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
   Orders.findAll({ where: { [Op.or]: delivery_dates } })
     // Orders.findAll({ where: { delivery_date } })
     .then((response: any) => {
-      console.log('LINE 62 || ORDERROUTER', response);
+      // console.log('LINE 62 || ORDERROUTER', response);
       const subscriptionEntryIds = response.map((order: any) => {
         return { id: order.dataValues.subscriptionEntryId };
       });
-      console.log('LINE 66 || ORDER ROUTER', subscriptionEntryIds);
+      // console.log('LINE 66 || ORDER ROUTER', subscriptionEntryIds);
 
       // FIND SUBSCRIPTION ENTRIES WITH THE ID ARRAY
       return SubscriptionEntries.findAll({
@@ -73,7 +73,7 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
       });
     })
     .then((data: any) => {
-      console.log('LINE 76 || ORDER ROUTER', data);
+      // console.log('LINE 76 || ORDER ROUTER', data);
       const orderLocations = data.map((subscriptionEntry: any) => {
         return {
           streetAddress: subscriptionEntry.streetAddress,
@@ -92,7 +92,7 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
       if (route.message) {
         throw route.err;
       }
-      console.log('LINE 93 || ORDERROUTER', route.data);
+      // console.log('LINE 93 || ORDERROUTER', route.data);
       res.json(route.data);
     })
     .catch((err: object) => {
@@ -103,15 +103,15 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// GET USER'S UPCOMING ORDERS
 orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
-  console.log('LINE 93 || SERVER INDEX', req.params); // user id
+  // console.log('LINE 93 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
   SubscriptionEntries.findAll({ where: { userId: Number(req.params.id) } })
     .then((data: Array<object>) => {
       const dataObj: Array<object> = [];
-      console.log('LINE 99 || ORDER ROUTER', data);
+      // console.log('LINE 99 || ORDER ROUTER', data);
       data.forEach((subscriptionEntry: any) => {
-        console.log('LINE 100', subscriptionEntry.dataValues);
+        // console.log('LINE 100', subscriptionEntry.dataValues);
         if (subscriptionEntry.dataValues.userId === Number(req.params.id)) {
           dataObj.push(subscriptionEntry.dataValues.id);
         }

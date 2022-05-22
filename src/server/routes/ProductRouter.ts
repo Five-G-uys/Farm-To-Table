@@ -50,11 +50,9 @@ productRouter.post('/api/products', (req: Request, res: Response) => {
 productRouter.get('/api/products', (req, res) => {
   Products.findAll()
     .then((response: any) => {
-      // console.log('FIND ALL Products RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
-      console.log('FIND ALL Products ERROR: ', err);
       res.sendStatus(500);
     });
 });
@@ -76,7 +74,7 @@ productRouter.get('/api/availableProducts', (req, res) => {
 productRouter.patch(
   '/api/products/:id',
   async (req: Request, res: Response) => {
-    console.log('LINE 79 || UPDATE PRODUCT', req.body);
+    // console.log('LINE 79 || UPDATE PRODUCT', req.body);
 
     try {
       // update product model with async query and assign the result of that promise to a variable to res.send back
@@ -84,7 +82,6 @@ productRouter.patch(
         where: { id: req.params.id },
         returning: true,
       });
-      // console.log('LINE 278 || UPDATE PRODUCT', updatedProduct);
 
       res.status(204).json(updatedProduct);
     } catch (err) {

@@ -7,14 +7,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Input from "@material-ui/core/Input";
+import Input from '@material-ui/core/Input';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import { CssBaseline, Box, Container, Typography } from '@mui/material';
 
 interface Column {
-  id: 'id' | 'name' | 'contact_information'
+  id: 'id' | 'name' | 'contact_information';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -26,16 +27,14 @@ const columns: readonly Column[] = [
   {
     id: 'name',
     label: 'Name',
-    minWidth: 170
+    minWidth: 170,
   },
   {
     id: 'contact_information',
     label: 'Contact Infomation',
-    minWidth: 170
+    minWidth: 170,
   },
-
 ];
-
 
 const VendorsRecords = () => {
   const [page, setPage] = useState(0);
@@ -46,43 +45,47 @@ const VendorsRecords = () => {
   const [deleteCount, setDeleteCount] = useState(0);
 
   const getVendors = () => {
-    axios.get("/api/vendors")
+    axios
+      .get('/api/vendors')
       .then((data) => {
         // console.log(data.data);
-        setRows(data.data)
+        setRows(data.data);
       })
       .catch((error) => {
-        console.log("failed request", error);
-      })
-  }
+        console.log('failed request', error);
+      });
+  };
 
   const patchVendors = async (vendorId: string, updatedvendor: any) => {
     try {
-      const { data } = await axios.patch(`/api/vendors/${vendorId}`, updatedvendor);
-      return data
+      const { data } = await axios.patch(
+        `/api/vendors/${vendorId}`,
+        updatedvendor,
+      );
+      return data;
     } catch (err) {
-      console.error(err)
+      console.error(err);
       return {
-        error: err
-      }
+        error: err,
+      };
     }
-  }
-  
+  };
+
   const deleteVendors = async (vendorId: string) => {
     try {
       const { data } = await axios.delete(`/api/vendors/${vendorId}`);
-      return data
+      return data;
     } catch (err) {
-      console.error(err)
+      console.error(err);
       return {
-        error: err
-      }
+        error: err,
+      };
     }
-  }
+  };
 
   useEffect(() => {
     getVendors();
-  }, [deleteCount])
+  }, [deleteCount]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -106,24 +109,24 @@ const VendorsRecords = () => {
       }
       return row;
     });
-    console.log();
+    // console.log();
     setRows(newRows);
   };
 
   const onDone = (row: object) => {
-    console.log(row)
-    setEditing(!editing)
+    // console.log(row);
+    setEditing(!editing);
     patchVendors(row.id, row);
-  }
+  };
 
   const onEdit = () => {
-    setEditing(!editing)
-  }
+    setEditing(!editing);
+  };
 
   const onDelete = (row: object) => {
-    setDeleteCount(deleteCount + 1)
-    deleteVendors(row.id)
-  }
+    setDeleteCount(deleteCount + 1);
+    deleteVendors(row.id);
+  };
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -156,18 +159,19 @@ const VendorsRecords = () => {
                             // type={String}
                             defaultValue={value}
                             name={column.id}
-                            onChange={e => onChange(e, row)} />
+                            onChange={(e) => onChange(e, row)}
+                          />
+                        ) : column.format && typeof value === 'number' ? (
+                          column.format(value)
                         ) : (
-                          column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value
+                          value
                         )}
                       </TableCell>
                     );
                   })}
                   {editing ? (
                     <DoneIcon onClick={() => onDone(row)} />
-                  ) :
+                  ) : (
                     <>
                       <TableCell>
                         <EditIcon onClick={() => onEdit()} />
@@ -176,8 +180,7 @@ const VendorsRecords = () => {
                         <DeleteIcon onClick={() => onDelete(row)} />
                       </TableCell>
                     </>
-                  }
-
+                  )}
                 </TableRow>
               ))}
           </TableBody>
@@ -194,6 +197,6 @@ const VendorsRecords = () => {
       />
     </Paper>
   );
-}
+};
 
 export default VendorsRecords;

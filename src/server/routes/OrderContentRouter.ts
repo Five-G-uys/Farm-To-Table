@@ -15,7 +15,7 @@ const orderContentRouter: Router = Router();
 orderContentRouter.post(
   '/api/order-content',
   async (req: Request, res: Response, next: any) => {
-    console.log('LINE 18', req.body);
+    // console.log('LINE 18', req.body);
     // destructure product id array from req.body as well
     const { delivery_date, productsIds } = req.body;
     try {
@@ -23,7 +23,7 @@ orderContentRouter.post(
       const orders = await Orders.findAll({
         where: { delivery_date },
       });
-      console.log('LINE 26 || ORDER CONTENTS ROUTER', orders);
+      // console.log('LINE 26 || ORDER CONTENTS ROUTER', orders);
 
       if (orders.length < 1) {
         // use throw to send custom error obj to catch block and call next
@@ -94,13 +94,13 @@ orderContentRouter.get('/api/order-content/:upcomingOrderId', (req, res) => {
 orderContentRouter.patch(
   '/api/order-content/:id',
   async (req: Request, res: Response) => {
-    console.log('UPDATE OrderContent REQUEST BODY: ', req.body);
+    // console.log('UPDATE OrderContent REQUEST BODY: ', req.body);
     try {
       const updatedUser = await OrderContents.update(req.body, {
         where: { id: req.params.id },
         returning: true,
       });
-      console.log('OrderContent UPDATE INFO: ', updatedUser);
+      // console.log('OrderContent UPDATE INFO: ', updatedUser);
       res.status(204).json(updatedUser);
     } catch (err) {
       console.error('OrderContents UPDATE WAS NOT SUCCESSFUL: ', err);
@@ -116,7 +116,7 @@ orderContentRouter.delete(
     console.log('LINE 116 || ORDER CONTENT ROUTER || DELETE', req.params);
     OrderContents.destroy({ where: { id: req.params.orderContentId } })
       .then((data: any) => {
-        console.log('LINE 119 || OrderContent DELETION SUCCESSFUL: ', data);
+        // console.log('LINE 119 || OrderContent DELETION SUCCESSFUL: ', data);
         res.sendStatus(200);
       })
       .catch((err: any) => {

@@ -34,10 +34,16 @@ import Weather from './Weather';
 
 //material UI IMPORTS
 import { Box, createTheme, PaletteMode } from '@mui/material';
-import { Container, Grid, Paper, Switch } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
-import { amber, blueGrey, grey, lightBlue, orange } from '@mui/material/colors';
+import {
+  amber,
+  blueGrey,
+  grey,
+  lightBlue,
+  orange,
+  lightGreen,
+} from '@mui/material/colors';
 
 import { Dispatch, SetStateAction } from 'react';
 
@@ -85,7 +91,7 @@ const App = () => {
   ////********************DARK MODE HERE *********************////
   const [mode, setMode] = React.useState<PaletteMode>('light');
   //Not functional yet
-  const image = 'https://www.pexels.com/photo/brown-wooden-surface-129722/';
+  const image = 'https://www.transparenttextures.com/patterns/asfalt-dark.png';
   const styles = {
     paperContainer: {
       backgroundImage: `url(${image})`,
@@ -100,10 +106,12 @@ const App = () => {
             // palette values for light mode
             primary: amber,
             divider: amber[200],
-            // background: {
-            //   default: orange[100],
-            //   //paper: orange[100],
-            // },
+            background: {
+              default: '#F6FAFF',
+              //rgba(246, 250, 255, 0.9),
+              // backdrop-filter: blur(8px),
+              //backgroundImage: `url(${image})`,
+            },
             text: {
               primary: blueGrey[700],
               secondary: grey[800],
@@ -137,12 +145,10 @@ const App = () => {
 
   /////////////////Local Storage for Darkmode/ LightMode////////////////////////////
   // Set dark mode based on media query
-  //const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   useEffect(() => {
     const mode = window.localStorage.getItem('mode');
     // set mode
-    console.log(`get localStore ${mode}`);
     if (mode !== null) {
       setMode(mode === 'dark' ? 'light' : 'dark');
     }
@@ -287,26 +293,26 @@ const App = () => {
                   )
                 }
               />
-              <Route path='records' element={<RecordsPage />}>
+              <Route path='/records' element={<RecordsPage />}>
                 <Route path='products-records' element={<ProductsRecords />} />
+                <Route path='vendors-records' element={<VendorsRecords />} />
+                <Route
+                  path='delivery-zones-records'
+                  element={<DileveryZonesRecords />}
+                />
+                <Route path='events-records' element={<EventsRecords />} />
+                <Route path='orders-records' element={<OrdersRecords />} />
+                <Route path='products-records' element={<ProductsRecords />} />
+                <Route
+                  path='subscription-entries-records'
+                  element={<SubscriptionEntriesRecords />}
+                />
+                <Route
+                  path='subscriptions-records'
+                  element={<SubscriptionsRecords />}
+                />
+                <Route path='users-records' element={<UsersRecords />} />
               </Route>
-              <Route
-                path='delivery-zones-records'
-                element={<DileveryZonesRecords />}
-              />
-              <Route path='events-records' element={<EventsRecords />} />
-              <Route path='orders-records' element={<OrdersRecords />} />
-              <Route path='products-records' element={<ProductsRecords />} />
-              <Route
-                path='subscription-entries-records'
-                element={<SubscriptionEntriesRecords />}
-              />
-              <Route
-                path='subscriptions-records'
-                element={<SubscriptionsRecords />}
-              />
-              <Route path='users-records' element={<UsersRecords />} />
-              <Route path='vendors-records' element={<VendorsRecords />} />
               <Route
                 path='/records'
                 element={
