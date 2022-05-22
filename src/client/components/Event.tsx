@@ -1,9 +1,8 @@
+// Import Dependencies
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './App';
-import GoogleCalendar from './Google calendar';
 
-//////////////////////MATERIAL UI/////////////////////////////////
 // MUI Imports
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -19,7 +18,6 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;

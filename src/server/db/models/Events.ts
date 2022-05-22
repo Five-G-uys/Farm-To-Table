@@ -1,6 +1,6 @@
+// Import Dependencies
 import { DataTypes } from "sequelize";
 import { db } from "../database";
-// import Farms from "./Farms";
 
 const Events = db.define("events", {
   id: {

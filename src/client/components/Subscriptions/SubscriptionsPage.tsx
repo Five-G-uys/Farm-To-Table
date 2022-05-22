@@ -1,24 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
+// Import Dependencies
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../App';
 import { updateSubscription } from './subscriptionCalls';
-import { useNavigate } from 'react-router-dom';
 
 // MUI IMPORTS
 import Fab from '@mui/material/Fab';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
 // COMPONENT IMPORTS
-import HomePage from '../HomePage';
 import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
 import AddressForm from './AddressForm';
-import { padding } from '@mui/system';
 import { CssBaseline, Box, Container } from '@mui/material';
 
 const SubscriptionsPage = () => {

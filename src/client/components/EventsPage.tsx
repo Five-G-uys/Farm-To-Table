@@ -20,15 +20,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import {
-  // amber,
-  // blueGrey,
-  // grey,
-  // orange,
-  purple,
-  // deepPurple,
-} from '@mui/material/colors';
-//import Button from "@mui/material/Button";
+import { purple } from '@mui/material/colors';
 
 //Component import
 import EventCard from './EventCard';

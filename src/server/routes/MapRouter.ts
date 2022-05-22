@@ -1,10 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import { Router } from 'express';
-// import axios from 'axios';
-// require('dotenv').config();
 
 // Initialize Router
 const mapRouter = Router();

@@ -1,3 +1,4 @@
+// Import Dependencies
 import axios from 'axios';
 
 // export function to product pages component

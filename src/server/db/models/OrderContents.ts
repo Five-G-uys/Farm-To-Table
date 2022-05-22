@@ -1,3 +1,4 @@
+// Import Dependences
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 import Products from './Products';

@@ -1,31 +1,8 @@
-import React, { useState, useContext } from 'react';
-
-// MUI Imports
-import { ThemeProvider, createTheme } from '@mui/system';
-import { Navigate } from 'react-router-dom';
-import {
-  RadioGroup,
-  Radio,
-  FormLabel,
-  FormControlLabel,
-  Fade,
-  Modal,
-  Typography,
-  InputAdornment,
-  InputLabel,
-  Input,
-  FormControl,
-  Backdrop,
-  Button,
-  Fab,
-  TextField,
-  Box,
-  Slide,
-  Stack,
-} from '@mui/material';
+// Import Dependencies
+import React from 'react';
+import { Fade, Modal, Backdrop, Button, TextField, Box, Stack } from '@mui/material';
 
 const AddressForm = ({
-  handleAddressForm,
   handleAddressFormClose,
   handleInputAddress,
   handleSubscribed,

@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 import React, { useState, useEffect, useContext } from "react";
 import Event from "./Event";
-import axios from "axios";
 import { UserContext } from "./App";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 
 interface AppProps {

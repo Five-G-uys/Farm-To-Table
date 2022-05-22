@@ -3,24 +3,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // MUI Imports
-import { ThemeProvider, createTheme } from '@mui/system';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import { Navigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
-import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
-import { Container, CssBaseline, Slide, Stack } from '@mui/material';
-import Divider from '@mui/material/Divider';
+import { Container, CssBaseline, Stack } from '@mui/material';
 
 // Component Imports
 import ProductsContainer from './ProductsContainer';

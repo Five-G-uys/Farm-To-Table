@@ -1,24 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// Import Dependencies
 import React, { useState, useEffect, useContext } from "react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import axios, { AxiosResponse } from "axios";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import axios from "axios";
 import RSVPLIST from "./RSVPLIST";
 import { UserContext } from "./App";
-import {
-  CardContent,
-  Typography,
-  Grid,
-  Container,
-  Paper,
-  Card,
-  CardActions,
-  Box,
-} from "@mui/material";
-import Reminders from "@mui/material";
-import Sidebar from "./Sidebar";
-//import Profile ""
+import { CardContent, Typography, Grid, Container, Paper, CardActions, Box } from "@mui/material";
 
+// Create Functional Component
 const RSVPS = () => {
   const user: any = useContext(UserContext);
   const { roleId, id } = user;
@@ -119,4 +106,5 @@ const RSVPS = () => {
   );
 };
 
+// Export Component
 export default RSVPS;

@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import { Router } from 'express';
-import { Op, or } from 'sequelize';
-import express, { Express, Request, Response } from 'express';
+import { Op } from 'sequelize';
+import { Request, Response } from 'express';
 
 // Import Models
 import { Orders, SubscriptionEntries } from '../db/models';

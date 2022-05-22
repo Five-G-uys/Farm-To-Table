@@ -1,5 +1,5 @@
+// import Farms from './Farms';
 import { DataTypes } from 'sequelize';
-import Subscriptions from './Subscriptions';
 import { db } from '../database';
 // import Farms from './Farms';
 // import Vendors from './Vendors';
