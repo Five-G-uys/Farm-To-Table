@@ -29,9 +29,9 @@ interface Props {
   children: React.ReactElement;
 }
 interface AppProps {
-  user: { id: number; roleId: number };
+  user: { id: number; roleId: number; picture: string };
   mode: string;
-  changeMode(mode): void;
+  changeMode(mode: string): void;
 }
 
 function HideOnScroll(props: Props) {
@@ -58,9 +58,10 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
     { name: 'Events', path: '/events-page' },
     { name: 'About', path: '/about-us-page' },
   ];
-
+  let settings: any;
   if (user.roleId === 4) {
-    const settings = [
+    settings = [
+      { name: 'Manage Orders', path: '/manage-orders' },
       { name: 'Records', path: '/records' },
       // { name: 'Packing List', path: '/packing-lists' },
       // { name: 'Delivery Routes', path: '/delivery-routes' },
@@ -71,7 +72,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
       { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
     ];
   } else if (user.roleId === 3) {
-    const settings = [
+    settings = [
       // { name: 'Packing List', path: '/packing-lists' },
       // { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Delivery Map', path: '/delivery-map' },
@@ -80,13 +81,13 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
       { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else if (user.roleId === 2 || user.roleId === 1) {
-    const settings = [
+    settings = [
       { name: 'Orders', path: '/orders-page' },
       { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else {
-    const settings = [{ name: 'Login', path: '/auth/google' }];
+    settings = [{ name: 'Login', path: '/auth/google' }];
   }
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -116,6 +117,14 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
           position='sticky'
           // position='fixed'
           style={{
+            // ORIGINAL NAVBAR STYLING
+            // backgroundColor: 'lightgreen',
+            // maxHeight: '5rem',
+            // // margin: '.4rem',
+            // justifySelf: 'center',
+            // marginTop: '1rem',
+            // maxWidth: '80vw',
+            // margin: 'auto',
             backgroundColor: '#e2f2d9',
             maxHeight: '5rem',
             // margin: '.4rem',
@@ -272,7 +281,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   onClose={handleCloseUserMenu}
                   // color='success'
                 >
-                  {settings.map((setting) => (
+                  {settings.map((setting: any) => (
                     <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
                       <Button href={setting.path} color='success'>
                         <Typography textAlign='center'>

@@ -1,5 +1,5 @@
 body {
-  background-image: url("https://www.transparenttextures.com/patterns/tileable-wood-colored.png");
+  background-image: url('https://www.transparenttextures.com/patterns/tileable-wood-colored.png');
 
   /* background-image: url('/src/client/components/groundImage.png'); */
   size-adjust: absolute;
@@ -133,6 +133,12 @@ body {
   width: 100vw;
 }
 
+.thumbnail {
+  border-radius: 1.5rem;
+  /* max-width: flex; */
+  /* min-width: 100; */
+  max-width: 200px;
+}
 /*CSS FOR CARD TEXTURE*/
 .texture1 {
   background-color: rgba(246, 250, 255, 0.9);
@@ -150,21 +156,21 @@ body {
 /* Background Image Classes */
 
 .lightBackground1 {
-background-color: #e6b265;
-background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+  background-color: #e6b265;
+  background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
 }
 
 .darkBackground1 {
-background-color: #000000;
-background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+  background-color: #000000;
+  background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
 }
 
 .lightBackground2 {
-background-color: #ffffff;
-background-image: url("https://www.transparenttextures.com/patterns/tileable-wood-colored.png");
+  background-color: #ffffff;
+  background-image: url('https://www.transparenttextures.com/patterns/tileable-wood-colored.png');
 }
 
-.darkBackground2{  
+.darkBackground2 {
   background-color: #000000;
-  background-image: url("https://www.transparenttextures.com/patterns/tileable-wood-colored.png");
- }
+  background-image: url('https://www.transparenttextures.com/patterns/tileable-wood-colored.png');
+}
