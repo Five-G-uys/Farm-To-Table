@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './App';
+//import GoogleCalendar from './GoogleCalendar';
 
 // MUI Imports
 import { styled } from '@mui/material/styles';
@@ -18,6 +19,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { Box } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -25,6 +27,7 @@ interface ExpandMoreProps extends IconButtonProps {
 
 //PASS EXPANDMORE THROUGH PROPS FROM PARENT
 const ExpandMore = styled((props: ExpandMoreProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -36,7 +39,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 interface AppProps {
-  handleEditClick(id): void;
+  handleEditClick(id: number): void;
   getAllEvents(): void;
   event: {
     eventName: string;
@@ -139,20 +142,43 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
       });
   };
 
+  //////////////////confirmation box//////////////////////
+  // class ConfirmBox {
+  //   show() {
+  //    var c = confirm("Are you sure you want to do that?");
+  //    var status = document.getElementById("content");
+  //    if (c == true) {
+  //     status.innerHTML = "You confirmed, thanks";
+  //    } else {
+  //     status.innerHTML = "You cancelled the action";
+  //    }
+  //   }
+  //  }
+  //  window.onload = () => {
+  //   var bttn = < HTMLButtonElement > document.getElementById("Button1");
+  //   bttn.onclick = function() {
+  //    const obj = new ConfirmBox();
+  //    obj.show();
+  //   };
+  //   };
+
   ////////////////////////////////////////////
   useEffect(() => {
     getUserRsvpCount();
     totalEventRsvps();
+    // GoogleCalendar();
   }, [updateCounter]);
 
   return (
-    <>
+    //Reconfiguring the card margins
+    <Box marginTop='-130px'>
       <Card
         sx={{
-          minWidth: 300,
+          minWidth: '15rem',
           borderRadius: '1.2rem',
           boxShadow: 8,
           size: 'large',
+          marginTop: '100px',
         }}
         className='texture1'
       >
@@ -199,8 +225,8 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
             {user.roleId < 4
               ? `${
                   totalRsvp === 1
-                    ? `Going:  ${totalRsvp}`
-                    : `Going:  ${totalRsvp}`
+                    ? `Total going:  ${totalRsvp}`
+                    : `Total going:  ${totalRsvp}`
                 }`
               : `RSVPS: ${totalRsvp}`}
           </Typography>
@@ -209,19 +235,31 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           <Stack spacing={5} direction='row' id='product_card_stack'>
             <ExpandMore sx={{ color: 'green' }} expand={expanded}>
               {roleId > 3 && (
-                <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
+                <Button>
+                  <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
+                </Button>
               )}
             </ExpandMore>
             {/* <ExpandMore sx={{ color: 'green' }} expand={expanded}> */}
-              {roleId < 4 && (
-                <Button onClick={handRSVPosts} color='success' size='large'>
-                  {isGoing ? (
-                    <CheckIcon color='success' fontSize='large'></CheckIcon>
-                  ) : (
-                    'RSVP'
-                  )}
-                </Button>
-              )}
+            {roleId < 4 && (
+              <Button
+                sx={{
+                  '&:hover:before': { content: `"Going"` },
+                  position: 'top',
+                  width: 80, //necessary for replacing text
+                }}
+                onClick={handRSVPosts}
+                color='success'
+                size='medium'
+                variant='outlined'
+              >
+                {isGoing ? (
+                  <CheckIcon color='success' fontSize='large'></CheckIcon>
+                ) : (
+                  'RSVP'
+                )}
+              </Button>
+            )}
             {/* </ExpandMore> */}
             {roleId > 3 && (
               <ExpandMore
@@ -267,7 +305,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         </Collapse>
       </Card>
       {/* <GoogleCalendar /> */}
-    </>
+    </Box>
   );
 };
 

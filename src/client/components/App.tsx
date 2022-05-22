@@ -29,10 +29,11 @@ import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
 
 //material UI IMPORTS
-import { Box, createTheme, PaletteMode } from '@mui/material';
+import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
-import { amber, blueGrey, grey } from '@mui/material/colors';
+import { amber, blueGrey, grey, lightGreen } from '@mui/material/colors';
+
 
 function Copyright() {
   return (
@@ -46,7 +47,7 @@ function Copyright() {
 export const UserContext: any = createContext(null);
 
 const App = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser]: any = useState({});
   const [lat, setLat]: any = useState(null);
   const [lon, setLon]: any = useState(null);
 
@@ -120,8 +121,8 @@ const App = () => {
               paper: blueGrey[900],
             },
             text: {
-              primary: '#fff',
-              secondary: grey[500],
+              primary: amber[600],
+              secondary: lightGreen[600],
             },
           }),
     },
@@ -173,7 +174,7 @@ const App = () => {
               // item
               xs={4}
             > */}
-        <div>
+        <Grid>
           <UserContext.Provider value={user}>
             <Routes>
               {/* Login/Logout Routes */}
@@ -214,8 +215,23 @@ const App = () => {
               <Route
                 path='/orders-page'
                 element={
-                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
-                  <OrdersPage />
+                  <OrdersPage
+                    getOrders={(id: any) =>
+                      axios.get(`/api/upcoming_orders/${id}`, {
+                        params: { id },
+                      })
+                    }
+                  />
+                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path='/manage-orders'
+                element={
+                  <OrdersPage
+                    getOrders={() => axios.get(`/api/order/deliveries`)}
+                  />
+                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to="/login" />
                 }
               />
               {/* Restricted Employ Routes */}
@@ -294,7 +310,7 @@ const App = () => {
               />
             </Routes>
           </UserContext.Provider>
-        </div>
+        </Grid>
         {/* Footer */}
         <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
           <Typography variant='h6' align='center' gutterBottom>

@@ -1,5 +1,9 @@
 // React Imports
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
+// Component Imports
+import { UserContext } from './App';
+import UpcomingOrderContentList from './UpcomingOrderContentList';
 
 // MUI Import
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
@@ -14,6 +18,8 @@ import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import { red } from '@mui/material/colors';
 import Typography from '@mui/material/Typography';
+import EditIcon from '@mui/icons-material/Edit';
+import Stack from '@mui/material/Stack';
 
 // Other Module Imports;
 import dayjs from 'dayjs';
@@ -33,22 +39,28 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const OrderCard = ({ order }: any) => {
+const OrderCard = ({
+  order,
+  handleOpen,
+  handleEditClick,
+  handleDeleteOrderContent,
+}: any) => {
   // expanded state var
   const [expanded, setExpanded] = useState(false);
-
+  const user: any = useContext(UserContext);
   // toggle bool
+  // console.log('LINE 49 || ORDERCARD', user.roleId);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   // MAP OVER ALL PRODUCTS IN EACH ORDER INSIDE OF THE COLLAPSE
-
+  // console.log('LINE 55 || ORDER OBJECT', order);
   return (
     <Card
       sx={{
         backgroundColor: '#e2f2d9',
-        minWidth: '15rem',
+        minWidth: '18rem',
         borderRadius: '2.5rem',
         // elevation: 2,
         boxShadow: 8,
@@ -77,21 +89,36 @@ const OrderCard = ({ order }: any) => {
         </Typography>
       </CardContent>
       {/* NEED TO CONDITIONALLY RENDER EDIT & DELETE BUTTONS FOR ADMIN */}
-      <CardActions disableSpacing>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label='show more'
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+      <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
+        <Stack spacing={5} direction='row'>
+          {user.roleId === 4 && (
+            <ExpandMore
+              sx={{ color: 'green' }}
+              expand={expanded}
+              onClick={() => handleEditClick(order.delivery_date)}
+            >
+              <EditIcon sx={{ color: 'green' }} />
+            </ExpandMore>
+          )}
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label='show more'
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        </Stack>
       </CardActions>
 
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
           {/* // setup map that returns a Typography */}
-          <Typography paragraph>Produce</Typography>
+          {/* {user.roleId === 1 && <UpcomingOrderContentList order={order} />} */}
+          <UpcomingOrderContentList
+            order={order}
+            handleDeleteOrderContent={handleDeleteOrderContent}
+          />
         </CardContent>
       </Collapse>
 

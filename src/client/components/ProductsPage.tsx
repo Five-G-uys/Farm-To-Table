@@ -12,13 +12,11 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
-import { Container, CssBaseline, Stack } from '@mui/material';
+import { Checkbox, Container, CssBaseline, FormControlLabel, Stack } from '@mui/material';
 
 // Component Imports
 import ProductsContainer from './ProductsContainer';
-// can import getallproducts after migrating it to apicalls file
 import { updateProduct } from '../apiCalls/productCallS';
-// import { cli } from 'webpack';
 
 const ProductsPage = () => {
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -28,6 +26,9 @@ const ProductsPage = () => {
 
   // create a stateful boolean to monitor if updating existing product (in update mode) or creating a new product entry
   const [inEditMode, setInEditMode] = useState(false);
+
+  // create stateful boolean to monitor if product availability is changed
+  const [isClicked, setIsClicked] = useState(true);
 
   // create state var for product object
   const [product, setProduct] = useState({
@@ -39,6 +40,7 @@ const ProductsPage = () => {
     // plant_date: '',
     harvest_dates: '',
     // subscriptionId: '',
+    available: true,
   });
   // state var for backdrop
   const [open, setOpen] = useState(false);
@@ -61,10 +63,9 @@ const ProductsPage = () => {
       // plant_date: '',
       harvest_dates: '',
       // subscriptionId: '',
+      available: true,
     });
   };
-  // const handleToggle = () => {
-  // };
 
   // Box component styles
   const commonStyles = {
@@ -101,6 +102,7 @@ const ProductsPage = () => {
     // plant_date,
     harvest_dates,
     // subscriptionId,
+    available,
   } = product;
 
   // create post req to send product form data
@@ -113,10 +115,13 @@ const ProductsPage = () => {
           name: name,
           description: description,
           quantity: quantity,
-          img_url: img_url,
+          img_url: img_url
+            ? img_url
+            : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg',
           // // plant_date: plant_date,
           harvest_dates: harvest_dates,
           // // subscriptionId: Number(subscriptionId),
+          available: available,
         },
       })
       .catch((err) => {
@@ -161,6 +166,17 @@ const ProductsPage = () => {
       return {
         ...state,
         [name]: value,
+      };
+    });
+  };
+
+  // Create input handler for availability checkbox
+  const handleAvailabilityChange = (e: any) => {
+    console.log('LINE 83 || PRODUCTSPAGE', e.target.checked);
+    setProduct((state) => {
+      return {
+        ...state,
+        available: e.target.checked,
       };
     });
   };
@@ -236,6 +252,7 @@ const ProductsPage = () => {
       // // plant_date: clickedProduct.plant_date,
       harvest_dates: clickedProduct.harvest_dates,
       // // subscriptionId: clickedProduct.subscriptionId,
+      available: clickedProduct.available,
     });
     setInEditMode(true);
     setOpen(true);
@@ -326,36 +343,18 @@ const ProductsPage = () => {
                     {img_url && (
                       <img width={'100%'} src={img_url} border-radius='2rem' />
                     )}
-                    {/* <FormControl fullWidth variant='filled'>
-                      <InputLabel htmlFor='filled-adornment-amount'>
-                        Amount
-                      </InputLabel>
-                      <FilledInput
-                        name='name'
-                        value={name}
-                        id='Product Name'
-                        // id='fullWidth'
-                        placeholder='Avocado'
-                        onChange={handelTextInput}
-                        // startAdornment={
-                        //   <InputAdornment position='start'>$</InputAdornment>
-                        // }
-                      />
-                    </FormControl>
-                    <FormControl fullWidth variant='filled'>
-                      <InputLabel htmlFor='filled-adornment-amount'>
-                        Amount
-                      </InputLabel>
-                      <FilledInput
-                        id='filled-adornment-amount'
-                        // value={values.amount}
-                        // onChange={handleChange('amount')}
-                        startAdornment={
-                          <InputAdornment position='start'>$</InputAdornment>
-                        }
-                      />
-                    </FormControl> */}
+
                     <br></br>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={available}
+                          onChange={handleAvailabilityChange}
+                        />
+                      }
+                      label='Available'
+                    />
+
                     <TextField
                       // width='75%'
                       // type={{ width: '75%' }}
@@ -425,31 +424,8 @@ const ProductsPage = () => {
                     />
                     <br></br>
                     <br></br>
-                    {/* <TextField
-                      fullWidth
-                      id='filled-basic'
-                      variant='filled'
-                      // value={subscriptionId}
-                      // name='subscriptionId'
-                      label='Season'
-                      // id='fullWidth'
-                      placeholder='Season'
-                      onChange={handelTextInput}
-                    />
-                    <br></br>
-                    <br></br> */}
-                    <Stack
-                      direction='row'
-                      // divider={
-                      //   <Divider
-                      //     orientation='vertical'
-                      //     variant='middle'
-                      //     flexItem
-                      //     light
-                      //   />
-                      // }
-                      justifyContent='space-between'
-                    >
+
+                    <Stack direction='row' justifyContent='space-between'>
                       <Button
                         variant='text'
                         size='medium'
