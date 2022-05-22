@@ -19,10 +19,16 @@ const useStyles = makeStyles({
   },
 });
 
-const OrdersList = ({ orders }: any) => {
+const OrdersList = ({
+  orders,
+  handleOpen,
+  handleEditClick,
+  handleDeleteOrderContent,
+}: any) => {
   // console.log(
   //   'LINE 4 || ORDERSLIST ',
-  //   orders.sort((a: any, b: any) => a.delivery_date - b.delivery_date)
+  //   orders,
+  //   // orders.sort((a: any, b: any) => a.id - b.id),
   // );
   const classes = useStyles();
 
@@ -34,13 +40,19 @@ const OrdersList = ({ orders }: any) => {
             <Grid
               item
               xs={10}
-              sm={5}
-              md={4}
-              lg={3}
+              sm={6}
+              md={5}
+              lg={4}
               xl={3}
               key={order.delivery_date + order.id}
             >
-              <OrderCard order={order} key={order.delivery_date + order.id} />
+              <OrderCard
+                order={order}
+                handleOpen={handleOpen}
+                key={order.delivery_date + order.id}
+                handleEditClick={handleEditClick}
+                handleDeleteOrderContent={handleDeleteOrderContent}
+              />
             </Grid>
           );
         })}

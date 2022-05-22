@@ -34,9 +34,8 @@ import Weather from './Weather';
 
 //material UI IMPORTS
 import { Box, createTheme, PaletteMode } from '@mui/material';
-import { Container, Grid, Paper, Switch } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
-import { Typography, url, URL } from '@mui/material';
+import { Typography } from '@mui/material';
 import {
   amber,
   blueGrey,
@@ -231,8 +230,23 @@ const App = () => {
               <Route
                 path='/orders-page'
                 element={
-                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
-                  <OrdersPage />
+                  <OrdersPage
+                    getOrders={(id: any) =>
+                      axios.get(`/api/upcoming_orders/${id}`, {
+                        params: { id },
+                      })
+                    }
+                  />
+                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path='/manage-orders'
+                element={
+                  <OrdersPage
+                    getOrders={() => axios.get(`/api/order/deliveries`)}
+                  />
+                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to="/login" />
                 }
               />
               {/* Restricted Employ Routes */}

@@ -35,10 +35,10 @@ const Products = db.define(
       defaultValue:
         'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg',
     },
-    // available: {
-    //   type: DataTypes.BOOLEAN,
-    //   allowNull: false,
-    // },
+    available: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     // farm_id: {
     //   type: DataTypes.INTEGER,
     //   allowNull: false,
