@@ -224,7 +224,22 @@ const App = () => {
               <Route
                 path='/orders-page'
                 element={
-                  <OrdersPage />
+                  <OrdersPage
+                    getOrders={(id: any) =>
+                      axios.get(`/api/upcoming_orders/${id}`, {
+                        params: { id },
+                      })
+                    }
+                  />
+                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path='/manage-orders'
+                element={
+                  <OrdersPage
+                    getOrders={() => axios.get(`/api/order/deliveries`)}
+                  />
                   // isLoggedIn(user) ? <OrdersPage /> : <Navigate to="/login" />
                 }
               />

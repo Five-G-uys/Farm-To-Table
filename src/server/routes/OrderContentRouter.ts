@@ -17,13 +17,13 @@ orderContentRouter.post(
   async (req: Request, res: Response, next: any) => {
     console.log('LINE 18', req.body);
     // destructure product id array from req.body as well
-    const { delivery_date } = req.body;
+    const { delivery_date, productsIds } = req.body;
     try {
       // find all orders with same delivery date
       const orders = await Orders.findAll({
         where: { delivery_date },
       });
-      console.log('LINE 23 || ORDER CONTENTS ROUTER', orders);
+      console.log('LINE 26 || ORDER CONTENTS ROUTER', orders);
 
       if (orders.length < 1) {
         // use throw to send custom error obj to catch block and call next
@@ -32,18 +32,28 @@ orderContentRouter.post(
         next(err);
         // throw err;
       }
+
       // logic to loop through each order and on each order loop through product id's to add
       // to order contents
+      const orderContents: any = [];
 
-      // OR
-
-      // await
-      // map through orders, return from map each object that should be an orderContent entry
-
-      res.json(orders);
+      console.log('LINE 40 ORDERCONTENTOROUTER', delivery_date, productsIds);
+      for (let i = 0; i < productsIds.length; i++) {
+        for (let j = 0; j < orders.length; j++) {
+          const contentOBj: any = {
+            orderId: orders[j].id,
+            productId: Number(productsIds[i]),
+          };
+          console.log('LINE 46 ORDERCONTENTOROUTER', contentOBj);
+          orderContents.push(contentOBj);
+        }
+      }
+      console.log('LINE 50 ORDERCONTENTOROUTER', orderContents);
+      await OrderContents.bulkCreate(orderContents);
+      res.json({ message: 'ORDER CONTENTS ADDED' });
     } catch (err: any) {
       // err ==> {status: 404, message: 'No orders on this date'}
-      console.log('LINE 35', err.message);
+      console.log('LINE 55', err.message);
       next(err);
       // res.json(err);
     }
@@ -56,14 +66,22 @@ orderContentRouter.post(
     //     console.error('Post Request Failed', err);
     //     res.sendStatus(500);
     //   });
-  }
+  },
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL OrderContents ROUTE
-orderContentRouter.get('/api/order-content', (req, res) => {
-  OrderContents.findAll()
+// GET UPCOMING ORDER CONTENTS
+
+orderContentRouter.get('/api/order-content/:upcomingOrderId', (req, res) => {
+  console.log('LINE 76 || ORDER CONTENT ROUTER', req.params);
+
+  OrderContents.findAll({
+    where: { orderId: Number(req.params.upcomingOrderId) },
+  })
     .then((response: any) => {
-      console.log('FINDALL USERS RESPONSE: ', response);
+      console.log('LINE 80 || ORDER CONTENT ROUTER', response);
+      // for each order content obj, I want to return the product info from each one
+      response = response.map((orderContent: any) => orderContent.productId);
       res.status(200).send(response);
     })
     .catch((err: object) => {
@@ -88,23 +106,27 @@ orderContentRouter.patch(
       console.error('OrderContents UPDATE WAS NOT SUCCESSFUL: ', err);
       res.status(500).json(err);
     }
-  }
+  },
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE ONE OrderContents ROUTE
 orderContentRouter.delete(
-  '/api/order-content/:id',
+  '/api/order-content/:orderContentId',
   (req: Request, res: Response) => {
-    OrderContents.destroy({ where: req.params })
+    console.log('LINE 116 || ORDER CONTENT ROUTER || DELETE', req.params);
+    OrderContents.destroy({ where: { id: req.params.orderContentId } })
       .then((data: any) => {
-        console.log('OrderContent DELETION SUCCESSFUL: ', data);
+        console.log('LINE 119 || OrderContent DELETION SUCCESSFUL: ', data);
         res.sendStatus(200);
       })
       .catch((err: any) => {
-        console.error('OrderContent DELETION WAS NOT SUCCESSFUL: ', err);
+        console.error(
+          'LINE 124 || OrderContent DELETION WAS NOT SUCCESSFUL: ',
+          err,
+        );
         res.sendStatus(400);
       });
-  }
+  },
 );
 
 // Export Router

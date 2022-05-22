@@ -6,9 +6,9 @@
 import { Router } from 'express';
 import { Op, or } from 'sequelize';
 import express, { Express, Request, Response } from 'express';
-
+import dayjs from 'dayjs';
 // Import Models
-import { Orders, SubscriptionEntries } from '../db/models';
+import { Orders, Products, SubscriptionEntries } from '../db/models';
 
 // Import Helper Functions
 import { getRoute } from '../utils/mapbox';
@@ -46,13 +46,24 @@ orderRouter.get('/api/order', (req, res) => {
 orderRouter.get('/api/order/todaysOrders', (req, res) => {
   console.log('LINE 47 || ORDER ROUTER', req.query);
   const { lat, lon, delivery_date } = req.query;
-  Orders.findAll({ where: { delivery_date } })
+  // want to find all orders within 8 days of today.
+  // create a delivery_date array of dates based of current delivery_date value using dayjs add 1 day 7 times
+  const delivery_dates: any = [];
+  // for loop
+  for (let i = 0; i < 8; i++) {
+    const date: any = dayjs().add(i, 'day').format().slice(0, 10);
+    delivery_dates.push({ delivery_date: date });
+  }
+  console.log('LINE 57 || ORDER ROUTER || TODAYS ORDERS', delivery_dates);
+
+  Orders.findAll({ where: { [Op.or]: delivery_dates } })
+    // Orders.findAll({ where: { delivery_date } })
     .then((response: any) => {
-      console.log('LINE 51 || ORDERROUTER', response);
+      console.log('LINE 62 || ORDERROUTER', response);
       const subscriptionEntryIds = response.map((order: any) => {
         return { id: order.dataValues.subscriptionEntryId };
       });
-      console.log('LINE 52 || ORDER ROUTER', subscriptionEntryIds);
+      console.log('LINE 66 || ORDER ROUTER', subscriptionEntryIds);
 
       // FIND SUBSCRIPTION ENTRIES WITH THE ID ARRAY
       return SubscriptionEntries.findAll({
@@ -62,7 +73,7 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
       });
     })
     .then((data: any) => {
-      console.log('LINE 64 || ORDER ROUTER', data);
+      console.log('LINE 76 || ORDER ROUTER', data);
       const orderLocations = data.map((subscriptionEntry: any) => {
         return {
           streetAddress: subscriptionEntry.streetAddress,
@@ -73,22 +84,24 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
           lon: subscriptionEntry.lon,
         };
       });
+      // return result of GETROUTE function from UTILS folder, invoked with lat lon and delivery locations.
+      // need to hardcode lat and lon values to simulate distribution center
       return getRoute(lat, lon, orderLocations);
     })
     .then((route: any) => {
       if (route.message) {
         throw route.err;
       }
-      console.log('LINE 82 || ORDERROUTER', route.data);
+      console.log('LINE 93 || ORDERROUTER', route.data);
       res.json(route.data);
     })
     .catch((err: object) => {
-      console.log('LINE 85, FIND ALL Orders ERROR: ', err);
+      console.log('LINE 97, FIND ALL Orders ERROR: ', err);
       res.status(404).json(err);
     });
 });
 
-///////////////////////////////////////////////////////////////////////////////////////////// ORDERS GET ROUTE
+///////////////////////////////////////////////////////////////////////////////////////////// GET USER'S UPCOMING ORDERS
 orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
   console.log('LINE 93 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
@@ -113,18 +126,27 @@ orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
             subscriptionEntryId: subscriptionEntryId,
           })),
         },
+        include: [
+          {
+            model: Products,
+            attributes: ['img_url', 'name', 'id', 'quantity'],
+          },
+        ],
       })
         .then((data: any) => {
-          console.log('LINE 117 || SERVER INDEX', Array.isArray(data)); // ==> ARRAY OF ORDER OBJECTS
+          // console.log('LINE 137 || SERVER INDEX', Array.isArray(data), data); // ==> ARRAY OF ORDER OBJECTS
+          // SORT ORDERS BY ORDER ID (SAME AS SORTING BY DATE)
+          data.sort((a: any, b: any) => a.id - b.id);
+          // console.log('LINE 139 || SERVER INDEX', data); // ==> ARRAY OF ORDER OBJECTS
           res.json(data);
         })
         .catch((err: any) => {
-          console.error('LINE 121 || SERVER INDEX', err);
+          console.error('LINE 141 || SERVER INDEX', err);
           res.send(err);
         });
     })
     .catch((err: any) => {
-      console.error('LINE 126 || ORDER ROUTER || GET || ERROR', err);
+      console.error('LINE 146 || ORDER ROUTER || GET || ERROR', err);
     });
 
   // console.log('LINE 263 ||', dataObj);
@@ -158,6 +180,55 @@ orderRouter.delete('/api/order/:id', (req: Request, res: Response) => {
       res.sendStatus(400);
     });
 });
+
+orderRouter.get(
+  '/api/order/deliveries',
+  async (req: Request, res: Response) => {
+    try {
+      let orders = await Orders.findAll({
+        include: [
+          {
+            model: Products,
+            attributes: ['img_url', 'name', 'id', 'quantity'],
+          },
+        ],
+      });
+      // console.log('LINE 196 || ORDER ROUTER || ADMIN ORDERS', orders);
+      orders = orders.sort((a: any, b: any) => a.id - b.id);
+      // console.log('LINE 198 || ORDER ROUTER || ADMIN ORDERS', orders);
+      // console.log(
+      //   'LINE 179 || ORDER ROUTER || DELIVERIES',
+      //   orders,
+      //   orders.sort((a: any, b: any) => a.id - b.id),
+      // );
+      // map array then make a set
+      const dates: any = Array.from(
+        new Set(
+          orders.map((order: any, i: number) => {
+            // console.log(`LINE 208 || ORDER ROUTER || ORDER${i}}`, order);
+
+            return {
+              id: i + 1,
+              delivery_date: order.delivery_date,
+              products: order.products,
+            };
+          }),
+        ),
+      );
+      // console.log('LINE 212 || ORDER ROUTER ||', dates);
+
+      res.json(dates);
+    } catch (err: any) {
+      console.error('LINE 216 || ORDER ROUTER || DELIVERIES ERROR', err);
+      res.json(err);
+    }
+
+    // .then((orders: any) => {
+    // })
+    // .catch((err: any) => {
+    // });
+  },
+);
 
 // Export Router
 export default orderRouter;

@@ -129,6 +129,12 @@ body {
   width: 100vw;
 }
 
+.thumbnail {
+  border-radius: 1.5rem;
+  /* max-width: flex; */
+  /* min-width: 100; */
+  max-width: 200px;
+}
 .texture2 {
   color: #e2f2d9;
   background-color: #91ef8f;

@@ -54,14 +54,14 @@ const ProductCard = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const { name, id, description, harvest_dates, img_url } = product;
+  const { name, id, description, harvest_dates, img_url, available } = product;
 
   const handleProductDelete = (productId: any) => {
     axios
       .delete(`/api/products/${id}`)
       .then(({ data }: any) => {
-        console.log('LINE 57', id);
-        console.log('LINE 55 ', data);
+        // console.log('LINE 57', id);
+        // console.log('LINE 55 ', data);
         setUpdateCounter(updateCounter + 1);
       })
       .catch((err: any) => {

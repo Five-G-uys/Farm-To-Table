@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, MouseEvent } from "react";
-import { Link } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import Paper from "@mui/material/Paper";
-import CssBaseline from "@mui/material/CssBaseline";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
-import Slide from "@mui/material/Slide";
-import ThemeProvider from "./App";
-import { Grid, Switch } from "@mui/material";
+import React, { useState, MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
+import CssBaseline from '@mui/material/CssBaseline';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import Slide from '@mui/material/Slide';
+import ThemeProvider from './App';
+import { Grid, Switch } from '@mui/material';
 
 interface Props {
   /**
@@ -40,7 +40,7 @@ function HideOnScroll(props: Props) {
   });
 
   return (
-    <Slide appear={false} direction="down" in={!trigger}>
+    <Slide appear={false} direction='down' in={!trigger}>
       {children}
     </Slide>
   );
@@ -48,41 +48,42 @@ function HideOnScroll(props: Props) {
 
 const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
   const pages = [
-    { name: "Home", path: "/" },
-    { name: "Subscribe", path: "/subscriptions-page" },
-    { name: "Products ", path: "/edit-products" },
-    { name: "Events", path: "/events-page" },
-    { name: "About", path: "/about-us-page" },
+    { name: 'Home', path: '/' },
+    { name: 'Subscribe', path: '/subscriptions-page' },
+    { name: 'Products ', path: '/edit-products' },
+    { name: 'Events', path: '/events-page' },
+    { name: 'About', path: '/about-us-page' },
   ];
 
   if (user.roleId === 4) {
     const settings = [
-      { name: "Records", path: "/records" },
+      { name: 'Manage Orders', path: '/manage-orders' },
+      { name: 'Records', path: '/records' },
       // { name: 'Packing List', path: '/packing-lists' },
       // { name: 'Delivery Routes', path: '/delivery-routes' },
-      { name: "Delivery Map", path: "/delivery-map" },
-      { name: "Weather", path: "/weather-page" },
+      { name: 'Delivery Map', path: '/delivery-map' },
+      { name: 'Weather', path: '/weather-page' },
       // { name: 'Edit User Role', path: '/edit-users' },
-      { name: "Profile", path: "/profile-page" },
+      { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
     ];
   } else if (user.roleId === 3) {
     const settings = [
       // { name: 'Packing List', path: '/packing-lists' },
       // { name: 'Delivery Routes', path: '/delivery-routes' },
-      { name: "Delivery Map", path: "/delivery-map" },
-      { name: "Weather", path: "/weather-page" },
-      { name: "Profile", path: "/profile-page" },
+      { name: 'Delivery Map', path: '/delivery-map' },
+      { name: 'Weather', path: '/weather-page' },
+      { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else if (user.roleId === 2 || user.roleId === 1) {
     const settings = [
-      { name: "Orders", path: "/orders-page" },
-      { name: "Profile", path: "/profile-page" },
+      { name: 'Orders', path: '/orders-page' },
+      { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/auth/api/logout' },
     ];
   } else {
-    const settings = [{ name: "Login", path: "/auth/google" }];
+    const settings = [{ name: 'Login', path: '/auth/google' }];
   }
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -108,39 +109,39 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
       <CssBaseline />
       <HideOnScroll {...props}>
         <AppBar
-          position="sticky"
+          position='sticky'
           // position='fixed'
           style={{
-            backgroundColor: "lightgreen",
-            maxHeight: "5rem",
+            backgroundColor: 'lightgreen',
+            maxHeight: '5rem',
             // margin: '.4rem',
-            justifySelf: "center",
-            marginTop: "1rem",
-            maxWidth: "80vw",
-            margin: "auto",
+            justifySelf: 'center',
+            marginTop: '1rem',
+            maxWidth: '80vw',
+            margin: 'auto',
             // marginRight: "1rem",
             // marginLeft: "5vw",
             // justifyContent: 'center',
             // marginTop: '1rem',
             // marginRight: '1rem',
             // marginLeft: '5vw',
-            borderRadius: "50px",
+            borderRadius: '50px',
           }}
         >
           <Container>
             <Toolbar
               sx={{
-                justifyContent: "space-between",
+                justifyContent: 'space-between',
               }}
             >
               {/* removed disableGutters attribute from toolbar */}
               {/* added a color prop for app name on navbar */}
               <Typography
-                variant="h6"
+                variant='h6'
                 noWrap
-                component="div"
-                sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-                color="red"
+                component='div'
+                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                color='red'
               >
                 Knock, Knock Tomatoes
               </Typography>
@@ -148,45 +149,47 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
               <Box
                 sx={{
                   flexGrow: 1,
-                  maxHeight: "4rem",
-                  flexDirection: "row",
-                  display: { xs: "flex", md: "none" },
+                  maxHeight: '4rem',
+                  flexDirection: 'row',
+                  display: { xs: 'flex', md: 'none' },
                 }}
               >
                 <Button
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
+                  size='large'
+                  aria-label='account of current user'
+                  aria-controls='menu-appbar'
+                  aria-haspopup='true'
                   onClick={handleOpenNavMenu}
-                  color="inherit"
+                  color='inherit'
                 >
                   <MenuIcon />
                 </Button>
                 <Menu
-                  id="menu-appbar"
+                  id='menu-appbar'
                   anchorEl={anchorElNav}
                   anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
+                    vertical: 'bottom',
+                    horizontal: 'left',
                   }}
                   keepMounted
                   transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
+                    vertical: 'top',
+                    horizontal: 'left',
                   }}
                   open={Boolean(anchorElNav)}
                   onClose={handleCloseNavMenu}
                   sx={{
-                    display: { xs: "block", md: "none" },
+                    display: { xs: 'block', md: 'none' },
                   }}
-                  color="success"
+                  color='success'
                 >
                   {pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                       {/* // link tags are anchor tags under the hood */}
-                      <Button href={`${page.path}`}>
-                        <Typography textAlign="center">{page.name}</Typography>
+                      <Button href={`${page.path}`} color='success'>
+                        <Typography color='success' textAlign='center'>
+                          {page.name}
+                        </Typography>
                       </Button>
                     </MenuItem>
                   ))}
@@ -194,22 +197,22 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
               </Box>
               <Switch
                 onChange={() => changeMode(mode)}
-                color="secondary"
+                color='secondary'
               ></Switch>
               <Typography
-                variant="h6"
+                variant='h6'
                 noWrap
-                component="div"
-                sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+                component='div'
+                sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
               >
                 Knock, Knock Tomatoes
               </Typography>
-              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {pages.map((page) => (
                   <Button
                     key={page.name}
                     onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     <Link to={page.path}>{page.name}</Link>
                   </Button>
@@ -217,23 +220,26 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
               </Box>
 
               <Box sx={{ flexGrow: -1 }}>
-                <Tooltip title="Open settings">
-                  <IconButton 
-                    onClick={handleOpenUserMenu} 
+                <Tooltip title='Open settings'>
+                  <IconButton
+                    onClick={handleOpenUserMenu}
                     sx={{ p: 0 }}
-                    style={{
-                      // position: "absolute",
-                      // alignSelf: "right",
-                      }}>
+                    style={
+                      {
+                        // position: "absolute",
+                        // alignSelf: "right",
+                      }
+                    }
+                  >
                     <Avatar
                       // alt="Profile"
                       src={user.picture}
                       style={{
                         // EDITED AVATAR HEIGHT EXPERIMENT
                         // position: "absolute",
-                        border: "3px solid lightgray",
-                        width: "3.0rem",
-                        height: "3.0rem",
+                        border: '3px solid lightgray',
+                        width: '3.0rem',
+                        height: '3.0rem',
                         // alignSelf: "right",
                         // margin: "10px"
                       }}
@@ -243,25 +249,25 @@ const NewNavBar = ({ user, mode, changeMode }: any, props: Props) => {
                   </IconButton>
                 </Tooltip>
                 <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
+                  sx={{ mt: '45px' }}
+                  id='menu-appbar'
                   anchorEl={anchorElUser}
                   anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
+                    vertical: 'top',
+                    horizontal: 'right',
                   }}
                   keepMounted
                   transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
+                    vertical: 'top',
+                    horizontal: 'right',
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting) => (
                     <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                      <Button href={setting.path} color="success">
-                        <Typography textAlign="center">
+                      <Button href={setting.path} color='success'>
+                        <Typography textAlign='center'>
                           {setting.name}
                         </Typography>
                       </Button>
