@@ -33,7 +33,7 @@ import Weather from './Weather';
 //import Image from "src/client/components/groundImage.png";
 
 //material UI IMPORTS
-import { Box, createTheme, PaletteMode } from '@mui/material';
+import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
 import {
@@ -138,7 +138,7 @@ const App = () => {
             },
             text: {
               primary: amber[600],
-              secondary: '#a7ffeb',
+              secondary: lightGreen[600],
             },
           }),
     },
