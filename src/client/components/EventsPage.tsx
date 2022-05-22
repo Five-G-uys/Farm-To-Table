@@ -9,9 +9,6 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
@@ -76,11 +73,6 @@ const EventsPage = () => {
     setOpen(true);
   };
 
-  //to update state and cause a refresh?
-  const updateState = () => {
-    setUpdateCounter((updateCounter) => updateCounter + 1);
-  };
-
   // Handlers for backdrop control
   const handleClose = () => {
     setOpen(false);
@@ -98,7 +90,7 @@ const EventsPage = () => {
     });
   };
 
-  // Destructure product state obj
+  // Destructure event state obj
   const {
     eventName,
     description,
@@ -121,7 +113,7 @@ const EventsPage = () => {
           description: description,
           thumbnail: thumbnail,
           eventDate: eventDate,
-          eventType: value,
+          eventType: eventType,
           location: location,
           // monthTitle: monthTitle,
           // seasonTitle: seasonTitle,
@@ -276,7 +268,8 @@ const EventsPage = () => {
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          backgroundColor: 'transparent',
+          fontColor: 'primary',
           pt: 8,
           pb: 6,
         }}
@@ -288,6 +281,7 @@ const EventsPage = () => {
             align='center'
             color='text.primary'
             gutterBottom
+            fontWeight={600}
           >
             Farm Events
           </Typography>
@@ -318,8 +312,8 @@ const EventsPage = () => {
           sx={{
             color: purple,
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            //borderRadius: "2.5rem",
-            boxShadow: 24,
+            borderRadius: '.7rem',
+            // boxShadow: 5,
           }}
           open={open}
           onClose={handleClose}
@@ -337,10 +331,6 @@ const EventsPage = () => {
                   <Box
                     sx={{
                       ...commonStyles,
-                      // flexWrap: 'wrap',
-                      // display: 'flex',
-                      // justifyContent: 'center',
-                      // borderRadius: '16px',
                     }}
                   >
                     <form
@@ -400,6 +390,7 @@ const EventsPage = () => {
                       <br></br>
                       <br></br>
                       <TextField
+                        type='datetime-local'
                         fullWidth
                         id='filled-basic'
                         variant='filled'
@@ -407,7 +398,7 @@ const EventsPage = () => {
                         name='eventDate'
                         label='Event Date'
                         // id='fullWidth'
-                        placeholder='MM / DD/ YYYY'
+                        // placeholder='MM/DD/YYYY'
                         onChange={handelTextInput}
                       />
                       <br></br>

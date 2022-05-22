@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './App';
-import GoogleCalendar from './GoogleCalendar';
+//import GoogleCalendar from './GoogleCalendar';
 
 //////////////////////MATERIAL UI/////////////////////////////////
 // MUI Imports
@@ -142,10 +142,31 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
       });
   };
 
+  //////////////////confirmation box//////////////////////
+  // class ConfirmBox {
+  //   show() {
+  //    var c = confirm("Are you sure you want to do that?");
+  //    var status = document.getElementById("content");
+  //    if (c == true) {
+  //     status.innerHTML = "You confirmed, thanks";
+  //    } else {
+  //     status.innerHTML = "You cancelled the action";
+  //    }
+  //   }
+  //  }
+  //  window.onload = () => {
+  //   var bttn = < HTMLButtonElement > document.getElementById("Button1");
+  //   bttn.onclick = function() {
+  //    const obj = new ConfirmBox();
+  //    obj.show();
+  //   };
+  //   };
+
   ////////////////////////////////////////////
   useEffect(() => {
     getUserRsvpCount();
     totalEventRsvps();
+    // GoogleCalendar();
   }, [updateCounter]);
 
   return (
@@ -204,8 +225,8 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
             {user.roleId < 4
               ? `${
                   totalRsvp === 1
-                    ? `Going:  ${totalRsvp}`
-                    : `Going:  ${totalRsvp}`
+                    ? `Total going:  ${totalRsvp}`
+                    : `Total going:  ${totalRsvp}`
                 }`
               : `RSVPS: ${totalRsvp}`}
           </Typography>
@@ -214,29 +235,31 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           <Stack spacing={5} direction='row' id='product_card_stack'>
             <ExpandMore sx={{ color: 'green' }} expand={expanded}>
               {roleId > 3 && (
-                <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
+                <Button>
+                  <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
+                </Button>
               )}
             </ExpandMore>
             {/* <ExpandMore sx={{ color: 'green' }} expand={expanded}> */}
-              {roleId < 4 && (
-                <Button
-                  sx={{
-                    '&:hover:before': { content: `"Going"` },
-                    position: 'top',
-                    width: 80, //necessary for replacing text
-                  }}
-                  onClick={handRSVPosts}
-                  color='success'
-                  size='medium'
-                  variant='outlined'
-                >
-                  {isGoing ? (
-                    <CheckIcon color='success' fontSize='large'></CheckIcon>
-                  ) : (
-                    'RSVP'
-                  )}
-                </Button>
-              )}
+            {roleId < 4 && (
+              <Button
+                sx={{
+                  '&:hover:before': { content: `"Going"` },
+                  position: 'top',
+                  width: 80, //necessary for replacing text
+                }}
+                onClick={handRSVPosts}
+                color='success'
+                size='medium'
+                variant='outlined'
+              >
+                {isGoing ? (
+                  <CheckIcon color='success' fontSize='large'></CheckIcon>
+                ) : (
+                  'RSVP'
+                )}
+              </Button>
+            )}
             {/* </ExpandMore> */}
             {roleId > 3 && (
               <ExpandMore

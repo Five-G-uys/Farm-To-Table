@@ -44,6 +44,7 @@ import {
   lightBlue,
   orange,
   lightGreen,
+  teal,
 } from '@mui/material/colors';
 
 import { Dispatch, SetStateAction } from 'react';
@@ -137,8 +138,8 @@ const App = () => {
               paper: blueGrey[900],
             },
             text: {
-              primary: '#fff',
-              secondary: grey[500],
+              primary: amber[600],
+              secondary: '#a7ffeb',
             },
           }),
     },

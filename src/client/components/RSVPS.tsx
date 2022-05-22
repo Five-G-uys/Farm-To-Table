@@ -3,19 +3,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import RSVPLIST from './RSVPLIST';
 import { UserContext } from './App';
-import {
-  // CardContent,
-  // Typography,
-  Grid,
-  Container,
-  Paper,
-  // Card,
-  CardActions,
-  Box,
-} from '@mui/material';
+import { Grid, Container, Paper, CardActions, Box } from '@mui/material';
 
 const RSVPS = () => {
-  const user: any = useContext(UserContext);
+  const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId, id } = user;
 
   const [rsvps, setRsvps] = useState([]);
@@ -25,11 +16,6 @@ const RSVPS = () => {
     axios
       .get(`/api/rsvps/user-id/${id}`)
       .then(({ data }) => {
-<<<<<<< HEAD
-        console.log('LINE 33 FrontEND request', data);
-=======
-        // console.log("LINE 33 FrontEND request", data);
->>>>>>> d742cbcba48ccaefc857056f11ce2a38c2df2002
         const newArr = data
           .map((eventObj: any) => {
             return eventObj.value;
@@ -45,15 +31,6 @@ const RSVPS = () => {
       });
   };
 
-<<<<<<< HEAD
-  console.log('LINE 75 ', rsvps + 'and' + rsvpsCount + 'number');
-
-  console.log('LINE 45', rsvps);
-=======
-  // console.log("LINE 75 ", rsvps + "and" + rsvpsCount + "number");
-
-  // console.log("LINE 45", rsvps);
->>>>>>> d742cbcba48ccaefc857056f11ce2a38c2df2002
   useEffect(() => {
     getAllRSVPSEvents();
   }, []);
