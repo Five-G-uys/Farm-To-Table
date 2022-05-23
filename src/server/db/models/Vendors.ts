@@ -1,7 +1,8 @@
+// Imports
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-// import Farms from './Farms';
 
+// Define Model
 const Vendors = db.define('vendors', {
   id: {
     type: DataTypes.INTEGER,
@@ -25,4 +26,5 @@ const Vendors = db.define('vendors', {
   // },
 });
 
+// Export Model
 export default Vendors;

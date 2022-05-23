@@ -11,8 +11,7 @@ import * as turf from '@turf/turf';
 import dayjs from 'dayjs';
 import axios from 'axios';
 
-mapboxgl.accessToken =
-  'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg';
+// mapboxgl.accessToken = 'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg';
 
 const Map = ({
   lat,
@@ -20,7 +19,7 @@ const Map = ({
   updateCoords,
   routeCoordinates,
   updateCounter,
-  mode,
+  // mode,
   routeData,
 }: any) => {
   const mapContainerRef = useRef(null);
@@ -45,10 +44,10 @@ const Map = ({
 
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style:
-        Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
-          ? 'mapbox://styles/mapbox/traffic-night-v2'
-          : 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/mapbox/traffic-night-v2',
+        // Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
+        //   ? 'mapbox://styles/mapbox/traffic-night-v2'
+        //   : 'mapbox://styles/mapbox/streets-v11',
       center: [lon, lat],
       zoom: zoom,
     });

@@ -1,11 +1,9 @@
+// import Farms from './Farms';
 import { DataTypes } from "sequelize";
 import { db } from "../database";
 // import Farms from "./Farms";
-import Events from "./Events";
-import Users from "./Users";
 
-//
-
+// Create Model
 const RSVP = db.define("rsvp", {
   id: {
     type: DataTypes.INTEGER,
@@ -16,4 +14,5 @@ const RSVP = db.define("rsvp", {
   },
 });
 
+// Export Model
 export default RSVP;

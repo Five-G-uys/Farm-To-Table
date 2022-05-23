@@ -1,14 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import express, { Express, Request, Response } from 'express';
 import path from 'path';
 import passport from 'passport';
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
-import axios from 'axios';
 
 // Import database and models
 require('./db/database.ts');

@@ -9,6 +9,20 @@
 // // Initialize Router
 // const mapRouter = Router();
 
+<<<<<<< HEAD
+///////////////////////////////////////////////////////////////////////////////////////////// GET MAP FUNCTION
+const getCurrentMap: any = (latt: any, long: any, rc: any) => {
+  return fetch(
+    `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${latt},${long};${rc}?steps=true&geometries=geojson&roundtrip=true&access_token=${process.env.MAPBOX_API_KEY}`,
+    { method: 'GET' }
+  )
+    .then((response: any ) => {
+      // console.log(response);
+      return response
+    }) //returns data object of current weather conditions
+    .catch((err: any) => console.error('error in map api call: ', err));
+};
+=======
 // ///////////////////////////////////////////////////////////////////////////////////////////// GET MAP FUNCTION
 // const getCurrentMap: any = (latt: any, long: any, rc: any) => {
 //   return fetch(
@@ -23,6 +37,7 @@
 //     }) //returns data object of current weather conditions
 //     .catch((err: any) => console.error('error in map api call: ', err));
 // };
+>>>>>>> 8a6ce76bf9d2a63f578f9ce4eb6e333a5445567d
 
 // ///////////////////////////////////////////////////////////////////////////////////////////// GET MAP ROUTE
 // //sends location to weather api and responds with current weather
@@ -40,5 +55,17 @@
 //     });
 // });
 
+<<<<<<< HEAD
+// Export Router
+export default mapRouter;
+
+
+
+
+
+
+
+=======
 // // Export Router
 // export default mapRouter;
+>>>>>>> 8a6ce76bf9d2a63f578f9ce4eb6e333a5445567d

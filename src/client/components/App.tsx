@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // React Imports
 import React, { useState, useEffect, createContext } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 // MUI Imports
 import HomePage from './HomePage';
@@ -31,26 +29,13 @@ import VendorsRecords from './Records/VendorsRecords';
 import PackingListPage from './PackingListPage';
 import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
-//import Image from "src/client/components/groundImage.png";
 
 //material UI IMPORTS
 import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
-import {
-  amber,
-  blueGrey,
-  grey,
-  lightBlue,
-  orange,
-  lightGreen,
-  teal,
-} from '@mui/material/colors';
+import { amber, blueGrey, grey, lightGreen } from '@mui/material/colors';
 
-import { Dispatch, SetStateAction } from 'react';
-
-// import { useEventListener } from "usehooks-ts";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 function Copyright() {
   return (

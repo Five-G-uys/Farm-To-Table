@@ -1,21 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import { Router } from 'express';
-import express, { Express, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import axios from 'axios';
 import dayjs from 'dayjs';
 // Import Models
-import {
-  SubscriptionEntries,
-  Orders,
-  OrderContents,
-  Products,
-} from '../db/models';
-import { start } from 'repl';
-import OrderContentModal from 'src/client/components/OrderContentModal';
+import { SubscriptionEntries, Orders, OrderContents, Products } from '../db/models';
 
 // Set Up Router
 const subscriptionEntriesRouter: Router = Router();
