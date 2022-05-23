@@ -295,9 +295,7 @@ const SubscriptionsPage = () => {
           bgcolor: 'background.paper',
           pt: 8,
           pb: 6,
-        }}
-      ></Box>
-      <div>
+        }} >
         <Container maxWidth='sm'>
           <Typography
             component='h1'
@@ -318,6 +316,8 @@ const SubscriptionsPage = () => {
             boxes of farm freshness today!
           </Typography>
         </Container>
+        </Box>
+
         <SubscriptionsContainer
           style={commonStyles}
           subscriptions={subscriptions}
@@ -372,7 +372,6 @@ const SubscriptionsPage = () => {
             <AddIcon style={{ color: '#FFFFFF' }} />
           </Fab>
         )}
-      </div>
     </div>
   );
 };

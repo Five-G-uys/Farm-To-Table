@@ -1,5 +1,6 @@
 // Import Dependencies
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import { Fade, Modal, Backdrop, Button, TextField, Box, Stack } from '@mui/material';
 
 const AddressForm = ({
@@ -12,6 +13,13 @@ const AddressForm = ({
   address,
 }: any) => {
   // state var
+  const navigate = useNavigate(); 
+
+  const handleSkipCheckout = async() => {
+    await handleSubscribed();
+    const path = `/orders-page`; 
+    navigate(path);
+  };
 
   const { streetAddress, city, state, zip, phone } = address;
   return (
@@ -134,6 +142,15 @@ const AddressForm = ({
                         onClick={handleCheckout}
                       >
                         PAY NOW
+                      </Button>
+                      <Button
+                        variant='text'
+                        size='large'
+                        type='submit'
+                        // sx={{ color: 'success' }}
+                        onClick={handleSkipCheckout}
+                      >
+                        PAY UPON DELIVERY
                       </Button>
                     </Stack>
                     <br></br>
