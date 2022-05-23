@@ -121,12 +121,13 @@ const Profile = () => {
       {/* Added new configurations for profile pages width and commented out the minWidth prop */}
       <Card
         sx={{
-          //minWidth: 250,
+          backgroundColor: '#e2f2d9',
           borderRadius: '2.5rem',
           boxShadow: 20,
-          marginLeft: '250px',
-          marginRight: '250px',
+          marginLeft: '500px',
+          marginRight: '500px',
         }}
+        className='texture2'
       >
         <CardHeader
           avatar={

@@ -14,6 +14,7 @@ import {
   Radio,
   FormLabel,
   FormControlLabel,
+  FormHelperText,
   Fade,
   Modal,
   Typography,
@@ -81,7 +82,7 @@ const SubscriptionsAdmin = ({
 
   return (
     <Modal
-      disableScrollLock='boolean'
+      // disableScrollLock='boolean'
       aria-labelledby='transition-modal-title'
       aria-describedby='transition-modal-description'
       sx={{
@@ -101,149 +102,141 @@ const SubscriptionsAdmin = ({
     >
       <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
         {
-          <div>
-            <div>
-              <Box
-                sx={{
-                  ...commonStyles,
-                  maxHeight: '90vh',
-                  flexWrap: 'wrap',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  overflowY: 'scroll',
-                  // overflow: 'hidden',
-                }}
-              >
-                <form
-                  onSubmit={
-                    inEditMode
-                      ? handleSubscriptionUpdateSubmit
-                      : postSubscription
-                  }
-                >
-                  <br></br>
-                  {thumbnail && (
-                    <img width={'100%'} src={thumbnail} border-radius='2rem' />
-                  )}
-                  <br></br>
-                  <Box>
-                    <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
-                      {' '}
-                      <FormLabel id='demo-radio-buttons-group-label'>
-                        <h3 className='create-subscription'>Create Season</h3>
-                      </FormLabel>
-                    </FormControl>
-                  </Box>
-                  <TextField
-                    id='filled-basic'
-                    variant='filled'
-                    fullWidth
-                    value={season}
-                    name='season'
-                    label='Season'
-                    placeholder='ex: Spring'
-                    onChange={(e) => handleInputSubscription(e)}
-                  />
-                  <br></br>
-                  <br></br>
-                  <TextField
-                    id='filled-basic'
-                    variant='filled'
-                    fullWidth
-                    value={year}
-                    name='year'
-                    label='Year'
-                    placeholder='ex: 2022'
-                    onChange={(e) => handleInputSubscription(e)}
-                  />
-                  <br></br>
-                  <br></br>
-                  <TextField
-                    fullWidth
-                    id='filled-basic'
-                    variant='filled'
-                    value={flat_price}
-                    name='flat_price'
-                    label='Flat Price'
-                    placeholder='400'
-                    onChange={handleInputSubscription}
-                  />
-                  <br></br>
-                  <br></br>
-                  <TextField
-                    fullWidth
-                    id='filled-basic'
-                    variant='filled'
-                    value={weekly_price}
-                    name='weekly_price'
-                    label='Weekly Price'
-                    placeholder='40'
-                    onChange={handleInputSubscription}
-                  />
-                  <br></br>
-                  <br></br>
-                  <TextField
-                    fullWidth
-                    id='filled-basic'
-                    variant='filled'
-                    value={description}
-                    name='description'
-                    label='Description'
-                    placeholder='ex: A beautiful harvest of...'
-                    onChange={handleInputSubscription}
-                  />
-                  <br></br>
-                  <br></br>
-                  <TextField
-                    fullWidth
-                    id='filled-basic'
-                    variant='filled'
-                    value={start_date}
-                    name='start_date'
-                    label='Start Date'
-                    placeholder='MM/DD/YYYY'
-                    onChange={handleInputSubscription}
-                  />
-                  <br></br>
-                  <br></br>
-                  <TextField
-                    fullWidth
-                    id='filled-basic'
-                    variant='filled'
-                    value={end_date}
-                    name='end_date'
-                    label='End Date'
-                    placeholder='MM/DD/YYYY'
-                    onChange={handleInputSubscription}
-                  />
-                  <br></br>
-                  <br></br>
-                  <Stack direction='row' justifyContent='space-between'>
-                    <Button
-                      variant='text'
-                      size='large'
-                      color='success'
-                      sx={{ color: 'green' }}
-                      onClick={showWidget}
-                    >
-                      Add Subscription Image
-                    </Button>
-                    <br></br>
-                    <br></br>
-                    <Button
-                      variant='text'
-                      size='large'
-                      color='success'
-                      type='submit'
-                      sx={{ color: 'green' }}
-                    >
-                      {handleInputSubscription ? 'SAVE' : 'UPDATE'}
-                    </Button>
-                  </Stack>
-                </form>
+          <Box
+            sx={{
+              ...commonStyles,
+              maxHeight: '90vh',
+              flexWrap: 'wrap',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <form
+              onSubmit={
+                inEditMode ? handleSubscriptionUpdateSubmit : postSubscription
+              }
+            >
+              {thumbnail && (
+                <img width={'100%'} src={thumbnail} border-radius='2rem' />
+              )}
+              <Box>
+                <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
+                  {' '}
+                  <FormLabel id='demo-radio-buttons-group-label'>
+                    <h3 className='create-subscription'>
+                      Create Seasonal Subscription
+                    </h3>
+                  </FormLabel>
+                </FormControl>
               </Box>
-            </div>
-          </div>
+              <TextField
+                id='filled-basic'
+                variant='filled'
+                fullWidth
+                value={season}
+                name='season'
+                label='Season'
+                placeholder='ex: Spring'
+                onChange={(e) => handleInputSubscription(e)}
+              />
+              <br></br>
+              <br></br>
+              <TextField
+                id='filled-basic'
+                variant='filled'
+                fullWidth
+                value={year}
+                name='year'
+                label='Year'
+                placeholder='ex: 2022'
+                onChange={(e) => handleInputSubscription(e)}
+              />
+              <br></br>
+              <br></br>
+              <TextField
+                fullWidth
+                id='filled-basic'
+                variant='filled'
+                value={flat_price}
+                name='flat_price'
+                label='Flat Price'
+                placeholder='400'
+                onChange={handleInputSubscription}
+              />
+              <br></br>
+              <br></br>
+              <TextField
+                fullWidth
+                id='filled-basic'
+                variant='filled'
+                value={weekly_price}
+                name='weekly_price'
+                label='Weekly Price'
+                placeholder='40'
+                onChange={handleInputSubscription}
+              />
+              <br></br>
+              <br></br>
+              <TextField
+                fullWidth
+                id='filled-basic'
+                variant='filled'
+                value={description}
+                name='description'
+                label='Description'
+                placeholder='Ex: A beautiful harvest of fresh fruits and vegetables...'
+                onChange={handleInputSubscription}
+              />
+              <br></br>
+              <br></br>
+              <TextField
+                type='date'
+                fullWidth
+                id='filled-basic'
+                variant='filled'
+                value={start_date}
+                name='start_date'
+                label='Start Date'
+                onChange={handleInputSubscription}
+              />
+              <br></br>
+              <br></br>
+              <TextField
+                fullWidth
+                id='filled-basic'
+                variant='filled'
+                value={end_date}
+                name='end_date'
+                label='End Date'
+                placeholder='MM/DD/YYYY'
+                onChange={handleInputSubscription}
+              />
+              <br></br>
+              <br></br>
+              <Stack direction='row' justifyContent='space-between'>
+                <Button
+                  variant='text'
+                  size='large'
+                  color='success'
+                  sx={{ color: 'green' }}
+                  onClick={showWidget}
+                >
+                  Add Subscription Image
+                </Button>
+                <br></br>
+                <br></br>
+                <Button
+                  variant='text'
+                  size='large'
+                  color='success'
+                  type='submit'
+                  sx={{ color: 'green' }}
+                >
+                  {handleInputSubscription ? 'SAVE' : 'UPDATE'}
+                </Button>
+              </Stack>
+            </form>
+          </Box>
         }
       </Fade>
     </Modal>

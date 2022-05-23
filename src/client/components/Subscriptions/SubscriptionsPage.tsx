@@ -80,9 +80,6 @@ const SubscriptionsPage = () => {
       };
     });
   };
-  //////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////
 
   // create state var for each address component (street, city, state, zip)
   const [selectedSubscription, setSelectedSubscription] = useState({
@@ -169,6 +166,7 @@ const SubscriptionsPage = () => {
     padding: '20px',
     borderRadius: '2.5rem',
     boxShadow: 24,
+    overflow: 'auto',
   };
 
   const postSubscription = () => {
@@ -367,15 +365,16 @@ const SubscriptionsPage = () => {
           aria-label='add'
           style={{
             transform: 'scale(1.5)',
-            backgroundColor: 'lightgreen',
+            backgroundColor: '#e2f2d9',
           }}
           sx={{
             position: 'fixed',
             bottom: (theme) => theme.spacing(8),
             right: (theme) => theme.spacing(8),
           }}
+          className='texture2'
         >
-          <AddIcon style={{ color: '#FFFFFF' }} />
+          <AddIcon style={{ color: 'text.primary' }} />
         </Fab>
       )}
     </div>
