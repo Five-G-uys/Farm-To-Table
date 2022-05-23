@@ -32,6 +32,7 @@ interface EventProps {
   eventDate: string;
   eventType: string;
   location: string;
+  city: string;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface AppProps {
@@ -45,7 +46,7 @@ interface AppProps {
   updateState(): void;
 }
 
-const EventsPage = () => {
+const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId } = user;
 
@@ -64,6 +65,7 @@ const EventsPage = () => {
     eventDate: '',
     eventType: 'Farmers marke',
     location: '',
+    city: '',
   });
   //state that controls the form
   const [open, setOpen] = useState(false);
@@ -85,6 +87,7 @@ const EventsPage = () => {
       eventDate: '',
       eventType: '',
       location: '',
+      city: '',
       // seasonTitle: "",
       // monthTitle: "",
     });
@@ -99,6 +102,7 @@ const EventsPage = () => {
     eventType,
     location,
     id,
+    city,
     // monthTitle,
     // seasonTitle,
   } = event;
@@ -115,6 +119,7 @@ const EventsPage = () => {
           eventDate: eventDate,
           eventType: eventType,
           location: location,
+          city: city,
           // monthTitle: monthTitle,
           // seasonTitle: seasonTitle,
         },
@@ -251,6 +256,7 @@ const EventsPage = () => {
         eventDate: clickedEvent.eventDate,
         eventType: clickedEvent.eventType,
         location: clickedEvent.location,
+        city: clickedEvent.city,
       };
     });
     setInEditMode(true);
@@ -261,7 +267,7 @@ const EventsPage = () => {
     getAllEvents();
     getUserRsvps();
   }, [updateCounter]);
-
+  console.log('LINE 270', event.location, 'AND ', event);
   return (
     <>
       <CssBaseline />
@@ -302,6 +308,10 @@ const EventsPage = () => {
         getAllEvents={getAllEvents}
         allEvents={allEvents}
         handleEditClick={handleEditClick}
+        lat={lat}
+        lon={lon}
+        updateCoords={updateCoords}
+        mode={mode}
       />
 
       <Box>
@@ -382,9 +392,21 @@ const EventsPage = () => {
                         variant='filled'
                         value={location}
                         name='location'
-                        label='Event Address'
+                        label='location'
                         // id='fullWidth'
                         placeholder='Address for event'
+                        onChange={handelTextInput}
+                      />
+                      <br></br>
+                      <br></br>
+                      <TextField
+                        fullWidth
+                        id='filled-basic'
+                        variant='filled'
+                        value={city}
+                        name='city'
+                        label='City'
+                        placeholder='City of street address'
                         onChange={handelTextInput}
                       />
                       <br></br>

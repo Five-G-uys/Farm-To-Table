@@ -9,6 +9,10 @@ interface AppProps {
   handleEditClick(id: number): void;
   allEvents: [];
   getAllEvents(): void;
+  lat: string;
+  lon: string;
+  updateCoords(): void;
+  mode: string;
 }
 
 //import RSVPS from "./RSVPS";
@@ -21,7 +25,15 @@ const useStyles = makeStyles({
   },
 });
 
-const EventCard = ({ handleEditClick, allEvents, getAllEvents }: AppProps) => {
+const EventCard = ({
+  handleEditClick,
+  allEvents,
+  getAllEvents,
+  lat,
+  lon,
+  updateCoords,
+  mode,
+}: AppProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const user: { roleId: number; id: number } = useContext(UserContext);
 
@@ -55,6 +67,10 @@ const EventCard = ({ handleEditClick, allEvents, getAllEvents }: AppProps) => {
                     event={event}
                     handleEditClick={handleEditClick}
                     getAllEvents={getAllEvents}
+                    lat={lat}
+                    lon={lon}
+                    updateCoords={updateCoords}
+                    mode={mode}
                   />
                 </Grid>
               );

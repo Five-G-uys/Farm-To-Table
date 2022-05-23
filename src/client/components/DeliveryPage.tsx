@@ -37,7 +37,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
           .map((location: any) => {
             // console.log(
             //   'LINE 33 || LOCATION MAP',
-            //   `${location.lat},${location.lon}`
+            //   `${location.lat},${location.lon}`,
             // );
             return `${location.location[0]},${location.location[1]}`;
           })
@@ -56,7 +56,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
 
   // console.log('LINE 57 || DELIVERY PAGE||', dayjs().format('H'));
 
-  // console.log('LINE 59', routeCoordinates);
+  console.log('LINE 59', routeCoordinates);
   return (
     <div>
       <Map

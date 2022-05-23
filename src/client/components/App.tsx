@@ -20,6 +20,7 @@ import ProductsPage from './ProductsPage';
 import RecordsPage from './Records/RecordsPage';
 import DileveryZonesRecords from './Records/DeliveryZonesRecords';
 import EventsRecords from './Records/EventsRecords';
+import EventMapPage from './EventMapPage';
 // import FarmsRecords from './Records/FarmsRecords';
 import OrdersRecords from './Records/OrdersRecords';
 import ProductsRecords from './Records/ProductsRecords';
@@ -209,6 +210,18 @@ const App = () => {
                 element={<SubscriptionsPage />}
               />
               <Route path='/events-page' element={<EventsPage />} />
+              <Route
+                path='eventmap-page'
+                element={
+                  <EventMapPage
+                    lat={lat}
+                    lon={lon}
+                    updateCoords={updateCoords}
+                    mode={mode}
+                  />
+                }
+              />
+
               <Route path='/edit-products' element={<ProductsPage />} />
               <Route
                 path='/weather-page'
