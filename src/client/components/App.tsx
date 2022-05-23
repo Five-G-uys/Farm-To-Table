@@ -20,6 +20,7 @@ import ProductsPage from './ProductsPage';
 import RecordsPage from './Records/RecordsPage';
 import DileveryZonesRecords from './Records/DeliveryZonesRecords';
 import EventsRecords from './Records/EventsRecords';
+import EventMapPage from './EventMapPage';
 // import FarmsRecords from './Records/FarmsRecords';
 import OrdersRecords from './Records/OrdersRecords';
 import ProductsRecords from './Records/ProductsRecords';
@@ -33,10 +34,9 @@ import Weather from './Weather';
 //import Image from "src/client/components/groundImage.png";
 
 //material UI IMPORTS
-import { Box, createTheme, PaletteMode } from '@mui/material';
-import { Container, Grid, Paper, Switch } from '@mui/material';
+import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
-import { Typography, url, URL } from '@mui/material';
+import { Typography } from '@mui/material';
 import {
   amber,
   blueGrey,
@@ -44,6 +44,7 @@ import {
   lightBlue,
   orange,
   lightGreen,
+  teal,
 } from '@mui/material/colors';
 
 import { Dispatch, SetStateAction } from 'react';
@@ -136,8 +137,8 @@ const App = () => {
               paper: blueGrey[900],
             },
             text: {
-              primary: '#fff',
-              secondary: grey[500],
+              primary: amber[600],
+              secondary: lightGreen[600],
             },
           }),
     },
@@ -188,7 +189,7 @@ const App = () => {
               // item
               xs={4}
             > */}
-        <div>
+        <Grid>
           <UserContext.Provider value={user}>
             <Routes>
               {/* Login/Logout Routes */}
@@ -207,6 +208,18 @@ const App = () => {
                 element={<SubscriptionsPage />}
               />
               <Route path='/events-page' element={<EventsPage />} />
+              <Route
+                path='eventmap-page'
+                element={
+                  <EventMapPage
+                    lat={lat}
+                    lon={lon}
+                    updateCoords={updateCoords}
+                    mode={mode}
+                  />
+                }
+              />
+
               <Route path='/edit-products' element={<ProductsPage />} />
               <Route
                 path='/weather-page'
@@ -229,8 +242,23 @@ const App = () => {
               <Route
                 path='/orders-page'
                 element={
-                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to='/login' />
-                  <OrdersPage />
+                  <OrdersPage
+                    getOrders={(id: any) =>
+                      axios.get(`/api/upcoming_orders/${id}`, {
+                        params: { id },
+                      })
+                    }
+                  />
+                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path='/manage-orders'
+                element={
+                  <OrdersPage
+                    getOrders={() => axios.get(`/api/order/deliveries`)}
+                  />
+                  // isLoggedIn(user) ? <OrdersPage /> : <Navigate to="/login" />
                 }
               />
               {/* Restricted Employ Routes */}
@@ -309,7 +337,7 @@ const App = () => {
               />
             </Routes>
           </UserContext.Provider>
-        </div>
+        </Grid>
         {/* Footer */}
         <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
           <Typography variant='h6' align='center' gutterBottom>
