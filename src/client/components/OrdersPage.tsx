@@ -38,12 +38,28 @@ const OrdersPage = ({ getOrders }: any) => {
   const user: { id: number; roleId: number } = useContext(UserContext);
   // console.log('LINE 39 || ORDERSPAGE', user.roleId);
   const id = user.id;
+  const roleId = user.roleId;
   // NEED TO MAKE GET REQ ON PAGE RENDER FOR ALL UPCOMING ORDERS ORGANIZED FROM SOONEST TO FURTHEST
 
   // state var for subscription entry id
   const [subscIds, setSubscIds] = useState([]);
   // state var for orders array
   const [orders, setOrders]: any = useState([]);
+  console.log('LINE 47 || ORDERS', id, roleId, orders);
+  // if (id > 1) {
+  //   const uniqueDeliveryDateArray: any = [];
+  //   setOrders(
+  //     orders.filter((order: any) => {
+  //       if (uniqueDeliveryDateArray.indexOf(order.delivery_date) === -1) {
+  //         uniqueDeliveryDateArray.push(order.delivery_date);
+  //         return order;
+  //       } else {
+  //         return;
+  //       }
+  //     }),
+  //   );
+  // }
+  // console.log('LINE 59 || ORDERS', orders);
 
   let upcomingOrderId: number;
   if (orders.length) {
@@ -70,7 +86,7 @@ const OrdersPage = ({ getOrders }: any) => {
     // get orders based on user role (user or admin);
     getOrders(id)
       .then((data: any) => {
-        // console.log('LINE 29 || ORDERSPAGE ||SUCCESS', data.data); //array of objects
+        console.log('LINE 29 || ORDERSPAGE ||SUCCESS', data.data); //array of objects
         setOrders(data.data);
       })
       .catch((error: any) => {
@@ -126,8 +142,9 @@ const OrdersPage = ({ getOrders }: any) => {
     }
   };
 
-  const handleOrderContentSubmit = () => {
+  const handleOrderContentSubmit = (e: any) => {
     // post route to add order contents to database
+    e.preventDefault();
     console.log('LINE 124 || ORDER CONTENT SUBMIT HIT');
     //
     axios
