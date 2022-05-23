@@ -339,7 +339,7 @@ const App = () => {
           </UserContext.Provider>
         </Grid>
         {/* Footer */}
-        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
+        <Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
           <Typography variant='h6' align='center' gutterBottom>
             Knock, Knock Tomatoes
           </Typography>

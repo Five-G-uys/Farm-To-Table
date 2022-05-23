@@ -25,7 +25,7 @@ productRouter.post('/api/products', (req: Request, res: Response) => {
     available,
   } = req.body.product;
 
-  console.log('LINE 28 || PRODUCT ROUTER || POST', req.body);
+  // console.log('LINE 28 || PRODUCT ROUTER || POST', req.body);
   Products.create({
     name,
     description,
@@ -37,7 +37,7 @@ productRouter.post('/api/products', (req: Request, res: Response) => {
     available,
   })
     .then((data: any) => {
-      console.log('LINE 40 || Product Post Request', data);
+      // console.log('LINE 40 || Product Post Request', data);
       res.status(201).json(data);
     })
     .catch((err: string) => {

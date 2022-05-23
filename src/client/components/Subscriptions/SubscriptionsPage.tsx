@@ -298,12 +298,11 @@ const SubscriptionsPage = () => {
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          bgcolor: 'transparent',
           pt: 8,
           pb: 6,
         }}
-      ></Box>
-      <div>
+      >
         <Container maxWidth='sm'>
           <Typography
             component='h1'
@@ -312,7 +311,7 @@ const SubscriptionsPage = () => {
             color='text.primary'
             gutterBottom
           >
-            Your bounty awaits...
+            Season Subscriptions
           </Typography>
           <Typography
             variant='h5'
@@ -324,61 +323,61 @@ const SubscriptionsPage = () => {
             boxes of farm freshness today!
           </Typography>
         </Container>
-        <SubscriptionsContainer
-          style={commonStyles}
-          subscriptions={subscriptions}
-          subscription={subscription}
-          getAllSubscriptions={getAllSubscriptions}
-          handleEditClick={handleEditClick}
-          inEditMode={inEditMode}
-          handleAddressForm={handleAddressForm}
-          deleteSubscription={deleteSubscription}
-        />
-        <AddressForm
-          handleAddressForm={handleAddressForm}
-          handleAddressFormClose={handleAddressFormClose}
-          addressOpen={addressOpen}
-          handleInputAddress={handleInputAddress}
-          handleSubscribed={handleSubscribed}
-          commonStyles={commonStyles}
-          address={address}
-          deleteSubscription={deleteSubscription}
-          handleCheckout={handleCheckout}
-        />
-        <SubscriptionsAdmin
-          handleInputSubscription={handleInputSubscription}
-          getAllSubscriptions={getAllSubscriptions}
-          postSubscription={postSubscription}
-          open={open}
-          subscription={subscription}
-          setSubscription={setSubscription}
-          handleCreateForm={handleCreateForm}
-          handleClose={handleClose}
-          commonStyles={commonStyles}
-          handleEditClick={handleEditClick}
-          inEditMode={inEditMode}
-          handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-        />
-        {roleId > 3 && (
-          <Fab
-            onClick={handleCreateForm}
-            size='large'
-            // color='secondary'
-            aria-label='add'
-            style={{
-              transform: 'scale(1.5)',
-              backgroundColor: 'lightgreen',
-            }}
-            sx={{
-              position: 'fixed',
-              bottom: (theme) => theme.spacing(8),
-              right: (theme) => theme.spacing(8),
-            }}
-          >
-            <AddIcon style={{ color: '#FFFFFF' }} />
-          </Fab>
-        )}
-      </div>
+      </Box>
+      <SubscriptionsContainer
+        style={commonStyles}
+        subscriptions={subscriptions}
+        subscription={subscription}
+        getAllSubscriptions={getAllSubscriptions}
+        handleEditClick={handleEditClick}
+        inEditMode={inEditMode}
+        handleAddressForm={handleAddressForm}
+        deleteSubscription={deleteSubscription}
+      />
+      <AddressForm
+        handleAddressForm={handleAddressForm}
+        handleAddressFormClose={handleAddressFormClose}
+        addressOpen={addressOpen}
+        handleInputAddress={handleInputAddress}
+        handleSubscribed={handleSubscribed}
+        commonStyles={commonStyles}
+        address={address}
+        deleteSubscription={deleteSubscription}
+        handleCheckout={handleCheckout}
+      />
+      <SubscriptionsAdmin
+        handleInputSubscription={handleInputSubscription}
+        getAllSubscriptions={getAllSubscriptions}
+        postSubscription={postSubscription}
+        open={open}
+        subscription={subscription}
+        setSubscription={setSubscription}
+        handleCreateForm={handleCreateForm}
+        handleClose={handleClose}
+        commonStyles={commonStyles}
+        handleEditClick={handleEditClick}
+        inEditMode={inEditMode}
+        handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
+      />
+      {roleId > 3 && (
+        <Fab
+          onClick={handleCreateForm}
+          size='large'
+          // color='secondary'
+          aria-label='add'
+          style={{
+            transform: 'scale(1.5)',
+            backgroundColor: 'lightgreen',
+          }}
+          sx={{
+            position: 'fixed',
+            bottom: (theme) => theme.spacing(8),
+            right: (theme) => theme.spacing(8),
+          }}
+        >
+          <AddIcon style={{ color: '#FFFFFF' }} />
+        </Fab>
+      )}
     </div>
   );
 };

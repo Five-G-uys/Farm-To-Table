@@ -101,7 +101,7 @@ const Profile = () => {
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          bgcolor: 'transparent',
           pt: 8,
           pb: 6,
         }}
@@ -148,7 +148,8 @@ const Profile = () => {
               size='large'
               color='success'
               sx={{ color: 'green' }}
-              onClick={showWidget}>
+              onClick={showWidget}
+            >
               Change User Image
             </Button>
             <Button
@@ -189,7 +190,12 @@ const Profile = () => {
 
 export default Profile;
 function setUser(arg0: {
-  id: number; googleId: any; name: any; email: any; address: any; picture: any;
+  id: number;
+  googleId: any;
+  name: any;
+  email: any;
+  address: any;
+  picture: any;
   // farm_id: clickedUser.farm_id,
   roleId: any;
 }) {
@@ -199,4 +205,3 @@ function setUser(arg0: {
 function setInEditMode(arg0: boolean) {
   throw new Error('Function not implemented.');
 }
-

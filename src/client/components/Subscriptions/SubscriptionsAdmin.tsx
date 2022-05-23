@@ -81,7 +81,7 @@ const SubscriptionsAdmin = ({
 
   return (
     <Modal
-      disableScrollLock='true'
+      disableScrollLock='boolean'
       aria-labelledby='transition-modal-title'
       aria-describedby='transition-modal-description'
       sx={{
