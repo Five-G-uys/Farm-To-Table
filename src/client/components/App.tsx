@@ -64,7 +64,7 @@ function Copyright() {
 export const UserContext: any = createContext(null);
 
 const App = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser]: any = useState({});
   const [lat, setLat]: any = useState(null);
   const [lon, setLon]: any = useState(null);
 
