@@ -1,8 +1,8 @@
-import { DataTypes } from "sequelize";
-import { db } from "../database";
+import { DataTypes } from 'sequelize';
+import { db } from '../database';
 // import Farms from "./Farms";
 
-const Events = db.define("events", {
+const Events = db.define('events', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -19,6 +19,26 @@ const Events = db.define("events", {
     allowNull: false,
   },
   thumbnail: { type: DataTypes.STRING, unique: false, allowNull: false },
+  city: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  state: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  zip: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  lat: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  lon: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   // farm_id: {
   //   type: DataTypes.INTEGER,
   //   unique: true,

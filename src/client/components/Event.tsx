@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './App';
+
 //import GoogleCalendar from './GoogleCalendar';
 
 //////////////////////MATERIAL UI/////////////////////////////////
@@ -21,6 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
+import { Link } from 'react-router-dom';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -50,9 +52,21 @@ interface AppProps {
     location: string;
     thumbnail: string;
   };
+  lat: string;
+  lon: string;
+  updateCoords(): void;
+  mode: string;
 }
 
-const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
+const Event = ({
+  event,
+  handleEditClick,
+  getAllEvents,
+  lat,
+  lon,
+  updateCoords,
+  mode,
+}: AppProps) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -65,6 +79,8 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
   const [updateCounter, setUpdateCounter] = useState(0);
   // const [numAttend, setNumAttend] = useState(0);
   const { roleId } = user;
+
+  const pages = { name: 'Events', path: '/eventmap-page' };
 
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
@@ -205,14 +221,15 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           </Typography>
         </CardContent>
         <CardContent>
-          <Typography
-            variant='body2'
-            color='text.secondary'
-            fontWeight='700'
-            fontSize='20px'
+          {/* <Button
+            component={Link}
+            variant='contained'
+            color='primary'
+            to={`/events-page${pages.path}`}
           >
             {`Address: ${event.location}`}
-          </Typography>
+          </Button> */}
+          <Link to={`${pages.path}`}>{event.location}</Link>
         </CardContent>
 
         {event.thumbnail ? (

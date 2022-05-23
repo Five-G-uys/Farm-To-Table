@@ -53,7 +53,7 @@ const Map = ({
       zoom: zoom,
     });
 
-    // Add navigation control (the +/- zoom buttons)
+    // Add geo control (the +/- zoom buttons)
     map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
     map.current.addControl(new MapboxTraffic(), 'bottom-left');
     map.current.addControl(
@@ -64,7 +64,7 @@ const Map = ({
         trackUserLocation: true,
         showUserHeading: true,
       }),
-      'bottom-left'
+      'bottom-left',
     );
     // console.log('LINE 69 || MAP.CURRENT', map.current);
     // // Add directions start/destination widget (box to enter starting location and destination)
@@ -91,7 +91,7 @@ const Map = ({
     map.current.on('move', () => {
       updateCoords(
         map.current.getCenter().lat.toFixed(2),
-        map.current.getCenter().lng.toFixed(2)
+        map.current.getCenter().lng.toFixed(2),
       );
       // console.log('q');
       // setLng(map.getCenter().lng.toFixed(lon));
@@ -126,7 +126,7 @@ const Map = ({
       // console.log('LINE 117 || MAP COMPONENT', routeData);
       // console.log('LINE 81 || MAP COMPONENT', lat, lon);
       const data = routeData.trips[0];
-
+      console.log('line 129', data);
       const route = data.geometry.coordinates;
       const geojson = {
         type: 'Feature',
@@ -197,7 +197,7 @@ const Map = ({
               'text-halo-width': 3,
             },
           },
-          'waterway-label'
+          'waterway-label',
         );
       }
       // }, 5000);
