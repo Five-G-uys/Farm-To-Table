@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// Import Dependencies
 import React from 'react';
 import SubscriptionCard from './SubscriptionCard';
 import { Grid } from '@mui/material';

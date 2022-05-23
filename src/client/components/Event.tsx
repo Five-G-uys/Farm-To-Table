@@ -1,10 +1,10 @@
+// Import Dependencies
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './App';
 
 //import GoogleCalendar from './GoogleCalendar';
 
-//////////////////////MATERIAL UI/////////////////////////////////
 // MUI Imports
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';

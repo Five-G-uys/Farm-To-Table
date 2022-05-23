@@ -6,11 +6,6 @@ import {
   Typography,
   Stack,
   Button,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
 } from '@mui/material';
 import axios from 'axios';
 import React from 'react';

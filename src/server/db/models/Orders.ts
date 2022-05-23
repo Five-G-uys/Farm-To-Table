@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-// import Farms from './Farms';
 import SubscriptionEntries from './SubscriptionEntries';
 
 const Orders = db.define('orders', {

@@ -1,9 +1,9 @@
+// Import Dependencies
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-// import Farms from './Farms';
 import Roles from './Roles';
-// import DeliveryZones from './DeliveryZones';
 
+// Define Model
 const Users = db.define(
   'user',
   {
@@ -48,4 +48,5 @@ const Users = db.define(
   { freezeTableName: true, tableName: 'user' }
 );
 
+// Export Model
 export default Users;

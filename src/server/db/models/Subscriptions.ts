@@ -1,6 +1,8 @@
+// Import Dependencies
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 
+// Define Model
 const Subscriptions = db.define('subscriptions', {
   id: {
     type: DataTypes.INTEGER,
@@ -40,4 +42,5 @@ const Subscriptions = db.define('subscriptions', {
   thumbnail: { type: DataTypes.STRING, unique: false },
 });
 
+// Export Model
 export default Subscriptions;

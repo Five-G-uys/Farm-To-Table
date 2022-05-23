@@ -1,29 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+// Import Dependencies
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../App';
 
 // MUI IMPORTS
-import {
-  Avatar,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  Collapse,
-  IconButton,
-  IconButtonProps,
-  Stack,
-  styled,
-  Typography,
-} from '@mui/material';
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, IconButtonProps, Stack, styled, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import { red } from '@mui/material/colors';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;

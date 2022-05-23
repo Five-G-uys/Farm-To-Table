@@ -1,3 +1,4 @@
+// Import Dependencies
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -12,8 +13,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import { CssBaseline, Box, Container, Typography } from '@mui/material';
-
 
 interface Column {
   id: 'id' | 'season' | 'year' | 'flat_price' | 'weekly_price' | 'ActionDescription' 

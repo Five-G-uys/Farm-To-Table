@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import RSVPLIST from './RSVPLIST';
 import { UserContext } from './App';
 import { Grid, Container, Paper, CardActions, Box } from '@mui/material';
 
+// Create Functional Component
 const RSVPS = () => {
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId, id } = user;
@@ -87,4 +87,5 @@ const RSVPS = () => {
   );
 };
 
+// Export Component
 export default RSVPS;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 // import FarmsModel from "./Farms";
 import RolesModel from './Roles';
 import UsersModel from './Users';
@@ -12,9 +11,6 @@ import DietaryRestrictionsModel from './DietaryRestrictions';
 import OrdersModel from './Orders';
 import RSVPModel from './Rsvps';
 import OrderContentsModel from './OrderContents';
-// const { dummyFarm } = require('./dummyUser');
-// const { dummyRole } = require('./dummyUser');
-// const { dummyUser } = require('./dummyUser');
 
 export const syncModels = async (dropTables = false) => {
   const options = { force: dropTables };

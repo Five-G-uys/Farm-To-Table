@@ -1,14 +1,10 @@
-import React, { createContext, useState } from 'react';
-import { ThemeProvider } from '@emotion/react';
-import { createTheme, Theme } from '@material-ui/core/styles';
+// Import Dependencies
+import { createContext, useState } from 'react';
 
 //material UI IMPORTS
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@mui/styles';
-import Paper from '@material-ui/core/Paper';
 import { useTheme } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-// import { withTheme } from '../Theme';
 
 const useStyles = makeStyles((theme: any) => ({
   root: {

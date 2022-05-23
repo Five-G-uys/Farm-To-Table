@@ -3,33 +3,26 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // MUI Imports
-import AddIcon from '@mui/icons-material/Add';
-import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import { Container, CssBaseline, Slide, Stack } from '@mui/material';
-import Divider from '@mui/material/Divider';
-import Fab from '@mui/material/Fab';
-import Fade from '@mui/material/Fade';
-import FilledInput from '@mui/material/FilledInput';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import Modal from '@mui/material/Modal';
-import { Navigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import { ThemeProvider, createTheme } from '@mui/system';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
+import Backdrop from '@mui/material/Backdrop';
+import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
+import Fade from '@mui/material/Fade';
+import {
+  Checkbox,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  Stack,
+} from '@mui/material';
 
 // Component Imports
 import ProductsContainer from './ProductsContainer';
-// can import getallproducts after migrating it to apicalls file
 import { updateProduct } from '../apiCalls/productCallS';
-// import { cli } from 'webpack';
 
 const ProductsPage = () => {
   const [updateCounter, setUpdateCounter] = useState(0);

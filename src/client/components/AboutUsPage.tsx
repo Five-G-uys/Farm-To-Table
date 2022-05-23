@@ -1,3 +1,4 @@
+// Import Dependencies
 import { CssBaseline, Box, Container, Typography } from '@mui/material';
 import React from 'react';
 

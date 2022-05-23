@@ -1,30 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-constant-condition */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import SubscriptionCard from './SubscriptionCard';
+// Import Dependencies
+import React from 'react';
 
 // MUI Imports
-import { ThemeProvider, createTheme } from '@mui/system';
-import { Navigate } from 'react-router-dom';
 import {
-  RadioGroup,
-  Radio,
   FormLabel,
-  FormControlLabel,
-  FormHelperText,
   Fade,
   Modal,
-  Typography,
-  InputAdornment,
-  InputLabel,
-  Input,
   FormControl,
   Backdrop,
   Button,
-  Fab,
   TextField,
   Box,
   Stack,
@@ -82,7 +66,7 @@ const SubscriptionsAdmin = ({
 
   return (
     <Modal
-      // disableScrollLock='boolean'
+      disableScrollLock={true}
       aria-labelledby='transition-modal-title'
       aria-describedby='transition-modal-description'
       sx={{
