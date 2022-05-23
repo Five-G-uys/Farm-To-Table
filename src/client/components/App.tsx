@@ -92,13 +92,6 @@ const App = () => {
 
   ////********************DARK MODE HERE *********************////
   const [mode, setMode] = React.useState<PaletteMode>('light');
-  //Not functional yet
-  const image = 'https://www.transparenttextures.com/patterns/asfalt-dark.png';
-  const styles = {
-    paperContainer: {
-      backgroundImage: `url(${image})`,
-    },
-  };
 
   const getDesignTokens = (mode: PaletteMode) => ({
     palette: {

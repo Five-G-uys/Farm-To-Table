@@ -424,6 +424,7 @@ const ProductsPage = () => {
                     <br></br>
                     <br></br>
                     <TextField
+                      type='datetime-local'
                       fullWidth
                       id='filled-basic'
                       variant='filled'

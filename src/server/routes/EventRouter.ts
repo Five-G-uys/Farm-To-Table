@@ -21,6 +21,8 @@ eventRouter.post('/api/events', async (req: Request, res: Response) => {
     // monthTitle,
     // seasonTitle,
   } = req.body.event;
+  const date: string = eventDate.slice(0, 10);
+  const time = `time: ${eventDate.slice(11, eventDate.length)}`;
 
   const address: any = `${location} ${city}`;
   try {
@@ -31,7 +33,7 @@ eventRouter.post('/api/events', async (req: Request, res: Response) => {
       eventName,
       description,
       thumbnail,
-      eventDate,
+      eventDate: date + ' ' + time,
       eventType,
       city,
       location,
