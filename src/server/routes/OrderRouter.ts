@@ -142,7 +142,7 @@ orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
         });
     })
     .catch((err: any) => {
-      console.error('LINE 146 || ORDER ROUTER || GET || ERROR', err);
+      console.error('LINE 149 || ORDER ROUTER || GET || ERROR', err);
     });
 
   // console.log('LINE 263 ||', dataObj);
@@ -198,22 +198,43 @@ orderRouter.get(
       //   orders.sort((a: any, b: any) => a.id - b.id),
       // );
       // map array then make a set
-      const dates: any = Array.from(
+      const datesCopy: any = Array.from(
         new Set(
           orders.map((order: any, i: number) => {
             // console.log(`LINE 208 || ORDER ROUTER || ORDER${i}}`, order);
 
             return {
-              id: i + 1,
+              id: i,
               delivery_date: order.delivery_date,
               products: order.products,
             };
           }),
         ),
       );
-      // console.log('LINE 212 || ORDER ROUTER ||', dates);
+      // const dates = [...datesCopy];
+      const uniqueDeliveryDateArray: any = [];
+      // console.log(
+      //   'LINE 212 || ORDER ROUTER ||',
+      //   datesCopy.filter((order: any) => {
+      //     if (uniqueDeliveryDateArray.indexOf(order.delivery_date) === -1) {
+      //       uniqueDeliveryDateArray.push(order.delivery_date);
+      //       return order;
+      //     } else {
+      //       return;
+      //     }
+      //   }),
+      // );
 
-      res.json(dates);
+      res.json(
+        datesCopy.filter((order: any) => {
+          if (uniqueDeliveryDateArray.indexOf(order.delivery_date) === -1) {
+            uniqueDeliveryDateArray.push(order.delivery_date);
+            return order;
+          } else {
+            return;
+          }
+        }),
+      );
     } catch (err: any) {
       console.error('LINE 216 || ORDER ROUTER || DELIVERIES ERROR', err);
       res.json(err);

@@ -1,10 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 // Import Dependencies
 import { Router } from 'express';
-import { Request, Response } from 'express';
+import express, { Express, Request, Response } from 'express';
 import axios from 'axios';
 import dayjs from 'dayjs';
 // Import Models
-import { SubscriptionEntries, Orders, OrderContents, Products } from '../db/models';
+import { SubscriptionEntries, Orders } from '../db/models';
+import { start } from 'repl';
 
 // Set Up Router
 const subscriptionEntriesRouter: Router = Router();
@@ -31,8 +36,7 @@ subscriptionEntriesRouter.post(
 
       const addSubscription = async () => {
         try {
-          // init a new sub entry to a variable for later use when creating orders
-          const newSubEntry: any = await SubscriptionEntries.create({
+          const createdSubEntry = await SubscriptionEntries.create({
             // CHANGED REQ.PARMS.ID TO NUMBER, USED TO BE STRING
             userId: Number(req.params.id),
             subscriptionId,
@@ -44,95 +48,46 @@ subscriptionEntriesRouter.post(
             lon: data.features[0].geometry.coordinates[0],
             phone,
           });
-
-          // console.log('LINE 53 || SUBSCRIPTION ENTRY ROUTER || ', newSubEntry);
-          // .then((data: any) => { // CLOSES ON LINE 95
-
+          // .then(async (data: any) => {
+          // CHANGE TODAY TO FIRST DAY OF SEASON START DATE
           // iterate over number of orders
           for (let i = 1; i < 15; i++) {
-            // init a var to represent the delivery date for each order in the subscription starting with the value of the season start date destructured from the req body
             const today: any = dayjs(start_date)
               .add(7 * i, 'day')
               .format('YYYY-MM-DD');
 
-            // search the orders table for any order with a matching date
-            // if one is found, include it's order contents in the return with the
-            // include property
-            const foundOrder: any = await Orders.findOne({
+            // before creating orders query database for any other orders with same delivery date to match order contents
+            // get array of products from order on a delivery date
+            const foundOrder = await Orders.findOne({
               where: { delivery_date: today },
-              // include products array
-              include: [
-                {
-                  model: Products,
-                  attributes: ['id'],
-                },
-              ],
             });
-            // console.log('LINE 64 || SUBSCRIPTION ENTRY ROUTER', foundOrder);
 
-            // declare a variable to store product ids of products that have
-            // already been added to an order with the same delivery_date
-            let foundProductIds: any;
-            // only reassign foundProductIds if foundOrder exists
-            if (foundOrder) {
-              // check in FOUND order for a products property array.
-              foundProductIds = foundOrder.products.map(
-                (product: any) => product.id,
-              );
-              console.log(
-                'LINE 82 || SUBSCRIPTION ENTRY ROUTER || FOUND PRODUCT IDS',
-                foundProductIds,
-              );
-            }
+            console.log('LINE 64 || SUBSCRIPTION ENTRY ROUTER', foundOrder);
 
-            // Create a new order for every week in the season
-            const newOrder = await Orders.create({
+            const createdOrder = await Orders.create({
               // subscriptionId: data.dataValues.subscriptionId,
-              subscriptionEntryId: newSubEntry.dataValues.id,
+              subscriptionEntryId: createdSubEntry.dataValues.id,
               delivery_date: today,
             });
-            console.log(
-              'LINE 93 || SUBSCRIPTION ENTRY ROUTER || NEW ORDER',
-              newOrder.id,
-            );
 
-            // Then check if foundProductIds.length > 0, which means the admin has added contents to the order
-            if (foundProductIds && foundProductIds.length > 0) {
-              // id's bulk create for every id in productIds
-              const newOrderContentInfo = await foundProductIds.map(
-                (productId: any) => ({ productId, orderId: newOrder.id }),
-              );
-              console.log(
-                'LINE 110 || SUBSCRIPTION ENTRY ROUTER || NEW ORDER CONTENT INFO ARRAY',
-                newOrderContentInfo,
-              );
+            // check in FOUND order for a products property array. Then check if length > 0, which means the admin
+            // has added contents to order
 
-              await OrderContents.bulkCreate(newOrderContentInfo);
-            }
-            // const newOrderContent = await OrderContents.create({
-            //   orderId: newOrder.id,
-            //   productId,
+            // if it has contents, map over product array making a new array with the product id and CREATED order id. Use
+            // this array to bulk create order contents,
+
+            // .then((data: any) => {
+            //   // console.log('LINE 318 || SERVER INDEX ||', data);
+            // })
+            // .catch((err: any) => {
+            //   console.log('LINE 73 || SERVER INDEX || ERROR', err);
             // });
 
-            // Orders.create({
-            //   // subscriptionId: data.dataValues.subscriptionId,
-            //   subscriptionEntryId: newSubEntry.dataValues.id,
-            //   delivery_date: today,
-            // })
-            //   .then((data: any) => {
-            //     // console.log('LINE 82 || SERVER INDEX ||', data);
-            //   })
-            //   .catch((err: any) => {
-            //     console.log('LINE 73 || SERVER INDEX || ERROR', err);
-            //   });
+            // can create order contents for each order after creating the order
           }
-          // });
+          // })
         } catch (err: any) {
-          console.error(
-            'LINE 78 || SUBSCRIPTION ENTRY ROUTER || ERROR',
-            err,
-            err.message,
-          );
+          console.error('LINE 83 || SUB ENTRY ROUTER ERROR', err);
         }
       };
 
