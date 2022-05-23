@@ -1,3 +1,4 @@
+// Import Dependencies
 import React from 'react';
 import ProductCard from './ProductCard';
 import { Grid } from '@mui/material';
@@ -57,4 +58,5 @@ const ProductsContainer = ({
   );
 };
 
+// Export Component
 export default ProductsContainer;

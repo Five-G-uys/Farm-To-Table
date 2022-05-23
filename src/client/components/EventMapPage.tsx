@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 
 // COMPONENT IMPORTS
 import EventMap from './EventMap';

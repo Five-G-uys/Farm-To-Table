@@ -1,8 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from './App';
-
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -66,4 +63,5 @@ const RSVPLIST = ({
   );
 };
 
+// Export Component
 export default RSVPLIST;

@@ -53,6 +53,7 @@ const useStyles = makeStyles({
 const OrderContentModal = ({
   handleClose,
   products,
+  deliveryDate,
   open,
   orders,
   handleSelectedProductsChange,
@@ -60,19 +61,57 @@ const OrderContentModal = ({
 }: any) => {
   const classes = useStyles();
 
-  console.log(
-    'LINE 62 || PRODUCTS',
-    products,
-    orders,
-    orders.map((order: any) => {
-      return order.products.map((product: any) => {
-        return product.id;
-      });
-    }),
-    // .flat(),
-  );
+  // console.log(
+  //   'LINE 64 || PRODUCTS',
+  //   products,
+  //   orders,
+  //   deliveryDate,
+  //   // orders.map((order: any) => {
+  //   //   return order.products.map((product: any) => {
+  //   //     return product.id;
+  //   //   });
+  //   // }),
+  //   // // .flat(),
+  // );
   // products.filter((product: any) => {
 
+  const selectedOrder = orders.find((order: any) => {
+    // console.log('LINE 79 || SELECTED ORDER', order, deliveryDate);
+    return order.delivery_date === deliveryDate;
+  });
+
+  // array of product ids in selected order
+  const productIds = selectedOrder
+    ? selectedOrder.products.map((product: any) => product.id)
+    : [];
+
+  console.log('LINE 89 || SELECTED ORDER || ', selectedOrder, productIds);
+
+  const availableProducts: any = selectedOrder
+    ? products
+        .filter((product: any) => !productIds.includes(product.id))
+        .map((product: any) => {
+          return (
+            <Grid
+              item
+              xs={10}
+              sm={5}
+              md={4}
+              lg={3}
+              xl={3}
+              // add margin
+              // p={10}
+              key={product.name + product.id}
+            >
+              <OrderContentProductCard
+                product={product}
+                handleSelectedProductsChange={handleSelectedProductsChange}
+                onClick={handleSelectedProductsChange}
+              />
+            </Grid>
+          );
+        })
+    : null;
   // });
   return (
     <div>
@@ -107,55 +146,18 @@ const OrderContentModal = ({
                 alignItems='center'
                 className={classes.gridContainer}
               >
-                {/* <FormGroup aria-label='position' row> */}
-                {products.map((product: any) => {
-                  return (
-                    <Grid
-                      item
-                      xs={10}
-                      sm={5}
-                      md={4}
-                      lg={3}
-                      xl={3}
-                      // add margin
-                      // p={10}
-                      key={product.name + product.id}
-                    >
-                      <OrderContentProductCard
-                        product={product}
-                        handleSelectedProductsChange={
-                          handleSelectedProductsChange
-                        }
-                        onClick={handleSelectedProductsChange}
-                      />
-                      {/* <Stack>
-                        <div className='thumbnail'>
-                          <FormControlLabel
-                            // value='end'
-                            control={
-                              <Checkbox
-                                name={String(product.id)}
-                                onChange={handleSelectedProductsChange}
-                              />
-                            }
-                            label={
-                              <div>
-                                {' '}
-                                <img
-                                  className='thumbnail'
-                                  src={product.img_url}
-                                  // width='200px'
-                                />
-                                {product.name}
-                              </div>
-                            }
-                            labelPlacement='end'
-                          />
-                        </div>
-                      </Stack> */}
-                    </Grid>
-                  );
-                })}
+                {selectedOrder && availableProducts.length > 0 ? (
+                  availableProducts
+                ) : (
+                  <Typography
+                    variant='h5'
+                    align='center'
+                    color='text.secondary'
+                    paragraph
+                  >
+                    No Available Products :c
+                  </Typography>
+                )}
                 {/* </FormGroup> */}
               </Grid>
               <Button

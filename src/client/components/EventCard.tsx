@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Event from './Event';
 import { UserContext } from './App';
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 //import GoogleCalendar from './GoogleCalendar';
 

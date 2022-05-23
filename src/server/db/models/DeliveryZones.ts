@@ -1,4 +1,4 @@
-// Import Dependencies
+// Imports
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 
@@ -22,4 +22,5 @@ const DeliveryZones = db.define('delivery_zones', {
   },
 });
 
+// Export Model
 export default DeliveryZones;
