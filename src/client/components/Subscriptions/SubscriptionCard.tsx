@@ -1,12 +1,29 @@
-// Import Dependencies
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../App';
 
 // MUI IMPORTS
-import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, IconButtonProps, Stack, styled, Typography } from '@mui/material';
+import {
+  Avatar,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Collapse,
+  IconButton,
+  IconButtonProps,
+  Stack,
+  styled,
+  Typography,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+import { red } from '@mui/material/colors';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -67,11 +84,7 @@ const SubscriptionCard = ({
         }}
         className='texture2'
       >
-        <CardHeader
-          subheader={`Harvest Year ${year}`}
-          // NEED TO FIGURE OUT HOW TO MATCH productS TO WEEKS
-          title={season}
-        />
+        <CardHeader subheader={`Harvest Year ${year}`} title={season} />
         <CardMedia
           component='img'
           height='194'

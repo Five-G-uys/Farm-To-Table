@@ -278,13 +278,15 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     getAllEvents();
     getUserRsvps();
   }, [updateCounter]);
-  console.log('LINE 270', event.location, 'AND ', event);
+
+  // console.log('LINE 270', event.location, 'AND ', event);
+
   return (
     <>
       <CssBaseline />
       <ToastContainer
         position='top-right'
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -309,7 +311,6 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
             align='center'
             color='text.primary'
             gutterBottom
-            fontWeight={600}
           >
             Farm Events
           </Typography>
