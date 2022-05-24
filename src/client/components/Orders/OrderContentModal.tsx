@@ -7,16 +7,10 @@ import OrderContentProductCard from './OrderContentProductCard';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import Fade from '@mui/material/Fade';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import FormLabel from '@mui/material/FormLabel';
 import { Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@mui/material/Modal';
-import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 // NEED TO MAKE IT SO THAT PRODUCTS THAT HAVE ALREADY BEEN ADDED TO AN ORDER
@@ -25,7 +19,7 @@ const commonStyles = {
   flexWrap: 'wrap',
   width: '60vw',
   minWidth: '500px',
-  bgcolor: 'background.paper',
+  bgcolor: 'transparent',
   borderColor: 'text.primary',
   m: 1,
   // to center elements absolutely inside parent

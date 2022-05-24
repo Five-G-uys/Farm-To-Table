@@ -9,7 +9,7 @@ const AboutUsPage = () => {
         {/* Hero unit */}
         <Box
           sx={{
-            bgcolor: 'background.paper',
+            bgcolor: 'transparent',
             pt: 8,
             pb: 6,
           }}

@@ -62,10 +62,12 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
+    "react-toastify": "^9.0.1",
     "react-use-event-listener": "^1.1.1",
     "sequelize": "^6.19.0",
     "stripe": "^8.219.0",
     "styled-components": "^5.3.5",
+    "sweetalert": "^2.1.2",
     "usehooks-ts": "^2.5.2",
     "uuid": "^8.3.2"
   },

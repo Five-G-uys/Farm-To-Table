@@ -1,14 +1,15 @@
-// Import Dependencies
+// DEPENDENCY IMPORTS
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../App';
 import { updateSubscription } from './subscriptionCalls';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import swal from 'sweetalert';
 // MUI IMPORTS
 import Fab from '@mui/material/Fab';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
-
 // COMPONENT IMPORTS
 import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
@@ -179,6 +180,15 @@ const SubscriptionsPage = () => {
       })
       .then(() => {
         setUpdateCounter(updateCounter + 1);
+        toast.success('Subscription Created', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
         handleClose();
       })
       .catch((err) => console.error(err));
@@ -203,16 +213,32 @@ const SubscriptionsPage = () => {
       // find mutates original array values
       (sub: any) => sub.id === subscriptionId,
     );
-    axios
-      .delete(`/api/subscriptions/${clickedSubscription.id}`, {
-        params: { id: clickedSubscription.id },
-      })
-      .then(() => {
-        getAllSubscriptions();
-      })
-      .catch((err) => {
-        console.error('69 REQUEST FAILED', err);
-      });
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this season!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("Product has been deleted", {
+          icon: "success",
+        });
+        axios
+        .delete(`/api/subscriptions/${clickedSubscription.id}`, {
+          params: { id: clickedSubscription.id },
+        })
+        .then(() => {
+          getAllSubscriptions();
+        })
+        .catch((err) => {
+          console.error('69 REQUEST FAILED', err);
+        });
+      } else {
+        swal("That was a close one!");
+      }
+    });
   };
 
   const getAllSubscriptions = () => {
@@ -289,10 +315,21 @@ const SubscriptionsPage = () => {
   return (
     <div>
       <CssBaseline />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          bgcolor: 'transparent',
           pt: 8,
           pb: 6,
         }} >

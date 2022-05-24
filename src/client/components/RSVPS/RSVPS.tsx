@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import RSVPLIST from './RSVPLIST';
-import { UserContext } from './App';
+import { UserContext } from '../App';
 import { Grid, Container, Paper, CardActions, Box } from '@mui/material';
 
 // Create Functional Component

@@ -1,6 +1,8 @@
 // React Imports
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // MUI Imports
 import Box from '@mui/material/Box';
@@ -16,7 +18,7 @@ import { Checkbox, Container, CssBaseline, FormControlLabel, Stack } from '@mui/
 
 // Component Imports
 import ProductsContainer from './ProductsContainer';
-import { updateProduct } from '../apiCalls/productCallS';
+import { updateProduct } from './productCallS';
 
 const ProductsPage = () => {
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -131,6 +133,15 @@ const ProductsPage = () => {
       .then((data) => {
         // console.log('saved!', data);
         setUpdateCounter(updateCounter + 1);
+        toast.success('Product Created', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
         handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
       })
@@ -265,10 +276,21 @@ const ProductsPage = () => {
   return (
     <div>
       <CssBaseline />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          bgcolor: 'transparent',
           pt: 8,
           pb: 6,
         }}

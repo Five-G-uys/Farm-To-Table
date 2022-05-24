@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // Import Env
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Import Dependencies
 import { Router } from 'express';
-import express, { Express, Request, Response } from 'express';
 
 // Set Up Router
 const stripeRouter: Router = Router();

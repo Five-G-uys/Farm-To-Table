@@ -1,5 +1,6 @@
 // React Imports
 import React, { useEffect, useState } from 'react';
+import swal from 'sweetalert'; 
 
 // MUI Imports
 import { styled } from '@mui/material/styles';
@@ -52,17 +53,35 @@ const ProductCard = ({
   const { name, id, description, harvest_dates, img_url, available } = product;
 
   const handleProductDelete = (productId: any) => {
-    axios
-      .delete(`/api/products/${id}`)
-      .then(({ data }: any) => {
-        // console.log('LINE 57', id);
-        // console.log('LINE 55 ', data);
-        setUpdateCounter(updateCounter + 1);
-      })
-      .catch((err: any) => {
-        console.error('LINE 59 ERROR');
-      });
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this product!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("Product has been deleted", {
+          icon: "success",
+        });
+        axios
+        .delete(`/api/products/${id}`)
+        .then(({ data }: any) => {
+          // console.log('LINE 57', id);
+          // console.log('LINE 55 ', data);
+          setUpdateCounter(updateCounter + 1);
+        })
+        .catch((err: any) => {
+          console.error('LINE 59 ERROR');
+        });
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
+
   };
+
   useEffect(() => {
     getAllProducts();
   }, [updateCounter]);

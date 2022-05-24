@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // export function to product pages component
 export const updatedEvent = async (eventId: number, updatedEvent: any) => {
@@ -8,6 +10,15 @@ export const updatedEvent = async (eventId: number, updatedEvent: any) => {
       `/api/events/${eventId}`,
       updatedEvent
     );
+    toast.success('Event Updated', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     // console.log("LINE 7 || EVENT CALLS", data);
     return data;
   } catch (err) {
