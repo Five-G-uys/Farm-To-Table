@@ -1,7 +1,7 @@
 // Import Dependencies
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import RSVPS from '../RSVPS';
+import RSVPS from '../RSVPS/RSVPS';
 import { UserContext } from '../App';
 
 // MUI Imports

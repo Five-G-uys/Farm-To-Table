@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CssBaseline, Box, Container, Typography } from "@mui/material";
 
-const Weather = ({ lat, lon }) => {
+const Weather = ({ lat, lon }: any) => {
   const [city, setCity] = useState();
   const [temp, setTemp] = useState();
   const [wind, setWind] = useState();
@@ -13,6 +13,7 @@ const Weather = ({ lat, lon }) => {
     axios
       .get(`/weather/${lat}/${lon}`)
       .then((response) => {
+        console.log('Response Data', response.data);
         //console.log('Weather Data Response', response.data);
         setCity(response.data.name);
         setTemp(response.data.main.temp);
@@ -20,7 +21,7 @@ const Weather = ({ lat, lon }) => {
         setWind(response.data.wind.speed);
       })
       .catch((error) => {
-        console.error("ERROR: ", error);
+        console.error("GET WEATHER ERROR: ", error);
       });
   }, []);
 

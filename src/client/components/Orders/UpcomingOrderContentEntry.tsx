@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 // COMPONENT IMPORTS
-import { UserContext } from './App';
+import { UserContext } from '../App';
 
 // MUI Import
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';

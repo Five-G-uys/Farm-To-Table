@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { UserContext } from './App';
+import { UserContext } from '../App';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 //mateiral UI
 import Box from '@mui/material/Box';
@@ -21,7 +21,7 @@ import { Stack } from '@mui/material';
 import { purple } from '@mui/material/colors';
 //Component import
 import EventCard from './EventCard';
-import { updatedEvent } from '../apiCalls/eventCalls';
+import { updatedEvent } from './eventCalls';
 import { CssBaseline, Container } from '@mui/material';
 
 interface EventProps {

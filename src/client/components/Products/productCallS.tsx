@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // export function to product pages component
 export const updateProduct = async (productId: number, updatedProduct: any) => {
@@ -9,6 +11,15 @@ export const updateProduct = async (productId: number, updatedProduct: any) => {
       `/api/products/${productId}`,
       updatedProduct
     );
+    toast.success('Product Updated', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
     // console.log('LINE 7 || PRODUCT CALLS', data);
     return data;
   } catch (err) {

@@ -6,7 +6,7 @@ import axios from 'axios';
 // Component Imports
 import OrdersList from './OrdersList';
 import OrderContentModal from './OrderContentModal';
-import { UserContext } from './App';
+import { UserContext } from '../App';
 
 // MUI Imports
 import { ThemeProvider, createTheme } from '@mui/system';
