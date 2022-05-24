@@ -1,7 +1,15 @@
 // Import Dependencies
 import React from 'react';
-import { useNavigate } from "react-router-dom";
-import { Fade, Modal, Backdrop, Button, TextField, Box, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import {
+  Fade,
+  Modal,
+  Backdrop,
+  Button,
+  TextField,
+  Box,
+  Stack,
+} from '@mui/material';
 
 const AddressForm = ({
   handleAddressFormClose,
@@ -13,11 +21,11 @@ const AddressForm = ({
   address,
 }: any) => {
   // state var
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  const handleSkipCheckout = async() => {
+  const handleSkipCheckout = async () => {
     await handleSubscribed();
-    const path = `/orders-page`; 
+    const path = `/orders-page`;
     navigate(path);
   };
 
@@ -26,6 +34,7 @@ const AddressForm = ({
     <div>
       {' '}
       <Modal
+        disableScrollLock={true}
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
         sx={{
@@ -33,6 +42,7 @@ const AddressForm = ({
           zIndex: (theme) => theme.zIndex.drawer + 1,
           borderRadius: '2.5rem',
           boxShadow: 24,
+          overflow: 'auto',
         }}
         open={addressOpen}
         onClose={handleAddressFormClose}

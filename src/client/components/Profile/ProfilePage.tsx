@@ -91,7 +91,7 @@ const Profile = () => {
   // console.log('New Profile Url: ', newProfileUrl);
 
   return (
-    <Box className='page-wrap'>
+    <Box className='page-wrap' justifyContent='center'>
       <CssBaseline />
       {/* Hero unit */}
       <Box
@@ -114,70 +114,79 @@ const Profile = () => {
         </Container>
       </Box>
       {/* Added new configurations for profile pages width and commented out the minWidth prop */}
-      <Card
-        sx={{
-          marginLeft: '250px',
-          marginRight: '250px',
-          maxWidth: '500px',
-          backgroundColor: '#e2f2d9',
-          // minWidth: '4rem',
-          borderRadius: '2.5rem',
-          boxShadow: 8,
-        }}
-        className='texture2'
-      >
-        <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-              {name[0]}
-            </Avatar>
-          }
-          subheader={`Email: ${email}`}
-          title={name}
-        />
-        <CardContent>
-          <img className='profilePic' src={user.picture}></img>
-        </CardContent>
-
-        <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
-          <Stack spacing={5} direction='row' id='user_card_stack'>
-            <Button
-              variant='text'
-              size='large'
-              color='success'
-              sx={{ color: 'green' }}
-              onClick={showWidget}
-            >
-              Change User Image
-            </Button>
-            <Button
-              variant='text'
-              size='large'
-              color='warning'
-              sx={{ color: 'red' }}
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
-            <ExpandMore
-              sx={{ color: 'green' }}
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label='show more'
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
-          </Stack>
-        </CardActions>
-
-        <Collapse in={expanded} timeout='auto' unmountOnExit>
+      <Box justifyContent='center' display='flex' alignItems='center'>
+        <Card
+          sx={{
+            marginLeft: '250px',
+            marginRight: '250px',
+            maxWidth: '500px',
+            backgroundColor: '#e2f2d9',
+            borderRadius: '2.5rem',
+            boxShadow: 8,
+            justifyContent: 'center',
+          }}
+          className='texture2'
+        >
+          <CardHeader
+            avatar={
+              <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
+                {name[0]}
+              </Avatar>
+            }
+            subheader={`Email: ${email}`}
+            title={name}
+          />
           <CardContent>
-            {/* User Orders */}
-            <RSVPS />
+            <img className='profilePic' src={user.picture}></img>
           </CardContent>
-        </Collapse>
-      </Card>
+
+          <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
+            <Stack
+              spacing={5}
+              direction='row'
+              id='user_card_stack'
+              justifyContent='center'
+              display='flex'
+              alignItems='center'
+            >
+              <Button
+                variant='text'
+                size='large'
+                color='success'
+                sx={{ color: 'green' }}
+                onClick={showWidget}
+              >
+                Change User Image
+              </Button>
+              <Button
+                variant='text'
+                size='large'
+                color='warning'
+                sx={{ color: 'red' }}
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+              <ExpandMore
+                sx={{ color: 'green' }}
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label='show more'
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </Stack>
+          </CardActions>
+
+          <Collapse in={expanded} timeout='auto' unmountOnExit>
+            <CardContent>
+              {/* User Orders */}
+              <RSVPS />
+            </CardContent>
+          </Collapse>
+        </Card>
+      </Box>
       <br></br>
       <br></br>
       <br></br>

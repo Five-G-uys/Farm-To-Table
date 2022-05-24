@@ -129,14 +129,14 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         //console.log('LINE 107 saved!', data);
         setUpdateCounter((updateCounter) => updateCounter + 1);
         toast.success('Event Updated', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
         handleClose();
       })
       .catch((err) => console.error(err));
@@ -283,7 +283,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     <>
       <CssBaseline />
       <ToastContainer
-        position="top-right"
+        position='top-right'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -339,6 +339,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
       <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
         <Modal
+          disableScrollLock={true}
           aria-labelledby='transition-modal-title'
           aria-describedby='transition-modal-description'
           sx={{

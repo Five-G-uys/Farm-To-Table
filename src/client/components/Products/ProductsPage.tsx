@@ -147,14 +147,14 @@ const ProductsPage = () => {
         // console.log('saved!', data);
         setUpdateCounter(updateCounter + 1);
         toast.success('Product Created', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
         handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
       })
@@ -290,7 +290,7 @@ const ProductsPage = () => {
     <div>
       <CssBaseline />
       <ToastContainer
-        position="top-right"
+        position='top-right'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -340,6 +340,7 @@ const ProductsPage = () => {
       />
       {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
       <Modal
+        disableScrollLock={true}
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
         sx={{

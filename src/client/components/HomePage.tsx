@@ -111,10 +111,6 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                 the freshest produce from our farm.
               </Typography>
             </CardContent>
-            <CardActions>
-              {/* <Button size='small'>View</Button>
-                    <Button size='small'>Edit</Button> */}
-            </CardActions>
           </Card>
         </Container>
       </main>

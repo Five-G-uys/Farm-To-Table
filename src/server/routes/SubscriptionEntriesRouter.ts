@@ -4,7 +4,12 @@ import { Request, Response } from 'express';
 import axios from 'axios';
 import dayjs from 'dayjs';
 // Import Models
-import { SubscriptionEntries, Orders, OrderContents, Products } from '../db/models';
+import {
+  SubscriptionEntries,
+  Orders,
+  OrderContents,
+  Products,
+} from '../db/models';
 
 // Set Up Router
 const subscriptionEntriesRouter: Router = Router();
@@ -79,10 +84,10 @@ subscriptionEntriesRouter.post(
               foundProductIds = foundOrder.products.map(
                 (product: any) => product.id,
               );
-              console.log(
-                'LINE 82 || SUBSCRIPTION ENTRY ROUTER || FOUND PRODUCT IDS',
-                foundProductIds,
-              );
+              // console.log(
+              //   'LINE 82 || SUBSCRIPTION ENTRY ROUTER || FOUND PRODUCT IDS',
+              //   foundProductIds,
+              // );
             }
 
             // Create a new order for every week in the season
@@ -91,10 +96,10 @@ subscriptionEntriesRouter.post(
               subscriptionEntryId: newSubEntry.dataValues.id,
               delivery_date: today,
             });
-            console.log(
-              'LINE 93 || SUBSCRIPTION ENTRY ROUTER || NEW ORDER',
-              newOrder.id,
-            );
+            // console.log(
+            //   'LINE 93 || SUBSCRIPTION ENTRY ROUTER || NEW ORDER',
+            //   newOrder.id,
+            // );
 
             // Then check if foundProductIds.length > 0, which means the admin has added contents to the order
             if (foundProductIds && foundProductIds.length > 0) {
