@@ -8,7 +8,7 @@ export const updatedEvent = async (eventId: number, updatedEvent: any) => {
     // axios always has data property available on response obj so can destructure here
     const { data } = await axios.patch(`/api/events/${eventId}`, updatedEvent);
     toast.success('Event Updated', {
-      position: 'top-right',
+      position: 'bottom-center',
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
