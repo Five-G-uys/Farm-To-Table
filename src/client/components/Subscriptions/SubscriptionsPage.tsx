@@ -303,7 +303,7 @@ const SubscriptionsPage = () => {
             color='text.primary'
             gutterBottom
           >
-            Season Subscriptions
+            Seasonal Subscriptions
           </Typography>
           <Typography
             variant='h5'
