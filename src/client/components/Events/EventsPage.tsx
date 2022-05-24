@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../App';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 //mateiral UI
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -127,6 +128,15 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
       .then(({ data }) => {
         //console.log('LINE 107 saved!', data);
         setUpdateCounter((updateCounter) => updateCounter + 1);
+        toast.success('Event Updated', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
         handleClose();
       })
       .catch((err) => console.error(err));
@@ -271,6 +281,17 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
   return (
     <>
       <CssBaseline />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {/* Hero unit */}
       <Box
         sx={{

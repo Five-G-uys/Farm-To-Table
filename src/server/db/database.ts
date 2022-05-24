@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const Sequelize = require("sequelize");
-const dotenv = require("dotenv");
+import dotenv from 'dotenv';
 dotenv.config();
 
 /*

@@ -6,13 +6,10 @@ import { updateSubscription } from './subscriptionCalls';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import swal from 'sweetalert';
-
-
 // MUI IMPORTS
 import Fab from '@mui/material/Fab';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
-
 // COMPONENT IMPORTS
 import SubscriptionsContainer from './SubscriptionsContainer';
 import SubscriptionsAdmin from './SubscriptionsAdmin';
@@ -318,10 +315,21 @@ const SubscriptionsPage = () => {
   return (
     <div>
       <CssBaseline />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          bgcolor: 'transparent',
           pt: 8,
           pb: 6,
         }} >

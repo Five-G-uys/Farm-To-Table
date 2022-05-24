@@ -6,10 +6,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 // import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import MapboxTraffic from '@mapbox/mapbox-gl-traffic';
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
-import * as turf from '@turf/turf';
-// import axios from 'axios';
-import dayjs from 'dayjs';
-import axios from 'axios';
 
 // mapboxgl.accessToken = 'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg';
 

@@ -71,7 +71,7 @@ const UserRecordsPage = () => {
 
   // Box component styles
   const commonStyles = {
-    bgcolor: 'background.paper',
+    bgcolor: 'transparent',
     borderColor: 'text.primary',
     m: 1,
     // to center elements absolutely inside parent

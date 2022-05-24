@@ -1,21 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme } from '@mui/material/styles';
-import SuccessToast from './Toastify/SuccessToast';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -63,7 +55,6 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             >
               Knock, Knock Tomatoes
             </Typography>
-            <SuccessToast/>
             <Typography
               variant='h5'
               align='center'
@@ -94,8 +85,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             </Stack>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth='md'>
-          {/* End hero unit */}
+        {/* <Container sx={{ py: 8 }} maxWidth='md'>
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
@@ -128,15 +118,11 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                       with the freshest produce from our farm.
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    {/* <Button size='small'>View</Button>
-                    <Button size='small'>Edit</Button> */}
-                  </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
-        </Container>
+        </Container> */}
       </main>
     </div>
   );

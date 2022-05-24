@@ -12,7 +12,7 @@ import OrdersPage from './Orders/OrdersPage';
 import EventsPage from './Events/EventsPage';
 import ProfilePage from './Profile/ProfilePage';
 import AboutUsPage from './AboutUsPage';
-import Login from './Login';
+import Login from './Profile/Login';
 import NewNavBar from './NewNavBar';
 import ProductsPage from './Products/ProductsPage';
 import RecordsPage from './Records/RecordsPage';
@@ -355,7 +355,7 @@ const App = () => {
           </UserContext.Provider>
         </Grid>
         {/* Footer */}
-        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
+        <Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
           <Typography variant='h6' align='center' gutterBottom>
             Knock, Knock Tomatoes
           </Typography>

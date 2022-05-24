@@ -2,6 +2,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../App';
+import swal from 'sweetalert';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //import GoogleCalendar from './GoogleCalendar';
 
@@ -132,30 +135,62 @@ const Event = ({
 
   //??????DELETES A GIVEN EVENT ??????/////////////////////////
   const deleteEvent = () => {
-    axios
-      .delete(`/api/events/${event.id}`, {
-        params: { id: event.id },
-      })
-      .then(() => {
-        getAllEvents();
-      })
-      .catch((err) => {
-        console.error('91 REQUEST FAILED', err);
-      });
+    swal({
+      title: "Are you sure?",
+      text: "Event will be deleted, along with all users RSVPs!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("Event has been deleted", {
+          icon: "success",
+        });
+        axios
+        .delete(`/api/events/${event.id}`, {
+          params: { id: event.id },
+        })
+        .then(() => {
+          getAllEvents();
+        })
+        .catch((err) => {
+          console.error('91 REQUEST FAILED', err);
+        });
+      } else {
+        swal("That was a close one!");
+      }
+    });
   };
   //////?????????DELETE User RSVP???????????????????///////
   const deleteRsvpsEvent = () => {
-    axios
-      .delete(`/api/rsvp/delete/${id}`, {
-        params: { userId: id, eventId: event.id },
-      })
-      .then(() => {
-        setUpdateCounter(updateCounter + 1);
-        totalEventRsvps();
-      })
-      .catch((err) => {
-        console.error('91 REQUEST FAILED', err);
-      });
+    swal({
+      title: "Are you sure?",
+      text: "You will be missed!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("RSVP has been deleted", {
+          icon: "success",
+        });
+        axios
+        .delete(`/api/rsvp/delete/${id}`, {
+          params: { userId: id, eventId: event.id },
+        })
+        .then(() => {
+          setUpdateCounter(updateCounter + 1);
+          totalEventRsvps();
+        })
+        .catch((err) => {
+          console.error('91 REQUEST FAILED', err);
+        });
+      } else {
+        swal("That was a close one!");
+      }
+    });
   };
 
   //////////////////confirmation box//////////////////////
@@ -188,6 +223,17 @@ const Event = ({
   return (
     //Reconfiguring the card margins
     <Box marginTop='-130px'>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Card
         sx={{
           minWidth: '15rem',

@@ -1,5 +1,5 @@
+// Import Dependencies
 import React, { useState, MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,8 +17,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
 import { Switch } from '@mui/material';
-import { blue } from '@mui/material/colors';
-import { HomeIcon } from '@mui/icons-material';
 
 interface Props {
   /**
@@ -52,7 +50,6 @@ function HideOnScroll(props: Props) {
 
 const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
   const pages = [
-    { name: 'Home', path: '/' },
     { name: 'Subscribe', path: '/subscriptions-page' },
     { name: 'Products ', path: '/edit-products' },
     { name: 'Events', path: '/events-page' },
@@ -98,6 +95,10 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
   };
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const linkToHomePage = () => {
+    window.location.href = '/';
   };
 
   const handleCloseNavMenu = () => {
@@ -151,15 +152,19 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
             >
               {/* removed disableGutters attribute from toolbar */}
               {/* added a color prop for app name on navbar */}
-              <Typography
-                variant='h6'
-                noWrap
-                component='div'
-                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                color='red'
+              <Button
+                onClick={linkToHomePage}  
               >
-                Knock, Knock Tomatoes
-              </Typography>
+                <Typography
+                  variant='h6'
+                  noWrap
+                  component='div'
+                  sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                  color='red'
+                >
+                  Knock, Knock Tomatoes
+                </Typography>
+              </Button>
 
               <Box
                 sx={{

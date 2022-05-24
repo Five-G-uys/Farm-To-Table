@@ -19,7 +19,7 @@ export const updateProduct = async (productId: number, updatedProduct: any) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      });
+    });
     // console.log('LINE 7 || PRODUCT CALLS', data);
     return data;
   } catch (err) {
