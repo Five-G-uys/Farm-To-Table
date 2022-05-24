@@ -156,6 +156,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     borderRadius: '2.5rem',
     boxShadow: 3,
     minWidth: '500px',
+    overflow: 'auto',
   };
 
   // create function to handle update form submission
@@ -343,8 +344,8 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
           sx={{
             color: purple,
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            borderRadius: '.7rem',
-            // boxShadow: 5,
+            borderRadius: '2.5rem',
+            boxShadow: 24,
           }}
           open={open}
           onClose={handleClose}
@@ -357,162 +358,171 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         >
           <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
             {
-              <div>
-                <div>
-                  <Box
-                    sx={{
-                      ...commonStyles,
-                    }}
-                  >
-                    <form
-                      onSubmit={
-                        inEditMode ? handleEventUpdateSubmit : postEvent
-                      }
-                    >
-                      <br></br>
-                      {thumbnail && <img width={300} src={thumbnail} />}
-                      {/* <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
+              <Box
+                sx={{
+                  ...commonStyles,
+                  maxHeight: '90vh',
+                  flexWrap: 'wrap',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  // overflow: 'auto',
+                  // overflowY: 'scroll',
+                }}
+              >
+                <form
+                  onSubmit={inEditMode ? handleEventUpdateSubmit : postEvent}
+                >
+                  {thumbnail && <img width={300} src={thumbnail} />}
+                  <Box>
+                    <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
+                      {' '}
+                      <FormLabel id='demo-radio-buttons-group-label'>
+                        <h3 className='create-subscription'>Create Event</h3>
+                      </FormLabel>
+                    </FormControl>
+                  </Box>
+                  {/* <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
                         <InputLabel htmlFor='standard-adornment-amount'>
                           Name of Event
                         </InputLabel> */}
-                      <br></br>
-                      <TextField
-                        variant='filled'
-                        name='eventName'
-                        value={eventName}
-                        label='Name of Event'
-                        id='Event Name'
-                        // id='fullWidth'
-                        placeholder='Name of Event'
+                  <TextField
+                    variant='filled'
+                    fullWidth
+                    name='eventName'
+                    value={eventName}
+                    label='Event Name'
+                    id='Event Name'
+                    placeholder='Ex: 1st Annual Spring Time Festival'
+                    onChange={handelTextInput}
+                    // startAdornment={
+                    //   <InputAdornment position='start'></InputAdornment>
+                    // }
+                  />
+                  {/* </FormControl> */}
+                  <br></br>
+                  <br></br>
+                  <TextField
+                    // width='75%'
+                    // type={{ width: '75%' }}
+                    id='filled-basic'
+                    variant='filled'
+                    fullWidth
+                    value={description}
+                    name='description'
+                    label='Description'
+                    placeholder='Ex: An afternoon outdoor market where the community is welcomed to come and sample all our farm has to offer!'
+                    onChange={handelTextInput}
+                  />
+                  <br></br>
+                  <br></br>
+                  <TextField
+                    fullWidth
+                    id='filled-basic'
+                    variant='filled'
+                    value={location}
+                    name='location'
+                    label='Address'
+                    // id='fullWidth'
+                    placeholder='Ex: 123 Wholesome Ln. '
+                    onChange={handelTextInput}
+                  />
+                  <br></br>
+                  <br></br>
+                  <TextField
+                    fullWidth
+                    id='filled-basic'
+                    variant='filled'
+                    value={city}
+                    name='city'
+                    label='City'
+                    placeholder='Ex: Pleasantville'
+                    onChange={handelTextInput}
+                  />
+                  <br></br>
+                  <br></br>
+                  <TextField
+                    type='datetime-local'
+                    fullWidth
+                    id='filled-basic'
+                    variant='filled'
+                    value={eventDate}
+                    name='eventDate'
+                    onChange={handelTextInput}
+                  />
+                  <br></br>
+                  <br></br>
+                  <Box>
+                    <FormControl>
+                      {' '}
+                      <FormLabel id='eventType-for-event'>
+                        Type of Event
+                      </FormLabel>
+                      <RadioGroup
+                        aria-labelledby='eventType-for-event'
+                        name='eventType'
+                        defaultValue='Farmers Market'
+                        value={eventType}
                         onChange={handelTextInput}
-                        // startAdornment={
-                        //   <InputAdornment position='start'></InputAdornment>
-                        // }
-                      />
-                      {/* </FormControl> */}
-                      <br></br>
-                      <br></br>
-                      <TextField
-                        // width='75%'
-                        // type={{ width: '75%' }}
-                        id='filled-basic'
-                        variant='filled'
-                        // label='Filled'
-                        value={description}
-                        name='description'
-                        label='Event Description'
-                        // id='fullWidth'
-                        placeholder='Event Description'
-                        onChange={handelTextInput}
-                      />
-                      <br></br>
-                      <br></br>
-                      <TextField
-                        fullWidth
-                        id='filled-basic'
-                        variant='filled'
-                        value={location}
-                        name='location'
-                        label='location'
-                        // id='fullWidth'
-                        placeholder='Address for event'
-                        onChange={handelTextInput}
-                      />
-                      <br></br>
-                      <br></br>
-                      <TextField
-                        fullWidth
-                        id='filled-basic'
-                        variant='filled'
-                        value={city}
-                        name='city'
-                        label='City'
-                        placeholder='City of street address'
-                        onChange={handelTextInput}
-                      />
-                      <br></br>
-                      <br></br>
-                      <TextField
-                        type='datetime-local'
-                        fullWidth
-                        id='filled-basic'
-                        variant='filled'
-                        value={eventDate}
-                        name='eventDate'
-                        label='Event Date'
-                        // id='fullWidth'
-                        // placeholder='MM/DD/YYYY'
-                        onChange={handelTextInput}
-                      />
-                      <br></br>
-                      <br></br>
-                      <Box>
-                        <FormControl>
-                          {' '}
-                          <FormLabel id='eventType-for-event'>
-                            Type of Event
-                          </FormLabel>
-                          <RadioGroup
-                            aria-labelledby='eventType-for-event'
-                            name='eventType'
-                            defaultValue='Farmers Market'
-                            value={eventType}
-                            onChange={handelTextInput}
-                          >
-                            <FormControlLabel
-                              control={<Radio color={'success'} />}
-                              value='Farmers Market'
-                              label='Farmers Market'
-                            />
-                            <FormControlLabel
-                              control={<Radio color='success' />}
-                              value='Community Volunteering'
-                              label='Community Volunteering'
-                            />
-                            <FormControlLabel
-                              control={<Radio color='success' />}
-                              value='Customer Day'
-                              label='Customer Day'
-                            />
-                          </RadioGroup>
-                        </FormControl>
-                      </Box>
-                      <br></br>
-                      <br></br>
-                      <Stack direction='row' justifyContent='space-between'>
-                        <Button
-                          variant='contained'
-                          size='large'
-                          onClick={showWidget}
-                        >
-                          Add Event Image
-                        </Button>
-                        <br></br>{' '}
-                        <Button variant='contained' size='large' type='submit'>
-                          {inEditMode ? 'UPDATE' : 'SAVE'}
-                        </Button>
-                      </Stack>
-                    </form>
+                      >
+                        <FormControlLabel
+                          control={<Radio color={'success'} />}
+                          value='Farmers Market'
+                          label='Farmers Market'
+                        />
+                        <FormControlLabel
+                          control={<Radio color='success' />}
+                          value='Community Volunteering'
+                          label='Community Volunteering'
+                        />
+                        <FormControlLabel
+                          control={<Radio color='success' />}
+                          value='Customer Day'
+                          label='Customer Day'
+                        />
+                      </RadioGroup>
+                    </FormControl>
                   </Box>
-                </div>
-              </div>
+                  <br></br>
+                  <br></br>
+                  <Stack direction='row' justifyContent='space-between'>
+                    <Button
+                      variant='text'
+                      size='large'
+                      onClick={showWidget}
+                      sx={{ color: 'green' }}
+                    >
+                      Add Event Image
+                    </Button>
+                    <Button
+                      variant='text'
+                      size='large'
+                      color='success'
+                      type='submit'
+                      sx={{ color: 'green' }}
+                    >
+                      {inEditMode ? 'UPDATE' : 'SAVE'}
+                    </Button>
+                  </Stack>
+                </form>
+              </Box>
             }
           </Fade>
         </Modal>
         {roleId > 3 && (
           <Fab
             onClick={handleCreateForm}
-            size='small'
+            size='large'
             // color='secondary'
             aria-label='add'
-            style={{ transform: 'scale(2.5)', backgroundColor: '#80D55F' }}
+            style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
             sx={{
               position: 'fixed',
               bottom: (theme) => theme.spacing(8),
               right: (theme) => theme.spacing(8),
             }}
+            className='texture2'
           >
-            <AddIcon style={{ color: '#FFFFFF' }} />
+            <AddIcon style={{ color: 'text.primary' }} />
           </Fab>
         )}
       </Box>

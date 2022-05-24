@@ -50,10 +50,7 @@ const AddressForm = ({
                 <Box
                   sx={{
                     ...commonStyles,
-                    // flexWrap: 'wrap',
-                    // display: 'flex',
-                    // justifyContent: 'center',
-                    // borderRadius: '16px',
+                    overflow: 'auto',
                   }}
                 >
                   <form onSubmit={handleSubscribed}>
@@ -79,7 +76,7 @@ const AddressForm = ({
                       value={city}
                       name='city'
                       label='City'
-                      placeholder='City'
+                      placeholder='New Orleans'
                       onChange={handleInputAddress}
                     />
                     <br></br>
@@ -92,7 +89,7 @@ const AddressForm = ({
                       name='state'
                       label='State'
                       // id='fullWidth'
-                      placeholder='State'
+                      placeholder='LA'
                       onChange={handleInputAddress}
                     />
                     <br></br>
@@ -104,7 +101,7 @@ const AddressForm = ({
                       value={zip}
                       name='zip'
                       label='Zip'
-                      placeholder='Zip code'
+                      placeholder='12121'
                       onChange={handleInputAddress}
                     />
                     <br></br>

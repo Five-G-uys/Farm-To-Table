@@ -136,59 +136,57 @@ const Event = ({
   //??????DELETES A GIVEN EVENT ??????/////////////////////////
   const deleteEvent = () => {
     swal({
-      title: "Are you sure?",
-      text: "Event will be deleted, along with all users RSVPs!",
-      icon: "warning",
+      title: 'Are you sure?',
+      text: 'Event will be deleted, along with all users RSVPs!',
+      icon: 'warning',
       buttons: true,
       dangerMode: true,
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
-        swal("Event has been deleted", {
-          icon: "success",
+        swal('Event has been deleted', {
+          icon: 'success',
         });
         axios
-        .delete(`/api/events/${event.id}`, {
-          params: { id: event.id },
-        })
-        .then(() => {
-          getAllEvents();
-        })
-        .catch((err) => {
-          console.error('91 REQUEST FAILED', err);
-        });
+          .delete(`/api/events/${event.id}`, {
+            params: { id: event.id },
+          })
+          .then(() => {
+            getAllEvents();
+          })
+          .catch((err) => {
+            console.error('91 REQUEST FAILED', err);
+          });
       } else {
-        swal("That was a close one!");
+        swal('That was a close one!');
       }
     });
   };
   //////?????????DELETE User RSVP???????????????????///////
   const deleteRsvpsEvent = () => {
     swal({
-      title: "Are you sure?",
-      text: "You will be missed!",
-      icon: "warning",
+      title: 'Are you sure?',
+      text: 'You will be missed!',
+      icon: 'warning',
       buttons: true,
       dangerMode: true,
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
-        swal("RSVP has been deleted", {
-          icon: "success",
+        swal('RSVP has been deleted', {
+          icon: 'success',
         });
         axios
-        .delete(`/api/rsvp/delete/${id}`, {
-          params: { userId: id, eventId: event.id },
-        })
-        .then(() => {
-          setUpdateCounter(updateCounter + 1);
-          totalEventRsvps();
-        })
-        .catch((err) => {
-          console.error('91 REQUEST FAILED', err);
-        });
+          .delete(`/api/rsvp/delete/${id}`, {
+            params: { userId: id, eventId: event.id },
+          })
+          .then(() => {
+            setUpdateCounter(updateCounter + 1);
+            totalEventRsvps();
+          })
+          .catch((err) => {
+            console.error('91 REQUEST FAILED', err);
+          });
       } else {
-        swal("That was a close one!");
+        swal('That was a close one!');
       }
     });
   };
@@ -224,8 +222,8 @@ const Event = ({
     //Reconfiguring the card margins
     <Box marginTop='-130px'>
       <ToastContainer
-        position="top-right"
-        autoClose={5000}
+        position='bottom-center'
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

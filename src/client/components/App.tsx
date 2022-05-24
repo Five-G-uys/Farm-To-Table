@@ -98,7 +98,6 @@ const App = () => {
     axios
       .get('/auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
-        // console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
       })
       .catch((err) => console.warn(err)); //
@@ -174,7 +173,6 @@ const App = () => {
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   const changeMode = (newMode: any) => {
-    //console.log(window.localStorage.setItem("mode", newMode));
     window.localStorage.setItem('mode', newMode);
     setMode((newMode) => (newMode === 'dark' ? 'light' : 'dark'));
   };
