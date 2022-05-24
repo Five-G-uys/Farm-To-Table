@@ -1,7 +1,7 @@
 // Import Dependencies
 import axios from 'axios';
 import { Request, Response, Router } from 'express';
-import { nextTick } from 'process';
+// import { nextTick } from 'process';
 
 // Import Models
 import { Events } from '../db/models';
@@ -108,7 +108,7 @@ eventRouter.delete('/api/events/:id', (req: Request, res: Response) => {
 //////////////////////////EVENT MAP BOX GET REQUEST ////////////////////////////
 eventRouter.get(
   '/api/event/:lat/:lon/:eventLon/:eventLat',
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next) => {
     console.log('LINE 111', req.params, '||', req.query);
 
     const { lon, lat, eventLat, eventLon } = req.params;
@@ -119,13 +119,32 @@ eventRouter.get(
         // HARDCODING INITIAL LAT AND LON VALUES SO GPS FUNCTIONALITY WON'T BE NECESSARY ON DEPLOYED INSTANCE TO RENDER MAP
         `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${lon},${lat};${eventLon},${eventLat}?steps=true&geometries=geojson&roundtrip=true&access_token=${process.env.MAPBOX_API_KEY}`,
       );
-      console.log('LINE 122', query);
-      return res.status(200).json(query);
+      const getCircularReplacer = () => {
+        const seen = new WeakSet();
+        return (key: unknown, value: object | null) => {
+          if (typeof value === 'object' && value !== null) {
+            if (seen.has(value)) {
+              return;
+            }
+            seen.add(value);
+          }
+          return value;
+        };
+      };
+
+      const obj = query;
+
+      // ✅ Works
+      const result = JSON.stringify(obj, getCircularReplacer());
+      //console.log(result); // 👉️ {"address":{"country":"Chile"},"numbers":[1,2,3],"age":30}
+
+      //console.log('LINE 142', query.data);
+      return res.status(200).send(query.data);
     } catch (err: any) {
       console.log('LINE 125', err.message);
-      return res.sendStatus(400);
+      res.sendStatus(400);
       // return { message: 'ERROR FETCHING OPTIMIZED ROUTE FROM MAPBOX', err };
-      //next(err);
+      next(err);
     }
   },
 );

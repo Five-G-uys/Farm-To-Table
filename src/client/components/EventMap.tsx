@@ -17,8 +17,9 @@ interface AppProps {
   lat: number;
   lon: number;
   routeCoordinates: string;
-  updateCounter: void;
+  updateCounter: any;
   routeData: any;
+  event: any;
 }
 
 const EventMap = ({
@@ -29,7 +30,9 @@ const EventMap = ({
   updateCounter,
   mode,
   routeData,
+  event,
 }: AppProps) => {
+  console.log('event line 35, EventMap', event);
   const mapContainerRef = useRef(null);
   const map: any = useRef(null);
   // let warehouse: any;
@@ -129,11 +132,17 @@ const EventMap = ({
         throw routeData;
       }
       const waypoints: any = routeData.waypoints;
-      // console.log('LINE 117 || MAP COMPONENT', routeData);
+      console.log(
+        'LINE 117 || MAP COMPONENT',
+        routeData,
+        'AND WAY POINT',
+        waypoints,
+      );
       // console.log('LINE 81 || MAP COMPONENT', lat, lon);
       const data = routeData.trips[0];
       console.log('line 129', data);
       const route = data.geometry.coordinates;
+      console.log('ROUTE LINE 142', route);
       const geojson = {
         type: 'Feature',
         properties: {},
@@ -209,7 +218,7 @@ const EventMap = ({
       // }, 5000);
 
       for (let i = 0; i < waypoints.length; i++) {
-        // console.log('LINE 120 || MAP', waypoints[i]);
+        console.log('LINE 120 || MAP', waypoints[i]);
         const marker1: any = new mapboxgl.Marker({
           color:
             i === 0
@@ -257,7 +266,7 @@ const EventMap = ({
     // ]);
     // console.log('LINE 252', dropoffs);
     getRoute();
-  }, [lat, lon, updateCounter]);
+  }, [lat, lon, updateCounter, event]);
 
   // useEffect to drop warehouse icon once map and warehouse var load
   // useEffect(() => {

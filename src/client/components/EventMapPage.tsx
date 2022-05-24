@@ -55,7 +55,7 @@ const EventMapPage = ({ mode, updateCoords, lat, lon }: AppProps) => {
         console.error('LINE 50 || EventMapPage ERROR', err);
       });
   };
-  useEffect(getEventRoutes, [lat, lon]);
+  useEffect(getEventRoutes, [lat, lon, event.id]);
 
   return (
     <div>
@@ -68,6 +68,7 @@ const EventMapPage = ({ mode, updateCoords, lat, lon }: AppProps) => {
         lat={lat}
         lon={lon}
         updateCounter={updateCounter}
+        event={event}
       />
     </div>
   );
