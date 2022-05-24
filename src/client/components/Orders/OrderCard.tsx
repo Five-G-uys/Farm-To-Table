@@ -2,7 +2,7 @@
 import React, { useState, useContext } from 'react';
 
 // Component Imports
-import { UserContext } from './App';
+import { UserContext } from '../App';
 import UpcomingOrderContentList from './UpcomingOrderContentList';
 
 // MUI Import

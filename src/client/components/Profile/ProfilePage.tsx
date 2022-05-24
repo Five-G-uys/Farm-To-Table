@@ -1,7 +1,7 @@
 // Import Dependencies
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import RSVPS from '../RSVPS';
+import RSVPS from '../RSVPS/RSVPS';
 import { UserContext } from '../App';
 
 // MUI Imports
@@ -116,11 +116,13 @@ const Profile = () => {
       {/* Added new configurations for profile pages width and commented out the minWidth prop */}
       <Card
         sx={{
+          marginLeft: '250px',
+          marginRight: '250px',
+          maxWidth: '500px',
           backgroundColor: '#e2f2d9',
+          // minWidth: '4rem',
           borderRadius: '2.5rem',
-          boxShadow: 20,
-          marginLeft: '500px',
-          marginRight: '500px',
+          boxShadow: 8,
         }}
         className='texture2'
       >

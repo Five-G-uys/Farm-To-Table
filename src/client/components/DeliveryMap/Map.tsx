@@ -6,13 +6,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 // import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import MapboxTraffic from '@mapbox/mapbox-gl-traffic';
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
-import * as turf from '@turf/turf';
-// import axios from 'axios';
-import dayjs from 'dayjs';
-import axios from 'axios';
 
-mapboxgl.accessToken =
-  'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg';
+// mapboxgl.accessToken = 'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg';
 
 const Map = ({
   lat,
@@ -20,13 +15,13 @@ const Map = ({
   updateCoords,
   routeCoordinates,
   updateCounter,
-  mode,
+  // mode,
   routeData,
 }: any) => {
   const mapContainerRef = useRef(null);
   const map: any = useRef(null);
-  let warehouse: any;
-  const [distance, setDistance] = useState(0);
+  // let warehouse: any;
+  // const [distance, setDistance] = useState(0);
   // const [lng, setLng] = useState(lon);
   // const [latt, setLatt] = useState(lat);
   const [zoom, setZoom] = useState(13);
@@ -45,15 +40,15 @@ const Map = ({
 
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style:
-        Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
-          ? 'mapbox://styles/mapbox/traffic-night-v2'
-          : 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/mapbox/traffic-night-v2',
+        // Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
+        //   ? 'mapbox://styles/mapbox/traffic-night-v2'
+        //   : 'mapbox://styles/mapbox/streets-v11',
       center: [lon, lat],
       zoom: zoom,
     });
 
-    // Add navigation control (the +/- zoom buttons)
+    // Add geo control (the +/- zoom buttons)
     map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
     map.current.addControl(new MapboxTraffic(), 'bottom-left');
     map.current.addControl(
@@ -96,7 +91,7 @@ const Map = ({
       // console.log('q');
       // setLng(map.getCenter().lng.toFixed(lon));
       // setLatt(map.getCenter().lat.toFixed(latt));
-      setZoom(map.current.getZoom().toFixed(5));
+      setZoom(map.current.getZoom().toFixed(1));
     });
   }, [map]);
 
@@ -126,7 +121,7 @@ const Map = ({
       // console.log('LINE 117 || MAP COMPONENT', routeData);
       // console.log('LINE 81 || MAP COMPONENT', lat, lon);
       const data = routeData.trips[0];
-
+      console.log('line 129', data);
       const route = data.geometry.coordinates;
       const geojson = {
         type: 'Feature',
@@ -237,73 +232,73 @@ const Map = ({
     // if (routeCoordinatesArray.length < 2) return;
     // create hypothetical warehouse location coordinate. Set to current location of device for now. Will hardcode
     // once a permanent location is decided
-    const warehouseLocation = [lon, lat];
-    // console.log('LINE 241 || MAP', lat, lon);
-    // Turning warehouse coordinate (or potentially a series of coordinates) into a GeoJSON feature collection.
-    warehouse = turf.featureCollection([turf.point(warehouseLocation)]);
-    // console.log('LINE 244 || WAREHOUSE', warehouse.features[0]);
-    warehouse = warehouse.features[0];
-    // Creating empty feature collection to store all order points
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    dropoffs = turf.featureCollection([
-      turf.point([lon, lat]),
-      ...routeCoordinatesArray.map((coordinate: any) => turf.point(coordinate)),
-    ]);
+    // const warehouseLocation = [lon, lat];
+    // // console.log('LINE 241 || MAP', lat, lon);
+    // // Turning warehouse coordinate (or potentially a series of coordinates) into a GeoJSON feature collection.
+    // warehouse = turf.featureCollection([turf.point(warehouseLocation)]);
+    // // console.log('LINE 244 || WAREHOUSE', warehouse.features[0]);
+    // warehouse = warehouse.features[0];
+    // // Creating empty feature collection to store all order points
+    // // eslint-disable-next-line @typescript-eslint/no-empty-function
+    // dropoffs = turf.featureCollection([
+    //   turf.point([lon, lat]),
+    //   ...routeCoordinatesArray.map((coordinate: any) => turf.point(coordinate)),
+    // ]);
     // console.log('LINE 252', dropoffs);
     getRoute();
   }, [lat, lon, updateCounter]);
 
   // useEffect to drop warehouse icon once map and warehouse var load
-  useEffect(() => {
-    if (!map.current) return;
+  // useEffect(() => {
+  //   if (!map.current) return;
 
-    map.current.on('load', () => {
-      map.current.addLayer({
-        id: 'warehouse',
-        type: 'circle',
-        source: {
-          data: warehouse,
-          type: 'geojson',
-        },
-        paint: {
-          'circle-radius': 20,
-          'circle-color': 'white',
-          'circle-stroke-color': '#3887be',
-          'circle-stroke-width': 3,
-        },
-      });
-      // Create a symbol layer on top of circle layer
-      map.current.addLayer({
-        id: 'warehouse-symbol',
-        type: 'symbol',
-        source: {
-          data: warehouse,
-          type: 'geojson',
-        },
-        layout: {
-          'icon-image': 'grocery-15',
-          'icon-size': 1,
-        },
-        paint: {
-          'text-color': '#3887be',
-        },
-      });
-      // Create a layer for all dropoff points
-      map.current.addLayer({
-        id: 'dropoffs-symbol',
-        type: 'symbol',
-        source: {
-          data: dropoffs,
-          type: 'geojson',
-        },
-        layout: {
-          'icon-allow-overlap': true,
-          'icon-ignore-placement': true,
-          'icon-image': 'marker-15',
-        },
-      });
-    });
-  }, [map.current, routeCoordinatesArray]);
+  //   // map.current.on('load', () => {
+  //   //   map.current.addLayer({
+  //   //     id: 'warehouse',
+  //   //     type: 'circle',
+  //   //     source: {
+  //   //       data: warehouse,
+  //   //       type: 'geojson',
+  //   //     },
+  //   //     paint: {
+  //   //       'circle-radius': 20,
+  //   //       'circle-color': 'white',
+  //   //       'circle-stroke-color': '#3887be',
+  //   //       'circle-stroke-width': 3,
+  //   //     },
+  //   //   });
+  //   //   // Create a symbol layer on top of circle layer
+  //   //   map.current.addLayer({
+  //   //     id: 'warehouse-symbol',
+  //   //     type: 'symbol',
+  //   //     source: {
+  //   //       data: warehouse,
+  //   //       type: 'geojson',
+  //   //     },
+  //   //     layout: {
+  //   //       'icon-image': 'grocery-15',
+  //   //       'icon-size': 1,
+  //   //     },
+  //   //     paint: {
+  //   //       'text-color': '#3887be',
+  //   //     },
+  //   //   });
+  //   //   // Create a layer for all dropoff points
+  //   //   map.current.addLayer({
+  //   //     id: 'dropoffs-symbol',
+  //   //     type: 'symbol',
+  //   //     source: {
+  //   //       data: dropoffs,
+  //   //       type: 'geojson',
+  //   //     },
+  //   //     layout: {
+  //   //       'icon-allow-overlap': true,
+  //   //       'icon-ignore-placement': true,
+  //   //       'icon-image': 'marker-15',
+  //   //     },
+  //   //   });
+  //   // });
+  // }, [map.current, routeCoordinatesArray]);
 
   return (
     <div>

@@ -2,35 +2,16 @@
 import React, { useContext } from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
 // Component Imports
 import OrdersList from './OrdersList';
 import OrderContentModal from './OrderContentModal';
-import { UserContext } from './App';
-
+import { UserContext } from '../App';
 // MUI Imports
-import { ThemeProvider, createTheme } from '@mui/system';
-import TextField from '@mui/material/TextField';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import { Navigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import Backdrop from '@mui/material/Backdrop';
-import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Divider from '@mui/material/Divider';
 import {
   CssBaseline,
   Box,
   Container,
   Typography,
-  Slide,
-  Stack,
 } from '@mui/material';
 
 const OrdersPage = ({ getOrders }: any) => {

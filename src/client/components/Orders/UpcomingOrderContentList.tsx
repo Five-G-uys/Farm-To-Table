@@ -1,5 +1,4 @@
 import React from 'react';
-
 import UpcomingOrderContentEntry from './UpcomingOrderContentEntry';
 
 const UpcomingOrderContentList = ({ order, handleDeleteOrderContent }: any) => {

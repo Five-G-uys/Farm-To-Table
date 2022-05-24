@@ -4,10 +4,7 @@ import React from 'react';
 import EventMap from './EventMap';
 
 // MODULE IMPORTS
-import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import dayjs from 'dayjs';
-import axios from 'axios';
 
 const EventMapPage = ({ mode, updateCoords, updateCounter, lat, lon }: any) => {
     
