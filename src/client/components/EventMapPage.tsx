@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 // COMPONENT IMPORTS
 import EventMap from './EventMap';
@@ -11,8 +12,9 @@ import axios from 'axios';
 interface AppProps {
   mode: string;
   updateCoords(): void;
-  lat: string;
-  lon: string;
+  lat: number;
+  lon: number;
+  state: any;
 }
 
 const EventMapPage = ({ mode, updateCoords, lat, lon }: AppProps) => {
@@ -20,19 +22,24 @@ const EventMapPage = ({ mode, updateCoords, lat, lon }: AppProps) => {
   const [routeData, setRouteData] = useState({});
   const [updateCounter, setUpdateCounter] = useState(0);
   // SET VAR FOR TODAYS DATE THAT MATCHES DATABASE FORMAT
-  const today = dayjs().add(7, 'day').format().slice(0, 10);
-  // console.log('LINE 21 || DELIVERY PAGE', today);
+  const { event }: any = useLocation().state;
+  //console.log('LINE 27 || EventMapPage', event);
 
   let tempStr = '';
   //FIRST FETCH ALL ORDERS FOR TODAY
-  const getTodaysOrders = () => {
+  const getEventRoutes = () => {
     if (!lat || !lon) return;
+    const eventLon = event.lon;
+    const eventLat = event.lat;
     axios
-      .get('/api/order/todaysOrders', {
-        params: { delivery_date: today, lat, lon },
-      })
+      .get(`/api/event/${lat}/${lon}/${eventLon}/${eventLat}`)
       .then((data) => {
-        console.log('LINE 34 || DELIVERY PAGE', data.data.waypoints);
+        console.log(
+          'LINE 37 || EventMapPage',
+          data,
+          'AND',
+          data.data.waypoints,
+        );
         setRouteData(data.data);
         tempStr = data.data.waypoints
           .map((location: any) => {
@@ -42,22 +49,25 @@ const EventMapPage = ({ mode, updateCoords, lat, lon }: AppProps) => {
 
         setRouteCoordinates(tempStr);
         setUpdateCounter(updateCounter + 1);
+        console.log('LINE 47', tempStr);
       })
       .catch((err) => {
-        console.error('LINE 52 || DELIVERY PAGE ERROR', err);
+        console.error('LINE 50 || EventMapPage ERROR', err);
       });
   };
-  useEffect(getTodaysOrders, [lat, lon]);
+  useEffect(getEventRoutes, [lat, lon]);
 
   return (
     <div>
       <h1>Hello!</h1>
       <EventMap
         mode={mode}
+        routeCoordinates={routeCoordinates}
+        routeData={routeData}
         updateCoords={updateCoords}
-        updateCounter={updateCounter}
         lat={lat}
         lon={lon}
+        updateCounter={updateCounter}
       />
     </div>
   );

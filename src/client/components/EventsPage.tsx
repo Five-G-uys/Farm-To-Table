@@ -267,7 +267,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     getAllEvents();
     getUserRsvps();
   }, [updateCounter]);
-  console.log('LINE 270', event.location, 'AND ', event);
+  // console.log('LINE 270', event.location, 'AND ', event);
   return (
     <>
       <CssBaseline />

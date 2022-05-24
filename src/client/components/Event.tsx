@@ -23,6 +23,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { Link } from 'react-router-dom';
+import EventMapPage from './EventMapPage';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -70,7 +71,7 @@ const Event = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  // console.log('LINE 74', event);
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { id } = user;
   const [expanded, setExpanded] = useState(false);
@@ -229,7 +230,9 @@ const Event = ({
           >
             {`Address: ${event.location}`}
           </Button> */}
-          <Link to={`${pages.path}`}>{event.location}</Link>
+          <Link to={`${pages.path}`} state={{ event }}>
+            {event.location}
+          </Link>
         </CardContent>
 
         {event.thumbnail ? (

@@ -33,6 +33,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
       .then((data) => {
         console.log('LINE 34 || DELIVERY PAGE', data.data.waypoints);
         setRouteData(data.data);
+        console.log('TEMP STRING', data.data.waypoints);
         tempStr = data.data.waypoints
           .map((location: any) => {
             // console.log(

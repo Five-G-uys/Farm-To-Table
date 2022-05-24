@@ -1,6 +1,7 @@
 // Import Dependencies
 import axios from 'axios';
 import { Request, Response, Router } from 'express';
+import { nextTick } from 'process';
 
 // Import Models
 import { Events } from '../db/models';
@@ -103,6 +104,31 @@ eventRouter.delete('/api/events/:id', (req: Request, res: Response) => {
       res.sendStatus(400);
     });
 });
+
+//////////////////////////EVENT MAP BOX GET REQUEST ////////////////////////////
+eventRouter.get(
+  '/api/event/:lat/:lon/:eventLon/:eventLat',
+  async (req: Request, res: Response) => {
+    console.log('LINE 111', req.params, '||', req.query);
+
+    const { lon, lat, eventLat, eventLon } = req.params;
+
+    try {
+      console.log('LINE 113', lon, lat, 'AND EVENT', eventLat, eventLon);
+      const query = await axios.get(
+        // HARDCODING INITIAL LAT AND LON VALUES SO GPS FUNCTIONALITY WON'T BE NECESSARY ON DEPLOYED INSTANCE TO RENDER MAP
+        `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${lon},${lat};${eventLon},${eventLat}?steps=true&geometries=geojson&roundtrip=true&access_token=${process.env.MAPBOX_API_KEY}`,
+      );
+      console.log('LINE 122', query);
+      return res.status(200).json(query);
+    } catch (err: any) {
+      console.log('LINE 125', err.message);
+      return res.sendStatus(400);
+      // return { message: 'ERROR FETCHING OPTIMIZED ROUTE FROM MAPBOX', err };
+      //next(err);
+    }
+  },
+);
 
 // Export Router
 export default eventRouter;
