@@ -59,7 +59,24 @@ eventRouter.post('/api/events', async (req: Request, res: Response) => {
 eventRouter.get('/api/events', (req: Request, res: Response) => {
   Events.findAll()
     .then((response: []) => {
-      //console.log(response, "This is line 186 events gotten");
+      //loop over response and split the values by dash
+      const filt = response.map((event: any) => event.dataValues.eventDate);
+      console.log('Line 64', filt);
+      //loop over filt, replace - with space
+      const noDashes = filt.map((date: any) => {
+        // const format = date.split('-').splice(0, 1);
+        let final: any;
+        // console.log('LINE 67', date.concat(format));
+        for (let i = 0; i < date.length; i++) {
+          const item = date[i];
+
+          console.log('LINE 73', final);
+        }
+        return date;
+      });
+      console.log('LINE 73', noDashes);
+
+      console.log(response, 'This is line 186 events gotten');
       res.status(200).send(response);
     })
     .catch((err: object) => {

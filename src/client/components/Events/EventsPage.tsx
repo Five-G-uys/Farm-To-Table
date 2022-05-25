@@ -129,14 +129,14 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         //console.log('LINE 107 saved!', data);
         setUpdateCounter((updateCounter) => updateCounter + 1);
         toast.success('Event Updated', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
         handleClose();
       })
       .catch((err) => console.error(err));
@@ -224,6 +224,13 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     axios
       .get('/api/events')
       .then(({ data }) => {
+        // const sorted = data.sort(
+        //   (a: { eventDate: number }, b: { eventDate: number }) => {
+        //     console.log(a.eventDate.split("-"));
+        //     return a.eventDate - b.eventDate;
+        //   },
+        // );
+        // console.log('LINE 233', sorted);
         setAllEvents(data);
       })
       .catch((error) => {
@@ -283,7 +290,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     <>
       <CssBaseline />
       <ToastContainer
-        position="top-right"
+        position='top-right'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}

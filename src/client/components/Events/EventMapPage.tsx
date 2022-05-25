@@ -6,7 +6,6 @@ import EventMap from './EventMap';
 
 // MODULE IMPORTS
 import 'mapbox-gl/dist/mapbox-gl.css';
-<<<<<<< HEAD:src/client/components/EventMapPage.tsx
 import dayjs from 'dayjs';
 import axios from 'axios';
 interface AppProps {
@@ -56,8 +55,6 @@ const EventMapPage = ({ mode, updateCoords, lat, lon }: AppProps) => {
       });
   };
   useEffect(getEventRoutes, [lat, lon, event.id]);
-=======
->>>>>>> dea9e967cb1595407ec953f4c59010c977d1678f:src/client/components/Events/EventMapPage.tsx
 
   return (
     <div>

@@ -447,24 +447,6 @@ const ProductsPage = () => {
                       placeholder='Plant Date'
                       onChange={handelTextInput}
                     /> */}
-<<<<<<< HEAD:src/client/components/ProductsPage.tsx
-                    <br></br>
-                    <br></br>
-                    <TextField
-                      type='datetime-local'
-                      fullWidth
-                      id='filled-basic'
-                      variant='filled'
-                      value={harvest_dates}
-                      name='harvest_dates'
-                      label='Harvest Dates'
-                      // id='fullWidth'
-                      placeholder='Projected Harvest Date'
-                      onChange={handelTextInput}
-                    />
-                    <br></br>
-                    <br></br>
-=======
                 <br></br>
                 <br></br>
                 <TextField
@@ -480,7 +462,6 @@ const ProductsPage = () => {
                 />
                 <br></br>
                 <br></br>
->>>>>>> dea9e967cb1595407ec953f4c59010c977d1678f:src/client/components/Products/ProductsPage.tsx
 
                 <Stack direction='row' justifyContent='space-between'>
                   <Button

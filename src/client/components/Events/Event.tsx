@@ -63,15 +63,7 @@ interface AppProps {
   mode: string;
 }
 
-const Event = ({
-  event,
-  handleEditClick,
-  getAllEvents,
-  lat,
-  lon,
-  updateCoords,
-  mode,
-}: AppProps) => {
+const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -89,22 +81,30 @@ const Event = ({
 
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
-    axios
-      .post('/api/rsvps/', {
-        userId: id,
-        eventId: event.id,
-      })
-      .then(() => {
-        setIsGoing(true);
-      })
-      .then(() => {
-        totalEventRsvps();
-        getAllEvents();
-      })
-      .catch((err) => {
-        console.error('68 REQUEST FAILED', err);
-      });
+    swal({}).then((isGoing) => {
+      if (isGoing) {
+        swal('We look forward to seeing you there!', {
+          icon: 'success',
+        });
+        axios
+          .post('/api/rsvps/', {
+            userId: id,
+            eventId: event.id,
+          })
+          .then(() => {
+            setIsGoing(true);
+          })
+          .then(() => {
+            totalEventRsvps();
+            getAllEvents();
+          })
+          .catch((err) => {
+            console.error('68 REQUEST FAILED', err);
+          });
+      }
+    });
   };
+
   /////////////??????????GETS THE RSVP COUNT FOR A USER?????////////////////
   const getUserRsvpCount = () => {
     axios
@@ -193,31 +193,10 @@ const Event = ({
     });
   };
 
-  //////////////////confirmation box//////////////////////
-  // class ConfirmBox {
-  //   show() {
-  //    var c = confirm("Are you sure you want to do that?");
-  //    var status = document.getElementById("content");
-  //    if (c == true) {
-  //     status.innerHTML = "You confirmed, thanks";
-  //    } else {
-  //     status.innerHTML = "You cancelled the action";
-  //    }
-  //   }
-  //  }
-  //  window.onload = () => {
-  //   var bttn = < HTMLButtonElement > document.getElementById("Button1");
-  //   bttn.onclick = function() {
-  //    const obj = new ConfirmBox();
-  //    obj.show();
-  //   };
-  //   };
-
   ////////////////////////////////////////////
   useEffect(() => {
     getUserRsvpCount();
     totalEventRsvps();
-    // GoogleCalendar();
   }, [updateCounter]);
 
   return (
@@ -242,7 +221,7 @@ const Event = ({
           size: 'large',
           marginTop: '100px',
         }}
-        className='texture1'
+        className='texture2'
       >
         <CardHeader fontWeight='700' title={event.eventName} />
         <CardContent>
@@ -269,10 +248,11 @@ const Event = ({
         <CardContent>
           <Button
             component={Link}
-            variant='contained'
-            color='primary'
+            // variant='contained'
+            color='info'
             to={`${pages.path}`}
             state={{ event }}
+            size='large'
           >
             <LocationOnIcon>{event.location}</LocationOnIcon>
           </Button>
