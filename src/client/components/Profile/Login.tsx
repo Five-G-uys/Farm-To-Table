@@ -1,10 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { CssBaseline, Box, Container, Typography, Stack, Button } from '@mui/material';
+import {
+  CssBaseline,
+  Box,
+  Container,
+  Typography,
+  Stack,
+  Button,
+} from '@mui/material';
 import axios from 'axios';
 import React from 'react';
 
 const handleLogin = () => {
-  axios.get('auth/google')
+  axios
+    .get('auth/google')
     .then((response) => console.log(response))
     .catch((err) => console.log(err));
 };
@@ -17,7 +25,7 @@ const Login = () => {
         {/* Hero unit */}
         <Box
           sx={{
-            bgcolor: 'background.paper',
+            bgcolor: 'transparent',
             pt: 8,
             pb: 6,
           }}
@@ -47,7 +55,9 @@ const Login = () => {
               justifyContent='center'
             >
               <form action='/auth/google' method='GET'>
-                <Button variant='contained' type='submit'>Sign In With Google</Button>
+                <Button variant='contained' type='submit'>
+                  Sign In With Google
+                </Button>
               </form>
               {/* <Button variant='outlined'>Secondary action</Button> */}
             </Stack>
@@ -55,14 +65,9 @@ const Login = () => {
         </Box>
         <Container sx={{ py: 8 }} maxWidth='md'>
           {/* End hero unit */}
-          
         </Container>
       </main>
     </div>
-
-
-
-
 
     // </div>
   );

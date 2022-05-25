@@ -1,22 +1,37 @@
 // React Imports
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // MUI Imports
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Fab from '@mui/material/Fab';
+import Fade from '@mui/material/Fade';
+import FilledInput from '@mui/material/FilledInput';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import Fade from '@mui/material/Fade';
-import { Checkbox, Container, CssBaseline, FormControlLabel, Stack } from '@mui/material';
+import {
+  Checkbox,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  Stack,
+} from '@mui/material';
 
 // Component Imports
 import ProductsContainer from './ProductsContainer';
-import { updateProduct } from '../apiCalls/productCallS';
+import { updateProduct } from './productCallS';
 
 const ProductsPage = () => {
   const [updateCounter, setUpdateCounter] = useState(0);
@@ -131,6 +146,15 @@ const ProductsPage = () => {
       .then((data) => {
         // console.log('saved!', data);
         setUpdateCounter(updateCounter + 1);
+        toast.success('Product Created', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
         handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
       })
@@ -265,10 +289,21 @@ const ProductsPage = () => {
   return (
     <div>
       <CssBaseline />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          bgcolor: 'transparent',
           pt: 8,
           pb: 6,
         }}
@@ -324,78 +359,81 @@ const ProductsPage = () => {
       >
         <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
           {
-            <div>
-              <div>
-                <Box
-                  sx={{
-                    ...commonStyles,
-                    // flexWrap: 'wrap',
-                    // display: 'flex',
-                    // justifyContent: 'center',
-                    // borderRadius: '16px',
-                  }}
-                >
-                  <form
-                    onSubmit={
-                      inEditMode ? handleProductUpdateSubmit : postProduct
-                    }
-                  >
-                    {img_url && (
-                      <img width={'100%'} src={img_url} border-radius='2rem' />
-                    )}
+            <Box
+              sx={{
+                ...commonStyles,
+                maxHeight: '90vh',
+                flexWrap: 'wrap',
+                display: 'flex',
+                flexDirection: 'column',
+                overflowY: 'scroll',
+              }}
+            >
+              <form
+                onSubmit={inEditMode ? handleProductUpdateSubmit : postProduct}
+              >
+                {img_url && (
+                  <img width={'100%'} src={img_url} border-radius='2rem' />
+                )}
+                <Box>
+                  <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
+                    {' '}
+                    <FormLabel>
+                      <h3 className='create-product'>Create Product</h3>
+                    </FormLabel>
+                  </FormControl>
+                </Box>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={available}
+                      onChange={handleAvailabilityChange}
+                    />
+                  }
+                  label='Available'
+                />
 
-                    <br></br>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={available}
-                          onChange={handleAvailabilityChange}
-                        />
-                      }
-                      label='Available'
-                    />
-
-                    <TextField
-                      // width='75%'
-                      // type={{ width: '75%' }}
-                      fullWidth
-                      border-radius='1rem'
-                      id='fullWidth'
-                      variant='filled'
-                      // label='Filled'
-                      value={name}
-                      name='name'
-                      label='Product Name'
-                      placeholder='Avocado'
-                      onChange={handelTextInput}
-                    />
-                    <br></br>
-                    <br></br>
-                    <TextField
-                      fullWidth
-                      id='filled-basic'
-                      variant='filled'
-                      value={description}
-                      name='description'
-                      label='Product Description'
-                      // id='fullWidth'
-                      placeholder='Description'
-                      onChange={handelTextInput}
-                    />
-                    <br></br>
-                    <br></br>
-                    <TextField
-                      fullWidth
-                      id='filled-basic'
-                      variant='filled'
-                      value={quantity}
-                      name='quantity'
-                      label='Product Quantity'
-                      // id='fullWidth'
-                      placeholder='Quantity'
-                      onChange={handelTextInput}
-                    />
-                    {/*
+                <TextField
+                  // width='75%'
+                  // type={{ width: '75%' }}
+                  fullWidth
+                  border-radius='1rem'
+                  id='fullWidth'
+                  variant='filled'
+                  // label='Filled'
+                  value={name}
+                  name='name'
+                  label='Product Name'
+                  placeholder='Avocado'
+                  onChange={handelTextInput}
+                />
+                <br></br>
+                <br></br>
+                <TextField
+                  fullWidth
+                  id='filled-basic'
+                  variant='filled'
+                  value={description}
+                  name='description'
+                  label='Description'
+                  // id='fullWidth'
+                  placeholder='Description'
+                  onChange={handelTextInput}
+                />
+                <br></br>
+                <br></br>
+                <TextField
+                  fullWidth
+                  id='filled-basic'
+                  variant='filled'
+                  value={quantity}
+                  name='quantity'
+                  label='Quantity'
+                  // id='fullWidth'
+                  placeholder='Quantity'
+                  onChange={handelTextInput}
+                />
+                {/*
                     <br></br>
                     <br></br>
                      <TextField
@@ -409,6 +447,7 @@ const ProductsPage = () => {
                       placeholder='Plant Date'
                       onChange={handelTextInput}
                     /> */}
+<<<<<<< HEAD:src/client/components/ProductsPage.tsx
                     <br></br>
                     <br></br>
                     <TextField
@@ -425,32 +464,47 @@ const ProductsPage = () => {
                     />
                     <br></br>
                     <br></br>
+=======
+                <br></br>
+                <br></br>
+                <TextField
+                  fullWidth
+                  id='filled-basic'
+                  variant='filled'
+                  value={harvest_dates}
+                  name='harvest_dates'
+                  label='Harvest Date'
+                  // id='fullWidth'
+                  placeholder='Projected Harvest Date'
+                  onChange={handelTextInput}
+                />
+                <br></br>
+                <br></br>
+>>>>>>> dea9e967cb1595407ec953f4c59010c977d1678f:src/client/components/Products/ProductsPage.tsx
 
-                    <Stack direction='row' justifyContent='space-between'>
-                      <Button
-                        variant='text'
-                        size='medium'
-                        onClick={showWidget}
-                        sx={{ color: 'green' }}
-                      >
-                        Add Product Image
-                      </Button>
-                      <Button
-                        variant='text'
-                        size='large'
-                        type='submit'
-                        sx={{ color: 'green' }}
-                      >
-                        {inEditMode ? 'UPDATE' : 'SAVE'}
-                      </Button>
-                    </Stack>
-                    {/* <button type='submit' className='form--submit'>
+                <Stack direction='row' justifyContent='space-between'>
+                  <Button
+                    variant='text'
+                    size='medium'
+                    onClick={showWidget}
+                    sx={{ color: 'green' }}
+                  >
+                    Add Product Image
+                  </Button>
+                  <Button
+                    variant='text'
+                    size='large'
+                    type='submit'
+                    sx={{ color: 'green' }}
+                  >
+                    {inEditMode ? 'UPDATE' : 'SAVE'}
+                  </Button>
+                </Stack>
+                {/* <button type='submit' className='form--submit'>
                 Save Product
               </button> */}
-                  </form>
-                </Box>
-              </div>
-            </div>
+              </form>
+            </Box>
           }
         </Fade>
       </Modal>
@@ -461,15 +515,16 @@ const ProductsPage = () => {
         aria-label='add'
         style={{
           transform: 'scale(1.5)',
-          backgroundColor: 'lightgreen',
+          backgroundColor: '#e2f2d9',
         }}
         sx={{
           position: 'fixed',
           bottom: (theme) => theme.spacing(8),
           right: (theme) => theme.spacing(8),
         }}
+        className='texture2'
       >
-        <AddIcon style={{ color: '#FFFFFF' }} />
+        <AddIcon style={{ color: 'text.primary' }} />
       </Fab>
     </div>
   );

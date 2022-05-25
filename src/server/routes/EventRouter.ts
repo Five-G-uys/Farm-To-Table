@@ -44,7 +44,6 @@ eventRouter.post('/api/events', async (req: Request, res: Response) => {
       // seasonTitle,
     })
       .then((data: []) => {
-        console.log('Return Events Route || Post Request', data);
         res.status(201).send(data);
       })
       .catch((err: string) => {

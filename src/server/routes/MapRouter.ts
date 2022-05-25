@@ -9,6 +9,21 @@
 // // Initialize Router
 // const mapRouter = Router();
 
+<<<<<<< HEAD
+=======
+///////////////////////////////////////////////////////////////////////////////////////////// GET MAP FUNCTION
+// const getCurrentMap: any = (latt: any, long: any, rc: any) => {
+//   return fetch(
+//     `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${latt},${long};${rc}?steps=true&geometries=geojson&roundtrip=true&access_token=${process.env.MAPBOX_API_KEY}`,
+//     { method: 'GET' }
+//   )
+//     .then((response: any ) => {
+//       // console.log(response);
+//       return response
+//     }) //returns data object of current weather conditions
+//     .catch((err: any) => console.error('error in map api call: ', err));
+// };
+>>>>>>> dea9e967cb1595407ec953f4c59010c977d1678f
 // ///////////////////////////////////////////////////////////////////////////////////////////// GET MAP FUNCTION
 // const getCurrentMap: any = (latt: any, long: any, rc: any) => {
 //   return fetch(

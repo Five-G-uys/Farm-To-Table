@@ -5,20 +5,20 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 // MUI Imports
 import HomePage from './HomePage';
-import DeliveryPage from './DeliveryPage';
+import DeliveryPage from './DeliveryMap/DeliveryPage';
 import SubscriptionsPage from './Subscriptions/SubscriptionsPage';
 import SubscriptionsAdmin from './Subscriptions/SubscriptionsAdmin';
-import OrdersPage from './OrdersPage';
-import EventsPage from './EventsPage';
+import OrdersPage from './Orders/OrdersPage';
+import EventsPage from './Events/EventsPage';
 import ProfilePage from './Profile/ProfilePage';
 import AboutUsPage from './AboutUsPage';
-import Login from './Login';
+import Login from './Profile/Login';
 import NewNavBar from './NewNavBar';
-import ProductsPage from './ProductsPage';
+import ProductsPage from './Products/ProductsPage';
 import RecordsPage from './Records/RecordsPage';
 import DileveryZonesRecords from './Records/DeliveryZonesRecords';
 import EventsRecords from './Records/EventsRecords';
-import EventMapPage from './EventMapPage';
+import EventMapPage from './Events/EventMapPage';
 // import FarmsRecords from './Records/FarmsRecords';
 import OrdersRecords from './Records/OrdersRecords';
 import ProductsRecords from './Records/ProductsRecords';
@@ -26,7 +26,7 @@ import SubscriptionEntriesRecords from './Records/SubscriptionEntriesRecords';
 import SubscriptionsRecords from './Records/SubscriptionsRecords';
 import UsersRecords from './Records/UsersRecords';
 import VendorsRecords from './Records/VendorsRecords';
-import PackingListPage from './PackingListPage';
+import PackingListPage from './PackingList/PackingListPage';
 import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
 
@@ -35,6 +35,35 @@ import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
 import { amber, blueGrey, grey, lightGreen } from '@mui/material/colors';
+
+/*
+▄ •▄  ▐ ▄        ▄▄· ▄ •▄     ▄ •▄  ▐ ▄        ▄▄· ▄ •▄
+█▌▄▌▪•█▌▐█▪     ▐█ ▌▪█▌▄▌▪    █▌▄▌▪•█▌▐█▪     ▐█ ▌▪█▌▄▌▪
+▐▀▀▄·▐█▐▐▌ ▄█▀▄ ██ ▄▄▐▀▀▄·    ▐▀▀▄·▐█▐▐▌ ▄█▀▄ ██ ▄▄▐▀▀▄·
+▐█.█▌██▐█▌▐█▌.▐▌▐███▌▐█.█▌    ▐█.█▌██▐█▌▐█▌.▐▌▐███▌▐█.█▌
+·▀  ▀▀▀ █▪ ▀█▄▀▪·▀▀▀ ·▀  ▀    ·▀  ▀▀▀ █▪ ▀█▄▀▪·▀▀▀ ·▀  ▀
+                ▄▄▄▄▄      • ▌ ▄ ·.  ▄▄▄· ▄▄▄▄▄      ▄▄▄ ..▄▄ ·
+                •██  ▪     ·██ ▐███▪▐█ ▀█ •██  ▪     ▀▄.▀·▐█ ▀.
+                 ▐█.▪ ▄█▀▄ ▐█ ▌▐▌▐█·▄█▀▀█  ▐█.▪ ▄█▀▄ ▐▀▀▪▄▄▀▀▀█▄
+                 ▐█▌·▐█▌.▐▌██ ██▌▐█▌▐█ ▪▐▌ ▐█▌·▐█▌.▐▌▐█▄▄▌▐█▄▪▐█
+                 ▀▀▀  ▀█▄▀▪▀▀  █▪▀▀▀ ▀  ▀  ▀▀▀  ▀█▄▀▪ ▀▀▀  ▀▀▀▀
+
+         ,            __ \/ __
+     /\^/`\          /o \{}/ o\
+    | \/   |         \   ()   /
+    | |    |          `> /\ <`   ,,,
+    \ \    /  @@@@    (o/\/\o)  {{{}}                 _ _
+     '\\//'  @@()@@  _ )    (    ~Y~       @@@@     _{ ' }_
+       ||     @@@@ _(_)_   wWWWw .oOOo.   @@()@@   { `.!.` }
+       ||     ,/  (_)@(_)  (___) OO()OO    @@@@  _ ',_/Y\_,'
+       ||  ,\ | /)  (_)\     Y   'OOOO',,,(\|/ _(_)_ {_,_}
+   |\  ||  |\\|// vVVVv`|/@@@@    _ \/{{}}}\| (_)@(_)  |  ,,,
+   | | ||  | |;,,,(___) |@@()@@ _(_)_| ~Y~ wWWWw(_)\ (\| {{{}}
+   | | || / / {{}}} Y  \| @@@@ (_)#(_) \|  (___)   |  \| /~Y~
+    \ \||/ /\\|~Y~ \|/  | \ \/  /(_) |/ |/   Y    \|/  |//\|/
+jgs\ `\\//`,.\|/|//.|/\\|/\\|,\|/ //\|/\|.\\\| // \|\\ |/,\|/
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+*/
 
 
 function Copyright() {
@@ -69,7 +98,6 @@ const App = () => {
     axios
       .get('/auth/api/userProfile')
       .then(({ data }: AxiosResponse) => {
-        // console.log('LINE 30 || APP COMPONENT', data);
         setUser(data);
       })
       .catch((err) => console.warn(err)); //
@@ -138,7 +166,6 @@ const App = () => {
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   const changeMode = (newMode: any) => {
-    //console.log(window.localStorage.setItem("mode", newMode));
     window.localStorage.setItem('mode', newMode);
     setMode((newMode) => (newMode === 'dark' ? 'light' : 'dark'));
   };
@@ -319,7 +346,7 @@ const App = () => {
           </UserContext.Provider>
         </Grid>
         {/* Footer */}
-        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component='footer'>
+        <Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
           <Typography variant='h6' align='center' gutterBottom>
             Knock, Knock Tomatoes
           </Typography>
@@ -342,5 +369,46 @@ const App = () => {
     </>
   );
 };
+
+/*
+                              ....
+                           ,;;'''';;,                    ,;;;;,
+                 ,        ;;'      `;;,               .,;;;'   ;
+              ,;;;       ;;          `;;,';;;,.     ,%;;'     '
+            ,;;,;;       ;;         ,;`;;;, `;::.  %%;'
+           ;;;,;;;       `'       ,;;; ;;,;;, `::,%%;'
+           ;;;,;;;,          .,%%%%%'% ;;;;,;;   %;;;
+ ,%,.      `;;;,;;;,    .,%%%%%%%%%'%; ;;;;;,;;  %;;;
+;,`%%%%%%%%%%`;;,;;'%%%%%%%%%%%%%'%%'  `;;;;;,;, %;;;
+;;;,`%%%%%%%%%%%,; ..`%%%%%%%%;'%%%'    `;;;;,;; %%;;
+ `;;;;;,`%%%%%,;;/, .. `"""'',%%%%%      `;;;;;; %%;;,
+    `;;;;;;;,;;/////,.    ,;%%%%%%%        `;;;;,`%%;;
+           ;;;/%%%%,%///;;;';%%%%%%,          `;;;%%;;,
+          ;;;/%%%,%%%%%/;;;';;'%%%%%,             `%%;;
+         .;;/%%,%%%%%//;;'  ;;;'%%%%%,             %%;;,
+         ;;//%,%%%%//;;;'   `;;;;'%%%%             `%;;;
+         ;;//%,%//;;;;'      `;;;;'%%%              %;;;,
+         `;;//,/;;;'          `;;;'%%'              `%;;;
+           `;;;;'               `;'%'                `;;;;
+                                  '      .,,,.        `;;;;
+                                      ,;;;;;;;;;;,     `;;;;
+                                     ;;;'    ;;;,;;,    `;;;;
+                                     ;;;      ;;;;,;;.   `;;;;
+                                      `;;      ;;;;;,;;   ;;;;
+                                        `'      `;;;;,;;  ;;;;
+                                                   `;;,;, ;;;;
+                                                      ;;, ;;;;
+                                                        ';;;;;
+                                                         ;;;;;
+                                                        .;;;;'
+                                                       .;;;;'
+                                                      ;;;;;'
+                                                     ,;;;;'
+▄▄▄▄▄ ▄ .▄ ▄▄▄·  ▐ ▄ ▄ •▄ .▄▄ ·     ·▄▄▄      ▄▄▄      .▄▄ · ▄▄▄▄▄       ▄▄▄· ▄▄▄·▪   ▐ ▄  ▄▄ •     ▄▄▄▄·  ▄· ▄▌
+•██  ██▪▐█▐█ ▀█ •█▌▐██▌▄▌▪▐█ ▀.     ▐▄▄·▪     ▀▄ █·    ▐█ ▀. •██  ▪     ▐█ ▄█▐█ ▄███ •█▌▐█▐█ ▀ ▪    ▐█ ▀█▪▐█▪██▌
+ ▐█.▪██▀▐█▄█▀▀█ ▐█▐▐▌▐▀▀▄·▄▀▀▀█▄    ██▪  ▄█▀▄ ▐▀▀▄     ▄▀▀▀█▄ ▐█.▪ ▄█▀▄  ██▀· ██▀·▐█·▐█▐▐▌▄█ ▀█▄    ▐█▀▀█▄▐█▌▐█▪
+ ▐█▌·██▌▐▀▐█ ▪▐▌██▐█▌▐█.█▌▐█▄▪▐█    ██▌.▐█▌.▐▌▐█•█▌    ▐█▄▪▐█ ▐█▌·▐█▌.▐▌▐█▪·•▐█▪·•▐█▌██▐█▌▐█▄▪▐█    ██▄▪▐█ ▐█▀·.
+ ▀▀▀ ▀▀▀ · ▀  ▀ ▀▀ █▪·▀  ▀ ▀▀▀▀     ▀▀▀  ▀█▄▀▪.▀  ▀     ▀▀▀▀  ▀▀▀  ▀█▄▀▪.▀   .▀   ▀▀▀▀▀ █▪·▀▀▀▀     ·▀▀▀▀   ▀ • 
+*/
 
 export default App;

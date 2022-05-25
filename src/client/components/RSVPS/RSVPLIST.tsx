@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { UserContext } from './App';
+import { UserContext } from '../App';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import axios from 'axios';
+
 
 const RSVPLIST = ({
   eventName,

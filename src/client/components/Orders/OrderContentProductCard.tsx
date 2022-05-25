@@ -7,13 +7,11 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Stack } from '@mui/material';
 
-import Typography from '@mui/material/Typography';
-
 const commonStyles = {
   flexWrap: 'wrap',
   width: '60vw',
   minWidth: '500px',
-  bgcolor: 'background.paper',
+  bgcolor: 'transparent',
   borderColor: 'text.primary',
   m: 1,
   // to center elements absolutely inside parent

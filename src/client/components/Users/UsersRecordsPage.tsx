@@ -71,7 +71,7 @@ const UserRecordsPage = () => {
 
   // Box component styles
   const commonStyles = {
-    bgcolor: 'background.paper',
+    bgcolor: 'transparent',
     borderColor: 'text.primary',
     m: 1,
     // to center elements absolutely inside parent
@@ -129,7 +129,7 @@ const UserRecordsPage = () => {
   const handelTextInput = (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setUser((state) => {
@@ -159,7 +159,7 @@ const UserRecordsPage = () => {
 
     const clickedUser: any = users.find(
       // find mutates original array values
-      (usr: any) => usr.id === userId
+      (usr: any) => usr.id === userId,
     );
 
     setUser({
@@ -200,6 +200,7 @@ const UserRecordsPage = () => {
           zIndex: (theme) => theme.zIndex.drawer + 1,
           borderRadius: '2.5rem',
           boxShadow: 24,
+          overflow: 'auto',
         }}
         open={open}
         onClose={handleClose}
@@ -223,9 +224,7 @@ const UserRecordsPage = () => {
                     // borderRadius: '16px',
                   }}
                 >
-                  <form
-                    onSubmit={handleUserUpdateSubmit}
-                  >
+                  <form onSubmit={handleUserUpdateSubmit}>
                     <br></br>
                     {picture && <img width={300} src={picture} />}
                     <br></br>

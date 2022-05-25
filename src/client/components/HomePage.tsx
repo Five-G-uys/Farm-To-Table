@@ -1,20 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme } from '@mui/material/styles';
+import { Card, CardMedia, CardContent, CardActions } from '@mui/material';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -93,47 +87,35 @@ const HomePage = ({ getAllSubscriptions }: any) => {
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth='md'>
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    borderRadius: '1.2rem',
-                    boxShadow: 8,
-                    fontColor: 'brown',
-                  }}
-                  className='texture1'
-                >
-                  <CardMedia
-                    component='img'
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg'
-                    alt='random'
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant='h5' component='h2'>
-                      Knock, Knock
-                    </Typography>
-                    <Typography>
-                      Who's There? A 4-month subscription of weekly boxes filled
-                      with the freshest produce from our farm.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    {/* <Button size='small'>View</Button>
+          <Card
+            sx={{
+              backgroundColor: '#e2f2d9',
+              minWidth: '15rem',
+              borderRadius: '2.5rem',
+              boxShadow: 8,
+            }}
+            className='texture2'
+          >
+            <CardMedia
+              component='img'
+              height='194'
+              image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg'
+              alt='random'
+            />
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Typography gutterBottom variant='h5' component='h2'>
+                Knock, Knock
+              </Typography>
+              <Typography>
+                Who's There? A 4-month subscription of weekly boxes filled with
+                the freshest produce from our farm.
+              </Typography>
+            </CardContent>
+            <CardActions>
+              {/* <Button size='small'>View</Button>
                     <Button size='small'>Edit</Button> */}
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+            </CardActions>
+          </Card>
         </Container>
       </main>
     </div>
