@@ -24,6 +24,7 @@ import { Box } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { Link } from 'react-router-dom';
 import EventMapPage from './EventMapPage';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -222,17 +223,18 @@ const Event = ({
           </Typography>
         </CardContent>
         <CardContent>
-          {/* <Button
+          <Button
             component={Link}
             variant='contained'
             color='primary'
-            to={`/events-page${pages.path}`}
+            to={`${pages.path}`}
+            state={{ event }}
           >
-            {`Address: ${event.location}`}
-          </Button> */}
-          <Link to={`${pages.path}`} state={{ event }}>
-            {event.location}
-          </Link>
+            <LocationOnIcon>{event.location}</LocationOnIcon>
+          </Button>
+          {/* <Link to={`${pages.path}`} state={{ event }}>
+            <LocationOnIcon>{event.location}</LocationOnIcon>
+          </Link> */}
         </CardContent>
 
         {event.thumbnail ? (

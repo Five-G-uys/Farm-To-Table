@@ -92,7 +92,7 @@ const EventMap = ({
       : map.current
       ? setTimeout(() => map.current.remove(), 2000)
       : setTimeout(() => map.current.remove(), 2000);
-  }, [lat, lon, zoom]);
+  }, [lat, lon, zoom, event.id]);
 
   useEffect(() => {
     if (!map.current) return;
@@ -266,7 +266,7 @@ const EventMap = ({
     // ]);
     // console.log('LINE 252', dropoffs);
     getRoute();
-  }, [lat, lon, updateCounter, event]);
+  }, [lat, lon, updateCounter]);
 
   // useEffect to drop warehouse icon once map and warehouse var load
   // useEffect(() => {
