@@ -238,12 +238,17 @@ const Event = ({
           minWidth: '15rem',
           borderRadius: '2.5rem',
           boxShadow: 8,
-          size: 'large',
+          // size: 'large',
           marginTop: '100px',
         }}
         className='texture2'
       >
         <CardHeader title={event.eventName} />
+        {event.thumbnail ? (
+          <CardMedia component='img' height='194' image={event.thumbnail} />
+        ) : (
+          ''
+        )}
         <CardContent>
           <Typography variant='body2' color='text.secondary' fontSize='20px'>
             {`Date of Event: ${event.eventDate}`}
@@ -266,12 +271,6 @@ const Event = ({
           </Button> */}
           <Link to={`${pages.path}`}>{event.location}</Link>
         </CardContent>
-
-        {event.thumbnail ? (
-          <CardMedia component='img' height='194' image={event.thumbnail} />
-        ) : (
-          ''
-        )}
         <CardContent>
           <Typography paragraph fontSize='20px'>
             {user.roleId < 4

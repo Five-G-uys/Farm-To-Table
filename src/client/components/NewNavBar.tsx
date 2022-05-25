@@ -152,15 +152,13 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
             >
               {/* removed disableGutters attribute from toolbar */}
               {/* added a color prop for app name on navbar */}
-              <Button
-                onClick={linkToHomePage}  
-              >
+              <Button onClick={linkToHomePage}>
                 <Typography
                   variant='h6'
                   noWrap
                   component='div'
                   sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                  color='red'
+                  color='error'
                 >
                   Knock, Knock Tomatoes
                 </Typography>

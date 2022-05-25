@@ -88,7 +88,6 @@ const Profile = () => {
       handleProfilePhotoUpdate();
     }
   }, [newProfileUrl]);
-  // console.log('New Profile Url: ', newProfileUrl);
 
   return (
     <Box className='page-wrap' justifyContent='center'>
@@ -141,14 +140,7 @@ const Profile = () => {
           </CardContent>
 
           <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
-            <Stack
-              spacing={5}
-              direction='row'
-              id='user_card_stack'
-              justifyContent='center'
-              display='flex'
-              alignItems='center'
-            >
+            <Stack spacing={5} direction='row' id='user_card_stack'>
               <Button
                 variant='text'
                 size='large'
