@@ -42,6 +42,7 @@ const OrdersRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
+  const [rowEditing, setRowEditing] = useState(null)
   const [editing, setEditing] = useState(false);
   const [rowColumnId, setRowColumnId] = useState({});
   const [deleteCount, setDeleteCount] = useState(0);
@@ -118,8 +119,10 @@ const OrdersRecords = () => {
     patchOrders(row.id, row);
   }
 
-  const onEdit = () => {
+  const onEdit = (row: number) => {
+    console.log(row);
     setEditing(!editing)
+    setRowEditing(row.id)
   }
 
   const onDelete = (row: object) => {
@@ -153,7 +156,7 @@ const OrdersRecords = () => {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {editing ? (
+                        {(editing && row.id === rowEditing) ? (
                           <Input
                             // type={String}
                             defaultValue={value}
@@ -167,12 +170,12 @@ const OrdersRecords = () => {
                       </TableCell>
                     );
                   })}
-                  {editing ? (
+                  {(editing && row.id === rowEditing) ? (
                     <DoneIcon onClick={() => onDone(row)} />
                   ) :
                     <>
                       <TableCell>
-                        <EditIcon onClick={() => onEdit()} />
+                        <EditIcon onClick={() => onEdit(row)} />
                       </TableCell>
                       <TableCell>
                         <DeleteIcon onClick={() => onDelete(row)} />

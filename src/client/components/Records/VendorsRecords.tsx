@@ -1,5 +1,7 @@
 // Import Dependencies
 import React, { useState, ChangeEvent, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,6 +14,7 @@ import Input from '@material-ui/core/Input';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
+import swal from 'sweetalert';
 import axios from 'axios';
 
 interface Column {
@@ -40,6 +43,7 @@ const VendorsRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
+  const [rowEditing, setRowEditing] = useState(null)
   const [editing, setEditing] = useState(false);
   const [rowColumnId, setRowColumnId] = useState({});
   const [deleteCount, setDeleteCount] = useState(0);
@@ -62,6 +66,15 @@ const VendorsRecords = () => {
         `/api/vendors/${vendorId}`,
         updatedvendor,
       );
+      toast.success('Vendor Updated', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
       return data;
     } catch (err) {
       console.error(err);
@@ -72,15 +85,33 @@ const VendorsRecords = () => {
   };
 
   const deleteVendors = async (vendorId: string) => {
-    try {
-      const { data } = await axios.delete(`/api/vendors/${vendorId}`);
-      return data;
-    } catch (err) {
-      console.error(err);
-      return {
-        error: err,
-      };
-    }
+    swal({
+      title: 'Are you sure?',
+      text: 'Vendor will be deleted, along with all associated products!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then( async (willDelete) => {
+      if (willDelete) {
+        swal('Event has been deleted', {
+          icon: 'success',
+        });
+        try {
+          const { data } = await axios.delete(`/api/vendors/${vendorId}`)
+          setDeleteCount((deleteCount) => deleteCount + 1)
+          return data;
+        } catch (err) {
+          console.error(err);
+          return {
+            error: err,
+          };
+        }
+      } else {
+        swal('That was a close one!');
+      }
+    });
+
+    
   };
 
   useEffect(() => {
@@ -119,17 +150,29 @@ const VendorsRecords = () => {
     patchVendors(row.id, row);
   };
 
-  const onEdit = () => {
-    setEditing(!editing);
-  };
+  const onEdit = (row: object) => {
+    setEditing(!editing)
+    setRowEditing(row.id)
+  }
 
-  const onDelete = (row: object) => {
-    setDeleteCount(deleteCount + 1);
+  const onDelete = async (row: object) => {
     deleteVendors(row.id);
+    setDeleteCount(deleteCount + 1);
   };
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
@@ -158,7 +201,7 @@ const VendorsRecords = () => {
                         align={column.align}
                         color='white'
                       >
-                        {editing ? (
+                        {(editing && row.id === rowEditing) ? (
                           <Input
                             // type={String}
                             color='primary'
@@ -174,12 +217,12 @@ const VendorsRecords = () => {
                       </TableCell>
                     );
                   })}
-                  {editing ? (
+                  {(editing && row.id === rowEditing) ? (
                     <DoneIcon onClick={() => onDone(row)} />
                   ) : (
                     <>
                       <TableCell>
-                        <EditIcon onClick={() => onEdit()} />
+                        <EditIcon onClick={() => onEdit(row)} />
                       </TableCell>
                       <TableCell>
                         <DeleteIcon onClick={() => onDelete(row)} />
