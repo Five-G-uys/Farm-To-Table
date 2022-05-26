@@ -65,7 +65,6 @@ jgs\ `\\//`,.\|/|//.|/\\|/\\|,\|/ //\|/\|.\\\| // \|\\ |/,\|/
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 */
 
-
 function Copyright() {
   return (
     <Typography variant='body2' color='text.secondary' align='center'>
@@ -84,8 +83,8 @@ const App = () => {
 
   navigator.geolocation.getCurrentPosition(function (position) {
     //returns lat/lon based on user location
-    setLat(position.coords.latitude + 0.000001);
-    setLon(position.coords.longitude + 0.000001);
+    setLat(position.coords.latitude);
+    setLon(position.coords.longitude);
   });
 
   const updateCoords: any = (newLat: any, newLon: any) => {
@@ -186,13 +185,13 @@ const App = () => {
       {/* <div>
       </div> */}
       {/* <ColorModeContext.Provider value={colorMode}> */}
+      <NewNavBar
+        className='newNavBar'
+        user={user}
+        mode={mode}
+        changeMode={changeMode}
+      />
       <ThemeProvider theme={theme}>
-        <NewNavBar
-          className='newNavBar'
-          user={user}
-          mode={mode}
-          changeMode={changeMode}
-        />
         {/* <Paper sx={{ height: '100%' }}> */}
         {/* <Container>
             <Grid
