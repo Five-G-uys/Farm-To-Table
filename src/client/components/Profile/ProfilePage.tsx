@@ -48,8 +48,8 @@ const Profile = () => {
   // const { id, name, email, phone, dietaryRestriction, picture } = user;
   const [expanded, setExpanded] = useState(false);
   const [newProfileUrl, setNewProfileUrl] = useState('');
-  const [inEditMode, setInEditMode] = useState(false);
-  const [open, setOpen] = useState(false);
+  // const [inEditMode, setInEditMode] = useState(false);
+  // const [open, setOpen] = useState(false);
   // const [updateCounter, setUpdateCounter] = useState(0);
 
   // const [profile, setProfile] = useState({
@@ -138,9 +138,9 @@ const Profile = () => {
   const handleProfilePhotoUpdate = () => {
     axios
       .patch(`/api/users/${id}`, { picture: newProfileUrl })
-      // .then((response) => {
-      //   console.log('Handle Profile Photo Update Response: ', response);
-      // })
+      .then((response) => {
+        console.log('Handle Profile Photo Update Response: ', response.data);
+      })
       .catch((err) => {
         console.error('Handle Profile Photo Update Error: ', err);
       });
