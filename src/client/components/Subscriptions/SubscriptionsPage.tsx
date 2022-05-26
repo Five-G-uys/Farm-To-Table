@@ -75,9 +75,6 @@ const SubscriptionsPage = () => {
       };
     });
   };
-  //////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////
 
   // create state var for each address component (street, city, state, zip)
   const [selectedSubscription, setSelectedSubscription] = useState({
@@ -127,7 +124,8 @@ const SubscriptionsPage = () => {
   };
 
   //SUBSCRIPTION CREATE
-  const handleSubscribed = (event: any) => {
+  const handlePaidSubscribed = (event: any) => {
+    console.log('LINE 136 || SUBSCRIPTION PAGE || PAID', event);
     event.preventDefault();
     // Insert Stripe Functionality Here
     // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
@@ -139,6 +137,30 @@ const SubscriptionsPage = () => {
         state: address.state,
         zip: address.zip,
         start_date: selectedSubscription.start_date,
+        paid: true,
+      })
+      // .then((data) => {
+      //   console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
+      //   // navigate('/subscriptions-page/confirmation-page');
+      // })
+      .catch((err) => {
+        console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
+      });
+  };
+  //SUBSCRIPTION CREATE
+  const handleUnpaidSubscribed = (event: any) => {
+    event.preventDefault();
+    // Insert Stripe Functionality Here
+    // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
+    axios
+      .post(`/api/add_subscription_entry/${id}`, {
+        subscriptionId: selectedSubscription.id, // change season to number season id on server side
+        streetAddress: address.streetAddress,
+        city: address.city,
+        state: address.state,
+        zip: address.zip,
+        start_date: selectedSubscription.start_date,
+        paid: false,
       })
       // .then((data) => {
       //   console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
@@ -164,6 +186,7 @@ const SubscriptionsPage = () => {
     padding: '20px',
     borderRadius: '2.5rem',
     boxShadow: 24,
+    overflow: 'auto',
   };
 
   const postSubscription = () => {
@@ -181,14 +204,14 @@ const SubscriptionsPage = () => {
       .then(() => {
         setUpdateCounter(updateCounter + 1);
         toast.success('Subscription Created', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
         handleClose();
       })
       .catch((err) => console.error(err));
@@ -214,29 +237,28 @@ const SubscriptionsPage = () => {
       (sub: any) => sub.id === subscriptionId,
     );
     swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this season!",
-      icon: "warning",
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this season!',
+      icon: 'warning',
       buttons: true,
       dangerMode: true,
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
-        swal("Product has been deleted", {
-          icon: "success",
+        swal('Product has been deleted', {
+          icon: 'success',
         });
         axios
-        .delete(`/api/subscriptions/${clickedSubscription.id}`, {
-          params: { id: clickedSubscription.id },
-        })
-        .then(() => {
-          getAllSubscriptions();
-        })
-        .catch((err) => {
-          console.error('69 REQUEST FAILED', err);
-        });
+          .delete(`/api/subscriptions/${clickedSubscription.id}`, {
+            params: { id: clickedSubscription.id },
+          })
+          .then(() => {
+            getAllSubscriptions();
+          })
+          .catch((err) => {
+            console.error('69 REQUEST FAILED', err);
+          });
       } else {
-        swal("That was a close one!");
+        swal('That was a close one!');
       }
     });
   };
@@ -316,7 +338,7 @@ const SubscriptionsPage = () => {
     <div>
       <CssBaseline />
       <ToastContainer
-        position="top-right"
+        position='top-right'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -332,7 +354,8 @@ const SubscriptionsPage = () => {
           bgcolor: 'transparent',
           pt: 8,
           pb: 6,
-        }} >
+        }}
+      >
         <Container maxWidth='sm'>
           <Typography
             component='h1'
@@ -341,7 +364,7 @@ const SubscriptionsPage = () => {
             color='text.primary'
             gutterBottom
           >
-            Your bounty awaits...
+            Seasonal Subscriptions
           </Typography>
           <Typography
             variant='h5'
@@ -353,62 +376,63 @@ const SubscriptionsPage = () => {
             boxes of farm freshness today!
           </Typography>
         </Container>
-        </Box>
-
-        <SubscriptionsContainer
-          style={commonStyles}
-          subscriptions={subscriptions}
-          subscription={subscription}
-          getAllSubscriptions={getAllSubscriptions}
-          handleEditClick={handleEditClick}
-          inEditMode={inEditMode}
-          handleAddressForm={handleAddressForm}
-          deleteSubscription={deleteSubscription}
-        />
-        <AddressForm
-          handleAddressForm={handleAddressForm}
-          handleAddressFormClose={handleAddressFormClose}
-          addressOpen={addressOpen}
-          handleInputAddress={handleInputAddress}
-          handleSubscribed={handleSubscribed}
-          commonStyles={commonStyles}
-          address={address}
-          deleteSubscription={deleteSubscription}
-          handleCheckout={handleCheckout}
-        />
-        <SubscriptionsAdmin
-          handleInputSubscription={handleInputSubscription}
-          getAllSubscriptions={getAllSubscriptions}
-          postSubscription={postSubscription}
-          open={open}
-          subscription={subscription}
-          setSubscription={setSubscription}
-          handleCreateForm={handleCreateForm}
-          handleClose={handleClose}
-          commonStyles={commonStyles}
-          handleEditClick={handleEditClick}
-          inEditMode={inEditMode}
-          handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
-        />
-        {roleId > 3 && (
-          <Fab
-            onClick={handleCreateForm}
-            size='large'
-            // color='secondary'
-            aria-label='add'
-            style={{
-              transform: 'scale(1.5)',
-              backgroundColor: 'lightgreen',
-            }}
-            sx={{
-              position: 'fixed',
-              bottom: (theme) => theme.spacing(8),
-              right: (theme) => theme.spacing(8),
-            }}
-          >
-            <AddIcon style={{ color: '#FFFFFF' }} />
-          </Fab>
-        )}
+      </Box>
+      <SubscriptionsContainer
+        style={commonStyles}
+        subscriptions={subscriptions}
+        subscription={subscription}
+        getAllSubscriptions={getAllSubscriptions}
+        handleEditClick={handleEditClick}
+        inEditMode={inEditMode}
+        handleAddressForm={handleAddressForm}
+        deleteSubscription={deleteSubscription}
+      />
+      <AddressForm
+        handleAddressForm={handleAddressForm}
+        handleAddressFormClose={handleAddressFormClose}
+        addressOpen={addressOpen}
+        handleInputAddress={handleInputAddress}
+        handlePaidSubscribed={handlePaidSubscribed}
+        handleUnpaidSubscribed={handleUnpaidSubscribed}
+        commonStyles={commonStyles}
+        address={address}
+        deleteSubscription={deleteSubscription}
+        handleCheckout={handleCheckout}
+      />
+      <SubscriptionsAdmin
+        handleInputSubscription={handleInputSubscription}
+        getAllSubscriptions={getAllSubscriptions}
+        postSubscription={postSubscription}
+        open={open}
+        subscription={subscription}
+        setSubscription={setSubscription}
+        handleCreateForm={handleCreateForm}
+        handleClose={handleClose}
+        commonStyles={commonStyles}
+        handleEditClick={handleEditClick}
+        inEditMode={inEditMode}
+        handleSubscriptionUpdateSubmit={handleSubscriptionUpdateSubmit}
+      />
+      {roleId > 3 && (
+        <Fab
+          onClick={handleCreateForm}
+          size='large'
+          // color='secondary'
+          aria-label='add'
+          style={{
+            transform: 'scale(1.5)',
+            backgroundColor: '#e2f2d9',
+          }}
+          sx={{
+            position: 'fixed',
+            bottom: (theme) => theme.spacing(8),
+            right: (theme) => theme.spacing(8),
+          }}
+          className='texture2'
+        >
+          <AddIcon style={{ color: 'text.primary' }} />
+        </Fab>
+      )}
     </div>
   );
 };

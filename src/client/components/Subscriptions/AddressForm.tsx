@@ -1,23 +1,33 @@
 // Import Dependencies
 import React from 'react';
-import { useNavigate } from "react-router-dom";
-import { Fade, Modal, Backdrop, Button, TextField, Box, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import {
+  Fade,
+  Modal,
+  Backdrop,
+  Button,
+  TextField,
+  Box,
+  Stack,
+} from '@mui/material';
 
 const AddressForm = ({
   handleAddressFormClose,
   handleInputAddress,
-  handleSubscribed,
+  handlePaidSubscribed,
+  handleUnpaidSubscribed,
   handleCheckout,
   addressOpen,
   commonStyles,
   address,
 }: any) => {
   // state var
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  const handleSkipCheckout = async(e: any) => {
-    await handleSubscribed(e);
-    const path = `/orders-page`; 
+  const handleSkipCheckout = async (e: any) => {
+    // e.preventDefault();
+    await handleUnpaidSubscribed(e);
+    const path = `/orders-page`;
     navigate(path);
   };
 
@@ -50,13 +60,10 @@ const AddressForm = ({
                 <Box
                   sx={{
                     ...commonStyles,
-                    // flexWrap: 'wrap',
-                    // display: 'flex',
-                    // justifyContent: 'center',
-                    // borderRadius: '16px',
+                    overflow: 'auto',
                   }}
                 >
-                  <form onSubmit={handleSubscribed}>
+                  <form onSubmit={handlePaidSubscribed}>
                     <br></br>
 
                     <TextField
@@ -79,7 +86,7 @@ const AddressForm = ({
                       value={city}
                       name='city'
                       label='City'
-                      placeholder='City'
+                      placeholder='New Orleans'
                       onChange={handleInputAddress}
                     />
                     <br></br>
@@ -92,7 +99,7 @@ const AddressForm = ({
                       name='state'
                       label='State'
                       // id='fullWidth'
-                      placeholder='State'
+                      placeholder='LA'
                       onChange={handleInputAddress}
                     />
                     <br></br>
@@ -104,7 +111,7 @@ const AddressForm = ({
                       value={zip}
                       name='zip'
                       label='Zip'
-                      placeholder='Zip code'
+                      placeholder='12121'
                       onChange={handleInputAddress}
                     />
                     <br></br>
@@ -146,7 +153,7 @@ const AddressForm = ({
                       <Button
                         variant='text'
                         size='large'
-                        type='submit'
+                        // type='submit'
                         // sx={{ color: 'success' }}
                         onClick={handleSkipCheckout}
                       >
