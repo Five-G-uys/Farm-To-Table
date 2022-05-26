@@ -14,7 +14,8 @@ import {
 const AddressForm = ({
   handleAddressFormClose,
   handleInputAddress,
-  handleSubscribed,
+  handlePaidSubscribed,
+  handleUnpaidSubscribed,
   handleCheckout,
   addressOpen,
   commonStyles,
@@ -23,8 +24,9 @@ const AddressForm = ({
   // state var
   const navigate = useNavigate();
 
-  const handleSkipCheckout = async () => {
-    await handleSubscribed();
+  const handleSkipCheckout = async (e: any) => {
+    // e.preventDefault();
+    await handleUnpaidSubscribed(e);
     const path = `/orders-page`;
     navigate(path);
   };
@@ -63,7 +65,7 @@ const AddressForm = ({
                     overflow: 'auto',
                   }}
                 >
-                  <form onSubmit={handleSubscribed}>
+                  <form onSubmit={handlePaidSubscribed}>
                     <br></br>
 
                     <TextField
@@ -153,7 +155,7 @@ const AddressForm = ({
                       <Button
                         variant='text'
                         size='large'
-                        type='submit'
+                        // type='submit'
                         // sx={{ color: 'success' }}
                         onClick={handleSkipCheckout}
                       >

@@ -6,6 +6,7 @@ import { UserContext } from '../App';
 
 //COMPONENT IMPORTS
 import ProfileModal from './ProfileModal';
+import ProfileCard from './ProfileCard';
 
 // MUI Imports
 import { styled } from '@mui/material/styles';
@@ -44,22 +45,21 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const Profile = () => {
   const user: any = useContext(UserContext);
-  const { id, googleId, name, email, picture, roleId, delivery_zone } = user;
-  // const { id, name, email, phone, dietaryRestriction, picture } = user;
+  const { id, name, email, phone, dietaryRestriction, picture } = user;
   const [expanded, setExpanded] = useState(false);
   const [newProfileUrl, setNewProfileUrl] = useState('');
-  // const [inEditMode, setInEditMode] = useState(false);
-  // const [open, setOpen] = useState(false);
-  // const [updateCounter, setUpdateCounter] = useState(0);
+  const [inEditMode, setInEditMode] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [updateCounter, setUpdateCounter] = useState(0);
 
-  // const [profile, setProfile] = useState({
-  //   id: '',
-  //   name: '',
-  //   email: '',
-  //   phone: '',
-  //   dietaryRestriction: '',
-  //   picture: '',
-  // });
+  const [profile, setProfile] = useState({
+    id: '',
+    name: '',
+    email: '',
+    phone: '',
+    dietaryRestriction: '',
+    picture: '',
+  });
 
   // toggle bool
   const handleExpandClick = () => {
@@ -71,50 +71,50 @@ const Profile = () => {
   };
 
   // Box component styles
-  // const commonStyles = {
-  //   width: '40vw',
-  //   minWidth: '500px',
-  //   bgcolor: 'background.paper',
-  //   borderColor: 'text.primary',
-  //   m: 1,
-  //   position: 'absolute',
-  //   top: '50%',
-  //   left: '50%',
-  //   transform: 'translate(-50%, -50%)',
-  //   border: 1,
-  //   padding: '20px',
-  //   borderRadius: '2rem',
-  //   boxShadow: 24,
-  //   overflow: 'auto',
-  // };
+  const commonStyles = {
+    width: '40vw',
+    minWidth: '500px',
+    bgcolor: 'background.paper',
+    borderColor: 'text.primary',
+    m: 1,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    border: 1,
+    padding: '20px',
+    borderRadius: '2rem',
+    boxShadow: 24,
+    overflow: 'auto',
+  };
 
-  // // Handlers for backdrop control
-  // const handleClose = () => {
-  //   setOpen(false);
-  //   setInEditMode(false);
-  //   setProfile({
-  //     id: '',
-  //     name: '',
-  //     email: '',
-  //     phone: '',
-  //     dietaryRestriction: '',
-  //     picture: '',
-  //   });
-  // };
+  // Handlers for backdrop control
+  const handleClose = () => {
+    setOpen(false);
+    setInEditMode(false);
+    setProfile({
+      id: '',
+      name: '',
+      email: '',
+      phone: '',
+      dietaryRestriction: '',
+      picture: '',
+    });
+  };
 
-  // const handleInputProfile = (
-  //   event:
-  //     | React.ChangeEvent<HTMLInputElement>
-  //     | React.ChangeEvent<HTMLTextAreaElement>,
-  // ) => {
-  //   const { name, value } = event.target;
-  //   setProfile((state) => {
-  //     return {
-  //       ...state,
-  //       [name]: value,
-  //     };
-  //   });
-  // };
+  const handleInputProfile = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = event.target;
+    setProfile((state) => {
+      return {
+        ...state,
+        [name]: value,
+      };
+    });
+  };
 
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
@@ -146,38 +146,38 @@ const Profile = () => {
       });
   };
 
-  // const updateProfile = async (id: any, updatedProfile: any) => {
-  //   try {
-  //     const { data } = await axios.patch(`/api/users/${id}`, updatedProfile);
-  //     toast.success('Profile Updated', {
-  //       position: 'top-right',
-  //       autoClose: 2000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //     });
-  //     return data;
-  //   } catch (err) {
-  //     console.error('Handle Profile Update Error: ', err);
-  //     return { error: err };
-  //   }
-  // };
+  const updateProfile = async (id: any, updatedProfile: any) => {
+    try {
+      const { data } = await axios.patch(`/api/users/${id}`, updatedProfile);
+      toast.success('Profile Updated', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return data;
+    } catch (err) {
+      console.error('Handle Profile Update Error: ', err);
+      return { error: err };
+    }
+  };
 
-  // // create function to handle update form submission
-  // const handleProfileUpdateSubmit = async (e: any) => {
-  //   e.preventDefault();
-  //   try {
-  //     // call async function that was imported from apiCalls/productCalls
-  //     const result = await updateProfile(profile.id, profile);
-  //     // keep in try so it doesn't rerender on error
-  //     setUpdateCounter(updateCounter + 1);
-  //     handleClose();
-  //   } catch (err) {
-  //     console.error('LINE 152 || Profile Update ', err);
-  //   }
-  // };
+  // create function to handle update form submission
+  const handleProfileUpdateSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      // call async function that was imported from apiCalls/productCalls
+      const result = await updateProfile(profile.id, profile);
+      // keep in try so it doesn't rerender on error
+      setUpdateCounter(updateCounter + 1);
+      handleClose();
+    } catch (err) {
+      console.error('LINE 152 || Profile Update ', err);
+    }
+  };
 
   useEffect(() => {
     if (newProfileUrl.length) {
@@ -185,50 +185,29 @@ const Profile = () => {
     }
   }, [newProfileUrl]);
 
-  // const handleEditClick = (id: any) => {
-  //   const clickedProfile: any = profile.find(
-  //     // find mutates original array values
-  //     (sub: any) => profile.id === id,
-  //   );
-  //   clickedProfile.picture = clickedProfile.picture
-  //     ? clickedProfile.picture
-  //     : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+  const handleEditClick = (id: any) => {
+    const clickedProfile: any = profile.find(
+      // find mutates original array values
+      (sub: any) => profile.id === id,
+    );
+    clickedProfile.picture = clickedProfile.picture
+      ? clickedProfile.picture
+      : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
 
-  //   setProfile({
-  //     id: id,
-  //     name: clickedProfile.name,
-  //     email: clickedProfile.email,
-  //     phone: clickedProfile.phone,
-  //     dietaryRestriction: clickedProfile.dietaryRestriction,
-  //     picture: clickedProfile.picture,
-  //   });
-  //   setInEditMode(true);
-  //   setOpen(true);
-  // };
+    setProfile({
+      id: id,
+      name: clickedProfile.name,
+      email: clickedProfile.email,
+      phone: clickedProfile.phone,
+      dietaryRestriction: clickedProfile.dietaryRestriction,
+      picture: clickedProfile.picture,
+    });
+    setInEditMode(true);
+    setOpen(true);
+  };
 
   return (
-    <Box className='page-wrap' justifyContent='center'>
-      <CssBaseline />
-      {/* Hero unit */}
-      <Box
-        sx={{
-          bgcolor: 'transparent',
-          pt: 8,
-          pb: 6,
-        }}
-      >
-        <Container maxWidth='sm'>
-          <Typography
-            component='h1'
-            variant='h2'
-            align='center'
-            color='text.primary'
-            gutterBottom
-          >
-            User Profile
-          </Typography>
-        </Container>
-      </Box>
+    <>
       {/* <ProfileModal
         handleInputProfile={handleInputProfile}
         handleProfileUpdateSubmit={handleProfileUpdateSubmit}
@@ -238,78 +217,101 @@ const Profile = () => {
         updateProfile={updateProfile}
         handleEditClick={handleEditClick}
       /> */}
-      {/* Added new configurations for profile pages width and commented out the minWidth prop */}
-      <Box justifyContent='center' display='flex' alignItems='center'>
-        <Card
+      <Box className='page-wrap' justifyContent='center'>
+        <CssBaseline />
+        {/* Hero unit */}
+        <Box
           sx={{
-            marginLeft: '250px',
-            marginRight: '250px',
-            maxWidth: '500px',
-            backgroundColor: '#e2f2d9',
-            borderRadius: '2rem',
-            boxShadow: 8,
-            justifyContent: 'center',
+            bgcolor: 'transparent',
+            pt: 8,
+            pb: 6,
           }}
-          className='texture2'
         >
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-                {name[0]}
-              </Avatar>
-            }
-            subheader={`Email: ${email}`}
-            title={name}
-          />
-          <Stack spacing={5} direction='row' id='user_card_stack'>
-            <CardMedia image={user.picture} component='img' height='194' />
-            <CardContent>ADDRESS</CardContent>
-          </Stack>
-          <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
+          <Container maxWidth='sm'>
+            <Typography
+              component='h1'
+              variant='h2'
+              align='center'
+              color='text.primary'
+              gutterBottom
+            >
+              User Profile
+            </Typography>
+          </Container>
+        </Box>
+        {/* Added new configurations for profile pages width and commented out the minWidth prop */}
+        <Box justifyContent='center' display='flex' alignItems='center'>
+          <Card
+            sx={{
+              marginLeft: '250px',
+              marginRight: '250px',
+              maxWidth: '500px',
+              backgroundColor: '#e2f2d9',
+              borderRadius: '2rem',
+              boxShadow: 8,
+              justifyContent: 'center',
+            }}
+            className='texture2'
+          >
+            <CardHeader
+              avatar={
+                <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
+                  {name[0]}
+                </Avatar>
+              }
+              subheader={`Email: ${email}`}
+              title={name}
+            />
             <Stack spacing={5} direction='row' id='user_card_stack'>
-              <Button
-                variant='text'
-                size='large'
-                color='success'
-                sx={{ color: 'green' }}
-                onClick={showWidget}
-              >
-                Change User Image
-              </Button>
-              <Button
-                variant='text'
-                size='large'
-                color='warning'
-                sx={{ color: 'red' }}
-                onClick={handleLogout}
-              >
-                Logout
-              </Button>
-              <ExpandMore
-                sx={{ color: 'green' }}
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label='show more'
-              >
-                <ExpandMoreIcon />
-              </ExpandMore>
+              <CardMedia image={user.picture} component='img' height='194' />
+              <CardContent>ADDRESS</CardContent>
             </Stack>
-          </CardActions>
+            <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
+              <Stack spacing={5} direction='row' id='user_card_stack'>
+                <Button
+                  variant='text'
+                  size='large'
+                  color='success'
+                  sx={{ color: 'green' }}
+                  onClick={showWidget}
+                >
+                  Change User Image
+                </Button>
+                <Button
+                  variant='text'
+                  size='large'
+                  color='warning'
+                  sx={{ color: 'red' }}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+                <ExpandMore
+                  sx={{ color: 'green' }}
+                  expand={expanded}
+                  onClick={handleExpandClick}
+                  aria-expanded={expanded}
+                  aria-label='show more'
+                >
+                  <ExpandMoreIcon />
+                </ExpandMore>
+              </Stack>
+            </CardActions>
 
-          <Collapse in={expanded} timeout='auto' unmountOnExit>
-            <CardContent>
-              {/* User Orders */}
-              <RSVPS />
-            </CardContent>
-          </Collapse>
-        </Card>
+            <Collapse in={expanded} timeout='auto' unmountOnExit>
+              <CardContent>
+                {/* User Orders */}
+                <RSVPS />
+              </CardContent>
+            </Collapse>
+          </Card>
+        </Box>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
       </Box>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-    </Box>
+    </>
   );
 };
 

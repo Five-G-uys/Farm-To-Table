@@ -26,6 +26,7 @@ subscriptionEntriesRouter.post(
       zip,
       phone,
       start_date,
+      paid,
     } = req.body;
 
     const address: any = `${streetAddress} ${city}`;
@@ -48,6 +49,7 @@ subscriptionEntriesRouter.post(
             lat: data.features[0].geometry.coordinates[1],
             lon: data.features[0].geometry.coordinates[0],
             phone,
+            paid,
           });
 
           // console.log('LINE 53 || SUBSCRIPTION ENTRY ROUTER || ', newSubEntry);
@@ -95,6 +97,7 @@ subscriptionEntriesRouter.post(
               // subscriptionId: data.dataValues.subscriptionId,
               subscriptionEntryId: newSubEntry.dataValues.id,
               delivery_date: today,
+              paid,
             });
             // console.log(
             //   'LINE 93 || SUBSCRIPTION ENTRY ROUTER || NEW ORDER',
@@ -149,21 +152,6 @@ subscriptionEntriesRouter.post(
     }
   },
 );
-
-// BASIC CRUD POST ROUT. FEEL FREE TO DELETE, JUST THOUGHT ID LEAVE IT HERE INCASE YOU WANTED IT FOR SOME REASON. TESTED AND WORKING (Murphy)
-// subscriptionEntriesRouter.post('/api/subscription-entries', (req, res) => {
-//   // console.log(req.body)
-//   const { subscriptionId, userId } =
-//     req.body;
-//     SubscriptionEntries.create({ subscriptionId, userId })
-//     .then((data: any) => {
-//       res.status(201).send(data);
-//     })
-//     .catch((err: string) => {
-//       console.error('Post Request Failed', err);
-//       res.sendStatus(500);
-//     });
-// });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL SubscriptionEntries ROUTE
 subscriptionEntriesRouter.get('/api/subscription-entries', (req, res) => {

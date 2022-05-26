@@ -19,7 +19,7 @@ const commonStyles = {
   flexWrap: 'wrap',
   width: '60vw',
   minWidth: '500px',
-  bgcolor: 'transparent',
+  bgcolor: '#e2f2d9',
   borderColor: 'text.primary',
   m: 1,
   // to center elements absolutely inside parent
@@ -129,7 +129,7 @@ const OrderContentModal = ({
         className='add_x_form_modal'
       >
         <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
-          <Box sx={commonStyles}>
+          <Box sx={commonStyles} className='texture2'>
             <form onSubmit={handleOrderContentSubmit}>
               <Grid
                 container

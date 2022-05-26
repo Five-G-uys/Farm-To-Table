@@ -361,6 +361,7 @@ const ProductsPage = () => {
         <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
           {
             <Box
+              className='texture2'
               sx={{
                 ...commonStyles,
                 maxHeight: '90vh',
