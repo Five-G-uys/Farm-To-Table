@@ -102,13 +102,13 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
 
   useEffect(() => {
     //  Return if socket isn't connected
-    if (!socket || roleId !== 3 || !lat || !lon) return;
+    if (!socket || roleId != 3 || !lat || !lon) return;
     // only emit events for delivery drivers
     const locationInterval: any = setInterval(() => {
       // get current location (as obj with driverLat driverLon properties)
       // send to websocket server
       socket.send(JSON.stringify({ driverLat: lat, driverLon: lon }));
-
+      console.log('LINE 122 || DELIVERY PAGE || DRIVER INTERVAL USEEFFECT');
       dispatch({
         type: 'setLocation',
         payload: { driverLat: lat, driverLon: lon },
@@ -132,7 +132,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
 
   useEffect(() => {
     //  Return if socket isn't connected
-    if (!socket || roleId !== 4) return;
+    if (!socket || roleId != 4) return;
 
     socket.onopen = () => {
       console.log('LINE 129 || SOCKET OPENED');
@@ -185,7 +185,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
             updateCounter={updateCounter}
             lat={lat}
             lon={lon}
-            state={state}
+            state={roleId == 4 && state}
             centerCoords={centerCoords}
           />
         ) : (
