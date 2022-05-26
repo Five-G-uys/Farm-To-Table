@@ -124,7 +124,8 @@ const SubscriptionsPage = () => {
   };
 
   //SUBSCRIPTION CREATE
-  const handleSubscribed = (event: any) => {
+  const handlePaidSubscribed = (event: any) => {
+    console.log('LINE 136 || SUBSCRIPTION PAGE || PAID', event);
     event.preventDefault();
     // Insert Stripe Functionality Here
     // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
@@ -136,6 +137,30 @@ const SubscriptionsPage = () => {
         state: address.state,
         zip: address.zip,
         start_date: selectedSubscription.start_date,
+        paid: true,
+      })
+      // .then((data) => {
+      //   console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
+      //   // navigate('/subscriptions-page/confirmation-page');
+      // })
+      .catch((err) => {
+        console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
+      });
+  };
+  //SUBSCRIPTION CREATE
+  const handleUnpaidSubscribed = (event: any) => {
+    event.preventDefault();
+    // Insert Stripe Functionality Here
+    // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
+    axios
+      .post(`/api/add_subscription_entry/${id}`, {
+        subscriptionId: selectedSubscription.id, // change season to number season id on server side
+        streetAddress: address.streetAddress,
+        city: address.city,
+        state: address.state,
+        zip: address.zip,
+        start_date: selectedSubscription.start_date,
+        paid: false,
       })
       // .then((data) => {
       //   console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
@@ -179,14 +204,14 @@ const SubscriptionsPage = () => {
       .then(() => {
         setUpdateCounter(updateCounter + 1);
         toast.success('Subscription Created', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
         handleClose();
       })
       .catch((err) => console.error(err));
@@ -212,29 +237,28 @@ const SubscriptionsPage = () => {
       (sub: any) => sub.id === subscriptionId,
     );
     swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this season!",
-      icon: "warning",
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this season!',
+      icon: 'warning',
       buttons: true,
       dangerMode: true,
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
-        swal("Product has been deleted", {
-          icon: "success",
+        swal('Product has been deleted', {
+          icon: 'success',
         });
         axios
-        .delete(`/api/subscriptions/${clickedSubscription.id}`, {
-          params: { id: clickedSubscription.id },
-        })
-        .then(() => {
-          getAllSubscriptions();
-        })
-        .catch((err) => {
-          console.error('69 REQUEST FAILED', err);
-        });
+          .delete(`/api/subscriptions/${clickedSubscription.id}`, {
+            params: { id: clickedSubscription.id },
+          })
+          .then(() => {
+            getAllSubscriptions();
+          })
+          .catch((err) => {
+            console.error('69 REQUEST FAILED', err);
+          });
       } else {
-        swal("That was a close one!");
+        swal('That was a close one!');
       }
     });
   };
@@ -314,7 +338,7 @@ const SubscriptionsPage = () => {
     <div>
       <CssBaseline />
       <ToastContainer
-        position="top-right"
+        position='top-right'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -368,7 +392,8 @@ const SubscriptionsPage = () => {
         handleAddressFormClose={handleAddressFormClose}
         addressOpen={addressOpen}
         handleInputAddress={handleInputAddress}
-        handleSubscribed={handleSubscribed}
+        handlePaidSubscribed={handlePaidSubscribed}
+        handleUnpaidSubscribed={handleUnpaidSubscribed}
         commonStyles={commonStyles}
         address={address}
         deleteSubscription={deleteSubscription}

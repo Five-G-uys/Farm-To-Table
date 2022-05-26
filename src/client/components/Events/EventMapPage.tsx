@@ -13,7 +13,6 @@ interface AppProps {
   updateCoords(): void;
   lat: number;
   lon: number;
-  state: any;
 }
 
 const EventMapPage = ({ mode, updateCoords, lat, lon }: AppProps) => {

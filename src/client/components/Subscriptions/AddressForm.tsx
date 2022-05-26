@@ -1,23 +1,33 @@
 // Import Dependencies
 import React from 'react';
-import { useNavigate } from "react-router-dom";
-import { Fade, Modal, Backdrop, Button, TextField, Box, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import {
+  Fade,
+  Modal,
+  Backdrop,
+  Button,
+  TextField,
+  Box,
+  Stack,
+} from '@mui/material';
 
 const AddressForm = ({
   handleAddressFormClose,
   handleInputAddress,
-  handleSubscribed,
+  handlePaidSubscribed,
+  handleUnpaidSubscribed,
   handleCheckout,
   addressOpen,
   commonStyles,
   address,
 }: any) => {
   // state var
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  const handleSkipCheckout = async() => {
-    await handleSubscribed();
-    const path = `/orders-page`; 
+  const handleSkipCheckout = async (e: any) => {
+    // e.preventDefault();
+    await handleUnpaidSubscribed(e);
+    const path = `/orders-page`;
     navigate(path);
   };
 
@@ -53,7 +63,7 @@ const AddressForm = ({
                     overflow: 'auto',
                   }}
                 >
-                  <form onSubmit={handleSubscribed}>
+                  <form onSubmit={handlePaidSubscribed}>
                     <br></br>
 
                     <TextField
@@ -143,7 +153,7 @@ const AddressForm = ({
                       <Button
                         variant='text'
                         size='large'
-                        type='submit'
+                        // type='submit'
                         // sx={{ color: 'success' }}
                         onClick={handleSkipCheckout}
                       >

@@ -147,14 +147,14 @@ const ProductsPage = () => {
         // console.log('saved!', data);
         setUpdateCounter(updateCounter + 1);
         toast.success('Product Created', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
         handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
       })
@@ -290,7 +290,7 @@ const ProductsPage = () => {
     <div>
       <CssBaseline />
       <ToastContainer
-        position="top-right"
+        position='top-right'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -360,6 +360,7 @@ const ProductsPage = () => {
         <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
           {
             <Box
+              className='texture2'
               sx={{
                 ...commonStyles,
                 maxHeight: '90vh',
