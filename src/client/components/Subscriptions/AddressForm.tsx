@@ -40,7 +40,7 @@ const AddressForm = ({
         sx={{
           color: '#fff',
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          borderRadius: '2.5rem',
+          borderRadius: '1rem',
           boxShadow: 24,
           overflow: 'auto',
         }}

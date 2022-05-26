@@ -79,8 +79,8 @@ const SubscriptionCard = ({
         sx={{
           backgroundColor: '#e2f2d9',
           minWidth: '15rem',
-          borderRadius: '2.5rem',
-          boxShadow: 8,
+          borderRadius: '2rem',
+          boxShadow: 5,
         }}
         className='texture2'
       >

@@ -16,19 +16,14 @@ import {
 
 const SubscriptionsAdmin = ({
   handleInputSubscription,
-  getAllSubscriptions,
   postSubscription,
   handleSubscriptionUpdateSubmit,
   open,
   inEditMode,
   subscription,
   setSubscription,
-  handleCreateForm,
   handleClose,
   commonStyles,
-  value,
-  setValue,
-  handleRadioBtn,
 }: any) => {
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
@@ -72,7 +67,7 @@ const SubscriptionsAdmin = ({
       sx={{
         color: '#fff',
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        borderRadius: '2.5rem',
+        borderRadius: '1rem',
         boxShadow: 24,
       }}
       open={open}

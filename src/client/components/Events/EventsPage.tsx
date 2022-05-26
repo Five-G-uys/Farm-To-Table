@@ -153,7 +153,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     transform: 'translate(-50%, -50%)',
     border: 1,
     padding: '20px',
-    borderRadius: '2.5rem',
+    borderRadius: '2rem',
     boxShadow: 3,
     minWidth: '500px',
     overflow: 'auto',
@@ -346,7 +346,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
           sx={{
             color: purple,
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            borderRadius: '2.5rem',
+            borderRadius: '1rem',
             boxShadow: 24,
           }}
           open={open}

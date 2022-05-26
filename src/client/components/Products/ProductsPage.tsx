@@ -97,7 +97,7 @@ const ProductsPage = () => {
     transform: 'translate(-50%, -50%)',
     border: 1,
     padding: '20px',
-    borderRadius: '2.5rem',
+    borderRadius: '2rem',
     boxShadow: 24,
 
     // width: ,
@@ -346,7 +346,7 @@ const ProductsPage = () => {
         sx={{
           color: '#fff',
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          borderRadius: '2.5rem',
+          borderRadius: '1rem',
           boxShadow: 24,
         }}
         open={open}
