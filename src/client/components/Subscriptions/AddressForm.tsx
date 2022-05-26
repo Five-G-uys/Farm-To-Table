@@ -15,8 +15,8 @@ const AddressForm = ({
   // state var
   const navigate = useNavigate(); 
 
-  const handleSkipCheckout = async() => {
-    await handleSubscribed();
+  const handleSkipCheckout = async(e: any) => {
+    await handleSubscribed(e);
     const path = `/orders-page`; 
     navigate(path);
   };
