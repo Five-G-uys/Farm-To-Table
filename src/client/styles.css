@@ -22,8 +22,6 @@ body {
   padding: 5vh;
 }
 
-
-
 /*///////////////////////////////////////////////////// WEATHER WIDGET /////////////////////////////////////////////////////*/
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
@@ -173,4 +171,19 @@ body {
 .darkBackground2 {
   background-color: #000000;
   background-image: url('https://www.transparenttextures.com/patterns/tileable-wood-colored.png');
+}
+
+.sidebar-event {
+  background-color: rgba(35, 55, 75, 0.9);
+  color: #fff;
+  padding: 6px 12px;
+  font-family: monospace;
+  z-index: 1;
+  align-self: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 12px;
+  margin-top: 90px;
+  border-radius: 4px;
 }

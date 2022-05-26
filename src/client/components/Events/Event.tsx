@@ -249,7 +249,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           <Button
             component={Link}
             // variant='contained'
-            color='info'
+            color='success'
             to={`${pages.path}`}
             state={{ event }}
             size='large'

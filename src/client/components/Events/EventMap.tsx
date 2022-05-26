@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef, useEffect, useState } from 'react';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mapboxgl from 'mapbox-gl';
+
 import 'mapbox-gl/dist/mapbox-gl.css';
 // import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import MapboxTraffic from '@mapbox/mapbox-gl-traffic';
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
+
 import * as turf from '@turf/turf';
 // import axios from 'axios';
-import dayjs from 'dayjs';
-import axios from 'axios';
-
 interface AppProps {
   mode: string;
   updateCoords: any;
@@ -35,6 +34,9 @@ const EventMap = ({
   console.log('event line 35, EventMap', event);
   const mapContainerRef = useRef(null);
   const map: any = useRef(null);
+  mapboxgl.accessToken =
+    'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A';
+
   // let warehouse: any;
   // const [distance, setDistance] = useState(0);
   // const [lng, setLng] = useState(lon);
@@ -58,12 +60,20 @@ const EventMap = ({
       // Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
       //   ? 'mapbox://styles/mapbox/traffic-night-v2'
       //   : 'mapbox://styles/mapbox/streets-v11',
+      pitch: 60,
+      bearing: -60,
       center: [lon, lat],
       zoom: zoom,
     });
 
     // Add geo control (the +/- zoom buttons)
     map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-left');
+    map.current.addControl(
+      new MapboxDirections({
+        accessToken: mapboxgl.accessToken,
+      }),
+      'top-left',
+    );
     map.current.addControl(new MapboxTraffic(), 'bottom-left');
     map.current.addControl(
       new mapboxgl.GeolocateControl({
@@ -88,7 +98,7 @@ const EventMap = ({
     // );
     // Clean up on unmount
     return map.current
-      ? () => map.current.remove()
+      ? (): any => map.current.remove()
       : map.current
       ? setTimeout(() => map.current.remove(), 2000)
       : setTimeout(() => map.current.remove(), 2000);
@@ -135,23 +145,22 @@ const EventMap = ({
 
       // console.log('LINE 81 || MAP COMPONENT', lat, lon);
       const data = routeData.trips[0];
-      const duration = routeData.trips[0].duration;
-      console.log('line 129', data);
+      // const duration = routeData.trips[0].duration;
+      // console.log('line 129', data);
       const route = data.geometry.coordinates;
-      
+
       console.log('ROUTE LINE 142', route);
       const geojson = {
         type: 'Feature',
+        ...data,
         properties: {
-          transition: {
-            duration: 300,
-            delay: 0,
-          },
+          title: 'Mapbox New Orleans',
+          'marker-symbol': 'City Park',
         },
-        geometry: {
-          type: 'LineString',
-          coordinates: route,
-        },
+        // geometry: {
+        //   type: 'LineString',
+        //   coordinates: route,
+        // },
       };
 
       // if the route already exists on the map, we'll reset it using setData
@@ -174,7 +183,7 @@ const EventMap = ({
             'line-cap': 'round',
           },
           paint: {
-            "line-color": "#ff0",
+            'line-color': '#ff0',
             'line-width': 5,
             'line-opacity': 0.75,
           },
@@ -324,13 +333,10 @@ const EventMap = ({
 
   return (
     <div>
-      <div className='map-container' ref={mapContainerRef}>
-        <div className='sidebar'>
-          <div>
-            Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
-          </div>
-        </div>
+      <div className='sidebar-event'>
+        Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
       </div>
+      <div className='map-container' ref={mapContainerRef} />
     </div>
   );
 };
