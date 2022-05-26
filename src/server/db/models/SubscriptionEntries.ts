@@ -45,6 +45,7 @@ const SubscriptionEntries = db.define('subscriptionEntries', {
     allowNull: false,
     references: { model: Users, key: 'id' },
   },
+  // paid: { type: DataTypes.BOOLEAN },
 });
 
 export default SubscriptionEntries;

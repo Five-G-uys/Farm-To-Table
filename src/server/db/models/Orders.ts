@@ -28,6 +28,7 @@ const Orders = db.define('orders', {
     unique: false,
     allowNull: false,
   },
+  // paid: { type: DataTypes.BOOLEAN },
 });
 
 export default Orders;

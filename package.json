@@ -40,6 +40,7 @@
     "@turf/turf": "^6.5.0",
     "@types/gapi": "^0.0.41",
     "@types/gapi.auth2": "^0.0.56",
+    "@types/react-map-gl": "^6.1.2",
     "axios": "^0.26.1",
     "cloudinary": "^1.29.1",
     "cookie-parser": "^1.4.6",
@@ -51,6 +52,7 @@
     "express-session": "^1.17.2",
     "fast-equals": "^3.0.2",
     "gapi-script": "^1.2.0",
+    "geolib": "^3.3.3",
     "html-webpack-plugin": "^5.5.0",
     "mapbox-gl": "^2.8.2",
     "node-polyfill-webpack-plugin": "^1.1.4",
@@ -61,13 +63,15 @@
     "postgres": "^3.0.6",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-map-gl": "^7.0.15",
     "react-router-dom": "^6.3.0",
     "react-use-event-listener": "^1.1.1",
     "sequelize": "^6.19.0",
     "stripe": "^8.219.0",
     "styled-components": "^5.3.5",
     "usehooks-ts": "^2.5.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "ws": "^8.6.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

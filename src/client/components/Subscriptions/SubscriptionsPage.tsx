@@ -132,7 +132,31 @@ const SubscriptionsPage = () => {
   };
 
   //SUBSCRIPTION CREATE
-  const handleSubscribed = (event: any) => {
+  const handlePaidSubscribed = (event: any) => {
+    console.log('LINE 136 || SUBSCRIPTION PAGE || PAID', event);
+    event.preventDefault();
+    // Insert Stripe Functionality Here
+    // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
+    axios
+      .post(`/api/add_subscription_entry/${id}`, {
+        subscriptionId: selectedSubscription.id, // change season to number season id on server side
+        streetAddress: address.streetAddress,
+        city: address.city,
+        state: address.state,
+        zip: address.zip,
+        start_date: selectedSubscription.start_date,
+        paid: true,
+      })
+      // .then((data) => {
+      //   console.log('LINE 159 || SUBSCRIPTIONS PAGE', data);
+      //   // navigate('/subscriptions-page/confirmation-page');
+      // })
+      .catch((err) => {
+        console.error('LINE 59 || SUBSCRIPTIONSPAGE ERROR', err);
+      });
+  };
+  //SUBSCRIPTION CREATE
+  const handleUnpaidSubscribed = (event: any) => {
     event.preventDefault();
     // Insert Stripe Functionality Here
     // WE NEED TO ADD ADDRESS VALUES TO INITIAL POST REQUEST TO CREATE SUBSCRIPTION ENTRY
@@ -339,7 +363,7 @@ const SubscriptionsPage = () => {
           handleAddressFormClose={handleAddressFormClose}
           addressOpen={addressOpen}
           handleInputAddress={handleInputAddress}
-          handleSubscribed={handleSubscribed}
+          handleSubscribed={handlePaidSubscribed}
           commonStyles={commonStyles}
           address={address}
           deleteSubscription={deleteSubscription}

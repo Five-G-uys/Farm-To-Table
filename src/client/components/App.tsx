@@ -68,8 +68,8 @@ const App = () => {
 
   navigator.geolocation.getCurrentPosition(function (position) {
     //returns lat/lon based on user location
-    setLat(position.coords.latitude + 0.000001);
-    setLon(position.coords.longitude + 0.000001);
+    setLat(position.coords.latitude);
+    setLon(position.coords.longitude);
   });
 
   const updateCoords: any = (newLat: any, newLon: any) => {

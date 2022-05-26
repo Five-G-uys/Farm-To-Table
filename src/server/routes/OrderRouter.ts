@@ -7,6 +7,8 @@ import { Router } from 'express';
 import { Op, or } from 'sequelize';
 import express, { Express, Request, Response } from 'express';
 import dayjs from 'dayjs';
+import getCenter from 'geolib/es/getCenter';
+
 // Import Models
 import { Orders, Products, SubscriptionEntries } from '../db/models';
 
@@ -54,7 +56,7 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
     const date: any = dayjs().add(i, 'day').format().slice(0, 10);
     delivery_dates.push({ delivery_date: date });
   }
-  console.log('LINE 57 || ORDER ROUTER || TODAYS ORDERS', delivery_dates);
+  // console.log('LINE 57 || ORDER ROUTER || TODAYS ORDERS', delivery_dates);
 
   Orders.findAll({ where: { [Op.or]: delivery_dates } })
     // Orders.findAll({ where: { delivery_date } })
@@ -72,28 +74,37 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
         },
       });
     })
-    .then((data: any) => {
+    .then(async (data: any) => {
       // console.log('LINE 76 || ORDER ROUTER', data);
       const orderLocations = data.map((subscriptionEntry: any) => {
         return {
-          streetAddress: subscriptionEntry.streetAddress,
-          city: subscriptionEntry.city,
-          state: subscriptionEntry.state,
-          zip: subscriptionEntry.zip,
-          lat: subscriptionEntry.lat,
-          lon: subscriptionEntry.lon,
+          // streetAddress: subscriptionEntry.streetAddress,
+          // city: subscriptionEntry.city,
+          // state: subscriptionEntry.state,
+          // zip: subscriptionEntry.zip,
+          latitude: subscriptionEntry.lat,
+          longitude: subscriptionEntry.lon,
         };
       });
+
+      // Get center of all dropoff points
+      const center: any = getCenter([
+        ...orderLocations,
+        { latitude: 29.949123908409483, longitude: -90.10436932015816 },
+      ]);
+      console.log('LINE 92 || ORDER ROUTER ', center);
       // return result of GETROUTE function from UTILS folder, invoked with lat lon and delivery locations.
       // need to hardcode lat and lon values to simulate distribution center
-      return getRoute(lat, lon, orderLocations);
+      const routeData: any = [await getRoute(lat, lon, orderLocations), center];
+      // console.log('LINE 96 || ORDER ROUTER ', routeData);
+      return routeData;
     })
     .then((route: any) => {
       if (route.message) {
         throw route.err;
       }
-      // console.log('LINE 93 || ORDERROUTER', route.data);
-      res.json(route.data);
+      console.log('LINE 103 || ORDERROUTER', [route[0].data, route[1]]);
+      res.json([route[0].data, route[1]]);
     })
     .catch((err: object) => {
       console.log('LINE 97, FIND ALL Orders ERROR: ', err);

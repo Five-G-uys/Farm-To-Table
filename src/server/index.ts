@@ -9,6 +9,7 @@ import passport from 'passport';
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
 import axios from 'axios';
+import WebSocket from 'ws';
 
 // Import database and models
 require('./db/database.ts');
@@ -36,6 +37,44 @@ const app: Express = express();
 const port = process.env.LOCAL_PORT;
 const dist = path.resolve(__dirname, '..', '..', 'dist');
 
+// HELPER TO PARSE uint8arr send from client side to websocket server
+function uint8arrayToStringMethod(myUint8Arr: any) {
+  return String.fromCharCode.apply(null, myUint8Arr);
+}
+// WebSocket Middleware
+const wss: any = new WebSocket.Server({ port: 3030 });
+wss.binaryType = 'arraybuffer';
+wss.on('connection', (ws: any) => {
+  // console.log(
+  //   'LINE 44 || SERVER INDEX || WEB SOCKET CONNECTED! || CLIENTS',
+  //   wss.clients,
+  // );
+
+  ws.on('message', (data: any) => {
+    // console.log(
+    //   'LINE 54 || SERVER INDEX || WEBSOCKET DATA',
+    //   uint8arrayToStringMethod(data),
+    // );
+    // console.log(
+    //   'LINE 58 || SERVER INDEX || WEBSOCKET DATA',
+    //   JSON.stringify(Array.from(data)),
+    //   // JSON.parse(`${data}`),
+    // );
+    // console.log(
+    //   'LINE 63 || SERVER INDEX || WEBSOCKET DATA',
+    //   uint8arrayToStringMethod(data),
+    // );
+
+    data = uint8arrayToStringMethod(data);
+    wss.clients.forEach((client: any) => {
+      console.log('LINE 56 || SERVER INDEX || WSS FOR EACH HIT', data);
+      // if (client !== ws && client.readyState === WebSocket.OPEN) {
+      // console.log('LINE 58 || SERVER INDEX || WSS FOR EACH HIT');
+      client.send(data);
+      // }
+    });
+  });
+});
 // Auth Middleware
 app.use(
   cookieSession({
