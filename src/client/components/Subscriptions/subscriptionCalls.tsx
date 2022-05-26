@@ -1,10 +1,11 @@
+// Import Dependencies
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // export function to product pages component
 export const updateSubscription = async (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   subscriptionId: any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updatedSubscription: any
 ) => {
   try {
@@ -13,6 +14,17 @@ export const updateSubscription = async (
       `/api/subscriptions/${subscriptionId}`,
       updatedSubscription
     );
+    console.log('hello')
+
+    toast.success('Subscription Updated', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
     return data;
   } catch (err) {
     console.error('LINE 10 || Subscription CALLS', err);

@@ -1,14 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import express, { Express, Request, Response } from 'express';
 import path from 'path';
 import passport from 'passport';
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
-import axios from 'axios';
 import WebSocket from 'ws';
 
 // Import database and models
@@ -31,6 +26,33 @@ import userRouter from './routes/UserRouter';
 import vendorRouter from './routes/VendorRouter';
 import weatherRouter from './routes/WeatherRouter';
 import orderContentRouter from './routes/OrderContentRouter';
+
+/*  _  __                 _      _  __                 _
+ | |/ /_ __   ___   ___| | __ | |/ /_ __   ___   ___| | __
+ | ' /| '_ \ / _ \ / __| |/ / | ' /| '_ \ / _ \ / __| |/ /
+ | . \| | | | (_) | (__|   <  | . \| | | | (_) | (__|   <
+ |_|\_\_| |_|\___/ \___|_|\_\ |_|\_\_| |_|\___/ \___|_|\_\
+   |_   _|__  _ __ ___   __ _| |_ ___   ___  ___
+     | |/ _ \| '_ ` _ \ / _` | __/ _ \ / _ \/ __|
+     | | (_) | | | | | | (_| | || (_) |  __/\__ \
+     |_|\___/|_| |_| |_|\__,_|\__\___/ \___||___/
+
+         ,            __ \/ __
+     /\^/`\          /o \{}/ o\
+    | \/   |         \   ()   /
+    | |    |          `> /\ <`   ,,,
+    \ \    /  @@@@    (o/\/\o)  {{{}}                 _ _
+     '\\//'  @@()@@  _ )    (    ~Y~       @@@@     _{ ' }_
+       ||     @@@@ _(_)_   wWWWw .oOOo.   @@()@@   { `.!.` }
+       ||     ,/  (_)@(_)  (___) OO()OO    @@@@  _ ',_/Y\_,'
+       ||  ,\ | /)  (_)\     Y   'OOOO',,,(\|/ _(_)_ {_,_}
+   |\  ||  |\\|// vVVVv`|/@@@@    _ \/{{}}}\| (_)@(_)  |  ,,,
+   | | ||  | |;,,,(___) |@@()@@ _(_)_| ~Y~ wWWWw(_)\ (\| {{{}}
+   | | || / / {{}}} Y  \| @@@@ (_)#(_) \|  (___)   |  \| /~Y~
+    \ \||/ /\\|~Y~ \|/  | \ \/  /(_) |/ |/   Y    \|/  |//\|/
+jgs\ `\\//`,.\|/|//.|/\\|/\\|,\|/ //\|/\|.\\\| // \|\\ |/,\|/
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+*/
 
 // Set Up Server
 const app: Express = express();

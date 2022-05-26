@@ -1,11 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import { Router } from 'express';
-import express, { Express, Request, Response } from 'express';
-// Import Models
+import { Request, Response } from 'express';
 import { Subscriptions } from '../db/models';
 
 // Set Up Router
@@ -42,7 +37,6 @@ subscriptionRouter.post('/api/subscriptions', (req, res) => {
 subscriptionRouter.get('/api/subscriptions', (req, res) => {
   Subscriptions.findAll()
     .then((response: any) => {
-      // console.log('FINDALL Subscriptions RESPONSE: ', response);
       res.status(200).send(response);
     })
     .catch((err: object) => {
@@ -56,7 +50,6 @@ subscriptionRouter.get('/api/subscriptions', (req, res) => {
 subscriptionRouter.put(
   `/api/subscriptions/:id`,
   (req: Request, res: Response) => {
-    // console.log('LINE 390 Subscription PUT req', req.params.id);
     Subscriptions.update(req.body, {
       where: {
         id: req.params.id,
@@ -69,26 +62,24 @@ subscriptionRouter.put(
       .catch((err: unknown) => {
         console.error('SUBSCRIPTION UPDATE REQUEST:', err);
       });
-  }
+  },
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Subscription PATCH ROUTE
 subscriptionRouter.patch(
   '/api/subscriptions/:id',
   async (req: Request, res: Response) => {
-    // console.log('UPDATE Subscription REQUEST BODY: ', req.body);
     try {
       const updatedSubscription = await Subscriptions.update(req.body, {
         where: { id: req.params.id },
         returning: true,
       });
-      // console.log('Subscription UPDATE INFO: ', updatedSubscription);
       res.status(204).json(updatedSubscription);
     } catch (err) {
       console.error('Subscription UPDATE WAS NOT SUCCESSFUL: ', err);
       res.status(500).json(err);
     }
-  }
+  },
 );
 
 // ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Subscription ROUTE (ORIGINAL from index.ts)
@@ -99,14 +90,13 @@ subscriptionRouter.delete(
       where: { id: Number(req.params.subscriptionId) },
     })
       .then((data: any) => {
-        // console.log('440 subscription delete was successful!!', data);
         res.sendStatus(200);
       })
       .catch((err: any) => {
         console.error('444 Deletion was not successful', err);
         res.sendStatus(400);
       });
-  }
+  },
 );
 
 export default subscriptionRouter;

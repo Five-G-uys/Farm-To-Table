@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
-// import Farms from './Farms';
 import SubscriptionEntries from './SubscriptionEntries';
 
 const Orders = db.define('orders', {
@@ -28,7 +27,7 @@ const Orders = db.define('orders', {
     unique: false,
     allowNull: false,
   },
-  // paid: { type: DataTypes.BOOLEAN },
+  paid: { type: DataTypes.BOOLEAN },
 });
 
 export default Orders;

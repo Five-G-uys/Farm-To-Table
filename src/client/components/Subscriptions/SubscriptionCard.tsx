@@ -1,30 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+// Import Dependencies
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
 import { UserContext } from '../App';
 
 // MUI IMPORTS
-import {
-  Avatar,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  Collapse,
-  IconButton,
-  IconButtonProps,
-  Stack,
-  styled,
-  Typography,
-} from '@mui/material';
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, IconButtonProps, Stack, styled, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import { red } from '@mui/material/colors';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -81,17 +63,9 @@ const SubscriptionCard = ({
           backgroundColor: '#e2f2d9',
           minWidth: '15rem',
           borderRadius: '2.5rem',
-          // elevation: 2,
           boxShadow: 8,
         }}
         className='texture2'
-        //   minWidth: 300,
-        //   borderRadius: '1.2rem',
-        //   boxShadow: 8,
-        //   fontWeight: 'medium',
-        //   fontSize: 35,
-        // }}
-        // className='texture1'
       >
         <CardHeader
           subheader={`Harvest Year ${year}`}

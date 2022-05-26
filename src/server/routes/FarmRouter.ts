@@ -1,9 +1,5 @@
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// /* eslint-disable @typescript-eslint/no-var-requires */
-
 // import { Router } from 'express';
-// import { Farms } from '../db/models';
+// // import { Farms } from '../db/models';
 
 // const farmRouter: Router = Router();
 

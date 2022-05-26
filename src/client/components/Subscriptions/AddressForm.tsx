@@ -1,40 +1,35 @@
-import React, { useState, useContext } from 'react';
-
-// MUI Imports
-import { ThemeProvider, createTheme } from '@mui/system';
-import { Navigate } from 'react-router-dom';
+// Import Dependencies
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-  RadioGroup,
-  Radio,
-  FormLabel,
-  FormControlLabel,
   Fade,
   Modal,
-  Typography,
-  InputAdornment,
-  InputLabel,
-  Input,
-  FormControl,
   Backdrop,
   Button,
-  Fab,
   TextField,
   Box,
-  Slide,
   Stack,
 } from '@mui/material';
 
 const AddressForm = ({
-  handleAddressForm,
   handleAddressFormClose,
   handleInputAddress,
-  handleSubscribed,
+  handlePaidSubscribed,
+  handleUnpaidSubscribed,
   handleCheckout,
   addressOpen,
   commonStyles,
   address,
 }: any) => {
   // state var
+  const navigate = useNavigate();
+
+  const handleSkipCheckout = async (e: any) => {
+    // e.preventDefault();
+    await handleUnpaidSubscribed(e);
+    const path = `/orders-page`;
+    navigate(path);
+  };
 
   const { streetAddress, city, state, zip, phone } = address;
   return (
@@ -65,13 +60,10 @@ const AddressForm = ({
                 <Box
                   sx={{
                     ...commonStyles,
-                    // flexWrap: 'wrap',
-                    // display: 'flex',
-                    // justifyContent: 'center',
-                    // borderRadius: '16px',
+                    overflow: 'auto',
                   }}
                 >
-                  <form onSubmit={handleSubscribed}>
+                  <form onSubmit={handlePaidSubscribed}>
                     <br></br>
 
                     <TextField
@@ -94,7 +86,7 @@ const AddressForm = ({
                       value={city}
                       name='city'
                       label='City'
-                      placeholder='City'
+                      placeholder='New Orleans'
                       onChange={handleInputAddress}
                     />
                     <br></br>
@@ -107,7 +99,7 @@ const AddressForm = ({
                       name='state'
                       label='State'
                       // id='fullWidth'
-                      placeholder='State'
+                      placeholder='LA'
                       onChange={handleInputAddress}
                     />
                     <br></br>
@@ -119,7 +111,7 @@ const AddressForm = ({
                       value={zip}
                       name='zip'
                       label='Zip'
-                      placeholder='Zip code'
+                      placeholder='12121'
                       onChange={handleInputAddress}
                     />
                     <br></br>
@@ -157,6 +149,15 @@ const AddressForm = ({
                         onClick={handleCheckout}
                       >
                         PAY NOW
+                      </Button>
+                      <Button
+                        variant='text'
+                        size='large'
+                        // type='submit'
+                        // sx={{ color: 'success' }}
+                        onClick={handleSkipCheckout}
+                      >
+                        PAY UPON DELIVERY
                       </Button>
                     </Stack>
                     <br></br>

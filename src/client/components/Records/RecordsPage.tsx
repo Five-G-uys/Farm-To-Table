@@ -1,36 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import Button from '@mui/material/Button';
-import { Routes, Route, Link, Navigate, Outlet } from 'react-router-dom';
-import ProductsRecords from './ProductsRecords';
+import { Link, Outlet } from 'react-router-dom';
 import { CssBaseline, Box, Container, Typography } from '@mui/material';
 import { Grid } from '@material-ui/core';
-// import DietaryRestrictionsRecords from "./DietaryRestrictions/DietaryRestrictionsRecords";
-// import DeliveryZones from "./DileveryZones/DeliveryZonesRecords";
-// import Events from "./Events/EventsRecords";
-// import Farms from "./Farms/FarmsRecords";
-// import Orders from "./Orders/OrdersRecords";
-// import Products from "./Products/ProductsRecords";
-// import Roles from "./Roles/RolesRecords";
-// import SubscriptionEntries from "./SubscriptionEntries/SubscriitionEntriesRecords";
-// import Subscriptions from "./Subscriptions/SubscriptionsRecords";
-// import Users from "./Users/UsersRecords";
-// import Vendors from "./Vendors/VendorsRecords";
 
 const RecordsPage = () => {
-  // const [deliveryZones, setDeliveryZones] = useState({ deliveryZonesArray: {} });
-  // const [dietaryRestrictions, setDietaryRestrictions] = useState({ dietaryRestrictionsArray: {} });
-  // const [events, setEvents] = useState({ eventsArray: {} });
-  // const [farms, setFarms] = useState({ farmsArray: {} });
-  // const [orders, setOrders] = useState({ ordersArray: {} });
-  // const [products, setProducts] = useState({ productsArray: {} });
-  // const [roles, setRoles] = useState({ rolesArray: {} });
-  // const [rsvp, setRSVP] = useState({ rsvpArray: {} });
-  // const [subscriptionEntries, setSubscriptionEntries] = useState({ subscriptionEntriesArray: {} });
-  // const [subscriptions, setSubscriptions] = useState({ subscriptionsArray: {} });
-  // const [users, setUsers] = useState({ usersArray: {} });
-  // const [vendors, setVendors] = useState({ vendorsArray: {} });
 
   return (
     <div>
@@ -38,7 +13,7 @@ const RecordsPage = () => {
       {/* Hero unit */}
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          bgcolor: 'transparent',
           pt: 8,
           pb: 6,
         }}
@@ -63,7 +38,7 @@ const RecordsPage = () => {
           </Typography>
         </Container>
       </Box>
-      <Grid container alignItems='center'  justifyContent='center'>
+      <Grid container alignItems='center' justifyContent='center'>
         <Button
           component={Link}
           to='/records/delivery-zones-records'

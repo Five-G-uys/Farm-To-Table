@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import { Router } from 'express';
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 // Import Models
 import { DeliveryZones } from '../db/models';

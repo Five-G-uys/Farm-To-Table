@@ -1,10 +1,6 @@
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// /* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import { Router } from 'express';
-import express, { Express, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 // Import Models
 import { Orders, OrderContents } from '../db/models';
@@ -37,18 +33,18 @@ orderContentRouter.post(
       // to order contents
       const orderContents: any = [];
 
-      console.log('LINE 40 ORDERCONTENTOROUTER', delivery_date, productsIds);
+      // console.log('LINE 40 ORDERCONTENTOROUTER', delivery_date, productsIds);
       for (let i = 0; i < productsIds.length; i++) {
         for (let j = 0; j < orders.length; j++) {
           const contentOBj: any = {
             orderId: orders[j].id,
             productId: Number(productsIds[i]),
           };
-          console.log('LINE 46 ORDERCONTENTOROUTER', contentOBj);
+          // console.log('LINE 46 ORDERCONTENTOROUTER', contentOBj);
           orderContents.push(contentOBj);
         }
       }
-      console.log('LINE 50 ORDERCONTENTOROUTER', orderContents);
+      // console.log('LINE 50 ORDERCONTENTOROUTER', orderContents);
       await OrderContents.bulkCreate(orderContents);
       res.json({ message: 'ORDER CONTENTS ADDED' });
     } catch (err: any) {
@@ -113,7 +109,7 @@ orderContentRouter.patch(
 orderContentRouter.delete(
   '/api/order-content/:orderContentId',
   (req: Request, res: Response) => {
-    console.log('LINE 116 || ORDER CONTENT ROUTER || DELETE', req.params);
+    // console.log('LINE 116 || ORDER CONTENT ROUTER || DELETE', req.params);
     OrderContents.destroy({ where: { id: req.params.orderContentId } })
       .then((data: any) => {
         // console.log('LINE 119 || OrderContent DELETION SUCCESSFUL: ', data);

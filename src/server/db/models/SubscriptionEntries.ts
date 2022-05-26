@@ -1,9 +1,10 @@
+// Import Dependencies
 import { db } from '../database';
 import { DataTypes } from 'sequelize';
-// import Farms from './Farms';
 import Users from './Users';
 import Subscriptions from './Subscriptions';
 
+// Define Model
 const SubscriptionEntries = db.define('subscriptionEntries', {
   id: {
     type: DataTypes.INTEGER,
@@ -45,7 +46,8 @@ const SubscriptionEntries = db.define('subscriptionEntries', {
     allowNull: false,
     references: { model: Users, key: 'id' },
   },
-  // paid: { type: DataTypes.BOOLEAN },
+  paid: { type: DataTypes.BOOLEAN },
 });
 
+// Export Model
 export default SubscriptionEntries;

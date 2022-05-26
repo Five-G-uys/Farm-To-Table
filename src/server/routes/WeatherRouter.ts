@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Import Dependencies
 import { Router } from 'express';
 import axios from 'axios';
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Initialize Router
 const weatherRouter = Router();

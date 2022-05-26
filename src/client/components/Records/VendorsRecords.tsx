@@ -1,3 +1,4 @@
+// Import Dependencies
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -12,7 +13,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import { CssBaseline, Box, Container, Typography } from '@mui/material';
 
 interface Column {
   id: 'id' | 'name' | 'contact_information';
@@ -153,10 +153,15 @@ const VendorsRecords = () => {
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
-                      <TableCell key={column.id} align={column.align}>
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        color='white'
+                      >
                         {editing ? (
                           <Input
                             // type={String}
+                            color='primary'
                             defaultValue={value}
                             name={column.id}
                             onChange={(e) => onChange(e, row)}

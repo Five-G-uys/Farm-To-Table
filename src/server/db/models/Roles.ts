@@ -1,6 +1,8 @@
+// Import Dependencies
 import { DataTypes } from 'sequelize';
 import { db } from '../database';
 
+// Define Model
 const Roles = db.define('roles', {
   id: {
     type: DataTypes.INTEGER,
@@ -11,9 +13,9 @@ const Roles = db.define('roles', {
   },
   role: {
     type: DataTypes.STRING,
-    // unique: true,
     allowNull: false,
   },
 });
 
+// Export Model
 export default Roles;

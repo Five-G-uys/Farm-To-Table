@@ -1,5 +1,5 @@
+// Import Dependencies
 import React, { useState, MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -50,7 +50,6 @@ function HideOnScroll(props: Props) {
 
 const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
   const pages = [
-    { name: 'Home', path: '/' },
     { name: 'Subscribe', path: '/subscriptions-page' },
     { name: 'Products ', path: '/edit-products' },
     { name: 'Events', path: '/events-page' },
@@ -96,6 +95,10 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
   };
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const linkToHomePage = () => {
+    window.location.href = '/';
   };
 
   const handleCloseNavMenu = () => {
@@ -149,15 +152,19 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
             >
               {/* removed disableGutters attribute from toolbar */}
               {/* added a color prop for app name on navbar */}
-              <Typography
-                variant='h6'
-                noWrap
-                component='div'
-                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                color='red'
+              <Button
+                onClick={linkToHomePage}  
               >
-                Knock, Knock Tomatoes
-              </Typography>
+                <Typography
+                  variant='h6'
+                  noWrap
+                  component='div'
+                  sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                  color='red'
+                >
+                  Knock, Knock Tomatoes
+                </Typography>
+              </Button>
 
               <Box
                 sx={{
@@ -173,7 +180,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   aria-controls='menu-appbar'
                   aria-haspopup='true'
                   onClick={handleOpenNavMenu}
-                  color='inherit'
+                  color='success'
                 >
                   <MenuIcon />
                 </Button>
@@ -194,12 +201,11 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   sx={{
                     display: { xs: 'block', md: 'none' },
                   }}
-                  color='success'
                 >
                   {pages.map((page) => (
                     <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                       {/* // link tags are anchor tags under the hood */}
-                      <Button href={`${page.path}`}>
+                      <Button href={`${page.path}`} color='success'>
                         <Typography textAlign='center'>{page.name}</Typography>
                       </Button>
                     </MenuItem>
@@ -220,9 +226,16 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   <Button
                     key={page.name}
                     onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    sx={{
+                      my: 2,
+                      color: 'white',
+                      display: 'block',
+                    }}
+                    color='success'
                   >
-                    <Link to={page.path}>{page.name}</Link>
+                    <Button href={page.path} color='success'>
+                      {page.name}
+                    </Button>
                   </Button>
                 ))}
               </Box>
@@ -271,6 +284,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
+                  // color='success'
                 >
                   {settings.map((setting: any) => (
                     <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
