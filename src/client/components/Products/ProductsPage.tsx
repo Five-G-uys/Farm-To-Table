@@ -12,7 +12,6 @@ import Fade from '@mui/material/Fade';
 import FilledInput from '@mui/material/FilledInput';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -147,14 +146,14 @@ const ProductsPage = () => {
         // console.log('saved!', data);
         setUpdateCounter(updateCounter + 1);
         toast.success('Product Created', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
         handleClose();
         // <Navigate to='/admin/edit-products' />; // ???
       })
@@ -290,7 +289,7 @@ const ProductsPage = () => {
     <div>
       <CssBaseline />
       <ToastContainer
-        position="top-right"
+        position='top-right'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -360,6 +359,7 @@ const ProductsPage = () => {
         <Fade in={open} timeout={{ appear: 300, enter: 300, exit: 400 }}>
           {
             <Box
+              className='texture2'
               sx={{
                 ...commonStyles,
                 maxHeight: '90vh',
