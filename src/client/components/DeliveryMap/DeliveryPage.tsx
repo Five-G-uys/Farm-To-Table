@@ -25,7 +25,7 @@ mapboxgl.accessToken =
 export const driverLocationReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'setLocation':
-      console.log('LINE 28 || DELIVERY PAGE || SETTING LOCATION');
+      // console.log('LINE 28 || DELIVERY PAGE || SETTING LOCATION');
       // return  new state
       return {
         ...state,
@@ -74,9 +74,20 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
         params: { delivery_date: today, lat, lon },
       })
       .then((data) => {
-        console.log('LINE 34 || DELIVERY PAGE', data.data.waypoints);
+        console.log('LINE 77 || DELIVERY PAGE', data.data);
+        // set route data to the array of waypoints I get back
         setRouteData(data.data);
-        console.log('TEMP STRING', data.data.waypoints);
+        // set center to the center {lat, lon} obj  I got back
+        // setCenterCoords(data.data[1]);
+
+        // tempWaypointCoords = data.data[0].waypoints.map((waypoint: any) => {
+        //   console.log('LINE 80 || DELIVERY PAGE', waypoint.location);
+        //   return {
+        //     latitude: waypoint.location[1],
+        //     longitude: waypoint.location[0],
+        //   };
+        // });
+
         tempStr = data.data.waypoints
           .map((location: any) => {
             // console.log(
@@ -98,7 +109,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
       });
   };
 
-  useEffect(getTodaysOrders, [lat, lon]);
+  useEffect(getTodaysOrders, [lat, lon, roleId]);
 
   useEffect(() => {
     //  Return if socket isn't connected
@@ -108,7 +119,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
       // get current location (as obj with driverLat driverLon properties)
       // send to websocket server
       socket.send(JSON.stringify({ driverLat: lat, driverLon: lon }));
-      console.log('LINE 122 || DELIVERY PAGE || DRIVER INTERVAL USEEFFECT');
+      // console.log('LINE 122 || DELIVERY PAGE || DRIVER INTERVAL USEEFFECT');
       dispatch({
         type: 'setLocation',
         payload: { driverLat: lat, driverLon: lon },
@@ -158,7 +169,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
     // }
   }, [socket, roleId]);
 
-  // console.log('LINE 170 || DELIVERY PAGE || CENTER', centerCoords);
+  // console.log('LINE 170 || DELIVERY PAGE || routedata', routeData);
   return (
     <div className='container-container'>
       {/* <section className='flex-grow pt-14 px-6'>
@@ -176,7 +187,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
         'hello'
       </section> */}
       <section>
-        {routeData.waypoints && centerCoords.latitude ? (
+        {routeData.waypoints ? (
           <MapRefactored
             mode={mode}
             routeCoordinates={routeCoordinates}

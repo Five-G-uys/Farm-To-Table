@@ -196,3 +196,13 @@ body {
   margin-left: 200px;
   margin-right: 200px;
 }
+
+
+.mapboxgl-popup-tip {
+  border-bottom-color: transparent !important;
+  background: transparent !important;
+}
+
+.mapboxgl-popup-content {
+  background: transparent !important;
+}
