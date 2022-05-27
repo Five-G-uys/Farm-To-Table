@@ -189,3 +189,10 @@ body {
   margin-top: 90px;
   border-radius: 4px;
 }
+
+.calendar-grid {
+  background-color: #ffffff;
+  text-decoration: blue;
+  margin-left: 200px;
+  margin-right: 200px;
+}
