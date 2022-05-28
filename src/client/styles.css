@@ -193,10 +193,10 @@ body {
 .calendar-grid {
   background-color: #ffffff;
   text-decoration: blue;
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: 380px;
+  margin-right: 380px;
+  border-radius: 20px;
 }
-
 
 .mapboxgl-popup-tip {
   border-bottom-color: transparent !important;

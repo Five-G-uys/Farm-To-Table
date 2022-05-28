@@ -22,6 +22,7 @@ import { Stack } from '@mui/material';
 import { purple } from '@mui/material/colors';
 //Component import
 import EventCard from './EventCard';
+import GoogleCalendar from './GoogleCalendar';
 import { updatedEvent } from './eventCalls';
 import { CssBaseline, Container } from '@mui/material';
 
@@ -280,6 +281,9 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     setInEditMode(true);
     setOpen(true);
   };
+  const toUpdatedCounter = () => {
+    setUpdateCounter(updateCounter + 1);
+  };
 
   useEffect((): void => {
     getAllEvents();
@@ -342,7 +346,10 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         updateCoords={updateCoords}
         mode={mode}
       />
-
+      <GoogleCalendar
+        updateCalendar={toUpdatedCounter}
+        updateCounter={updateCounter}
+      />
       <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
         <Modal

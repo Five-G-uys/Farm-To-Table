@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Event from './Event';
 import { UserContext } from '../App';
-import { Box, Box, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleCalendar from './GoogleCalendar';
 
@@ -13,6 +13,7 @@ interface AppProps {
   lon: string;
   updateCoords(): void;
   mode: string;
+  // updateCounter: number;
 }
 
 //import RSVPS from "./RSVPS";
@@ -41,7 +42,7 @@ const EventCard = ({
   return (
     <>
       <Box>
-        <GoogleCalendar />
+        <GoogleCalendar event={allEvents} />
         {/* <iframe
           src='https://calendar.google.com/calendar/embed?src=rodolfomachirica%40gmail.com&ctz=America%2FChicago'
           // style='border: 0'
