@@ -147,7 +147,7 @@ body {
 }
 
 .texture2 {
-  color: #e2f2d9;
+  color: darkgreen;
   background-color: #e2f2d9;
   backdrop-filter: blur(8px);
   background-image: url('https://www.transparenttextures.com/patterns/exclusive-paper.png');

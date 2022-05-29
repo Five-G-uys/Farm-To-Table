@@ -25,6 +25,7 @@ import EventCard from './EventCard';
 import GoogleCalendar from './GoogleCalendar';
 import { updatedEvent } from './eventCalls';
 import { CssBaseline, Container } from '@mui/material';
+import EventIcon from '@mui/icons-material/Event';
 
 interface EventProps {
   id: number;
@@ -39,7 +40,7 @@ interface EventProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface AppProps {
   handleEditClick(): void;
-  allEvents: [];
+  allEvents: object[];
   updateCounter: number;
   inEditMode: boolean;
   getAllEvents(): void;
@@ -72,6 +73,10 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
   //state that controls the form
   const [open, setOpen] = useState(false);
 
+  const [openCalendar, setOpenCalendar] = useState(false);
+  const handleCalendarChange = () => {
+    setOpenCalendar(!openCalendar);
+  };
   // handle create form
   const handleCreateForm = () => {
     setOpen(true);
@@ -281,9 +286,9 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     setInEditMode(true);
     setOpen(true);
   };
-  const toUpdatedCounter = () => {
-    setUpdateCounter(updateCounter + 1);
-  };
+  // const toUpdatedCounter = () => {
+  //   setUpdateCounter(updateCounter + 1);
+  // };
 
   useEffect((): void => {
     getAllEvents();
@@ -347,8 +352,9 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         mode={mode}
       />
       <GoogleCalendar
-        updateCalendar={toUpdatedCounter}
-        updateCounter={updateCounter}
+        event={allEvents}
+        open={openCalendar}
+        handleCalendarChange={handleCalendarChange}
       />
       <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
@@ -538,6 +544,24 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
             className='texture2'
           >
             <AddIcon style={{ color: 'text.primary' }} />
+          </Fab>
+        )}
+        <br></br>
+        {roleId > 3 && (
+          <Fab
+            onClick={handleCalendarChange}
+            size='large'
+            // color='secondary'
+            aria-label='add'
+            style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
+            sx={{
+              position: 'fixed',
+              bottom: (theme) => theme.spacing(8),
+              left: (theme) => theme.spacing(8),
+            }}
+            className='texture2'
+          >
+            <EventIcon style={{ color: 'text.primary' }} />
           </Fab>
         )}
       </Box>

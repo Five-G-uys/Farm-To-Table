@@ -215,6 +215,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
       />
       <Card
         sx={{
+          backgroundColor: '#e2f2d9',
           minWidth: '15rem',
           borderRadius: '1.2rem',
           boxShadow: 8,
@@ -231,7 +232,10 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
             fontWeight='700'
             fontSize='20px'
           >
-            {`Date of Event: ${event.eventDate}`}
+            {`Date of Event: ${event.eventDate.slice(
+              0,
+              10,
+            )} Time ${event.eventDate.slice(11, event.eventDate.length)}`}
           </Typography>
         </CardContent>
 
@@ -279,13 +283,13 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         </CardContent>
         <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
           <Stack spacing={5} direction='row' id='product_card_stack'>
-            <ExpandMore sx={{ color: 'green' }} expand={expanded}>
-              {roleId > 3 && (
-                <Button>
-                  <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
-                </Button>
-              )}
-            </ExpandMore>
+            {/* <ExpandMore sx={{ color: 'green' }} expand={expanded}> */}
+            {roleId > 3 && (
+              <Button onClick={deleteEvent}>
+                <DeleteIcon sx={{ color: 'green' }} />
+              </Button>
+            )}
+            {/* </ExpandMore> */}
             {/* <ExpandMore sx={{ color: 'green' }} expand={expanded}> */}
             {roleId < 4 && (
               <Button
@@ -300,7 +304,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
                 variant='outlined'
               >
                 {isGoing ? (
-                  <CheckIcon color='success' fontSize='large'></CheckIcon>
+                  <CheckIcon color='success' fontSize='large' />
                 ) : (
                   'RSVP'
                 )}

@@ -34,7 +34,7 @@ eventRouter.post('/api/events', async (req: Request, res: Response) => {
       eventName,
       description,
       thumbnail,
-      eventDate: date + ' ' + time,
+      eventDate,
       eventType,
       city,
       location,

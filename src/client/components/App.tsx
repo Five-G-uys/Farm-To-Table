@@ -34,7 +34,13 @@ import Weather from './Weather';
 import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
-import { amber, blueGrey, grey, lightGreen } from '@mui/material/colors';
+import {
+  amber,
+  blueGrey,
+  grey,
+  lightGreen,
+  darkGreen,
+} from '@mui/material/colors';
 
 /*
 ▄ •▄  ▐ ▄        ▄▄· ▄ •▄     ▄ •▄  ▐ ▄        ▄▄· ▄ •▄
