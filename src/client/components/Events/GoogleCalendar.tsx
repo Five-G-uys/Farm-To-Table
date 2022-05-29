@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 // import { Calendar } from '@fullcalendar/core';
-import FullCalendar from '@fullcalendar/react';
+import FullCalendar, { eventTupleToStore } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import weekGridPlugin from '@fullcalendar/timegrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
-import listPlugin from '@fullcalendar/list';
 import { Box, Grid } from '@mui/material';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import Modal from '@mui/material/Modal';
@@ -14,6 +13,12 @@ interface AppProps {
   event: any;
   open: boolean;
   handleCalendarChange(): void;
+  inEditMode: boolean;
+  handleClose(): void;
+  handleInEditMode(): void;
+  handleEditClick(id: number): void;
+  getOrders(): void;
+  order: [];
 }
 const style = {
   position: 'absolute',
@@ -33,9 +38,19 @@ const style = {
   // pb: 3,
 };
 
-const GoogleCalendar = ({ event, open, handleCalendarChange }: AppProps) => {
+const GoogleCalendar = ({
+  event,
+  open,
+  handleCalendarChange,
+  handleClose,
+  handleInEditMode,
+  inEditMode,
+  handleEditClick,
+  getOrders,
+  order,
+}: AppProps) => {
   //run the page on load based on events
-  useEffect(() => {}, [event]);
+  useEffect(() => {}, [event, order]);
   const mapped =
     event &&
     event.map((event: any) => {
@@ -48,12 +63,42 @@ const GoogleCalendar = ({ event, open, handleCalendarChange }: AppProps) => {
       };
     });
 
+  const mappedOrders = order.map((order: any) => {
+    return {
+      title: 'ORDER NUMBER: ' + order.id,
+      date: order.delivery_date,
+      allDay: false,
+    };
+  });
   //will handles changes on a date click
   const handleDateClick = (e: DateClickArg) => {
-    console.log('EVENT', e);
-    if (e.jsEvent.altKey) {
-      console.log('ALTCLICK');
-    }
+    // console.log('DATECLICK', typeof e);
+    // console.log('EVENT', e);
+    // if (e.jsEvent.altKey) {
+    //   event.forEach(
+    //     (event: {
+    //       id: number;
+    //       title: string;
+    //       date: string;
+    //       address: string;
+    //     }) => {
+    //       console.log('CALENDAR EVENT', mapped['event'].id);
+    //       if (event.id === mapped['event'].id) {
+    //         handleEditClick(event.id);
+    //       }
+    //     },
+    //   );
+    // }
+    return (
+      <div>
+        <Modal
+          sx={{ overflow: 'scroll' }}
+          open={open}
+          aria-labelledby='child-modal-title'
+          aria-describedby='child-modal-description'
+        ></Modal>
+      </div>
+    );
   };
   return (
     <div>
@@ -63,18 +108,23 @@ const GoogleCalendar = ({ event, open, handleCalendarChange }: AppProps) => {
         aria-labelledby='child-modal-title'
         aria-describedby='child-modal-description'
       >
-        <Box sx={{ ...style, padding: '5vh' }} className='texture2'>
+        {/* //className='texture2' */}
+        <Box sx={{ ...style, padding: '5vh' }} className='calendar'>
           <FullCalendar
+            headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay',
+            }}
             plugins={[
               dayGridPlugin,
               interactionPlugin,
-              weekGridPlugin,
               googleCalendarPlugin,
-              listPlugin,
+              timeGridPlugin,
             ]}
             initialView='dayGridMonth'
             weekends={true}
-            events={mapped}
+            events={[...mappedOrders, ...mapped]}
             dateClick={handleDateClick}
           />
           <Button onClick={handleCalendarChange} variant='text' color='success'>

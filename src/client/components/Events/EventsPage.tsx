@@ -47,6 +47,13 @@ interface AppProps {
   rsvps: [];
   rsvpCount: number;
   updateState(): void;
+  handleCalendarChange(): void;
+  handleClose(): void;
+  setInEditMode(): void;
+  getOrders(): void;
+  // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
+  handleEditClick(id: number): void;
+  order: object[];
 }
 
 const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
@@ -60,6 +67,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
   //existing event (in update mode) or creating a new event
   const [inEditMode, setInEditMode] = useState(false);
 
+  const [orders, setOrders] = useState<object[]>([]);
   const [event, setEvent] = useState<EventProps>({
     id: 0,
     eventName: '',
@@ -131,7 +139,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
           // seasonTitle: seasonTitle,
         },
       })
-      .then(({ data }) => {
+      .then(() => {
         //console.log('LINE 107 saved!', data);
         setUpdateCounter((updateCounter) => updateCounter + 1);
         toast.success('Event Updated', {
@@ -230,13 +238,6 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     axios
       .get('/api/events')
       .then(({ data }) => {
-        // const sorted = data.sort(
-        //   (a: { eventDate: number }, b: { eventDate: number }) => {
-        //     console.log(a.eventDate.split("-"));
-        //     return a.eventDate - b.eventDate;
-        //   },
-        // );
-        // console.log('LINE 233', sorted);
         setAllEvents(data);
       })
       .catch((error) => {
@@ -286,11 +287,25 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     setInEditMode(true);
     setOpen(true);
   };
-  // const toUpdatedCounter = () => {
-  //   setUpdateCounter(updateCounter + 1);
-  // };
+  const handleInEditMode = () => {
+    setInEditMode(!inEditMode);
+  };
+
+  //getOrders
+  const getOrders = () => {
+    axios
+      .get(`/api/order/deliveries`)
+      .then(({ data }) => {
+        console.log('LINE 295', data);
+        setOrders(data);
+      })
+      .catch((err) => {
+        console.log('Error', err);
+      });
+  };
 
   useEffect((): void => {
+    getOrders();
     getAllEvents();
     getUserRsvps();
   }, [updateCounter]);
@@ -355,6 +370,12 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         event={allEvents}
         open={openCalendar}
         handleCalendarChange={handleCalendarChange}
+        inEditMode={inEditMode}
+        handleClose={handleClose}
+        handleInEditMode={handleInEditMode}
+        handleEditClick={handleEditClick}
+        getOrders={getOrders}
+        order={orders}
       />
       <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
@@ -529,41 +550,42 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
             }
           </Fade>
         </Modal>
-        {roleId > 3 && (
-          <Fab
-            onClick={handleCreateForm}
-            size='large'
-            // color='secondary'
-            aria-label='add'
-            style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
-            sx={{
-              position: 'fixed',
-              bottom: (theme) => theme.spacing(8),
-              right: (theme) => theme.spacing(8),
-            }}
-            className='texture2'
-          >
-            <AddIcon style={{ color: 'text.primary' }} />
-          </Fab>
-        )}
-        <br></br>
-        {roleId > 3 && (
-          <Fab
-            onClick={handleCalendarChange}
-            size='large'
-            // color='secondary'
-            aria-label='add'
-            style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
-            sx={{
-              position: 'fixed',
-              bottom: (theme) => theme.spacing(8),
-              left: (theme) => theme.spacing(8),
-            }}
-            className='texture2'
-          >
-            <EventIcon style={{ color: 'text.primary' }} />
-          </Fab>
-        )}
+        <Stack direction='row' justifyContent='space-between'>
+          {roleId > 3 && (
+            <Fab
+              onClick={handleCreateForm}
+              size='large'
+              // color='secondary'
+              aria-label='add'
+              style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
+              sx={{
+                position: 'fixed',
+                bottom: (theme) => theme.spacing(8),
+                right: (theme) => theme.spacing(8),
+              }}
+              className='texture2'
+            >
+              <AddIcon style={{ color: 'text.primary' }} />
+            </Fab>
+          )}
+          {roleId > 3 && (
+            <Fab
+              onClick={handleCalendarChange}
+              size='large'
+              // color='secondary'
+              aria-label='add'
+              style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
+              sx={{
+                position: 'fixed',
+                bottom: (theme) => theme.spacing(8),
+                left: (theme) => theme.spacing(8),
+              }}
+              className='texture2'
+            >
+              <EventIcon style={{ color: 'text.primary' }} />
+            </Fab>
+          )}
+        </Stack>
       </Box>
     </>
   );
