@@ -3,7 +3,7 @@ import getCenter from 'geolib/es/getCenter';
 
 // Format order locations from array of strings into a single string for mapbox api
 const formatOrderCoords = (orderLocations: any) => {
-  console.log('LINE 5 || SERVER UTILS || MAPBOX', orderLocations);
+  // console.log('LINE 5 || SERVER UTILS || MAPBOX', orderLocations);
   const tempStr: any = orderLocations
     .map((location: any) => {
       return `${location.longitude},${location.latitude}`;

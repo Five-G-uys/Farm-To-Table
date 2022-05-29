@@ -25,7 +25,7 @@ mapboxgl.accessToken =
 export const driverLocationReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'setLocation':
-      // console.log('LINE 28 || DELIVERY PAGE || SETTING LOCATION');
+      console.log('LINE 28 || DELIVERY PAGE || SETTING LOCATION');
       // return  new state
       return {
         ...state,
@@ -69,12 +69,13 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
   //FIRST FETCH ALL ORDERS FOR TODAY
   const getTodaysOrders = () => {
     if (!lat || !lon) return;
+    console.log('LINE 72 || get todays orders hit ||');
     axios
       .get('/api/order/todaysOrders', {
         params: { delivery_date: today, lat, lon },
       })
       .then((data) => {
-        console.log('LINE 77 || DELIVERY PAGE', data.data);
+        // console.log('LINE 77 || DELIVERY PAGE', data.data);
         // set route data to the array of waypoints I get back
         setRouteData(data.data);
         // set center to the center {lat, lon} obj  I got back
@@ -102,7 +103,6 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
         // setCenterCoords(tempWaypointCoords);
         setRouteCoordinates(tempStr);
         setUpdateCounter(updateCounter + 1);
-        // setUpdateCounter(updateCounter + 1);
       })
       .catch((err) => {
         console.error('LINE 104 || DELIVERY PAGE ERROR', err);
@@ -128,18 +128,19 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
     // Stop interval from running after unmounting.
     //Trying to clean up side effect to prevent unnecessary resource usage and slowdown
     return () => clearInterval(locationInterval);
-  }, [lat, lon, socket]);
+  }, [lat, lon, roleId, socket]);
 
   // console.log('LINE 115 || STATE', state);
 
   // WebSocket: set up to create the socket and set it in state
   useEffect(() => {
+    if (!roleId) return;
     const socketInstance = new WebSocket(socketUrl);
     socketInstance.binaryType = 'arraybuffer';
     setSocket(socketInstance);
     // Cleanup ==> disconnect socket
     return () => socket.close();
-  }, []);
+  }, [roleId]);
 
   useEffect(() => {
     //  Return if socket isn't connected
@@ -154,6 +155,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
     // if (roleId < 4) {
     socket.onmessage = (e: any) => {
       // console.log('LINE 133 || MESSAGE', e.data, e);
+      if (!roleId) return;
       const message: any = JSON.parse(e.data);
       console.log('LINE 157 || MESSAGE', message);
 
@@ -194,10 +196,12 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
             routeData={routeData}
             updateCoords={updateCoords}
             updateCounter={updateCounter}
+            setUpdateCounter={setUpdateCounter}
             lat={lat}
             lon={lon}
             state={roleId == 4 && state}
             centerCoords={centerCoords}
+            getTodaysOrders={getTodaysOrders}
           />
         ) : (
           <h1>Grabbing your map</h1>

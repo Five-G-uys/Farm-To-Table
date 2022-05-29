@@ -7,12 +7,7 @@ import OrdersList from './OrdersList';
 import OrderContentModal from './OrderContentModal';
 import { UserContext } from '../App';
 // MUI Imports
-import {
-  CssBaseline,
-  Box,
-  Container,
-  Typography,
-} from '@mui/material';
+import { CssBaseline, Box, Container, Typography } from '@mui/material';
 
 const OrdersPage = ({ getOrders }: any) => {
   const user: { id: number; roleId: number } = useContext(UserContext);
@@ -140,9 +135,16 @@ const OrdersPage = ({ getOrders }: any) => {
       });
   };
 
-  const handleDeleteOrderContent = (orderContentId: number) => {
+  const handleDeleteOrderContent = (
+    orderContentId: number,
+    productId: number,
+    orderId: number,
+    delivery_date: string,
+  ) => {
     axios
-      .delete(`/api/order-content/${orderContentId}`)
+      .delete(
+        `/api/order-content/${orderContentId}/${productId}/${orderId}/${delivery_date}`,
+      )
       .then((data: any) => {
         console.log('LINE 148 || ORDER CONTENT DELETE SUCCESS', data);
       })

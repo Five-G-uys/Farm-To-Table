@@ -29,7 +29,10 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const UpcomingOrderContentEntry = ({
   product,
+  productId,
+  orderId,
   orderContentId,
+  delivery_date,
   handleDeleteOrderContent,
 }: any) => {
   // console.log('LINE 15 || PRODUCT', product);
@@ -75,7 +78,14 @@ const UpcomingOrderContentEntry = ({
                   <ExpandMore
                     sx={{ color: 'green' }}
                     expand={expanded}
-                    onClick={() => handleDeleteOrderContent(orderContentId)}
+                    onClick={() =>
+                      handleDeleteOrderContent(
+                        orderContentId,
+                        productId,
+                        orderId,
+                        delivery_date,
+                      )
+                    }
                   >
                     <DeleteIcon sx={{ color: 'green' }} />
                   </ExpandMore>

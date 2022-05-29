@@ -119,7 +119,7 @@ const App = () => {
         ? {
             // palette values for light mode
             primary: amber,
-            divider: amber[200],
+            // divider: 'darkgreen',
             background: {
               default: '#F6FAFF',
               //rgba(246, 250, 255, 0.9),
