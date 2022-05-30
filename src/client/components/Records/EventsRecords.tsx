@@ -37,10 +37,6 @@ const columns: readonly Column[] = [
     id: 'description',
     label: 'Description',
     minWidth: 170,
-<<<<<<< HEAD
-=======
-    align: 'right',
->>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
   },
   {
     id: 'eventDate',
@@ -82,7 +78,6 @@ const EventsRecords = () => {
 
   const patchEvents = async (eventId: string, updatedEvent: any) => {
     try {
-<<<<<<< HEAD
       const { data } = await axios.patch(`/api/events/${eventId}`, updatedEvent);
       toast.success('Vendor Updated', {
         position: "top-right",
@@ -94,13 +89,6 @@ const EventsRecords = () => {
         progress: undefined,
         });
       return data
-=======
-      const { data } = await axios.patch(
-        `/api/events/${eventId}`,
-        updatedEvent,
-      );
-      return data;
->>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
     } catch (err) {
       console.error(err);
       return {
@@ -110,7 +98,6 @@ const EventsRecords = () => {
   };
 
   const deleteEvents = async (eventId: string) => {
-<<<<<<< HEAD
     swal({
       title: 'Are you sure?',
       text: 'Vendor will be deleted, along with all associated products!',
@@ -137,18 +124,6 @@ const EventsRecords = () => {
       }
     });
   }
-=======
-    try {
-      const { data } = await axios.delete(`/api/events/${eventId}`);
-      return data;
-    } catch (err) {
-      console.error(err);
-      return {
-        error: err,
-      };
-    }
-  };
->>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
 
   useEffect(() => {
     getEvents();
@@ -189,7 +164,6 @@ const EventsRecords = () => {
     patchEvents(row.id, row);
   };
 
-<<<<<<< HEAD
   const onEdit = (row: object) => {
     setEditing(!editing)
     setRowEditing(row.id)
@@ -199,16 +173,6 @@ const EventsRecords = () => {
     deleteEvents(row.id)
     setDeleteCount(deleteCount + 1)
   }
-=======
-  const onEdit = () => {
-    setEditing(!editing);
-  };
-
-  const onDelete = (row: object) => {
-    setDeleteCount(deleteCount + 1);
-    deleteEvents(row.id);
-  };
->>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
 
   return (
     <Paper sx={{ width: '90%', overflow: 'hidden' }}>
@@ -274,10 +238,6 @@ const EventsRecords = () => {
                       </TableCell>
                     </>
                   )}
-<<<<<<< HEAD
-
-=======
->>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
                 </TableRow>
               ))}
           </TableBody>
