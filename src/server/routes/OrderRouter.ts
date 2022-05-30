@@ -74,36 +74,38 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
       // console.log('LINE 76 || ORDER ROUTER', data);
       const orderLocations = data.map((subscriptionEntry: any) => {
         return {
-          // streetAddress: subscriptionEntry.streetAddress,
-          // city: subscriptionEntry.city,
-          // state: subscriptionEntry.state,
-          // zip: subscriptionEntry.zip,
+          streetAddress: subscriptionEntry.streetAddress,
+          city: subscriptionEntry.city,
+          state: subscriptionEntry.state,
+          zip: subscriptionEntry.zip,
+          paid: subscriptionEntry.paid,
           latitude: subscriptionEntry.lat,
           longitude: subscriptionEntry.lon,
         };
       });
 
       // Get center of all dropoff points
-      const center: any = getCenter([
-        ...orderLocations,
-        { latitude: 29.949123908409483, longitude: -90.10436932015816 },
-      ]);
-      console.log('LINE 92 || ORDER ROUTER ', center);
+      // const center: any = getCenter([
+      //   ...orderLocations,
+      //   { latitude: 29.949123908409483, longitude: -90.10436932015816 },
+      // ]);
+      // console.log('LINE 92 || ORDER ROUTER ', center);
       // return result of GETROUTE function from UTILS folder, invoked with lat lon and delivery locations.
       // need to hardcode lat and lon values to simulate distribution center
-      const routeData: any = [await getRoute(lat, lon, orderLocations), center];
-      // console.log('LINE 96 || ORDER ROUTER ', routeData);
+      const routeData: any = await getRoute(lat, lon, orderLocations); //, center];
+      routeData.data.orderLocations = orderLocations;
+      // console.log('LINE 97 || ORDER ROUTER ', routeData);
       return routeData;
     })
     .then((route: any) => {
       if (route.message) {
         throw route.err;
       }
-      console.log('LINE 103 || ORDERROUTER', [route[0].data, route[1]]);
-      res.json([route[0].data, route[1]]);
+      // console.log('LINE 104 || ORDERROUTER', route.data);
+      res.json(route.data);
     })
     .catch((err: object) => {
-      console.log('LINE 97, FIND ALL Orders ERROR: ', err);
+      console.log('LINE 108, FIND ALL Orders ERROR: ', err);
       res.status(404).json(err);
     });
 });

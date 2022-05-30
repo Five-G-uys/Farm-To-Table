@@ -85,7 +85,7 @@ const ProductsPage = () => {
   const commonStyles = {
     width: '40vw',
     minWidth: '500px',
-    bgcolor: 'background.paper',
+    bgcolor: '#e2f2d9',
     borderColor: 'text.primary',
     m: 1,
     // to center elements absolutely inside parent

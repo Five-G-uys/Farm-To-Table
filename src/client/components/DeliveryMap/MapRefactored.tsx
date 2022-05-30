@@ -1,17 +1,60 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  useMemo,
+} from 'react';
 
+// COMPONENT IMPORTS
+import DirectionsModal from './DirectionsModal';
+
+// MUI Imports
+import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import Avatar from '@mui/material/Avatar';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { red } from '@mui/material/colors';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+interface ExpandMoreProps extends IconButtonProps {
+  expand: boolean;
+}
+
+// PASS EXPANDMORE THROUGH PROPS FROM PARENT: ALSO USED IN product CARD COMPONENT
+const ExpandMore = styled((props: ExpandMoreProps) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+// MAPBOX IMPORTS
 import Map, {
-  Marker,
-  NavigationControl,
   GeolocateControl,
   Layer,
+  Marker,
+  NavigationControl,
+  Popup,
   Source,
 } from 'react-map-gl';
 import type { LayerProps } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import getCenter from 'geolib/es/getCenter';
 import { center } from '@turf/turf';
-import { stat } from 'fs';
+import { Dir, stat } from 'fs';
 const size = 200;
 
 // Style object for animated point on map to represent delivery driver in admin view
@@ -54,7 +97,18 @@ const MapRefactored = ({
 }: any) => {
   const [viewState, setViewState] = useState({});
   const [pointData, setPointData]: any = useState(null);
+  const [popupInfo, setPopupInfo]: any = useState(null);
+  const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  // This provides a way to reference the map created in the tsx directly (mapRef.current)
   const mapRef: any = useRef();
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   // This implements `StyleImageInterface`
   // to draw a pulsing dot icon on the map.
@@ -111,6 +165,7 @@ const MapRefactored = ({
   const onMapLoad: any = useCallback(() => {
     if (!mapRef.current) return;
     mapRef.current.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
+    // mapRef.current.
   }, [mapRef.current]);
 
   const geolocateControlRef = useCallback((ref) => {
@@ -126,19 +181,108 @@ const MapRefactored = ({
   //   centerCoords,
   //   routeData,
   // );
-  console.log('LINE 48 || REF MAP || STATE', state.driverLat, state.driverLon);
+  // console.log('LINE 48 || REF MAP || STATE', state.driverLat, state.driverLon);
+  // console.log('LINE 49 || REF MAP || WAYPOINTS', routeData.waypoints);
 
   let data: any;
   const route: any = routeData.trips[0].geometry.coordinates;
 
   let routeLineLayer: any;
   let routeArrowLayer: any;
-  const markerCoords: any = routeData.waypoints.map((waypoint: any) => {
-    return {
-      latitude: waypoint.location[1],
-      longitude: waypoint.location[0],
-    };
-  });
+  // const markerCoords: any = routeData.waypoints.map(
+  //   (waypoint: any, i: number) => {
+  //     // Since the first waypoint will always be the "warehouse", all subsequent
+  //     // waypoints must be orders. That means I can set up a condition so that
+  //     // on each order waypoint I also add it's paid status from the orderLocations.
+  //     // This way when I map over this 'markerCoords' array, I can conditionally
+  //     // render the color of the marker based on the order's paid status
+  //     return i === 0
+  //       ? {
+  //           latitude: waypoint.location[1],
+  //           longitude: waypoint.location[0],
+  //         }
+  //       : {
+  //           paid: routeData.orderLocations[i - 1].paid,
+  //           latitude: waypoint.location[1],
+  //           longitude: waypoint.location[0],
+  //         };
+  //   },
+  // );
+  const markerCoords: any = useMemo(
+    () =>
+      routeData.waypoints.map((order: any, i: number) => {
+        // console.log('LINE 157 || REF MAP || ORDER ', order);
+        // console.log(
+        //   'LINE 308 || REF MAP || routeData.trips[0].legs',
+        //   routeData.trips[0].legs[i].steps,
+        // );
+        return (
+          <Marker
+            key={`marker-${i}${order.longitude}${order.latitude}`}
+            longitude={order.location[0]}
+            latitude={order.location[1]}
+            anchor='center'
+            onClick={(e) => {
+              // If we let the click event propagates to the map, it will immediately close the popup
+              // with `closeOnClick: true`
+
+              e.originalEvent.stopPropagation();
+              order.i = i;
+              order.steps =
+                routeData.trips[0].legs[
+                  order.waypoint_index === 0 ? 4 : order.waypoint_index - 1
+                ].steps;
+              setPopupInfo(order);
+              handleClose();
+              handleOpen();
+              console.log(
+                'LINE 233 || REF MAP || routeData.trips[0].legs',
+                routeData.trips[0].legs,
+              );
+              console.log(
+                'LINE 246 || REF MAP || routeData.orderLocation',
+                routeData.orderLocations,
+              );
+              mapRef.current.easeTo({
+                center: [order.location[0], order.location[1]],
+              });
+            }}
+            color={
+              i === 0
+                ? 'green'
+                : routeData.orderLocations[i - 1].paid
+                ? 'gray'
+                : 'red'
+            }
+          />
+        );
+
+        // Since the first order will always be the "warehouse", all subsequent
+        // orders must be orders. That means I can set up a condition so that
+        // on each order order I also add it's paid status from the orderLocations.
+        // This way when I map over this 'markerCoords' array, I can conditionally
+        // render the color of the marker based on the order's paid status
+        //     return i === 0
+        //       ? {
+        //           latitude: order.location[1],
+        //           longitude: order.location[0],
+        //         }
+        //       : {
+        //           paid: routeData.orderLocations[i - 1].paid,
+        //           latitude: order.location[1],
+        //           longitude: order.location[0],
+        //         };
+        //
+        //
+        //
+        //
+        //
+        //
+      }),
+    [],
+  );
+  // console.log('LINE 156 || MARKER COORDS', markerCoords);
+
   const geojson: any = {
     type: 'Feature',
     properties: { color: 'blue' },
@@ -148,16 +292,14 @@ const MapRefactored = ({
     },
   };
 
-  // console.log('LINE 57 || MARKER COORDS', markerCoords);
-
   useEffect(() => {
     // error handling until waypoints are defined
     if (!routeData.waypoints) return;
 
     // Set coordinates for markers in tsx using the formatted 'data' array
     setViewState({
-      longitude: centerCoords.longitude,
-      latitude: centerCoords.latitude,
+      longitude: -90.10436932015816,
+      latitude: 29.949123908409483,
       zoom: 12,
     });
     // formatted geojson for route object
@@ -192,7 +334,8 @@ const MapRefactored = ({
     return () => window.cancelAnimationFrame(animation);
   });
 
-  console.log('LINE 195 || REF MAP || mapref.current', mapRef.current);
+  // console.log('LINE 313 || REF MAP || mapRef', mapRef);
+
   return (
     <div className='map-container'>
       <Map
@@ -211,19 +354,32 @@ const MapRefactored = ({
         mapboxAccessToken='pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg'
         style={{}}
       >
-        {markerCoords.length > 0 ? (
-          markerCoords.map((coord: any) => (
-            <div key={`${coord.longitude}+${coord.latitude}`}>
-              <Marker
-                longitude={coord.longitude}
-                latitude={coord.latitude}
-                color='red'
-              />
-            </div>
-          ))
+        {markerCoords}
+        {popupInfo && (
+          <DirectionsModal
+            open={open}
+            handleClose={handleClose}
+            popupInfo={popupInfo}
+          />
+        )}
+        {/* {markerCoords.length > 0 ? (
+          markerCoords.map((coord: any, i: number) => {
+            console.log('LINE 230 || DELIVERY PAGE || COORD', coord);
+            return (
+              <div key={`${coord.longitude}+${coord.latitude}`}>
+                <Marker
+                  longitude={coord.longitude}
+                  latitude={coord.latitude}
+                  color={
+                    i === 0 ? 'green' : coord.paid === true ? 'gray' : 'red'
+                  }
+                />
+              </div>
+            );
+          })
         ) : (
           <div></div>
-        )}
+        )} */}
         <Source id='routearrows' type='geojson' data={geojson}>
           <Layer
             id='delivery-route-arrows'
@@ -289,6 +445,7 @@ const MapRefactored = ({
         )}
         <NavigationControl position='bottom-left' />
         <GeolocateControl
+          onGeolocate={}
           showUserLocation={true}
           showUserHeading={true}
           trackUserLocation={true}
