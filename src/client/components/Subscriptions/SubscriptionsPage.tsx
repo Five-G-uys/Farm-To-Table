@@ -19,7 +19,6 @@ import { CssBaseline, Box, Container } from '@mui/material';
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
   const { id, roleId } = user;
-  // const navigate = useNavigate();
 
   const [updateCounter, setUpdateCounter] = useState(0);
 
@@ -42,10 +41,12 @@ const SubscriptionsPage = () => {
 
   // state var for form modal and backdrop
   const [open, setOpen] = useState(false);
+
   // handle create form
   const handleCreateForm = () => {
     setOpen(true);
   };
+
   // Handlers for backdrop control
   const handleClose = () => {
     setOpen(false);
@@ -62,6 +63,7 @@ const SubscriptionsPage = () => {
       thumbnail: '',
     });
   };
+
   const handleInputSubscription = (
     event:
       | React.ChangeEvent<HTMLInputElement>
@@ -184,7 +186,7 @@ const SubscriptionsPage = () => {
     transform: 'translate(-50%, -50%)',
     border: 1,
     padding: '20px',
-    borderRadius: '2.5rem',
+    borderRadius: '2rem',
     boxShadow: 24,
     overflow: 'auto',
   };
@@ -205,7 +207,7 @@ const SubscriptionsPage = () => {
         setUpdateCounter(updateCounter + 1);
         toast.success('Subscription Created', {
           position: 'top-right',
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -242,7 +244,7 @@ const SubscriptionsPage = () => {
       icon: 'warning',
       buttons: true,
       dangerMode: true,
-    }).then((willDelete) => {
+    }).then((willDelete: any) => {
       if (willDelete) {
         swal('Product has been deleted', {
           icon: 'success',
@@ -339,7 +341,7 @@ const SubscriptionsPage = () => {
       <CssBaseline />
       <ToastContainer
         position='top-right'
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

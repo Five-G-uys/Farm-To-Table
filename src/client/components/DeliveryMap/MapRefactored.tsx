@@ -91,15 +91,19 @@ const MapRefactored = ({
   lon,
   mode,
   routeCoordinates, // string of coordinates
+  updateCounter,
+  setUpdateCounter,
   routeData, // waypoint and trip data for the route
   state,
   centerCoords, // object with the center of all order points
+  getTodaysOrders,
 }: any) => {
   const [viewState, setViewState] = useState({});
   const [pointData, setPointData]: any = useState(null);
   const [popupInfo, setPopupInfo]: any = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [open, setOpen] = useState(false);
+  const [paid, setPaid]: any = useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -163,7 +167,7 @@ const MapRefactored = ({
     },
   };
   const onMapLoad: any = useCallback(() => {
-    if (!mapRef.current) return;
+    if (!mapRef.current || !popupInfo) return;
     mapRef.current.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
     // mapRef.current.
   }, [mapRef.current]);
@@ -216,6 +220,7 @@ const MapRefactored = ({
         //   'LINE 308 || REF MAP || routeData.trips[0].legs',
         //   routeData.trips[0].legs[i].steps,
         // );
+
         return (
           <Marker
             key={`marker-${i}${order.longitude}${order.latitude}`}
@@ -228,6 +233,11 @@ const MapRefactored = ({
 
               e.originalEvent.stopPropagation();
               order.i = i;
+              i !== 0 &&
+                (order.orderId = routeData.orderLocations[i - 1].orderId);
+              if (i > 0) {
+                order.paid = routeData.orderLocations[i - 1].paid;
+              }
               order.steps =
                 routeData.trips[0].legs[
                   order.waypoint_index === 0 ? 4 : order.waypoint_index - 1
@@ -235,17 +245,15 @@ const MapRefactored = ({
               setPopupInfo(order);
               handleClose();
               handleOpen();
-              console.log(
-                'LINE 233 || REF MAP || routeData.trips[0].legs',
-                routeData.trips[0].legs,
-              );
-              console.log(
-                'LINE 246 || REF MAP || routeData.orderLocation',
-                routeData.orderLocations,
-              );
+              console.log('LINE 233 || REF MAP || order', order);
+              // console.log(
+              //   'LINE 246 || REF MAP || routeData.orderLocation',
+              //   routeData.orderLocations,
+              // );
               mapRef.current.easeTo({
                 center: [order.location[0], order.location[1]],
               });
+              console.log('LINE 254 || REF MAP ||', popupInfo);
             }}
             color={
               i === 0
@@ -279,7 +287,7 @@ const MapRefactored = ({
         //
         //
       }),
-    [],
+    [updateCounter],
   );
   // console.log('LINE 156 || MARKER COORDS', markerCoords);
 
@@ -360,6 +368,11 @@ const MapRefactored = ({
             open={open}
             handleClose={handleClose}
             popupInfo={popupInfo}
+            getTodaysOrders={getTodaysOrders}
+            lat={lat}
+            lon={lon}
+            updateCounter={updateCounter}
+            setUpdateCounter={setUpdateCounter}
           />
         )}
         {/* {markerCoords.length > 0 ? (

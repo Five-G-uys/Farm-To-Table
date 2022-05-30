@@ -77,7 +77,7 @@ const RecordsPage = () => {
           variant='contained'
           color='primary'
         >
-          SubscriptionEntries
+          Subscription Entries
         </Button>
         <Button
           component={Link}

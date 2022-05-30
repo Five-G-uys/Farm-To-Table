@@ -22,8 +22,10 @@ import { Stack } from '@mui/material';
 import { purple } from '@mui/material/colors';
 //Component import
 import EventCard from './EventCard';
+import GoogleCalendar from './GoogleCalendar';
 import { updatedEvent } from './eventCalls';
 import { CssBaseline, Container } from '@mui/material';
+import EventIcon from '@mui/icons-material/Event';
 
 interface EventProps {
   id: number;
@@ -38,18 +40,32 @@ interface EventProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface AppProps {
   handleEditClick(): void;
-  allEvents: [];
+  allEvents: object[];
   updateCounter: number;
   inEditMode: boolean;
   getAllEvents(): void;
   rsvps: [];
   rsvpCount: number;
   updateState(): void;
+  handleCalendarChange(): void;
+  handleClose(): void;
+  setInEditMode(): void;
+  getOrders(): void;
+  // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
+  handleEditClick(id: number): void;
+  order: object[];
+  handleTrackCalendar(): void;
+  trackCalendar: boolean;
 }
 
 const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId } = user;
+  const [trackCalendar, setTrackCalendar] = useState(false);
+
+  const handleTrackCalendar = () => {
+    setTrackCalendar(!trackCalendar);
+  };
 
   const [updateCounter, setUpdateCounter] = useState(0);
   // cerate state var events array (set to result of get req)
@@ -58,6 +74,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
   //existing event (in update mode) or creating a new event
   const [inEditMode, setInEditMode] = useState(false);
 
+  const [orders, setOrders] = useState<object[]>([]);
   const [event, setEvent] = useState<EventProps>({
     id: 0,
     eventName: '',
@@ -71,6 +88,19 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
   //state that controls the form
   const [open, setOpen] = useState(false);
 
+  const [openCalendar, setOpenCalendar] = useState(false);
+  const handleCalendarChange = () => {
+    //tracks if calendar is open or not
+    setOpenCalendar(!openCalendar);
+    //if calendar is open
+    if (openCalendar) {
+      //set calendar tracker to true
+      setTrackCalendar(true);
+    } else {
+      //set calendar tracker to false
+      setTrackCalendar(false);
+    }
+  };
   // handle create form
   const handleCreateForm = () => {
     setOpen(true);
@@ -125,7 +155,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
           // seasonTitle: seasonTitle,
         },
       })
-      .then(({ data }) => {
+      .then(() => {
         //console.log('LINE 107 saved!', data);
         setUpdateCounter((updateCounter) => updateCounter + 1);
         toast.success('Event Updated', {
@@ -153,7 +183,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     transform: 'translate(-50%, -50%)',
     border: 1,
     padding: '20px',
-    borderRadius: '2.5rem',
+    borderRadius: '2rem',
     boxShadow: 3,
     minWidth: '500px',
     overflow: 'auto',
@@ -244,41 +274,91 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         console.error(err);
       });
   };
-  ////////////////Radio Button handle function///////////////////////////
 
   // handle click + edit form functionality for edit button in Product Card component
-  const handleEditClick = (id: number | undefined) => {
+  const handleEditClick = (id: any) => {
     //handle searches for a clicked event in order to update
-    const clickedEvent: any = allEvents.find(
-      // find mutates original array values
-      (event: any) => event.id === id,
-    );
-    clickedEvent.thumbnail = clickedEvent.thumbnail
-      ? clickedEvent.thumbnail
-      : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
-    console.log('CLIECKED EVENT', clickedEvent);
-    setEvent((state: any) => {
-      return {
-        ...state,
-        id: id,
-        eventName: clickedEvent.eventName,
-        description: clickedEvent.description,
-        thumbnail: clickedEvent.thumbnail,
-        eventDate: clickedEvent.eventDate,
-        eventType: clickedEvent.eventType,
-        location: clickedEvent.location,
-        city: clickedEvent.city,
-      };
-    });
-    setInEditMode(true);
-    setOpen(true);
+    if (typeof id === 'number') {
+      const clickedEvent: any = allEvents.find(
+        // find mutates original array values
+        (event: any) => event.id === id,
+      );
+      if (!clickedEvent) {
+        setOpen(true);
+        return;
+      }
+      clickedEvent.thumbnail = clickedEvent.thumbnail
+        ? clickedEvent.thumbnail
+        : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+
+      setEvent((state: any) => {
+        return {
+          ...state,
+          id: id,
+          eventName: clickedEvent.eventName,
+          description: clickedEvent.description,
+          thumbnail: clickedEvent.thumbnail,
+          eventDate: clickedEvent.eventDate,
+          eventType: clickedEvent.eventType,
+          location: clickedEvent.location,
+          city: clickedEvent.city,
+        };
+      });
+      setInEditMode(true);
+      setOpen(true);
+    } else {
+      const clickedEvent: any = allEvents.find(
+        // find mutates original array values
+        (event: any) => event.eventDate.slice(0, 10) === id,
+      );
+      if (!clickedEvent) {
+        setOpen(true);
+        return;
+      }
+      clickedEvent.thumbnail = clickedEvent.thumbnail
+        ? clickedEvent.thumbnail
+        : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+      console.log('CLIECKED EVENT', clickedEvent);
+      setEvent((state: any) => {
+        return {
+          ...state,
+          id: id,
+          eventName: clickedEvent.eventName,
+          description: clickedEvent.description,
+          thumbnail: clickedEvent.thumbnail,
+          eventDate: clickedEvent.eventDate,
+          eventType: clickedEvent.eventType,
+          location: clickedEvent.location,
+          city: clickedEvent.city,
+        };
+      });
+      setInEditMode(true);
+      setOpen(true);
+    }
+  };
+  const handleInEditMode = () => {
+    setInEditMode(!inEditMode);
+  };
+
+  //getOrders
+  const getOrders = () => {
+    axios
+      .get(`/api/order/deliveries`)
+      .then(({ data }) => {
+        console.log('LINE 295', data);
+        setOrders(data);
+      })
+      .catch((err) => {
+        console.log('Error', err);
+      });
   };
 
   useEffect((): void => {
+    getOrders();
     getAllEvents();
     getUserRsvps();
   }, [updateCounter]);
-  console.log('LINE 270', event.location, 'AND ', event);
+
   return (
     <>
       <CssBaseline />
@@ -309,7 +389,6 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
             align='center'
             color='text.primary'
             gutterBottom
-            fontWeight={600}
           >
             Farm Events
           </Typography>
@@ -335,16 +414,29 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         updateCoords={updateCoords}
         mode={mode}
       />
-
+      <GoogleCalendar
+        event={allEvents}
+        open={openCalendar}
+        handleCalendarChange={handleCalendarChange}
+        inEditMode={inEditMode}
+        handleClose={handleClose}
+        handleInEditMode={handleInEditMode}
+        handleEditClick={handleEditClick}
+        getOrders={getOrders}
+        order={orders}
+        trackCalendar={trackCalendar}
+        handleTrackCalendar={handleTrackCalendar}
+      />
       <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
         <Modal
+          disableScrollLock={true}
           aria-labelledby='transition-modal-title'
           aria-describedby='transition-modal-description'
           sx={{
             color: purple,
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            borderRadius: '2.5rem',
+            borderRadius: '1rem',
             boxShadow: 24,
           }}
           open={open}
@@ -494,6 +586,21 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
                     >
                       Add Event Image
                     </Button>
+                    {trackCalendar && (
+                      <Button
+                        variant='text'
+                        size='large'
+                        onClick={() => {
+                          //closes the event modal
+                          handleClose();
+                          //open the calendar open
+                          setOpenCalendar(true);
+                        }}
+                        sx={{ color: 'green' }}
+                      >
+                        <EventIcon style={{ color: 'text.primary' }} />
+                      </Button>
+                    )}
                     <Button
                       variant='text'
                       size='large'
@@ -509,23 +616,42 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
             }
           </Fade>
         </Modal>
-        {roleId > 3 && (
-          <Fab
-            onClick={handleCreateForm}
-            size='large'
-            // color='secondary'
-            aria-label='add'
-            style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
-            sx={{
-              position: 'fixed',
-              bottom: (theme) => theme.spacing(8),
-              right: (theme) => theme.spacing(8),
-            }}
-            className='texture2'
-          >
-            <AddIcon style={{ color: 'text.primary' }} />
-          </Fab>
-        )}
+        <Stack direction='row' justifyContent='space-between'>
+          {roleId > 3 && (
+            <Fab
+              onClick={handleCreateForm}
+              size='large'
+              // color='secondary'
+              aria-label='add'
+              style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
+              sx={{
+                position: 'fixed',
+                bottom: (theme) => theme.spacing(8),
+                right: (theme) => theme.spacing(8),
+              }}
+              className='texture2'
+            >
+              <AddIcon style={{ color: 'text.primary' }} />
+            </Fab>
+          )}
+          {roleId > 3 && (
+            <Fab
+              onClick={handleCalendarChange}
+              size='large'
+              // color='secondary'
+              aria-label='add'
+              style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
+              sx={{
+                position: 'fixed',
+                bottom: (theme) => theme.spacing(8),
+                left: (theme) => theme.spacing(8),
+              }}
+              className='texture2'
+            >
+              <EventIcon style={{ color: 'text.primary' }} />
+            </Fab>
+          )}
+        </Stack>
       </Box>
     </>
   );

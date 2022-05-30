@@ -24,6 +24,12 @@ const OrderContents = db.define('orderContents', {
     allowNull: false,
     references: { model: Orders, key: 'id' },
   },
+  // delivery_date: {
+  //   type: DataTypes.STRING,
+  //   unique: false,
+  //   allowNull: false,
+  //   references: { model: Orders, key: 'delivery_date' },
+  // },
 });
 
 export default OrderContents;

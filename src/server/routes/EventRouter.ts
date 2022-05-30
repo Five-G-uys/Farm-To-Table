@@ -1,6 +1,8 @@
 // Import Dependencies
 import axios from 'axios';
+import dayjs from 'dayjs';
 import { Request, Response, Router } from 'express';
+// import { nextTick } from 'process';
 
 // Import Models
 import { Events } from '../db/models';
@@ -21,6 +23,8 @@ eventRouter.post('/api/events', async (req: Request, res: Response) => {
     // monthTitle,
     // seasonTitle,
   } = req.body.event;
+  const date: string = eventDate.slice(0, 10);
+  const time = `time: ${eventDate.slice(11, eventDate.length)}`;
 
   const address: any = `${location} ${city}`;
   try {
@@ -56,7 +60,14 @@ eventRouter.post('/api/events', async (req: Request, res: Response) => {
 eventRouter.get('/api/events', (req: Request, res: Response) => {
   Events.findAll()
     .then((response: []) => {
-      //console.log(response, "This is line 186 events gotten");
+      //loop over response and split the values by dash
+
+      const respo: any = response.sort((a: any, b: any) => {
+        const ab: any = dayjs(a.dataValues.eventDate);
+        const ba: any = dayjs(b.dataValues.eventDate);
+        return ab.format('LL') - ba.format('LL');
+      });
+      console.log('This is line 186 events gotten', respo);
       res.status(200).send(response);
     })
     .catch((err: object) => {
@@ -101,5 +112,52 @@ eventRouter.delete('/api/events/:id', (req: Request, res: Response) => {
     });
 });
 
+//////////////////////////EVENT MAP BOX GET REQUEST ////////////////////////////
+eventRouter.get(
+  '/api/event/:lat/:lon/:eventLon/:eventLat',
+  async (req: Request, res: Response, next) => {
+    console.log('LINE 111', req.params, '||', req.query);
+
+    const { lon, lat, eventLat, eventLon } = req.params;
+
+    try {
+      console.log('LINE 113', lon, lat, 'AND EVENT', eventLat, eventLon);
+      const query = await axios.get(
+        // HARDCODING INITIAL LAT AND LON VALUES SO GPS FUNCTIONALITY WON'T BE NECESSARY ON DEPLOYED INSTANCE TO RENDER MAP
+        `https://api.mapbox.com/optimized-trips/v1/mapbox/driving-traffic/${lon},${lat};${eventLon},${eventLat}?steps=true&geometries=geojson&roundtrip=true&access_token=${process.env.MAPBOX_API_KEY}`,
+      );
+      const getCircularReplacer = () => {
+        const seen = new WeakSet();
+        return (key: unknown, value: object | null) => {
+          if (typeof value === 'object' && value !== null) {
+            if (seen.has(value)) {
+              return;
+            }
+            seen.add(value);
+          }
+          return value;
+        };
+      };
+
+      const obj = query;
+
+      // ✅ Works
+      const result = JSON.stringify(obj, getCircularReplacer());
+      //console.log(result); // 👉️ {"address":{"country":"Chile"},"numbers":[1,2,3],"age":30}
+
+      //console.log('LINE 142', query.data);
+      return res.status(200).send(query.data);
+    } catch (err: any) {
+      console.log('LINE 125', err.message);
+      res.sendStatus(400);
+      // return { message: 'ERROR FETCHING OPTIMIZED ROUTE FROM MAPBOX', err };
+      next(err);
+    }
+  },
+);
+
 // Export Router
 export default eventRouter;
+function LL(LL: any) {
+  throw new Error('Function not implemented.');
+}
