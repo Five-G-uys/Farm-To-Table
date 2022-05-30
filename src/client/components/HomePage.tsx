@@ -56,6 +56,12 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             >
               Knock, Knock Tomatoes
             </Typography>
+            <CardMedia
+              component='img'
+              height='194'
+              image='src/media/homePageImage.jpg'
+              alt='Produce'
+            />
             <Typography
               variant='h5'
               align='center'

@@ -187,7 +187,7 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
         'hello'
       </section> */}
       <section>
-        {routeData.waypoints && centerCoords.latitude ? (
+        {routeData.waypoints && centerCoords.latitude && state.driverLat && state.driverLon ? (
           <MapRefactored
             mode={mode}
             routeCoordinates={routeCoordinates}

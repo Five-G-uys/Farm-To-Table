@@ -33,6 +33,7 @@ const AboutUsPage = () => {
             If you're looking for info on our farm team, our organic practices,
             or our customer policies you've come to the right place!
           </Typography>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/kEq6enJEv_I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </Container>
       </Box>
     </div>
