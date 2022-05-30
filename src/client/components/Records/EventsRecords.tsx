@@ -110,7 +110,7 @@ const EventsRecords = () => {
           icon: 'success',
         });
         try {
-          const { data } = await axios.patch(`/api/events/${eventId}`);
+          const { data } = await axios.delete(`/api/events/${eventId}`);
           setDeleteCount((deleteCount) => deleteCount + 1)
           return data;
         } catch (err) {
