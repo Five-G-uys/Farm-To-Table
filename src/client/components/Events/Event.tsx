@@ -81,28 +81,36 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
 
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
-    swal({}).then((isGoing) => {
-      if (isGoing) {
-        swal('We look forward to seeing you there!', {
-          icon: 'success',
-        });
-        axios
-          .post('/api/rsvps/', {
-            userId: id,
-            eventId: event.id,
-          })
-          .then(() => {
-            setIsGoing(true);
-          })
-          .then(() => {
-            totalEventRsvps();
-            getAllEvents();
-          })
-          .catch((err) => {
-            console.error('68 REQUEST FAILED', err);
+    if (isGoing) {
+      return swal({
+        title: 'You are Already Going',
+        icon: 'success',
+        dangerMode: false,
+      });
+    } else {
+      axios
+        .post('/api/rsvps/', {
+          userId: id,
+          eventId: event.id,
+        })
+        .then(() => {
+          setIsGoing(true);
+          swal({
+            title: 'We look forward to seeing you there!',
+            buttons: true,
           });
-      }
-    });
+        })
+        .then(() => {
+          totalEventRsvps();
+          getAllEvents();
+        })
+        .catch((err) => {
+          console.error('68 REQUEST FAILED', err);
+        });
+      //     }
+      //   },
+      // );
+    }
   };
 
   /////////////??????????GETS THE RSVP COUNT FOR A USER?????////////////////
@@ -288,11 +296,6 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
             {/* <ExpandMore sx={{ color: 'green' }} expand={expanded}> */}
             {roleId < 4 && (
               <Button
-                sx={{
-                  '&:hover:before': { content: `"Going"` },
-                  position: 'top',
-                  width: 80, //necessary for replacing text
-                }}
                 onClick={handRSVPosts}
                 color='success'
                 size='medium'
