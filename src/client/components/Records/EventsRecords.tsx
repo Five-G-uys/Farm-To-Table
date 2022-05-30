@@ -1,5 +1,7 @@
 // Import Dependencies
 import React, { useState, ChangeEvent, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,17 +10,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Input from "@material-ui/core/Input";
+import Input from '@material-ui/core/Input';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
+import swal from 'sweetalert';
 import axios from 'axios';
 
 interface Column {
   id: 'id' | 'eventName' | 'description' | 'eventDate' | 'location' | 'eventType' 
   label: string;
   minWidth?: number;
-  align?: 'right';
   format?: (value: number) => string;
 }
 
@@ -29,25 +31,21 @@ const columns: readonly Column[] = [
     id: 'description',
     label: 'Description',
     minWidth: 170,
-    align: 'right'
   },
   {
     id: 'eventDate',
     label: 'Date',
     minWidth: 170,
-    align: 'right',
   },
   {
     id: 'location',
     label: 'Location',
     minWidth: 170,
-    align: 'right',
   },
   {
     id: 'eventType',
     label: 'Event Type',
     minWidth: 170,
-    align: 'right',
   },
   
 ];
@@ -56,6 +54,7 @@ const EventsRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
+  const [rowEditing, setRowEditing] = useState(null);
   const [editing, setEditing] = useState(false);
   const [rowColumnId, setRowColumnId] = useState({});
   const [deleteCount, setDeleteCount] = useState(0);
@@ -74,6 +73,15 @@ const EventsRecords = () => {
   const patchEvents = async (eventId: string, updatedEvent: any) => {
     try {
       const { data } = await axios.patch(`/api/events/${eventId}`, updatedEvent);
+      toast.success('Vendor Updated', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
       return data
     } catch (err) {
       console.error(err)
@@ -84,15 +92,31 @@ const EventsRecords = () => {
   }
 
   const deleteEvents = async (eventId: string) => {
-    try {
-      const { data } = await axios.delete(`/api/events/${eventId}`);
-      return data
-    } catch (err) {
-      console.error(err)
-      return {
-        error: err
+    swal({
+      title: 'Are you sure?',
+      text: 'Vendor will be deleted, along with all associated products!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then( async (willDelete) => {
+      if (willDelete) {
+        swal('Event has been deleted', {
+          icon: 'success',
+        });
+        try {
+          const { data } = await axios.patch(`/api/events/${eventId}`);
+          setDeleteCount((deleteCount) => deleteCount + 1)
+          return data;
+        } catch (err) {
+          console.error(err);
+          return {
+            error: err,
+          };
+        }
+      } else {
+        swal('That was a close one!');
       }
-    }
+    });
   }
 
   useEffect(() => {
@@ -131,17 +155,29 @@ const EventsRecords = () => {
     patchEvents(row.id, row);
   }
 
-  const onEdit = () => {
+  const onEdit = (row: object) => {
     setEditing(!editing)
+    setRowEditing(row.id)
   }
 
   const onDelete = (row: object) => {
-    setDeleteCount(deleteCount + 1)
     deleteEvents(row.id)
+    setDeleteCount(deleteCount + 1)
   }
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: '90%', overflow: 'hidden' }}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
@@ -166,7 +202,7 @@ const EventsRecords = () => {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {editing ? (
+                        {(editing && row.id === rowEditing) ? (
                           <Input
                             // type={String}
                             defaultValue={value}
@@ -180,18 +216,18 @@ const EventsRecords = () => {
                       </TableCell>
                     );
                   })}
-                  {editing ? (
+                  {(editing && row.id === rowEditing) ? (
                     <DoneIcon onClick={() => onDone(row)} />
-                  ) :
+                  ) : (
                     <>
                       <TableCell>
-                        <EditIcon onClick={() => onEdit()} />
+                        <EditIcon onClick={() => onEdit(row)} />
                       </TableCell>
                       <TableCell>
                         <DeleteIcon onClick={() => onDelete(row)} />
                       </TableCell>
                     </>
-                  }
+                  )}
 
                 </TableRow>
               ))}

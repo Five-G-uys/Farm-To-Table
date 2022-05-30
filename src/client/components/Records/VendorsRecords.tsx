@@ -21,7 +21,6 @@ interface Column {
   id: 'id' | 'name' | 'contact_information';
   label: string;
   minWidth?: number;
-  align?: 'right';
   format?: (value: number) => string;
 }
 
@@ -43,7 +42,7 @@ const VendorsRecords = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
-  const [rowEditing, setRowEditing] = useState(null)
+  const [rowEditing, setRowEditing] = useState(null);
   const [editing, setEditing] = useState(false);
   const [rowColumnId, setRowColumnId] = useState({});
   const [deleteCount, setDeleteCount] = useState(0);
@@ -110,8 +109,6 @@ const VendorsRecords = () => {
         swal('That was a close one!');
       }
     });
-
-    
   };
 
   useEffect(() => {
@@ -161,7 +158,7 @@ const VendorsRecords = () => {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: '90%', overflow: 'hidden' }}>
       <ToastContainer
         position="top-right"
         autoClose={5000}

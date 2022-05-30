@@ -1,5 +1,7 @@
 // Import Dependencies
 import React, { useState, ChangeEvent, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,17 +10,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Input from "@material-ui/core/Input";
+import Input from '@material-ui/core/Input';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
+import swal from 'sweetalert';
 import axios from 'axios';
 
 interface Column {
   id: 'id' | 'subscriptionEntryId' | 'delivery_date';
   label: string;
   minWidth?: number;
-  align?: 'right';
   format?: (value: number) => string;
 }
 
@@ -28,13 +30,11 @@ const columns: readonly Column[] = [
     id: 'subscriptionEntryId',
     label: 'Subscription ID',
     minWidth: 170,
-    align: 'right',
   },
   {
     id: 'delivery_date',
     label: 'Delivery Date',
     minWidth: 170,
-    align: 'right',
   },
 ];
 
@@ -49,7 +49,7 @@ const OrdersRecords = () => {
 
   const getOrders = () => {
     axios
-      .get('/api/orders')
+      .get('/api/order')
       .then((data) => {
         // console.log(data.data, "orders data!!!!!!!!!!!!!!!!!!!!!!!!!!");
         setRows(data.data);
@@ -61,7 +61,16 @@ const OrdersRecords = () => {
 
   const patchOrders = async (orderId: string, updatedOrder: any) => {
     try {
-      const { data } = await axios.patch(`/api/orders/${orderId}`, updatedOrder);
+      const { data } = await axios.patch(`/api/order/${orderId}`, updatedOrder);
+      toast.success('Vendor Updated', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
       return data
     } catch (err) {
       console.error(err)
@@ -72,15 +81,31 @@ const OrdersRecords = () => {
   }
 
   const deleteOrders = async (orderId: string) => {
-    try {
-      const {data} = await axios.delete(`/api/orders/${orderId}`);
-      return data;
-    } catch (err) {
-      console.error(err)
-      return {
-        error: err
+    swal({
+      title: 'Are you sure?',
+      text: 'Vendor will be deleted, along with all associated products!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then( async (willDelete) => {
+      if (willDelete) {
+        swal('Event has been deleted', {
+          icon: 'success',
+        });
+        try {
+          const {data} = await axios.delete(`/api/order/${orderId}`);
+          setDeleteCount((deleteCount) => deleteCount + 1)
+          return data;
+        } catch (err) {
+          console.error(err);
+          return {
+            error: err,
+          };
+        }
+      } else {
+        swal('That was a close one!');
       }
-    }
+    });
   }
 
   useEffect(() => {
@@ -119,19 +144,29 @@ const OrdersRecords = () => {
     patchOrders(row.id, row);
   }
 
-  const onEdit = (row: number) => {
-    console.log(row);
+  const onEdit = (row: object) => {
     setEditing(!editing)
     setRowEditing(row.id)
   }
 
   const onDelete = (row: object) => {
-    setDeleteCount(deleteCount + 1)
     deleteOrders(row.id)
+    setDeleteCount(deleteCount + 1)
   }
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: '90%', overflow: 'hidden' }}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
