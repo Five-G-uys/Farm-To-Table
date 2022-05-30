@@ -24,95 +24,95 @@ syncModels(true)
     // //     //   },
     // //     // });
 
+    // // // Events Seed Data
+    // await Events.findOrCreate({
+    //   where: { id: 1 },
+    //   defaults: {
+    //     id: 1,
+    //     eventName: 'Saturday Farmers market',
+    //     description:
+    //       "Local farmer's market fresh produce harvested under twilight showers and earth's dance",
+    //     thumbnail:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
+    //     eventDate: '05/ 13/ 2022',
+    //     eventType: 'Farmers market',
+    //     location: '9032 Saint John St',
+    //     city: 'New Orleans',
+    //     // monthTitle: "Events for April",
+    //     // seasonTitle: "Spring Seasson Events",
+    //   },
+    // });
     // // Events Seed Data
-    await Events.findOrCreate({
-      where: { id: 1 },
-      defaults: {
-        id: 1,
-        eventName: 'Saturday Farmers market',
-        description:
-          "Local farmer's market fresh produce harvested under twilight showers and earth's dance",
-        thumbnail:
-          'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
-        eventDate: '05/ 13/ 2022',
-        eventType: 'Farmers market',
-        location: '9032 Saint John St',
-        city: 'New Orleans',
-        // monthTitle: "Events for April",
-        // seasonTitle: "Spring Seasson Events",
-      },
-    });
-    // Events Seed Data
-    await Events.findOrCreate({
-      where: { id: 2 },
-      defaults: {
-        id: 2,
-        eventName: 'First harvest of the season',
-        description:
-          'Our first event of the season. Come and get your favorite produce for little money. Bring a smile to a member of the community-- Buy an extra bag to share with share with someone.',
-        thumbnail:
-          'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
-        eventDate: '05/ 20/ 2022',
-        eventType: 'Community Volunteering',
-        location: '2437 Webster Park St',
-        city: 'El paso',
-        // monthTitle: "Events for April",
-        // seasonTitle: "Spring Seasson Events",
-      },
-    });
+    // await Events.findOrCreate({
+    //   where: { id: 2 },
+    //   defaults: {
+    //     id: 2,
+    //     eventName: 'First harvest of the season',
+    //     description:
+    //       'Our first event of the season. Come and get your favorite produce for little money. Bring a smile to a member of the community-- Buy an extra bag to share with share with someone.',
+    //     thumbnail:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
+    //     eventDate: '05/ 20/ 2022',
+    //     eventType: 'Community Volunteering',
+    //     location: '2437 Webster Park St',
+    //     city: 'El paso',
+    //     // monthTitle: "Events for April",
+    //     // seasonTitle: "Spring Seasson Events",
+    //   },
+    // });
 
-    // Events Seed Data
-    await Events.findOrCreate({
-      where: { id: 3 },
-      defaults: {
-        id: 3,
-        eventName: 'Compost',
-        description:
-          'Promote the usage of fresh food scrapes for compost. Share your compost with the farm',
-        thumbnail:
-          'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
-        eventDate: '05/ 27/ 2022',
-        eventType: 'Community Volunteering',
-        location: '2437 Berry Hills St',
-        city: 'Mendaville',
-        // monthTitle: "Events for April",
-        // seasonTitle: "Fall Seasson Events",
-      },
-    });
-    // Events Seed Data
-    await Events.findOrCreate({
-      where: { id: 4 },
-      defaults: {
-        id: 4,
-        eventName: 'Cook out',
-        description: 'Come join us for a meal and music and other activities',
-        thumbnail:
-          'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
-        eventDate: '08/ 08/ 2022',
-        eventType: 'Customers Celebration',
-        location: '2437 Berry Hills St',
-        city: 'New Orleans',
-        // monthTitle: "Events for April",
-        // seasonTitle: "Winter Seasson Events",
-      },
-    });
-    // Events Seed Data
-    await Events.findOrCreate({
-      where: { id: 5 },
-      defaults: {
-        id: 5,
-        eventName: 'Last harvest of the season',
-        description: 'Come join us for a meal and music and other activities',
-        thumbnail:
-          'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
-        eventDate: '07/ 27/ 2022',
-        eventType: 'Customers Celebration',
-        location: '2437 Berry Hills St',
-        city: 'Metarie',
-        // monthTitle: "Events for April",
-        // seasonTitle: "Spring Seasson Events",
-      },
-    });
+    // // Events Seed Data
+    // await Events.findOrCreate({
+    //   where: { id: 3 },
+    //   defaults: {
+    //     id: 3,
+    //     eventName: 'Compost',
+    //     description:
+    //       'Promote the usage of fresh food scrapes for compost. Share your compost with the farm',
+    //     thumbnail:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
+    //     eventDate: '05/ 27/ 2022',
+    //     eventType: 'Community Volunteering',
+    //     location: '2437 Berry Hills St',
+    //     city: 'Mendaville',
+    //     // monthTitle: "Events for April",
+    //     // seasonTitle: "Fall Seasson Events",
+    //   },
+    // });
+    // // Events Seed Data
+    // await Events.findOrCreate({
+    //   where: { id: 4 },
+    //   defaults: {
+    //     id: 4,
+    //     eventName: 'Cook out',
+    //     description: 'Come join us for a meal and music and other activities',
+    //     thumbnail:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
+    //     eventDate: '08/ 08/ 2022',
+    //     eventType: 'Customers Celebration',
+    //     location: '2437 Berry Hills St',
+    //     city: 'New Orleans',
+    //     // monthTitle: "Events for April",
+    //     // seasonTitle: "Winter Seasson Events",
+    //   },
+    // });
+    // // Events Seed Data
+    // await Events.findOrCreate({
+    //   where: { id: 5 },
+    //   defaults: {
+    //     id: 5,
+    //     eventName: 'Last harvest of the season',
+    //     description: 'Come join us for a meal and music and other activities',
+    //     thumbnail:
+    //       'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651501422/sjeumpgncr0hmsqtr8co.jpg',
+    //     eventDate: '07/ 27/ 2022',
+    //     eventType: 'Customers Celebration',
+    //     location: '2437 Berry Hills St',
+    //     city: 'Metarie',
+    //     // monthTitle: "Events for April",
+    //     // seasonTitle: "Spring Seasson Events",
+    //   },
+    // });
     // // Events Seed Data
     // await Events.findOrCreate({
     //   where: { id: 6 },
