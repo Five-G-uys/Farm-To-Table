@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ESNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./build/server",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "allowJs": true
+  },
+  "compileOnSave": true,
+  "exclude": ["./src/client"],
+  "include": ["./src/server"]
+}
