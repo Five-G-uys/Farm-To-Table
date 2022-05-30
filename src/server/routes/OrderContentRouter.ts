@@ -1,6 +1,7 @@
 // Import Dependencies
 import { Router } from 'express';
 import { Request, Response } from 'express';
+import { Op, or } from 'sequelize';
 
 // Import Models
 import { Orders, OrderContents } from '../db/models';
@@ -49,7 +50,7 @@ orderContentRouter.post(
       res.json({ message: 'ORDER CONTENTS ADDED' });
     } catch (err: any) {
       // err ==> {status: 404, message: 'No orders on this date'}
-      console.log('LINE 55', err.message);
+      console.log('LINE 55', err.message, err);
       next(err);
       // res.json(err);
     }
@@ -107,10 +108,47 @@ orderContentRouter.patch(
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE ONE OrderContents ROUTE
 orderContentRouter.delete(
-  '/api/order-content/:orderContentId',
-  (req: Request, res: Response) => {
-    // console.log('LINE 116 || ORDER CONTENT ROUTER || DELETE', req.params);
-    OrderContents.destroy({ where: { id: req.params.orderContentId } })
+  '/api/order-content/:orderContentId/:productId/:orderId/:delivery_date',
+  async (req: Request, res: Response) => {
+    console.log('LINE 112 || ORDER CONTENT ROUTER || DELETE', req.params);
+    const { orderContentId, orderId, productId, delivery_date }: any =
+      req.params;
+    const orders = await Orders.findAll({
+      where: { delivery_date },
+      raw: true,
+      nest: true,
+    });
+    // .map((order: any) => order.id);
+    console.log(
+      'LINE 120 || CONTENT ROUTER',
+      orders.map((order: any) => ({ orderId: order.id })),
+    );
+    const orderIds: any = orders.map((order: any) => ({ orderId: order.id }));
+
+    // try {
+    //   // console.log('LINE 117');
+    //   orders = await Orders.findAll({
+    //     where: { delivery_date },
+    //     attributes: ['id'],
+    //   });
+    //   console.log('LINE 121 || ORDER CONTENT ROUTER || orders', orders);
+    //   return orders;
+    // } catch (err) {
+    //   console.error('LINE 129 || ORDER CONTENT ROUTER || ERROR', err);
+    // }
+
+    // NEED TO SEND A DELETE REQUEST THAT TARGETS ALL INSTANCES OF AN ORDER ON A CERTAIN DATE
+    // NEED AN ARRAY OF ORDER CONTENT ID OBJECTS? OR ORDER OBJECTS
+    // NEED TO SEND PRODUCT AND ORDER ID?
+    // MIGHT BE EASIER TO ADD A DELIVERY_DATE FIELD TO THE ORDERCONTENTS TABLE DO DELETE BASED ON PRODUCTID AND DELIVERY_DATE
+    // FINDALL ORDERCONTENTS AND DESTROY WHERE DELIVERY_DATE AND PRODUCT ID ARE THE SAME
+    OrderContents.destroy({
+      where: {
+        // id: Number(orderContentId),
+        [Op.or]: orderIds,
+        productId: Number(productId),
+      },
+    })
       .then((data: any) => {
         // console.log('LINE 119 || OrderContent DELETION SUCCESSFUL: ', data);
         res.sendStatus(200);

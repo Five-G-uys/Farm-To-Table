@@ -1,18 +1,19 @@
 import React, { useContext } from 'react';
 import Event from './Event';
 import { UserContext } from '../App';
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
-//import GoogleCalendar from './GoogleCalendar';
+import GoogleCalendar from './GoogleCalendar';
 
 interface AppProps {
   handleEditClick(id: number): void;
-  allEvents: [];
+  allEvents: object[];
   getAllEvents(): void;
   lat: string;
   lon: string;
   updateCoords(): void;
   mode: string;
+  // updateCounter: number;
 }
 
 //import RSVPS from "./RSVPS";
@@ -40,9 +41,6 @@ const EventCard = ({
   const classes = useStyles();
   return (
     <>
-      {/* <Box>
-        <GoogleCalendar />
-      </Box> */}
       <Grid
         container
         spacing={4}
@@ -52,15 +50,18 @@ const EventCard = ({
       >
         {Array.isArray(allEvents) &&
           allEvents.map(
-            (event: {
-              id: number;
-              eventName: string;
-              description: string;
-              thumbnail: string;
-              location: string;
-              eventType: string;
-              eventDate: string;
-            }) => {
+            (
+              event: any,
+              //   {
+              //   id: number;
+              //   eventName: string;
+              //   description: string;
+              //   thumbnail: string;
+              //   location: string;
+              //   eventType: string;
+              //   eventDate: string;
+              // }
+            ) => {
               return (
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={event.id}>
                   <Event

@@ -137,7 +137,7 @@ subscriptionEntriesRouter.post(
           // });
         } catch (err: any) {
           console.error(
-            'LINE 78 || SUBSCRIPTION ENTRY ROUTER || ERROR',
+            'LINE 140 || SUBSCRIPTION ENTRY ROUTER || ERROR',
             err,
             err.message,
           );

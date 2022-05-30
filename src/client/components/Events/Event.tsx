@@ -26,6 +26,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { Link } from 'react-router-dom';
+import EventMapPage from './EventMapPage';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -61,19 +63,11 @@ interface AppProps {
   mode: string;
 }
 
-const Event = ({
-  event,
-  handleEditClick,
-  getAllEvents,
-  lat,
-  lon,
-  updateCoords,
-  mode,
-}: AppProps) => {
+const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  // console.log('LINE 74', event);
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { id } = user;
   const [expanded, setExpanded] = useState(false);
@@ -87,22 +81,38 @@ const Event = ({
 
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
-    axios
-      .post('/api/rsvps/', {
-        userId: id,
-        eventId: event.id,
-      })
-      .then(() => {
-        setIsGoing(true);
-      })
-      .then(() => {
-        totalEventRsvps();
-        getAllEvents();
-      })
-      .catch((err) => {
-        console.error('68 REQUEST FAILED', err);
+    if (isGoing) {
+      return swal({
+        title: 'You are Already Going',
+        icon: 'success',
+        dangerMode: false,
       });
+    } else {
+      axios
+        .post('/api/rsvps/', {
+          userId: id,
+          eventId: event.id,
+        })
+        .then(() => {
+          setIsGoing(true);
+          swal({
+            title: 'We look forward to seeing you there!',
+            buttons: true,
+          });
+        })
+        .then(() => {
+          totalEventRsvps();
+          getAllEvents();
+        })
+        .catch((err) => {
+          console.error('68 REQUEST FAILED', err);
+        });
+      //     }
+      //   },
+      // );
+    }
   };
+
   /////////////??????????GETS THE RSVP COUNT FOR A USER?????////////////////
   const getUserRsvpCount = () => {
     axios
@@ -191,31 +201,10 @@ const Event = ({
     });
   };
 
-  //////////////////confirmation box//////////////////////
-  // class ConfirmBox {
-  //   show() {
-  //    var c = confirm("Are you sure you want to do that?");
-  //    var status = document.getElementById("content");
-  //    if (c == true) {
-  //     status.innerHTML = "You confirmed, thanks";
-  //    } else {
-  //     status.innerHTML = "You cancelled the action";
-  //    }
-  //   }
-  //  }
-  //  window.onload = () => {
-  //   var bttn = < HTMLButtonElement > document.getElementById("Button1");
-  //   bttn.onclick = function() {
-  //    const obj = new ConfirmBox();
-  //    obj.show();
-  //   };
-  //   };
-
   ////////////////////////////////////////////
   useEffect(() => {
     getUserRsvpCount();
     totalEventRsvps();
-    // GoogleCalendar();
   }, [updateCounter]);
 
   return (
@@ -251,7 +240,10 @@ const Event = ({
         )}
         <CardContent>
           <Typography variant='body2' color='text.secondary' fontSize='20px'>
-            {`Date of Event: ${event.eventDate}`}
+            {`Date of Event: ${event.eventDate.slice(
+              0,
+              10,
+            )} Time ${event.eventDate.slice(11, event.eventDate.length)}`}
           </Typography>
         </CardContent>
 
@@ -261,15 +253,19 @@ const Event = ({
           </Typography>
         </CardContent>
         <CardContent>
-          {/* <Button
+          <Button
             component={Link}
-            variant='contained'
-            color='primary'
-            to={`/events-page${pages.path}`}
+            // variant='contained'
+            color='success'
+            to={`${pages.path}`}
+            state={{ event }}
+            size='large'
           >
-            {`Address: ${event.location}`}
-          </Button> */}
-          <Link to={`${pages.path}`}>{event.location}</Link>
+            <LocationOnIcon>{event.location}</LocationOnIcon>
+          </Button>
+          {/* <Link to={`${pages.path}`} state={{ event }}>
+            <LocationOnIcon>{event.location}</LocationOnIcon>
+          </Link> */}
         </CardContent>
         <CardContent>
           <Typography paragraph fontSize='20px'>
@@ -284,28 +280,23 @@ const Event = ({
         </CardContent>
         <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
           <Stack spacing={5} direction='row' id='product_card_stack'>
-            <ExpandMore sx={{ color: 'green' }} expand={expanded}>
-              {roleId > 3 && (
-                <Button>
-                  <DeleteIcon sx={{ color: 'green' }} onClick={deleteEvent} />
-                </Button>
-              )}
-            </ExpandMore>
+            {/* <ExpandMore sx={{ color: 'green' }} expand={expanded}> */}
+            {roleId > 3 && (
+              <Button onClick={deleteEvent}>
+                <DeleteIcon sx={{ color: 'green' }} />
+              </Button>
+            )}
+            {/* </ExpandMore> */}
             {/* <ExpandMore sx={{ color: 'green' }} expand={expanded}> */}
             {roleId < 4 && (
               <Button
-                sx={{
-                  '&:hover:before': { content: `"Going"` },
-                  position: 'top',
-                  width: 80, //necessary for replacing text
-                }}
                 onClick={handRSVPosts}
                 color='success'
                 size='medium'
                 variant='outlined'
               >
                 {isGoing ? (
-                  <CheckIcon color='success' fontSize='large'></CheckIcon>
+                  <CheckIcon color='success' fontSize='large' />
                 ) : (
                   'RSVP'
                 )}

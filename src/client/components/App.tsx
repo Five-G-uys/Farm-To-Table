@@ -34,7 +34,13 @@ import Weather from './Weather';
 import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
-import { amber, blueGrey, grey, lightGreen } from '@mui/material/colors';
+import {
+  amber,
+  blueGrey,
+  grey,
+  lightGreen,
+  darkGreen,
+} from '@mui/material/colors';
 
 /*
 ▄ •▄  ▐ ▄        ▄▄· ▄ •▄     ▄ •▄  ▐ ▄        ▄▄· ▄ •▄
@@ -104,13 +110,6 @@ const App = () => {
 
   ////********************DARK MODE HERE *********************////
   const [mode, setMode] = React.useState<PaletteMode>('light');
-  //Not functional yet
-  const image = 'https://www.transparenttextures.com/patterns/asfalt-dark.png';
-  const styles = {
-    paperContainer: {
-      backgroundImage: `url(${image})`,
-    },
-  };
 
   const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
@@ -119,7 +118,7 @@ const App = () => {
         ? {
             // palette values for light mode
             primary: amber,
-            divider: amber[200],
+            // divider: 'darkgreen',
             background: {
               default: '#F6FAFF',
               //rgba(246, 250, 255, 0.9),

@@ -263,8 +263,18 @@ const Profile = () => {
               title={name}
             />
             <Stack spacing={5} direction='row' id='user_card_stack'>
-              <CardMedia image={user.picture} component='img' height='194' />
-              <CardContent>ADDRESS</CardContent>
+              <CardMedia
+                image={user.picture}
+                component='img'
+                height='200'
+                width='200'
+                sx={{
+                  width: 'auto',
+                  maxHeight: '200px',
+                  margin: 2,
+                }}
+              />
+              <CardContent></CardContent>
             </Stack>
             <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
               <Stack spacing={5} direction='row' id='user_card_stack'>
