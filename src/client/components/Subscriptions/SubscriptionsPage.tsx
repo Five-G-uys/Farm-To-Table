@@ -19,7 +19,6 @@ import { CssBaseline, Box, Container } from '@mui/material';
 const SubscriptionsPage = () => {
   const user: any = useContext(UserContext);
   const { id, roleId } = user;
-  // const navigate = useNavigate();
 
   const [updateCounter, setUpdateCounter] = useState(0);
 
