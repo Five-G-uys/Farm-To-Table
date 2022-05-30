@@ -7,6 +7,7 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { Box, Grid } from '@mui/material';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import Modal from '@mui/material/Modal';
+import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 
 interface AppProps {
@@ -19,6 +20,7 @@ interface AppProps {
   handleEditClick(id: number): void;
   getOrders(): void;
   order: [];
+  handleTrackCalendar(): void;
 }
 const style = {
   position: 'absolute',
@@ -26,7 +28,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '90vw',
-  height: '80vh',
+  height: '90vh',
   backgroundColor: '#e2f2d9',
   border: '2px solid #000',
   borderRadius: '2.5rem',
@@ -48,10 +50,11 @@ const GoogleCalendar = ({
   handleEditClick,
   getOrders,
   order,
+  handleTrackCalendar,
 }: AppProps) => {
   //run the page on load based on events
   useEffect(() => {}, [event, order]);
-  const mapped =
+  const mappedEvents =
     event &&
     event.map((event: any) => {
       return {
@@ -70,36 +73,15 @@ const GoogleCalendar = ({
       allDay: false,
     };
   });
+  
   //will handles changes on a date click
   const handleDateClick = (e: DateClickArg) => {
     // console.log('DATECLICK', typeof e);
-    // console.log('EVENT', e);
-    // if (e.jsEvent.altKey) {
-    //   event.forEach(
-    //     (event: {
-    //       id: number;
-    //       title: string;
-    //       date: string;
-    //       address: string;
-    //     }) => {
-    //       console.log('CALENDAR EVENT', mapped['event'].id);
-    //       if (event.id === mapped['event'].id) {
-    //         handleEditClick(event.id);
-    //       }
-    //     },
-    //   );
-    // }
-    return (
-      <div>
-        <Modal
-          sx={{ overflow: 'scroll' }}
-          open={open}
-          aria-labelledby='child-modal-title'
-          aria-describedby='child-modal-description'
-        ></Modal>
-      </div>
-    );
+    console.log('EVENT', e);
+    handleCalendarChange();
+    handleEditClick(e.dateStr);
   };
+
   return (
     <div>
       <Modal
@@ -124,8 +106,8 @@ const GoogleCalendar = ({
             ]}
             initialView='dayGridMonth'
             weekends={true}
-            events={[...mappedOrders, ...mapped]}
-            dateClick={handleDateClick}
+            events={[...mappedOrders, ...mappedEvents]}
+            dateClick={(e) => handleDateClick(e)}
           />
           <Button onClick={handleCalendarChange} variant='text' color='success'>
             close

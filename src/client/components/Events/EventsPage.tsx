@@ -54,11 +54,18 @@ interface AppProps {
   // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
   handleEditClick(id: number): void;
   order: object[];
+  handleTrackCalendar(): void;
+  trackCalendar: boolean;
 }
 
 const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId } = user;
+  const [trackCalendar, setTrackCalendar] = useState(false);
+
+  const handleTrackCalendar = () => {
+    setTrackCalendar(!trackCalendar);
+  };
 
   const [updateCounter, setUpdateCounter] = useState(0);
   // cerate state var events array (set to result of get req)
@@ -83,7 +90,16 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
 
   const [openCalendar, setOpenCalendar] = useState(false);
   const handleCalendarChange = () => {
+    //tracks if calendar is open or not
     setOpenCalendar(!openCalendar);
+    //if calendar is open
+    if (openCalendar) {
+      //set calendar tracker to true
+      setTrackCalendar(true);
+    } else {
+      //set calendar tracker to false
+      setTrackCalendar(false);
+    }
   };
   // handle create form
   const handleCreateForm = () => {
@@ -258,34 +274,67 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         console.error(err);
       });
   };
-  ////////////////Radio Button handle function///////////////////////////
 
   // handle click + edit form functionality for edit button in Product Card component
-  const handleEditClick = (id: number | undefined) => {
+  const handleEditClick = (id: any) => {
     //handle searches for a clicked event in order to update
-    const clickedEvent: any = allEvents.find(
-      // find mutates original array values
-      (event: any) => event.id === id,
-    );
-    clickedEvent.thumbnail = clickedEvent.thumbnail
-      ? clickedEvent.thumbnail
-      : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
-    console.log('CLIECKED EVENT', clickedEvent);
-    setEvent((state: any) => {
-      return {
-        ...state,
-        id: id,
-        eventName: clickedEvent.eventName,
-        description: clickedEvent.description,
-        thumbnail: clickedEvent.thumbnail,
-        eventDate: clickedEvent.eventDate,
-        eventType: clickedEvent.eventType,
-        location: clickedEvent.location,
-        city: clickedEvent.city,
-      };
-    });
-    setInEditMode(true);
-    setOpen(true);
+    if (typeof id === 'number') {
+      const clickedEvent: any = allEvents.find(
+        // find mutates original array values
+        (event: any) => event.id === id,
+      );
+      if (!clickedEvent) {
+        setOpen(true);
+        return;
+      }
+      clickedEvent.thumbnail = clickedEvent.thumbnail
+        ? clickedEvent.thumbnail
+        : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+
+      setEvent((state: any) => {
+        return {
+          ...state,
+          id: id,
+          eventName: clickedEvent.eventName,
+          description: clickedEvent.description,
+          thumbnail: clickedEvent.thumbnail,
+          eventDate: clickedEvent.eventDate,
+          eventType: clickedEvent.eventType,
+          location: clickedEvent.location,
+          city: clickedEvent.city,
+        };
+      });
+      setInEditMode(true);
+      setOpen(true);
+    } else {
+      const clickedEvent: any = allEvents.find(
+        // find mutates original array values
+        (event: any) => event.eventDate.slice(0, 10) === id,
+      );
+      if (!clickedEvent) {
+        setOpen(true);
+        return;
+      }
+      clickedEvent.thumbnail = clickedEvent.thumbnail
+        ? clickedEvent.thumbnail
+        : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+      console.log('CLIECKED EVENT', clickedEvent);
+      setEvent((state: any) => {
+        return {
+          ...state,
+          id: id,
+          eventName: clickedEvent.eventName,
+          description: clickedEvent.description,
+          thumbnail: clickedEvent.thumbnail,
+          eventDate: clickedEvent.eventDate,
+          eventType: clickedEvent.eventType,
+          location: clickedEvent.location,
+          city: clickedEvent.city,
+        };
+      });
+      setInEditMode(true);
+      setOpen(true);
+    }
   };
   const handleInEditMode = () => {
     setInEditMode(!inEditMode);
@@ -309,7 +358,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     getAllEvents();
     getUserRsvps();
   }, [updateCounter]);
-  // console.log('LINE 270', event.location, 'AND ', event);
+
   return (
     <>
       <CssBaseline />
@@ -376,6 +425,8 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         handleEditClick={handleEditClick}
         getOrders={getOrders}
         order={orders}
+        trackCalendar={trackCalendar}
+        handleTrackCalendar={handleTrackCalendar}
       />
       <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
@@ -535,6 +586,21 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
                     >
                       Add Event Image
                     </Button>
+                    {trackCalendar && (
+                      <Button
+                        variant='text'
+                        size='large'
+                        onClick={() => {
+                          //closes the event modal
+                          handleClose();
+                          //open the calendar open
+                          setOpenCalendar(true);
+                        }}
+                        sx={{ color: 'green' }}
+                      >
+                        <EventIcon style={{ color: 'text.primary' }} />
+                      </Button>
+                    )}
                     <Button
                       variant='text'
                       size='large'

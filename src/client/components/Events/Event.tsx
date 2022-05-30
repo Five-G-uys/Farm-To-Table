@@ -226,12 +226,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
       >
         <CardHeader fontWeight='700' title={event.eventName} />
         <CardContent>
-          <Typography
-            variant='body2'
-            color='text.secondary'
-            fontWeight='700'
-            fontSize='20px'
-          >
+          <Typography variant='body2' color='text.secondary' fontSize='20px'>
             {`Date of Event: ${event.eventDate.slice(
               0,
               10,
