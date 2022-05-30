@@ -1,19 +1,31 @@
+// React Imports
+import React from 'react';
+
+// MUI Imports
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import Divider from '@mui/material/Divider';
 import {
-  Card,
   Box,
+  Card,
   CardContent,
+  Chip,
   Stack,
   CardMedia,
   Typography,
 } from '@mui/material';
-import React from 'react';
 
 const UpcomingDirectionsListEntry = ({ step, i }: any) => {
   console.log('LINE 4 || DIRECTIONS ENTRY || STEP ', step);
   console.log('LINE 5 || DIRECTIONS ENTRY ||iP ', i);
   return (
     <div>
+      <Divider
+        className='direction-divider'
+        variant='middle'
+        sx={{ color: 'darkgreen' }}
+      >
+        <Chip label={`${i + 1}`} />
+      </Divider>
       <Card
         sx={{ display: 'flex', backgroundColor: 'transparent', boxShadow: 0 }}
       >

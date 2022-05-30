@@ -27,6 +27,20 @@ orderRouter.post('/api/order', (req, res) => {
     });
 });
 
+///////////////////////////////////////////////////////////////////////////////////////////// UPDATE ONE Order'S DELIVERY STATUS
+orderRouter.patch('/api/order', (req, res) => {
+  // console.log(req.body)
+  const { subscriptionEntryId, deliveryDate } = req.body;
+  Orders.create({ subscriptionEntryId, deliveryDate })
+    .then((data: any) => {
+      res.status(201).send(data);
+    })
+    .catch((err: string) => {
+      // console.error('Order Post Request Failed', err);
+      res.sendStatus(500);
+    });
+});
+
 ///////////////////////////////////////////////////////////////////////////////////////////// READ ALL Orders ROUTE
 orderRouter.get('/api/order', (req, res) => {
   Orders.findAll()
@@ -54,60 +68,98 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
   }
   // console.log('LINE 57 || ORDER ROUTER || TODAYS ORDERS', delivery_dates);
 
-  Orders.findAll({ where: { [Op.or]: delivery_dates } })
-    // Orders.findAll({ where: { delivery_date } })
-    .then((response: any) => {
-      // console.log('LINE 62 || ORDERROUTER', response);
-      const subscriptionEntryIds = response.map((order: any) => {
-        return { id: order.dataValues.subscriptionEntryId };
-      });
-      // console.log('LINE 66 || ORDER ROUTER', subscriptionEntryIds);
-
-      // FIND SUBSCRIPTION ENTRIES WITH THE ID ARRAY
-      return SubscriptionEntries.findAll({
-        where: {
-          [Op.or]: subscriptionEntryIds,
+  return (
+    Orders.findAll({
+      where: { [Op.or]: delivery_dates },
+      include: [
+        {
+          model: SubscriptionEntries,
+          attributes: [
+            'id',
+            'lat',
+            'lon',
+            'city',
+            'state',
+            'zip',
+            'streetAddress',
+          ],
         },
-      });
+      ],
     })
-    .then(async (data: any) => {
-      // console.log('LINE 76 || ORDER ROUTER', data);
-      const orderLocations = data.map((subscriptionEntry: any) => {
-        return {
-          streetAddress: subscriptionEntry.streetAddress,
-          city: subscriptionEntry.city,
-          state: subscriptionEntry.state,
-          zip: subscriptionEntry.zip,
-          paid: subscriptionEntry.paid,
-          latitude: subscriptionEntry.lat,
-          longitude: subscriptionEntry.lon,
-        };
-      });
+      // Orders.findAll({ where: { delivery_date } })
+      // .then(async (response: any) => {
+      //   console.log('LINE 74 || ORDERROUTER', response);
 
-      // Get center of all dropoff points
-      // const center: any = getCenter([
-      //   ...orderLocations,
-      //   { latitude: 29.949123908409483, longitude: -90.10436932015816 },
-      // ]);
-      // console.log('LINE 92 || ORDER ROUTER ', center);
-      // return result of GETROUTE function from UTILS folder, invoked with lat lon and delivery locations.
-      // need to hardcode lat and lon values to simulate distribution center
-      const routeData: any = await getRoute(lat, lon, orderLocations); //, center];
-      routeData.data.orderLocations = orderLocations;
-      // console.log('LINE 97 || ORDER ROUTER ', routeData);
-      return routeData;
-    })
-    .then((route: any) => {
-      if (route.message) {
-        throw route.err;
-      }
-      // console.log('LINE 104 || ORDERROUTER', route.data);
-      res.json(route.data);
-    })
-    .catch((err: object) => {
-      console.log('LINE 108, FIND ALL Orders ERROR: ', err);
-      res.status(404).json(err);
-    });
+      //   const orderIds: any = [];
+      //   const subscriptionEntryIds = response.map((order: any) => {
+      //     orderIds.push({ orderId: order.dataValues.id });
+      //     return {
+      //       id: order.dataValues.subscriptionEntryId,
+      //     };
+      //   });
+      //   // console.log('LINE 66 || ORDER ROUTER', subscriptionEntryIds);
+
+      //   // FIND SUBSCRIPTION ENTRIES WITH THE ID ARRAY
+      //   const subEntryIds = await SubscriptionEntries.findAll({
+      //     where: {
+      //       [Op.or]: subscriptionEntryIds,
+      //     },
+      //   });
+      //   // console.log(
+      //   //   'LINE 88 || ORDER ROUTER || SUB ENTRY IDS',
+      //   //   orderIds,
+      //   //   subEntryIds,
+      //   // );
+      //   // add order id's to proper subscription entry info to send it back in order to manage paid status
+
+      //   // FIND SUBSCRIPTION ENTRIES WITH THE ID ARRAY
+      //   return SubscriptionEntries.findAll({
+      //     where: {
+      //       [Op.or]: subscriptionEntryIds,
+      //     },
+      //   });
+      // })
+      .then(async (data: any) => {
+        // console.log('LINE 114 || ORDER ROUTER', data);
+        const orderLocations = data.map((subscriptionEntry: any) => {
+          // console.log('LINE 117 || ORDER ROUTER || ', subscriptionEntry);
+          return {
+            orderId: subscriptionEntry.id,
+            streetAddress: subscriptionEntry.subscriptionEntry.streetAddress,
+            city: subscriptionEntry.subscriptionEntry.city,
+            state: subscriptionEntry.subscriptionEntry.state,
+            zip: subscriptionEntry.subscriptionEntry.zip,
+            paid: subscriptionEntry.paid,
+            latitude: subscriptionEntry.subscriptionEntry.lat,
+            longitude: subscriptionEntry.subscriptionEntry.lon,
+          };
+        });
+
+        // Get center of all dropoff points
+        // const center: any = getCenter([
+        //   ...orderLocations,
+        //   { latitude: 29.949123908409483, longitude: -90.10436932015816 },
+        // ]);
+        // console.log('LINE 92 || ORDER ROUTER ', center);
+        // return result of GETROUTE function from UTILS folder, invoked with lat lon and delivery locations.
+        // need to hardcode lat and lon values to simulate distribution center
+        const routeData: any = await getRoute(lat, lon, orderLocations); //, center];
+        routeData.data.orderLocations = orderLocations;
+        // console.log('LINE 97 || ORDER ROUTER ', routeData);
+        return routeData;
+      })
+      .then((route: any) => {
+        if (route.message) {
+          throw route.err;
+        }
+        // console.log('LINE 104 || ORDERROUTER', route.data);
+        res.json(route.data);
+      })
+      .catch((err: object) => {
+        console.log('LINE 108, FIND ALL Orders ERROR: ', err);
+        res.status(404).json(err);
+      })
+  );
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// GET USER'S UPCOMING ORDERS
@@ -162,20 +214,23 @@ orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////// UPDATE BY ID Orders ROUTE
-orderRouter.patch('/api/order/:id', async (req: Request, res: Response) => {
-  // console.log('UPDATE Order REQUEST BODY: ', req.body);
-  try {
-    const updatedOrder = await Orders.update(req.body, {
-      where: { id: req.params.id },
-      returning: true,
-    });
-    // console.log('Order UPDATE INFO: ', updatedOrder);
-    res.status(204).json(updatedOrder);
-  } catch (err) {
-    // console.error('Order UPDATE WAS NOT SUCCESSFUL: ', err);
-    res.status(500).json(err);
-  }
-});
+orderRouter.patch(
+  '/api/order/delivery_status/:id',
+  async (req: Request, res: Response) => {
+    console.log(' LINE 220 || ORDER ROUTER || PATCH', req.body, req.params);
+    try {
+      const updatedOrder: any = await Orders.update(req.body, {
+        where: { id: Number(req.params.id) },
+        returning: true,
+      });
+      console.log('Order UPDATE INFO: ', updatedOrder);
+      res.json(updatedOrder);
+    } catch (err) {
+      console.error('Order UPDATE WAS NOT SUCCESSFUL: ', err);
+      res.send(err);
+    }
+  },
+);
 
 ///////////////////////////////////////////////////////////////////////////////////////////// DELETE BY ID Order ROUTE
 orderRouter.delete('/api/order/:id', (req: Request, res: Response) => {
@@ -190,6 +245,7 @@ orderRouter.delete('/api/order/:id', (req: Request, res: Response) => {
     });
 });
 
+///////////////////////////////////////////////////////////////////////////////////////////// GET ORDERS BY DELIVERY DATES
 orderRouter.get(
   '/api/order/deliveries',
   async (req: Request, res: Response) => {
@@ -204,7 +260,7 @@ orderRouter.get(
       });
       // console.log('LINE 196 || ORDER ROUTER || ADMIN ORDERS', orders);
       orders = orders.sort((a: any, b: any) => a.id - b.id);
-      // console.log('LINE 198 || ORDER ROUTER || ADMIN ORDERS', orders);
+      // console.log('LINE 263 || ORDER ROUTER || ADMIN ORDERS', orders);
       // console.log(
       //   'LINE 179 || ORDER ROUTER || DELIVERIES',
       //   orders,
@@ -214,10 +270,11 @@ orderRouter.get(
       const datesCopy: any = Array.from(
         new Set(
           orders.map((order: any, i: number) => {
-            // console.log(`LINE 208 || ORDER ROUTER || ORDER${i}}`, order);
+            console.log(`LINE 208 || ORDER ROUTER || ORDER${i}}`, order.id);
 
             return {
-              id: i,
+              // id: i + 1,
+              id: order.id,
               delivery_date: order.delivery_date,
               products: order.products,
             };
