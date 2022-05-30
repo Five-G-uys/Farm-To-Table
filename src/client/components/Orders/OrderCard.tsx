@@ -61,7 +61,7 @@ const OrderCard = ({
       sx={{
         backgroundColor: '#e2f2d9',
         minWidth: '18rem',
-        borderRadius: '2.5rem',
+        borderRadius: '2rem',
         // elevation: 2,
         boxShadow: 8,
       }}

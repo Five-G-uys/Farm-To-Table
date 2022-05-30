@@ -211,8 +211,8 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
     //Reconfiguring the card margins
     <Box marginTop='-130px'>
       <ToastContainer
-        position='bottom-center'
-        autoClose={3000}
+        position='center-bottom'
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -225,14 +225,19 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         sx={{
           backgroundColor: '#e2f2d9',
           minWidth: '15rem',
-          borderRadius: '1.2rem',
+          borderRadius: '2rem',
           boxShadow: 8,
-          size: 'large',
+          // size: 'large',
           marginTop: '100px',
         }}
         className='texture2'
       >
-        <CardHeader fontWeight='700' title={event.eventName} />
+        <CardHeader title={event.eventName} />
+        {event.thumbnail ? (
+          <CardMedia component='img' height='194' image={event.thumbnail} />
+        ) : (
+          ''
+        )}
         <CardContent>
           <Typography variant='body2' color='text.secondary' fontSize='20px'>
             {`Date of Event: ${event.eventDate.slice(
@@ -243,12 +248,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         </CardContent>
 
         <CardContent>
-          <Typography
-            variant='body2'
-            color='text.secondary'
-            fontWeight='700'
-            fontSize='20px'
-          >
+          <Typography variant='body2' color='text.secondary' fontSize='20px'>
             {`Type: ${event.eventType}`}
           </Typography>
         </CardContent>
@@ -267,14 +267,8 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
             <LocationOnIcon>{event.location}</LocationOnIcon>
           </Link> */}
         </CardContent>
-
-        {event.thumbnail ? (
-          <CardMedia component='img' height='300' image={event.thumbnail} />
-        ) : (
-          ''
-        )}
         <CardContent>
-          <Typography paragraph fontWeight='700' fontSize='20px'>
+          <Typography paragraph fontSize='20px'>
             {user.roleId < 4
               ? `${
                   totalRsvp === 1
@@ -341,12 +335,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
           {' '}
-          <Typography
-            paragraph
-            margin='2.3rem'
-            fontWeight='700'
-            fontSize='18px'
-          >
+          <Typography paragraph margin='2.3rem' fontSize='18px'>
             {' '}
             {`Description: ${event.description}`}
           </Typography>

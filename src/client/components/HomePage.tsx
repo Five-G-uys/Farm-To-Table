@@ -91,7 +91,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             sx={{
               backgroundColor: '#e2f2d9',
               minWidth: '15rem',
-              borderRadius: '2.5rem',
+              borderRadius: '2rem',
               boxShadow: 8,
             }}
             className='texture2'
@@ -111,10 +111,6 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                 the freshest produce from our farm.
               </Typography>
             </CardContent>
-            <CardActions>
-              {/* <Button size='small'>View</Button>
-                    <Button size='small'>Edit</Button> */}
-            </CardActions>
           </Card>
         </Container>
       </main>

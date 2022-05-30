@@ -19,10 +19,10 @@ interface AppProps {
 //import RSVPS from "./RSVPS";
 const useStyles = makeStyles({
   gridContainer: {
-    paddingTop: '60px',
+    paddingTop: '40px',
+    paddingLeft: '4rem',
+    paddingRight: '4rem',
     justifyContent: 'center',
-    paddingLeft: '5vw',
-    paddingRight: '5vw',
   },
 });
 
@@ -43,9 +43,9 @@ const EventCard = ({
     <>
       <Grid
         container
-        spacing={8}
-        direction='row'
-        alignItems='center'
+        spacing={4}
+        // direction='row'
+        // alignItems='center'
         className={classes.gridContainer}
       >
         {Array.isArray(allEvents) &&

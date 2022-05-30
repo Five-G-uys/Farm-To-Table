@@ -14,16 +14,16 @@ import {
   Stack,
 } from '@mui/material';
 
-const SubscriptionsAdmin = ({
-  handleInputSubscription,
+const ProfileModal = ({
   postSubscription,
-  handleSubscriptionUpdateSubmit,
   open,
   inEditMode,
-  subscription,
-  setSubscription,
+  profile,
+  setProfile,
   handleClose,
   commonStyles,
+  handleProfileUpdateSubmit,
+  handleInputProfile,
 }: any) => {
   const CLOUD_NAME = process.env.CLOUD_NAME;
   const CLOUD_PRESET2 = process.env.CLOUD_PRESET2;
@@ -36,10 +36,10 @@ const SubscriptionsAdmin = ({
       (error: unknown, result: { event: string; info: { url: string } }) => {
         if (!error && result && result.event === 'success') {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          setSubscription((state: any) => {
+          setProfile((state: any) => {
             return {
               ...state,
-              thumbnail: result.info.url,
+              picture: result.info.url,
             };
           });
         }
@@ -48,16 +48,8 @@ const SubscriptionsAdmin = ({
     widget.open();
   };
 
-  const {
-    season,
-    year,
-    flat_price,
-    weekly_price,
-    description,
-    start_date,
-    end_date,
-    thumbnail,
-  } = subscription;
+  const { name, email, phone, dietaryRestriction, picture } = profile;
+  console.log('line 53', profile);
 
   return (
     <Modal
@@ -92,19 +84,17 @@ const SubscriptionsAdmin = ({
           >
             <form
               onSubmit={
-                inEditMode ? handleSubscriptionUpdateSubmit : postSubscription
+                inEditMode ? handleProfileUpdateSubmit : postSubscription
               }
             >
-              {thumbnail && (
-                <img width={'100%'} src={thumbnail} border-radius='2rem' />
+              {picture && (
+                <img width={'100%'} src={picture} border-radius='2rem' />
               )}
               <Box>
                 <FormControl fullWidth sx={{ m: 1 }} variant='standard'>
                   {' '}
                   <FormLabel id='demo-radio-buttons-group-label'>
-                    <h3 className='create-subscription'>
-                      Create Seasonal Subscription
-                    </h3>
+                    <h3 className='create-subscription'>Update Profile</h3>
                   </FormLabel>
                 </FormControl>
               </Box>
@@ -112,11 +102,11 @@ const SubscriptionsAdmin = ({
                 id='filled-basic'
                 variant='filled'
                 fullWidth
-                value={season}
-                name='season'
-                label='Season'
-                placeholder='ex: Spring'
-                onChange={(e) => handleInputSubscription(e)}
+                value={name}
+                name='name'
+                label='Name'
+                placeholder='ex: Jane Doe'
+                onChange={(e) => handleInputProfile(e)}
               />
               <br></br>
               <br></br>
@@ -124,11 +114,11 @@ const SubscriptionsAdmin = ({
                 id='filled-basic'
                 variant='filled'
                 fullWidth
-                value={year}
-                name='year'
-                label='Year'
-                placeholder='ex: 2022'
-                onChange={(e) => handleInputSubscription(e)}
+                value={email}
+                name='email'
+                label='E-mail'
+                placeholder='ex: janedoe@email.com'
+                onChange={(e) => handleInputProfile(e)}
               />
               <br></br>
               <br></br>
@@ -136,11 +126,11 @@ const SubscriptionsAdmin = ({
                 fullWidth
                 id='filled-basic'
                 variant='filled'
-                value={flat_price}
-                name='flat_price'
-                label='Flat Price'
-                placeholder='400'
-                onChange={handleInputSubscription}
+                value={phone}
+                name='phone'
+                label='Phone'
+                placeholder='(555) 555-5555'
+                onChange={handleInputProfile}
               />
               <br></br>
               <br></br>
@@ -148,47 +138,11 @@ const SubscriptionsAdmin = ({
                 fullWidth
                 id='filled-basic'
                 variant='filled'
-                value={weekly_price}
-                name='weekly_price'
-                label='Weekly Price'
-                placeholder='40'
-                onChange={handleInputSubscription}
-              />
-              <br></br>
-              <br></br>
-              <TextField
-                fullWidth
-                id='filled-basic'
-                variant='filled'
-                value={description}
-                name='description'
-                label='Description'
-                placeholder='Ex: A beautiful harvest of fresh fruits and vegetables...'
-                onChange={handleInputSubscription}
-              />
-              <br></br>
-              <br></br>
-              <TextField
-                type='date'
-                fullWidth
-                id='filled-basic'
-                variant='filled'
-                value={start_date}
-                name='start_date'
-                label='Start Date'
-                onChange={handleInputSubscription}
-              />
-              <br></br>
-              <br></br>
-              <TextField
-                fullWidth
-                id='filled-basic'
-                variant='filled'
-                value={end_date}
-                name='end_date'
-                label='End Date'
-                placeholder='MM/DD/YYYY'
-                onChange={handleInputSubscription}
+                value={dietaryRestriction}
+                name='dietaryRestriction'
+                label='Dietary Restrictions'
+                placeholder='Ex: Dairy, Gluten, Nuts, etc'
+                onChange={handleInputProfile}
               />
               <br></br>
               <br></br>
@@ -211,7 +165,7 @@ const SubscriptionsAdmin = ({
                   type='submit'
                   sx={{ color: 'green' }}
                 >
-                  {handleInputSubscription ? 'SAVE' : 'UPDATE'}
+                  {handleInputProfile ? 'SAVE' : 'UPDATE'}
                 </Button>
               </Stack>
             </form>
@@ -222,4 +176,4 @@ const SubscriptionsAdmin = ({
   );
 };
 
-export default SubscriptionsAdmin;
+export default ProfileModal;

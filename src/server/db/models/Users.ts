@@ -28,6 +28,16 @@ const Users = db.define(
       unique: true,
       allowNull: false,
     },
+    phone: {
+      type: DataTypes.STRING,
+      unique: true,
+      // allowNull: false,
+    },
+    dietaryRestriction: {
+      type: DataTypes.STRING,
+      unique: true,
+      // allowNull: false,
+    },
     picture: {
       type: DataTypes.STRING,
     },
@@ -45,7 +55,7 @@ const Users = db.define(
       defaultValue: 1,
     },
   },
-  { freezeTableName: true, tableName: 'user' }
+  { freezeTableName: true, tableName: 'user' },
 );
 
 // Export Model

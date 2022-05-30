@@ -183,7 +183,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     transform: 'translate(-50%, -50%)',
     border: 1,
     padding: '20px',
-    borderRadius: '2.5rem',
+    borderRadius: '2rem',
     boxShadow: 3,
     minWidth: '500px',
     overflow: 'auto',
@@ -389,7 +389,6 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
             align='center'
             color='text.primary'
             gutterBottom
-            fontWeight={600}
           >
             Farm Events
           </Typography>
@@ -431,12 +430,13 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
       <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
         <Modal
+          disableScrollLock={true}
           aria-labelledby='transition-modal-title'
           aria-describedby='transition-modal-description'
           sx={{
             color: purple,
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            borderRadius: '2.5rem',
+            borderRadius: '1rem',
             boxShadow: 24,
           }}
           open={open}

@@ -36,13 +36,15 @@ const AddressForm = ({
     <div>
       {' '}
       <Modal
+        disableScrollLock={true}
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
         sx={{
           color: '#fff',
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          borderRadius: '2.5rem',
+          borderRadius: '1rem',
           boxShadow: 24,
+          overflow: 'auto',
         }}
         open={addressOpen}
         onClose={handleAddressFormClose}
