@@ -21,13 +21,15 @@ const OrdersList = ({
   handleEditClick,
   handleDeleteOrderContent,
 }: any) => {
-  // console.log(
-  //   'LINE 4 || ORDERSLIST ',
-  //   orders,
-  //   // orders.sort((a: any, b: any) => a.id - b.id),
-  // );
+  console.log(
+    'LINE 4 || ORDERSLIST ',
+    orders,
+    // orders.sort((a: any, b: any) => a.id - b.id),
+  );
   const classes = useStyles();
 
+  // POTENTIAL ERROR HANDLING BELOW, MIGHT CAUSE PROBLEMS
+  if (orders.length < 1) return;
   return (
     <div>
       <Grid container spacing={6} className={classes.gridContainer}>

@@ -18,7 +18,13 @@ import swal from 'sweetalert';
 import axios from 'axios';
 
 interface Column {
-  id: 'id' | 'eventName' | 'description' | 'eventDate' | 'location' | 'eventType' 
+  id:
+    | 'id'
+    | 'eventName'
+    | 'description'
+    | 'eventDate'
+    | 'location'
+    | 'eventType';
   label: string;
   minWidth?: number;
   format?: (value: number) => string;
@@ -31,6 +37,10 @@ const columns: readonly Column[] = [
     id: 'description',
     label: 'Description',
     minWidth: 170,
+<<<<<<< HEAD
+=======
+    align: 'right',
+>>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
   },
   {
     id: 'eventDate',
@@ -47,7 +57,6 @@ const columns: readonly Column[] = [
     label: 'Event Type',
     minWidth: 170,
   },
-  
 ];
 
 const EventsRecords = () => {
@@ -60,18 +69,20 @@ const EventsRecords = () => {
   const [deleteCount, setDeleteCount] = useState(0);
 
   const getEvents = () => {
-    axios.get("/api/events")
+    axios
+      .get('/api/events')
       .then((data) => {
         // console.log(data.data);
-        setRows(data.data)
+        setRows(data.data);
       })
       .catch((error) => {
-        console.log("failed request", error);
-      })
+        console.log('failed request', error);
+      });
   };
 
   const patchEvents = async (eventId: string, updatedEvent: any) => {
     try {
+<<<<<<< HEAD
       const { data } = await axios.patch(`/api/events/${eventId}`, updatedEvent);
       toast.success('Vendor Updated', {
         position: "top-right",
@@ -83,15 +94,23 @@ const EventsRecords = () => {
         progress: undefined,
         });
       return data
+=======
+      const { data } = await axios.patch(
+        `/api/events/${eventId}`,
+        updatedEvent,
+      );
+      return data;
+>>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
     } catch (err) {
-      console.error(err)
+      console.error(err);
       return {
-        error: err
-      }
+        error: err,
+      };
     }
-  }
+  };
 
   const deleteEvents = async (eventId: string) => {
+<<<<<<< HEAD
     swal({
       title: 'Are you sure?',
       text: 'Vendor will be deleted, along with all associated products!',
@@ -118,10 +137,22 @@ const EventsRecords = () => {
       }
     });
   }
+=======
+    try {
+      const { data } = await axios.delete(`/api/events/${eventId}`);
+      return data;
+    } catch (err) {
+      console.error(err);
+      return {
+        error: err,
+      };
+    }
+  };
+>>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
 
   useEffect(() => {
     getEvents();
-  }, [deleteCount])
+  }, [deleteCount]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -132,7 +163,10 @@ const EventsRecords = () => {
     setPage(0);
   };
 
-  const onChange = (e, row) => {
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    row: any,
+  ) => {
     // if (!previous[row.id]) {
     //   setPrevious(state => ({ ...state, [row.id]: row }));
     // }
@@ -151,10 +185,11 @@ const EventsRecords = () => {
 
   const onDone = (row: object) => {
     // console.log(row)
-    setEditing(!editing)
+    setEditing(!editing);
     patchEvents(row.id, row);
-  }
+  };
 
+<<<<<<< HEAD
   const onEdit = (row: object) => {
     setEditing(!editing)
     setRowEditing(row.id)
@@ -164,6 +199,16 @@ const EventsRecords = () => {
     deleteEvents(row.id)
     setDeleteCount(deleteCount + 1)
   }
+=======
+  const onEdit = () => {
+    setEditing(!editing);
+  };
+
+  const onDelete = (row: object) => {
+    setDeleteCount(deleteCount + 1);
+    deleteEvents(row.id);
+  };
+>>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
 
   return (
     <Paper sx={{ width: '90%', overflow: 'hidden' }}>
@@ -207,11 +252,12 @@ const EventsRecords = () => {
                             // type={String}
                             defaultValue={value}
                             name={column.id}
-                            onChange={e => onChange(e, row)} />
+                            onChange={(e) => onChange(e, row)}
+                          />
+                        ) : column.format && typeof value === 'number' ? (
+                          column.format(value)
                         ) : (
-                          column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value
+                          value
                         )}
                       </TableCell>
                     );
@@ -228,7 +274,10 @@ const EventsRecords = () => {
                       </TableCell>
                     </>
                   )}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 603a1cc844d3117913aaf20623089d3c122918ec
                 </TableRow>
               ))}
           </TableBody>
@@ -245,6 +294,6 @@ const EventsRecords = () => {
       />
     </Paper>
   );
-}
+};
 
 export default EventsRecords;
