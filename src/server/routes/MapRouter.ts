@@ -9,6 +9,8 @@
 // // Initialize Router
 // const mapRouter = Router();
 
+<<<<<<< HEAD
+=======
 ///////////////////////////////////////////////////////////////////////////////////////////// GET MAP FUNCTION
 // const getCurrentMap: any = (latt: any, long: any, rc: any) => {
 //   return fetch(
@@ -21,6 +23,7 @@
 //     }) //returns data object of current weather conditions
 //     .catch((err: any) => console.error('error in map api call: ', err));
 // };
+>>>>>>> dea9e967cb1595407ec953f4c59010c977d1678f
 // ///////////////////////////////////////////////////////////////////////////////////////////// GET MAP FUNCTION
 // const getCurrentMap: any = (latt: any, long: any, rc: any) => {
 //   return fetch(
@@ -42,6 +45,7 @@
 //   // console.log('TRIGGERED', req.params);
 
 //   const { lat, lon, routeCoordinates } = req.params;
+//   console.log('lat', lat, 'lon', lon, 'routeCoordinates', routeCoordinates);
 //   getCurrentMap(lat, lon, routeCoordinates)
 //     .then((response: any) => {
 //       res.status(200).send(response);
