@@ -52,7 +52,7 @@ const UserCard = ({ user, handleEditClick }: any) => {
   const { id, googleId, name, email, address, picture, roleId } = user;
   // console.log('LINE 53 || USER CARD', id);
   return (
-    <Card sx={{ minWidth: 250, borderRadius: '2.5rem', boxShadow: 24 }}>
+    <Card sx={{ minWidth: 250, borderRadius: '1.5rem', boxShadow: 24 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>

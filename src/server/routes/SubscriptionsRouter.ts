@@ -60,7 +60,7 @@ subscriptionRouter.put(
         res.json(response).status(204);
       })
       .catch((err: unknown) => {
-        console.error('SUBSCRIPTION UPDATE REQUEST:', err);
+        console.error('SUBSCRIPTION UPDATE REQUEST ERROR:', err);
       });
   },
 );
