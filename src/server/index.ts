@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import WebSocket from 'ws';
 
 // Import database and models
-require('./db/database.ts');
+require('./db/database');
 require('./middleware/auth');
 
 // Import Routers
