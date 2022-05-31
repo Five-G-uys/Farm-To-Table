@@ -40,7 +40,7 @@ export const driverLocationReducer = (state: any, action: any) => {
   }
 };
 
-const socketUrl = 'wss://knockknocktomatoes.com:3030';
+const socketUrl = 'wss://localhost:3030';
 
 const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
   const [state, dispatch] = useReducer(driverLocationReducer, {
