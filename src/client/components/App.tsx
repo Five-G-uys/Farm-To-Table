@@ -140,6 +140,7 @@ const App = () => {
               //   selectedOpacity: 1,
               // },
             },
+            transparentBG: 'rgba(25,25,25,0.25)'
           }
         : {
             // palette values for dark mode
@@ -153,6 +154,7 @@ const App = () => {
               primary: amber[600],
               secondary: lightGreen[600],
             },
+            transparentBG: 'rgba(25,25,25,0.75)',
           }),
     },
   });
@@ -202,7 +204,10 @@ const App = () => {
               // item
               xs={4}
             > */}
-        <Grid>
+        <Grid 
+          sx={{
+            minHeight: '100vh',  
+          }}>
           <UserContext.Provider value={user}>
             <Routes>
               {/* Login/Logout Routes */}
@@ -352,14 +357,30 @@ const App = () => {
           </UserContext.Provider>
         </Grid>
         {/* Footer */}
-        <Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
-          <Typography variant='h6' align='center' gutterBottom>
+        <Box 
+          sx={{ 
+              
+              padding: '1rem 1rem',
+              background: 'rgba(0,0,0,0)',
+              backdropFilter: 'blur(3px)',
+              borderRadius: '2rem',
+              // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+              boxShadow: 8,
+              width: 'fit-content',
+              margin: '0 auto',
+              p: 6, 
+          }} 
+          component='footer'>
+          <Typography 
+          variant='h6' 
+          align='center' 
+          gutterBottom>
             Knock, Knock Tomatoes
           </Typography>
           <Typography
             variant='subtitle1'
             align='center'
-            color='text.secondary'
+            color='text.primary'
             component='p'
           >
             Who's There? Farm Freshness!

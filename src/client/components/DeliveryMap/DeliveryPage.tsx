@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, {
   useRef,
   useEffect,
@@ -39,7 +40,7 @@ export const driverLocationReducer = (state: any, action: any) => {
   }
 };
 
-const socketUrl = 'ws://localhost:3030';
+const socketUrl = 'wss://localhost:3030';
 
 const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
   const [state, dispatch] = useReducer(driverLocationReducer, {
