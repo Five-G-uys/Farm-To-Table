@@ -261,7 +261,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
             state={{ event }}
             size='large'
           >
-            {`${event.location}` + ' '} <LocationOnIcon></LocationOnIcon>
+            {`${event.location}` + " "} <LocationOnIcon></LocationOnIcon>
           </Button>
           {/* <Link to={`${pages.path}`} state={{ event }}>
             <LocationOnIcon>{event.location}</LocationOnIcon>

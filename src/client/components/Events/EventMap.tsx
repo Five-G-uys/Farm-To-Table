@@ -71,9 +71,6 @@ const EventMap = ({
     map.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/traffic-night-v2',
-      // Number(dayjs().format('H')) > 6 || Number(dayjs().format('H')) <= 18 //mode === 'light'
-      //   ? 'mapbox://styles/mapbox/traffic-night-v2'
-      //   : 'mapbox://styles/mapbox/streets-v11',
       pitch: 60,
       bearing: -60,
       center: [lon, lat],
@@ -99,17 +96,7 @@ const EventMap = ({
       }),
       'bottom-right',
     );
-    // console.log('LINE 69 || MAP.CURRENT', map.current);
-    // // Add directions start/destination widget (box to enter starting location and destination)
-    // map.current.addControl(
-    //   new MapboxDirections({
-    //     unit: 'metric',
-    //     profile: 'mapbox/driving',
-    //     accessToken: mapboxgl.accessToken,
-    //     // coordinates,
-    //   }),
-    //   'bottom-left'
-    // );
+
     // Clean up on unmount
     return map.current
       ? (): any => map.current.remove()
@@ -253,17 +240,17 @@ const EventMap = ({
           .addTo(map.current);
       }
       //Directions
-      (async () => {
-        const directions: any = await routeData.trips;
-        console.log('LINE 254', directions[0].legs[0].steps);
-        // let step = '';
-        for (let i = 0; i < directions[0].legs[0].steps.length; i++) {
-          console.log('LINE 120 || MAP', directions[0].legs[0].steps[i]);
-          step += `<li>${directions[0].legs[0].steps[i].maneuver.instruction}</li>`;
-          console.log('LINE 49', step);
-        }
-        return step;
-      })();
+      // (async () => {
+      //   const directions: any = await routeData.trips;
+      //   console.log('LINE 254', directions[0].legs[0].steps);
+      //   // let step = '';
+      //   for (let i = 0; i < directions[0].legs[0].steps.length; i++) {
+      //     console.log('LINE 120 || MAP', directions[0].legs[0].steps[i]);
+      //     step += `<li>${directions[0].legs[0].steps[i].maneuver.instruction}</li>`;
+      //     console.log('LINE 49', step);
+      //   }
+      //   return step;
+      // })();
     } catch (err: any) {
       console.error('LINE 217 || MAP ERROR', err);
     }
@@ -357,43 +344,7 @@ const EventMap = ({
         Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
       </div>
       <div className='map-container' ref={mapContainerRef} />
-      <div id='instructions'>
-        <div>
-          <Divider
-            className='direction-divider'
-            variant='middle'
-            sx={{ color: 'darkgreen' }}
-          >
-            <Chip />
-          </Divider>
-          <Card
-            sx={{
-              display: 'flex',
-              backgroundColor: 'transparent',
-              boxShadow: 0,
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: 'transparent',
-                justifyContent: 'center',
-              }}
-            >
-              <CardContent sx={{ flex: '1 0 auto', justifyContent: 'center' }}>
-                <Typography
-                  variant='subtitle1'
-                  color='darkgreen'
-                  component='div'
-                >
-                  <ol>{step}</ol>
-                </Typography>
-              </CardContent>
-            </Box>
-          </Card>
-        </div>
-      </div>
+      <div id='instructions'></div>
     </div>
   );
 };
