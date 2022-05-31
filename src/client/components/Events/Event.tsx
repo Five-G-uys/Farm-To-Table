@@ -79,6 +79,16 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
 
   const pages = { name: 'Events', path: '/eventmap-page' };
 
+  let time: string = event.eventDate.slice(11, event.eventDate.length);
+  console.log('LINE 83', time.slice(0, 2));
+  console.log('LINE 83', time[0]);
+  console.log('LINE 83', time[1]);
+  if (Number(time.slice(0, 2)) <= 12) {
+    time = `Time ${time} am`;
+  } else {
+    return time;
+  }
+
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
     if (isGoing) {
@@ -240,10 +250,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         )}
         <CardContent>
           <Typography variant='body2' color='text.secondary' fontSize='20px'>
-            {`Date of Event: ${event.eventDate.slice(
-              0,
-              10,
-            )} Time ${event.eventDate.slice(11, event.eventDate.length)}`}
+            {`Date of Event: ${event.eventDate.slice(0, 10)} ${time}`}
           </Typography>
         </CardContent>
 
@@ -261,7 +268,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
             state={{ event }}
             size='large'
           >
-            {`${event.location}` + " "} <LocationOnIcon></LocationOnIcon>
+            {`${event.location}` + ' '} <LocationOnIcon></LocationOnIcon>
           </Button>
           {/* <Link to={`${pages.path}`} state={{ event }}>
             <LocationOnIcon>{event.location}</LocationOnIcon>

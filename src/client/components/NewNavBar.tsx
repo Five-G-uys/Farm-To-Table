@@ -132,10 +132,11 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
             justifySelf: 'center',
             marginTop: '.7rem',
             maxWidth: '80vw',
-            alignSelf: 'center',
+            // alignSelf: 'center',
             //margin: "auto",
             // marginRight: "1rem",
             marginLeft: '9vw',
+            marginRight: '9vw',
             justifyContent: 'center',
             // marginTop: '1rem',
             // marginRight: '1rem',
@@ -210,11 +211,10 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   ))}
                 </Menu>
               </Box>
-              <Switch 
-                onChange={() => 
-                changeMode(mode)} 
+              <Switch
+                onChange={() => changeMode(mode)}
                 // sx={{image}}
-                color='error' 
+                color='error'
               />
               <Typography
                 variant='h6'
