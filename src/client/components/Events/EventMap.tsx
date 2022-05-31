@@ -9,6 +9,18 @@ import MapboxTraffic from '@mapbox/mapbox-gl-traffic';
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 
 import * as turf from '@turf/turf';
+import FullCalendar from '@fullcalendar/react';
+import {
+  Modal,
+  Box,
+  Button,
+  Typography,
+  Card,
+  CardContent,
+  Chip,
+  Divider,
+} from '@mui/material';
+import EventDirections from './EventDirections';
 // import axios from 'axios';
 interface AppProps {
   mode: string;
@@ -34,6 +46,8 @@ const EventMap = ({
   console.log('event line 35, EventMap', event);
   const mapContainerRef = useRef(null);
   const map: any = useRef(null);
+  let step = '';
+
   mapboxgl.accessToken =
     'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A';
 
@@ -72,9 +86,9 @@ const EventMap = ({
       new MapboxDirections({
         accessToken: mapboxgl.accessToken,
       }),
-      'top-left',
+      'bottom-left',
     );
-    map.current.addControl(new MapboxTraffic(), 'bottom-left');
+    map.current.addControl(new MapboxTraffic(), 'bottom-right');
     map.current.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -83,7 +97,7 @@ const EventMap = ({
         trackUserLocation: true,
         showUserHeading: true,
       }),
-      'bottom-left',
+      'bottom-right',
     );
     // console.log('LINE 69 || MAP.CURRENT', map.current);
     // // Add directions start/destination widget (box to enter starting location and destination)
@@ -153,10 +167,7 @@ const EventMap = ({
       const geojson = {
         type: 'Feature',
         ...data,
-        properties: {
-          title: 'Mapbox New Orleans',
-          'marker-symbol': 'City Park',
-        },
+        properties: {},
         // geometry: {
         //   type: 'LineString',
         //   coordinates: route,
@@ -241,18 +252,27 @@ const EventMap = ({
           .setLngLat([waypoints[i].location[0], waypoints[i].location[1]])
           .addTo(map.current);
       }
+      //Directions
+      (async () => {
+        const directions: any = await routeData.trips;
+        console.log('LINE 254', directions[0].legs[0].steps);
+        // let step = '';
+        for (let i = 0; i < directions[0].legs[0].steps.length; i++) {
+          console.log('LINE 120 || MAP', directions[0].legs[0].steps[i]);
+          step += `<li>${directions[0].legs[0].steps[i].maneuver.instruction}</li>`;
+          console.log('LINE 49', step);
+        }
+        return step;
+      })();
     } catch (err: any) {
       console.error('LINE 217 || MAP ERROR', err);
     }
 
     // add turn instructions here at the end
+    // for ()
   }
-  /*
 
-
-
-
-*/
+  // add turn instructions here at the end
 
   let dropoffs: any;
   // let warehouse: any;
@@ -330,13 +350,50 @@ const EventMap = ({
   //   //   });
   //   // });
   // }, [map.current, routeCoordinatesArray]);
-
+  // const instructions: HTML = document.getElementById('instructions');
   return (
     <div>
       <div className='sidebar-event'>
         Longitude: {lon} | Latitude: {lat} | Zoom: {zoom}
       </div>
       <div className='map-container' ref={mapContainerRef} />
+      <div id='instructions'>
+        <div>
+          <Divider
+            className='direction-divider'
+            variant='middle'
+            sx={{ color: 'darkgreen' }}
+          >
+            <Chip />
+          </Divider>
+          <Card
+            sx={{
+              display: 'flex',
+              backgroundColor: 'transparent',
+              boxShadow: 0,
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: 'transparent',
+                justifyContent: 'center',
+              }}
+            >
+              <CardContent sx={{ flex: '1 0 auto', justifyContent: 'center' }}>
+                <Typography
+                  variant='subtitle1'
+                  color='darkgreen'
+                  component='div'
+                >
+                  <ol>{step}</ol>
+                </Typography>
+              </CardContent>
+            </Box>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };

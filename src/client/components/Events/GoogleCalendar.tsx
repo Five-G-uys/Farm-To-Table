@@ -9,7 +9,7 @@ import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import Modal from '@mui/material/Modal';
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
-
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 interface AppProps {
   event: any;
   open: boolean;
@@ -73,7 +73,7 @@ const GoogleCalendar = ({
       allDay: false,
     };
   });
-  
+
   //will handles changes on a date click
   const handleDateClick = (e: DateClickArg) => {
     // console.log('DATECLICK', typeof e);
@@ -92,6 +92,9 @@ const GoogleCalendar = ({
       >
         {/* //className='texture2' */}
         <Box sx={{ ...style, padding: '5vh' }} className='calendar'>
+          <Button onClick={handleCalendarChange} variant='text' color='success'>
+            <ExitToAppIcon />
+          </Button>
           <FullCalendar
             headerToolbar={{
               left: 'prev,next today',
@@ -109,9 +112,6 @@ const GoogleCalendar = ({
             events={[...mappedOrders, ...mappedEvents]}
             dateClick={(e) => handleDateClick(e)}
           />
-          <Button onClick={handleCalendarChange} variant='text' color='success'>
-            close
-          </Button>
         </Box>
       </Modal>
     </div>
