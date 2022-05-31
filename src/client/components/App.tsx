@@ -18,6 +18,7 @@ import ProductsPage from './Products/ProductsPage';
 import RecordsPage from './Records/RecordsPage';
 import DileveryZonesRecords from './Records/DeliveryZonesRecords';
 import EventsRecords from './Records/EventsRecords';
+import EventMapPageRefact from './Events/EventMapPageRefact';
 import EventMapPage from './Events/EventMapPage';
 // import FarmsRecords from './Records/FarmsRecords';
 import OrdersRecords from './Records/OrdersRecords';

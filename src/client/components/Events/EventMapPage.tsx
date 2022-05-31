@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-
+// import NewNavbar from '../NewNavBar';
 // COMPONENT IMPORTS
 import EventMap from './EventMap';
+// import NewNavBar from '../NewNavBar';
 
 // MODULE IMPORTS
 import 'mapbox-gl/dist/mapbox-gl.css';

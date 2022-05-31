@@ -158,7 +158,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
       .then(() => {
         //console.log('LINE 107 saved!', data);
         setUpdateCounter((updateCounter) => updateCounter + 1);
-        toast.success('Event Updated', {
+        toast.success('Event Posted', {
           position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
