@@ -72,7 +72,7 @@ const UpcomingOrderContentEntry = ({
                   color='text.secondary'
                   component='div'
                 >
-                  {`${product.quantity} of ${product.name}`}
+                  {`${product.quantity}  ${product.name}`}
                 </Typography>
                 {user.roleId > 3 && (
                   <ExpandMore
