@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme } from '@mui/material/styles';
 import { Card, CardMedia, CardContent, CardActions } from '@mui/material';
+import { borderRadius } from '@mui/system';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -46,7 +47,16 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             pb: 6,
           }}
         >
-          <Container maxWidth='sm'>
+          <Container 
+            maxWidth='sm' 
+            sx={{
+              padding: '3rem 2rem',
+              background: 'rgba(0,0,0,0)',
+              backdropFilter: 'blur(3px)',
+              borderRadius: '2rem',
+              // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+              boxShadow: 8,
+              }}>
             <Typography
               component='h1'
               variant='h2'
@@ -65,7 +75,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             <Typography
               variant='h5'
               align='center'
-              color='text.secondary'
+              color='text.primary'
               paragraph
             >
               Community Supported Agriculture is a way for farms to serve their
