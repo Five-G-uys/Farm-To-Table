@@ -67,3 +67,28 @@ Google Oauth requires a google cloud account. First create your account and then
 3. Run npm install to install all dependencies
 4. Run npm run dev to start Webpack
 5. Run npm start to run the server
+
+### Productions Start Up Scripts
+1. `npm run migrate`
+2. `npm run build`
+3. `npm run build:server`
+4. `npm run pm2:init` (First time only)
+5. `npm run start:pm2` (Upon subsequent restart)
+
+### Development Start Up Scripts
+1. `npm run migrate`
+2. `npm run dev`
+3. `npm run start:dev`
+
+```sh
+    "migrate": "ts-node src/server/db/seed.ts",
+    "build": "webpack",
+    "dev": "webpack --watch",
+    "build:server": "tsc -p tsconfig-server.json",
+    "pm2:init": "pm2 start build/server --name server",
+    "start:pm2": "pm2 restart server",
+    "start:dev": "npx nodemon src/server/index.ts",
+    "start": "node build/server",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+```
