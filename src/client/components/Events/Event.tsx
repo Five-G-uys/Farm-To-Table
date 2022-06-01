@@ -83,7 +83,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
   if (Number(time.slice(0, 2)) <= 12) {
     time = `Time ${time} am`;
   } else {
-    time = `Time ${time} pm`;
+    time = `Time ${time}`;
   }
 
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
