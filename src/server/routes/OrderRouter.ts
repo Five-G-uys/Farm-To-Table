@@ -66,6 +66,7 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
     const date: any = dayjs().add(i, 'day').format().slice(0, 10);
     delivery_dates.push({ delivery_date: date });
   }
+
   // console.log('LINE 57 || ORDER ROUTER || TODAYS ORDERS', delivery_dates);
 
   return (
