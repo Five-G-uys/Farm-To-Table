@@ -80,13 +80,10 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
   const pages = { name: 'Events', path: '/eventmap-page' };
 
   let time: string = event.eventDate.slice(11, event.eventDate.length);
-  console.log('LINE 83', time.slice(0, 2));
-  console.log('LINE 83', time[0]);
-  console.log('LINE 83', time[1]);
   if (Number(time.slice(0, 2)) <= 12) {
     time = `Time ${time} am`;
   } else {
-    return time;
+    time = `Time ${time} pm`;
   }
 
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
@@ -250,13 +247,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         )}
         <CardContent>
           <Typography variant='body2' color='text.secondary' fontSize='20px'>
-            {`Date of Event: ${event.eventDate.slice(0, 10)} ${time}`}
-          </Typography>
-        </CardContent>
-
-        <CardContent>
-          <Typography variant='body2' color='text.secondary' fontSize='20px'>
-            {`Type: ${event.eventType}`}
+            {`Date: ${event.eventDate.slice(0, 10)} ${time}`}
           </Typography>
         </CardContent>
         <CardContent>
@@ -278,8 +269,8 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           <Typography paragraph fontSize='20px'>
             {user.roleId < 4
               ? `${
-                  totalRsvp === 1
-                    ? `Total going:  ${totalRsvp}`
+                  totalRsvp === 0
+                    ? `Be the first to RSVP!`
                     : `Total going:  ${totalRsvp}`
                 }`
               : `RSVPS: ${totalRsvp}`}
@@ -341,7 +332,11 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           </Stack>
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
-          {' '}
+          <CardContent>
+            <Typography variant='body2' color='text.secondary' fontSize='20px'>
+              {`Type: ${event.eventType}`}
+            </Typography>
+          </CardContent>
           <Typography paragraph margin='2.3rem' fontSize='18px'>
             {' '}
             {`Description: ${event.description}`}

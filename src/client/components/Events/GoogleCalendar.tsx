@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 // import { Calendar } from '@fullcalendar/core';
 import FullCalendar, { eventTupleToStore } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -10,6 +10,8 @@ import Modal from '@mui/material/Modal';
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { UserContext } from '../App';
+import swal from 'sweetalert';
 interface AppProps {
   event: any;
   open: boolean;
@@ -21,6 +23,7 @@ interface AppProps {
   getOrders(): void;
   order: [];
   handleTrackCalendar(): void;
+  rsvps: object[];
 }
 const style = {
   position: 'absolute',
@@ -51,9 +54,13 @@ const GoogleCalendar = ({
   getOrders,
   order,
   handleTrackCalendar,
+  rsvps,
 }: AppProps) => {
   //run the page on load based on events
-  useEffect(() => {}, [event, order]);
+  useEffect(() => {}, [event, order, rsvps]);
+  const user: { roleId: number; id: number } = useContext(UserContext);
+  const { roleId, id } = user;
+  //Events for the calendar
   const mappedEvents =
     event &&
     event.map((event: any) => {
@@ -66,6 +73,8 @@ const GoogleCalendar = ({
       };
     });
 
+  //orders for the calendar
+  // console.log('RSVPS', order);
   const mappedOrders = order.map((order: any) => {
     return {
       title: 'ORDER NUMBER: ' + order.id,
@@ -74,12 +83,33 @@ const GoogleCalendar = ({
     };
   });
 
+  //rsvps for user calendar
+  const userEvents: { title: any; date: any }[] = [];
+  const rsvpUser = () => {
+    for (let i = 0; i < event.length; i++) {
+      for (let k = 0; k < rsvps.length; k++) {
+        if (event[i].id === rsvps[k].eventId) {
+          userEvents.push({
+            title: event[i].eventName,
+            date: event[i].eventDate,
+          });
+        }
+      }
+    }
+    return userEvents;
+  };
+
   //will handles changes on a date click
   const handleDateClick = (e: DateClickArg) => {
-    // console.log('DATECLICK', typeof e);
-    console.log('EVENT', e);
-    handleCalendarChange();
-    handleEditClick(e.dateStr);
+    if (roleId > 3) {
+      handleCalendarChange();
+      handleEditClick(e.dateStr);
+    } else {
+      handleCalendarChange();
+      swal({ title: 'Sorry, no permission to Edit!' });
+      handleClose();
+      handleCalendarChange();
+    }
   };
 
   return (
@@ -109,9 +139,14 @@ const GoogleCalendar = ({
             ]}
             initialView='dayGridMonth'
             weekends={true}
-            events={[...mappedOrders, ...mappedEvents]}
-            dateClick={(e) => handleDateClick(e)}
+            events={
+              roleId > 3 ? [...mappedOrders, ...mappedEvents] : rsvpUser()
+            }
+            dateClick={(e: DateClickArg) => handleDateClick(e)}
           />
+          <Button onClick={handleCalendarChange} variant='text' color='success'>
+            <ExitToAppIcon />
+          </Button>
         </Box>
       </Modal>
     </div>

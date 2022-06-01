@@ -56,6 +56,7 @@ interface AppProps {
   order: object[];
   handleTrackCalendar(): void;
   trackCalendar: boolean;
+  rsvps: object[];
 }
 
 const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
@@ -227,8 +228,6 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         cloudName: CLOUD_NAME,
         uploadPreset: CLOUD_PRESET2,
         folder: name,
-        // WE NEED TO CONSIDER ADDING A 2 DIGIT YEAR NUMBER AT THE END OF EACH SEASON TO IDENTIFY
-        // AND ACCESS PHOTOS MORE EASILY
         tags: [id],
       },
       (
@@ -236,7 +235,6 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         result: { event: string; info: { url: string } },
       ) => {
         if (!error && result && result.event === 'success') {
-          // console.log('LINE 56', result.info.url);
           setEvent((state) => {
             return {
               ...state,
@@ -244,7 +242,6 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
             };
           });
         }
-        //console.log("LINE 135 || CLOUDINARY", error);
       },
     );
     widget.open();
@@ -278,64 +275,125 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
   // handle click + edit form functionality for edit button in Product Card component
   const handleEditClick = (id: any) => {
     //handle searches for a clicked event in order to update
-    if (typeof id === 'number') {
-      const clickedEvent: any = allEvents.find(
-        // find mutates original array values
-        (event: any) => event.id === id,
-      );
-      if (!clickedEvent) {
-        setOpen(true);
-        return;
-      }
-      clickedEvent.thumbnail = clickedEvent.thumbnail
-        ? clickedEvent.thumbnail
-        : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+    if (roleId > 3)
+      if (typeof id === 'number') {
+        const clickedEvent: any = allEvents.find(
+          // find mutates original array values
+          (event: any) => event.id === id,
+        );
+        if (!clickedEvent) {
+          setOpen(true);
+          return;
+        }
+        clickedEvent.thumbnail = clickedEvent.thumbnail
+          ? clickedEvent.thumbnail
+          : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
 
-      setEvent((state: any) => {
-        return {
-          ...state,
-          id: id,
-          eventName: clickedEvent.eventName,
-          description: clickedEvent.description,
-          thumbnail: clickedEvent.thumbnail,
-          eventDate: clickedEvent.eventDate,
-          eventType: clickedEvent.eventType,
-          location: clickedEvent.location,
-          city: clickedEvent.city,
-        };
-      });
-      setInEditMode(true);
-      setOpen(true);
-    } else {
-      const clickedEvent: any = allEvents.find(
-        // find mutates original array values
-        (event: any) => event.eventDate.slice(0, 10) === id,
-      );
-      if (!clickedEvent) {
+        setEvent((state: any) => {
+          return {
+            ...state,
+            id: id,
+            eventName: clickedEvent.eventName,
+            description: clickedEvent.description,
+            thumbnail: clickedEvent.thumbnail,
+            eventDate: clickedEvent.eventDate,
+            eventType: clickedEvent.eventType,
+            location: clickedEvent.location,
+            city: clickedEvent.city,
+          };
+        });
+        setInEditMode(true);
         setOpen(true);
-        return;
+      } else {
+        const clickedEvent: any = allEvents.find(
+          // find mutates original array values
+          (event: any) => event.eventDate.slice(0, 10) === id,
+        );
+        if (!clickedEvent) {
+          setOpen(true);
+          return;
+        }
+        clickedEvent.thumbnail = clickedEvent.thumbnail
+          ? clickedEvent.thumbnail
+          : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+        console.log('CLIECKED EVENT', clickedEvent);
+        setEvent((state: any) => {
+          return {
+            ...state,
+            id: id,
+            eventName: clickedEvent.eventName,
+            description: clickedEvent.description,
+            thumbnail: clickedEvent.thumbnail,
+            eventDate: clickedEvent.eventDate,
+            eventType: clickedEvent.eventType,
+            location: clickedEvent.location,
+            city: clickedEvent.city,
+          };
+        });
+        setInEditMode(true);
+        setOpen(true);
       }
-      clickedEvent.thumbnail = clickedEvent.thumbnail
-        ? clickedEvent.thumbnail
-        : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
-      console.log('CLIECKED EVENT', clickedEvent);
-      setEvent((state: any) => {
-        return {
-          ...state,
-          id: id,
-          eventName: clickedEvent.eventName,
-          description: clickedEvent.description,
-          thumbnail: clickedEvent.thumbnail,
-          eventDate: clickedEvent.eventDate,
-          eventType: clickedEvent.eventType,
-          location: clickedEvent.location,
-          city: clickedEvent.city,
-        };
-      });
-      setInEditMode(true);
-      setOpen(true);
+    else {
+      if (typeof id === 'number') {
+        const clickedEvent: any = allEvents.find(
+          // find mutates original array values
+          (event: any) => event.id === id,
+        );
+        if (!clickedEvent) {
+          setOpen(true);
+          return;
+        }
+        clickedEvent.thumbnail = clickedEvent.thumbnail
+          ? clickedEvent.thumbnail
+          : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+
+        setEvent((state: any) => {
+          return {
+            ...state,
+            id: id,
+            eventName: clickedEvent.eventName,
+            description: clickedEvent.description,
+            thumbnail: clickedEvent.thumbnail,
+            eventDate: clickedEvent.eventDate,
+            eventType: clickedEvent.eventType,
+            location: clickedEvent.location,
+            city: clickedEvent.city,
+          };
+        });
+        setInEditMode(true);
+        setOpen(true);
+      } else {
+        const clickedEvent: any = allEvents.find(
+          // find mutates original array values
+          (event: any) => event.eventDate.slice(0, 10) === id,
+        );
+        if (!clickedEvent) {
+          setOpen(true);
+          return;
+        }
+        clickedEvent.thumbnail = clickedEvent.thumbnail
+          ? clickedEvent.thumbnail
+          : 'http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg';
+        console.log('CLIECKED EVENT', clickedEvent);
+        setEvent((state: any) => {
+          return {
+            ...state,
+            id: id,
+            eventName: clickedEvent.eventName,
+            description: clickedEvent.description,
+            thumbnail: clickedEvent.thumbnail,
+            eventDate: clickedEvent.eventDate,
+            eventType: clickedEvent.eventType,
+            location: clickedEvent.location,
+            city: clickedEvent.city,
+          };
+        });
+        setInEditMode(true);
+        setOpen(true);
+      }
     }
   };
+
   const handleInEditMode = () => {
     setInEditMode(!inEditMode);
   };
@@ -426,6 +484,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         order={orders}
         trackCalendar={trackCalendar}
         handleTrackCalendar={handleTrackCalendar}
+        rsvps={rsvps}
       />
       <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
@@ -634,7 +693,23 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
               <AddIcon style={{ color: 'text.primary' }} />
             </Fab>
           )}
-          {roleId > 3 && (
+          {roleId > 3 ? (
+            <Fab
+              onClick={handleCalendarChange}
+              size='large'
+              // color='secondary'
+              aria-label='add'
+              style={{ transform: 'scale(1.5)', backgroundColor: '#e2f2d9' }}
+              sx={{
+                position: 'fixed',
+                bottom: (theme) => theme.spacing(8),
+                left: (theme) => theme.spacing(8),
+              }}
+              className='texture2'
+            >
+              <EventIcon style={{ color: 'text.primary' }} />
+            </Fab>
+          ) : (
             <Fab
               onClick={handleCalendarChange}
               size='large'
@@ -656,5 +731,4 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
     </>
   );
 };
-
 export default EventsPage;
