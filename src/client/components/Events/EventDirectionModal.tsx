@@ -22,7 +22,6 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import UpcomingOrderDirectionsList from './UpcomingOrderDirectionsList';
 import { useTheme } from '@mui/material/styles';
 import axios from 'axios';
 import EventDirections from './EventDirections';
@@ -113,7 +112,6 @@ const EventDirectionModal = ({
   // Patch request to database to update paid status
   const handleUpdatePaidStatus = () => {
     handleClose();
-    console.log('UPDATE ORDER PAID STATUS CLICKED', popupInfo.orderId);
     axios
       .patch(`/api/order/delivery_status/${popupInfo.orderId}`, {
         paid: !popupInfo.paid,
@@ -205,9 +203,6 @@ const EventDirectionModal = ({
                   >
                     {`${popupInfo.steps[i].maneuver.instruction}`}
                   </Typography>
-                  {/* <IconButton aria-label='play/pause'>
-              <PlayArrowIcon sx={{ height: 38, width: 38 }} color='success' />
-            </IconButton> */}
                 </Box>
               </Stack>
             )}
@@ -241,8 +236,6 @@ const EventDirectionModal = ({
           </Stack>
           <Collapse in={expanded} timeout='auto' unmountOnExit>
             <CardContent sx={{ justifyContent: 'right' }}>
-              {/* // setup map that returns a Typography */}
-              {/* {user.roleId === 1 && <UpcomingOrderContentList order={order} />} */}
               <EventDirections popupInfo={popupInfo} />
               <Stack direction='row-reverse'>
                 <ExpandMore
