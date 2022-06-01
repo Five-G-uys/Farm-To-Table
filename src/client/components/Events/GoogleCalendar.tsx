@@ -61,7 +61,7 @@ const GoogleCalendar = ({
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId, id } = user;
   //run the page on load based on events
-  useEffect(() => {}, [event, orders, userOrders]);
+  // useEffect(() => {}, [event, orders, userOrders]);
   //Events for the calendar
   const mappedEvents =
     event &&
