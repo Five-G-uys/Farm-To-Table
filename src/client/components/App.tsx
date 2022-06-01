@@ -368,13 +368,6 @@ const App = () => {
           }}
           component='footer'
         >
-          {/* <CardMedia
-            component='img'
-            height='194'
-            width='auto'
-            image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654021654/Avocado/bzin8us1esmuhr643jau.svg'
-            alt='Produce'
-          /> */}
           <Typography
             variant='h6'
             align='center'
@@ -393,6 +386,7 @@ const App = () => {
           </Typography>
           <Copyright />
         </Box>
+        <br></br>
         {/* End footer */}
         {/* </Grid>
           </Container> */}

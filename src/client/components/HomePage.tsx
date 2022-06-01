@@ -71,13 +71,14 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               component='img'
               height='194'
               width='auto'
-              //Rainbow image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg' //default rainbow
-              //image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654051948/bgr7pdi9ifkfmgmhi99l.jpg' //Tomatoes
+              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg' //default rainbow
+              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654051948/bgr7pdi9ifkfmgmhi99l.jpg' //Tomatoes
               // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654050705/uofoifgt6ced1btybcny.png' //new rainbow produce
-              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654052233/oyxbvubzdgdytblycpsc.jpg' //tomato basket
-              image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654052298/tdxl7ohcwxqwbbtohxhe.webp' //sliced tomatoes
+              image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654052233/oyxbvubzdgdytblycpsc.jpg' //tomato basket
+              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654052298/tdxl7ohcwxqwbbtohxhe.webp' //sliced tomatoes
               alt='default image'
             />
+            <br></br>
             <Typography
               variant='h5'
               padding='10px'
@@ -86,12 +87,11 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               paragraph
             >
               Community Supported Agriculture is a way for farms to serve their
-              communities & for their communities to serve them. It's a
-              beautifully organized delivery system designed to compliment both
-              the farmers & the eaters so both parties have a chance to learn,
-              work, & grow with each other.
+              communities & for their communities to serve them. A beautifully
+              designed delivery system that compliments both the farmers & the
+              eaters so both parties have a chance to learn, work, & grow
+              together.
             </Typography>
-            <br></br>
             <Stack
               sx={{ pt: 0 }}
               direction='row'
@@ -104,7 +104,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                 sx={{ color: 'white' }}
                 onClick={() => navigate('/subscriptions-page')}
               >
-                Sign Up
+                Sign Up Today
               </Button>
             </Stack>
           </Container>
