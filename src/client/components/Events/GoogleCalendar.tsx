@@ -103,14 +103,14 @@ const GoogleCalendar = ({
   //setUser orders for the calendar
   console.log('CALENDAR, LINE 103', userOrders);
 
-  //will handles changes on a date click
+  //will handle changes on a date click
   const handleDateClick = (e: DateClickArg) => {
     if (roleId > 3) {
       handleCalendarChange();
       handleEditClick(e.dateStr);
     } else {
       handleCalendarChange();
-      swal({ title: 'Sorry, no permission to Edit!' });
+      // swal({ title: 'Sorry, no permission to Edit!' });
       handleClose();
       handleCalendarChange();
     }

@@ -28,6 +28,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { Link } from 'react-router-dom';
 import EventMapPage from './EventMapPage';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import InsertEmoticonRoundedIcon from '@material-ui/icons/InsertEmoticonRounded';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -245,7 +246,7 @@ const Event = ({
       >
         <CardHeader title={event.eventName} />
         {event.thumbnail ? (
-          <CardMedia component='img' height='194' image={event.thumbnail} />
+          <CardMedia component='img' height='370' image={event.thumbnail} />
         ) : (
           ''
         )}
@@ -274,8 +275,8 @@ const Event = ({
             {user.roleId < 4
               ? `${
                   totalRsvp === 0
-                    ? `Be the first to RSVP!`
-                    : `Total going:  ${totalRsvp}`
+                    ? `Be the first to RSVP!!`
+                    : `Already going:  ${totalRsvp}`
                 }`
               : `RSVPS: ${totalRsvp}`}
           </Typography>
