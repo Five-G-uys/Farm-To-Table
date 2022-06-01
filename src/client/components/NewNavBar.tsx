@@ -181,7 +181,8 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   onClick={handleOpenNavMenu}
                   color='success'
                 >
-                  <MenuIcon />
+                  {/* Attempt to adjust the burger menu padding */}
+                  <MenuIcon sx={{ paddingLeft: '.009rem' }} />
                 </Button>
                 <Menu
                   id='menu-appbar'

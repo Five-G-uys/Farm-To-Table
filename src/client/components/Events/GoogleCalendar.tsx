@@ -21,9 +21,11 @@ interface AppProps {
   handleInEditMode(): void;
   handleEditClick(id: number): void;
   getOrders(): void;
-  order: [];
+  orders: object[];
   handleTrackCalendar(): void;
   rsvps: object[];
+  userOrders: object[];
+  updateCounter: number;
 }
 const style = {
   position: 'absolute',
@@ -49,17 +51,17 @@ const GoogleCalendar = ({
   handleCalendarChange,
   handleClose,
   handleInEditMode,
-  inEditMode,
   handleEditClick,
-  getOrders,
-  order,
+  orders,
   handleTrackCalendar,
   rsvps,
+  userOrders,
 }: AppProps) => {
-  //run the page on load based on events
-  useEffect(() => {}, [event, order, rsvps]);
+  //set user context
   const user: { roleId: number; id: number } = useContext(UserContext);
   const { roleId, id } = user;
+  //run the page on load based on events
+  useEffect(() => {}, [event, orders, userOrders]);
   //Events for the calendar
   const mappedEvents =
     event &&
@@ -73,9 +75,8 @@ const GoogleCalendar = ({
       };
     });
 
-  //orders for the calendar
-  // console.log('RSVPS', order);
-  const mappedOrders = order.map((order: any) => {
+  //orders for the calendar Admin view
+  const mappedOrders = orders.map((order: any) => {
     return {
       title: 'ORDER NUMBER: ' + order.id,
       date: order.delivery_date,
@@ -98,6 +99,9 @@ const GoogleCalendar = ({
     }
     return userEvents;
   };
+
+  //setUser orders for the calendar
+  console.log('CALENDAR, LINE 103', userOrders);
 
   //will handles changes on a date click
   const handleDateClick = (e: DateClickArg) => {
@@ -140,7 +144,9 @@ const GoogleCalendar = ({
             initialView='dayGridMonth'
             weekends={true}
             events={
-              roleId > 3 ? [...mappedOrders, ...mappedEvents] : rsvpUser()
+              roleId > 3
+                ? [...mappedOrders, ...mappedEvents]
+                : [...rsvpUser(), ...mappedOrders]
             }
             dateClick={(e: DateClickArg) => handleDateClick(e)}
           />

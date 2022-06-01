@@ -61,9 +61,15 @@ interface AppProps {
   lon: string;
   updateCoords(): void;
   mode: string;
+  getUserRsvps(): void;
 }
 
-const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
+const Event = ({
+  event,
+  handleEditClick,
+  getAllEvents,
+  getUserRsvps,
+}: AppProps) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -109,14 +115,11 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         })
         .then(() => {
           totalEventRsvps();
-          getAllEvents();
+          getUserRsvps();
         })
         .catch((err) => {
           console.error('68 REQUEST FAILED', err);
         });
-      //     }
-      //   },
-      // );
     }
   };
 
@@ -198,6 +201,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           .then(() => {
             setUpdateCounter(updateCounter + 1);
             totalEventRsvps();
+            getUserRsvps();
           })
           .catch((err) => {
             console.error('91 REQUEST FAILED', err);

@@ -44,19 +44,20 @@ interface AppProps {
   updateCounter: number;
   inEditMode: boolean;
   getAllEvents(): void;
-  rsvps: [];
+  rsvps: object[];
   rsvpCount: number;
-  updateState(): void;
+  // handleUpdateState(): void;
   handleCalendarChange(): void;
   handleClose(): void;
   setInEditMode(): void;
   getOrders(): void;
   // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
   handleEditClick(id: number): void;
-  order: object[];
+  orders: object[];
   handleTrackCalendar(): void;
   trackCalendar: boolean;
-  rsvps: object[];
+  userOrders: object[];
+  getUserRsvps(): void;
 }
 
 const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
@@ -258,14 +259,13 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
       });
   };
 
-  const [rsvps, setRsvps] = useState<string[]>([]);
+  const [rsvps, setRsvps] = useState<object[]>([]);
   const getUserRsvps = () => {
     axios
       .get('/api/rsvps')
       .then(({ data }) => {
-        // console.log('Rsvps get all Response ', data);
+        console.log('Rsvps get all Response ', data);
         setRsvps(data);
-        //setRsvpCount(data.length);
       })
       .catch((err) => {
         console.error(err);
@@ -411,7 +411,28 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
       });
   };
 
+  //set state for orders
+  const [userOrders, setUserOrders]: any = useState([]);
+  //get orders for the calendar user view
+  const getUserOrders = () => {
+    axios
+      .get(`/api/upcoming_orders/${user.id}`)
+      .then((data: any) => {
+        console.log('LINE 29 || ORDERSPAGE ||SUCCESS', data.data); //array of objects
+        setUserOrders(data.data);
+      })
+      .catch((error: any) => {
+        console.log('LINE 68 || ADMIN ORDERSPAGE', error);
+      });
+  };
+  //handle update state
+  const handleUpdateState = () => {
+    setUpdateCounter(updateCounter + 1);
+  };
+
+  //reload page on change
   useEffect((): void => {
+    getUserOrders();
     getOrders();
     getAllEvents();
     getUserRsvps();
@@ -469,8 +490,10 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         handleEditClick={handleEditClick}
         lat={lat}
         lon={lon}
-        updateCoords={updateCoords}
         mode={mode}
+        updateCoords={updateCoords}
+        getUserRsvps={getUserRsvps}
+        // handleUpdateState={handleUpdateState}
       />
       <GoogleCalendar
         event={allEvents}
@@ -481,10 +504,11 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
         handleInEditMode={handleInEditMode}
         handleEditClick={handleEditClick}
         getOrders={getOrders}
-        order={orders}
-        trackCalendar={trackCalendar}
+        orders={orders}
         handleTrackCalendar={handleTrackCalendar}
         rsvps={rsvps}
+        userOrders={userOrders}
+        updateCounter={updateCounter}
       />
       <Box>
         {/* <Button onClick={handleToggle}>Show backdrop</Button> */}
