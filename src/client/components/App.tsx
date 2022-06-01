@@ -42,6 +42,7 @@ import {
   lightGreen,
   darkGreen,
 } from '@mui/material/colors';
+import EventMapRefact from './Events/EventMapRefact';
 
 /*
 ▄ •▄  ▐ ▄        ▄▄· ▄ •▄     ▄ •▄  ▐ ▄        ▄▄· ▄ •▄
@@ -140,7 +141,7 @@ const App = () => {
               //   selectedOpacity: 1,
               // },
             },
-            transparentBG: 'rgba(25,25,25,0.25)'
+            transparentBG: 'rgba(25,25,25,0.25)',
           }
         : {
             // palette values for dark mode
@@ -204,10 +205,11 @@ const App = () => {
               // item
               xs={4}
             > */}
-        <Grid 
+        <Grid
           sx={{
-            minHeight: '100vh',  
-          }}>
+            minHeight: '100vh',
+          }}
+        >
           <UserContext.Provider value={user}>
             <Routes>
               {/* Login/Logout Routes */}
@@ -229,7 +231,7 @@ const App = () => {
               <Route
                 path='eventmap-page'
                 element={
-                  <EventMapPage
+                  <EventMapPageRefact
                     lat={lat}
                     lon={lon}
                     updateCoords={updateCoords}
@@ -357,24 +359,21 @@ const App = () => {
           </UserContext.Provider>
         </Grid>
         {/* Footer */}
-        <Box 
-          sx={{ 
-              
-              padding: '1rem 1rem',
-              background: 'rgba(0,0,0,0)',
-              backdropFilter: 'blur(3px)',
-              borderRadius: '2rem',
-              // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
-              boxShadow: 8,
-              width: 'fit-content',
-              margin: '0 auto',
-              p: 6, 
-          }} 
-          component='footer'>
-          <Typography 
-          variant='h6' 
-          align='center' 
-          gutterBottom>
+        <Box
+          sx={{
+            padding: '1rem 1rem',
+            background: 'rgba(0,0,0,0)',
+            backdropFilter: 'blur(3px)',
+            borderRadius: '2rem',
+            // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+            boxShadow: 8,
+            width: 'fit-content',
+            margin: '0 auto',
+            p: 6,
+          }}
+          component='footer'
+        >
+          <Typography variant='h6' align='center' gutterBottom>
             Knock, Knock Tomatoes
           </Typography>
           <Typography

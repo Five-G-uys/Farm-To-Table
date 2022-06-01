@@ -7,7 +7,6 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { Box, Grid } from '@mui/material';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import Modal from '@mui/material/Modal';
-import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { UserContext } from '../App';
@@ -50,10 +49,8 @@ const GoogleCalendar = ({
   open,
   handleCalendarChange,
   handleClose,
-  handleInEditMode,
   handleEditClick,
   orders,
-  handleTrackCalendar,
   rsvps,
   userOrders,
 }: AppProps) => {
@@ -115,6 +112,7 @@ const GoogleCalendar = ({
       handleCalendarChange();
     }
   };
+  
 
   return (
     <div>
