@@ -227,7 +227,17 @@ const Profile = () => {
             pb: 6,
           }}
         >
-          <Container maxWidth='sm'>
+          <Container
+            maxWidth='sm'
+            sx={{
+              padding: '3rem 2rem',
+              background: 'rgba(0,0,0,0)',
+              backdropFilter: 'blur(3px)',
+              borderRadius: '2rem',
+              // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+              boxShadow: 8,
+            }}
+          >
             <Typography
               component='h1'
               variant='h2'

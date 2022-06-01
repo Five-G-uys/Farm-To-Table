@@ -31,16 +31,10 @@ import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
 
 //material UI IMPORTS
-import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
+import { Box, CardMedia, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
-import {
-  amber,
-  blueGrey,
-  grey,
-  lightGreen,
-  darkGreen,
-} from '@mui/material/colors';
+import { amber, blueGrey, grey, lightGreen } from '@mui/material/colors';
 
 /*
 ▄ •▄  ▐ ▄        ▄▄· ▄ •▄     ▄ •▄  ▐ ▄        ▄▄· ▄ •▄
@@ -73,7 +67,7 @@ jgs\ `\\//`,.\|/|//.|/\\|/\\|,\|/ //\|/\|.\\\| // \|\\ |/,\|/
 
 function Copyright() {
   return (
-    <Typography variant='body2' color='text.secondary' align='center'>
+    <Typography variant='body2' color='text.primary' align='center'>
       {'Copyright © www.knockknocktomatoes.com'} {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -139,7 +133,7 @@ const App = () => {
               //   selectedOpacity: 1,
               // },
             },
-            transparentBG: 'rgba(25,25,25,0.25)'
+            transparentBG: 'rgba(25,25,25,0.25)',
           }
         : {
             // palette values for dark mode
@@ -150,7 +144,7 @@ const App = () => {
               paper: blueGrey[900],
             },
             text: {
-              primary: amber[600],
+              primary: lightGreen[100],
               secondary: lightGreen[600],
             },
             transparentBG: 'rgba(25,25,25,0.75)',
@@ -203,10 +197,11 @@ const App = () => {
               // item
               xs={4}
             > */}
-        <Grid 
+        <Grid
           sx={{
-            minHeight: '100vh',  
-          }}>
+            minHeight: '100vh',
+          }}
+        >
           <UserContext.Provider value={user}>
             <Routes>
               {/* Login/Logout Routes */}
@@ -356,25 +351,37 @@ const App = () => {
           </UserContext.Provider>
         </Grid>
         {/* Footer */}
-        <Box 
-          sx={{ 
-              
-              padding: '1rem 1rem',
-              background: 'rgba(0,0,0,0)',
-              backdropFilter: 'blur(3px)',
-              borderRadius: '2rem',
-              // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
-              boxShadow: 8,
-              width: 'fit-content',
-              margin: '0 auto',
-              p: 6, 
-          }} 
-          component='footer'>
-          <Typography 
-          variant='h6' 
-          align='center' 
-          gutterBottom>
-            Knock, Knock Tomatoes
+        <br></br>
+        <br></br>
+        <br></br>
+        <Box
+          sx={{
+            padding: '1rem 1rem',
+            background: 'rgba(0,0,0,0)',
+            backdropFilter: 'blur(3px)',
+            borderRadius: '2rem',
+            // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+            boxShadow: 8,
+            width: 'fit-content',
+            margin: '0 auto',
+            // p: 6,
+          }}
+          component='footer'
+        >
+          {/* <CardMedia
+            component='img'
+            height='194'
+            width='auto'
+            image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654021654/Avocado/bzin8us1esmuhr643jau.svg'
+            alt='Produce'
+          /> */}
+          <Typography
+            variant='h6'
+            align='center'
+            color='text.primary'
+            component='p'
+          >
+            Knock, Knock!
           </Typography>
           <Typography
             variant='subtitle1'

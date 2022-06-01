@@ -47,16 +47,17 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             pb: 6,
           }}
         >
-          <Container 
-            maxWidth='sm' 
+          <Container
+            maxWidth='sm'
             sx={{
               padding: '3rem 2rem',
               background: 'rgba(0,0,0,0)',
               backdropFilter: 'blur(3px)',
               borderRadius: '2rem',
-              // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
-              boxShadow: 8,
-              }}>
+              boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+              // boxShadow: 8,
+            }}
+          >
             <Typography
               component='h1'
               variant='h2'
@@ -66,14 +67,20 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             >
               Knock, Knock Tomatoes
             </Typography>
-            {/* <CardMedia
+            <CardMedia
               component='img'
               height='194'
-              image='src/media/homePageImage.jpg'
-              alt='Produce'
-            /> */}
+              width='auto'
+              //Rainbow image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg' //default rainbow
+              //image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654051948/bgr7pdi9ifkfmgmhi99l.jpg' //Tomatoes
+              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654050705/uofoifgt6ced1btybcny.png' //new rainbow produce
+              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654052233/oyxbvubzdgdytblycpsc.jpg' //tomato basket
+              image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654052298/tdxl7ohcwxqwbbtohxhe.webp' //sliced tomatoes
+              alt='default image'
+            />
             <Typography
               variant='h5'
+              padding='10px'
               align='center'
               color='text.primary'
               paragraph
@@ -84,8 +91,9 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               the farmers & the eaters so both parties have a chance to learn,
               work, & grow with each other.
             </Typography>
+            <br></br>
             <Stack
-              sx={{ pt: 4 }}
+              sx={{ pt: 0 }}
               direction='row'
               spacing={2}
               justifyContent='center'
@@ -98,11 +106,10 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               >
                 Sign Up
               </Button>
-              {/* <Button variant='outlined'>Secondary action</Button> */}
             </Stack>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth='md'>
+        {/* <Container sx={{ py: 8 }} maxWidth='md'>
           <Card
             sx={{
               backgroundColor: '#e2f2d9',
@@ -125,7 +132,7 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               </Typography>
             </CardContent>
           </Card>
-        </Container>
+        </Container> */}
       </main>
     </div>
   );

@@ -67,7 +67,7 @@ eventRouter.get('/api/events', (req: Request, res: Response) => {
         const ba: any = dayjs(b.dataValues.eventDate);
         return ab.format('LL') - ba.format('LL');
       });
-      console.log('This is line 186 events gotten', respo);
+      // console.log('This is line 186 events gotten', respo);
       res.status(200).send(response);
     })
     .catch((err: object) => {
