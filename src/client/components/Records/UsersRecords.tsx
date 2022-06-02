@@ -86,7 +86,7 @@ const UsersRecords = () => {
   const patchUsers = async (userId: string, updatedUser: any) => {
     try {
       const { data } = await axios.patch(`/api/users/${userId}`, updatedUser);
-      toast.success('Vendor Updated', {
+      toast.success('User Updated', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -107,13 +107,13 @@ const UsersRecords = () => {
   const deleteUser = async (userId: string) => {
     swal({
       title: 'Are you sure?',
-      text: 'Vendor will be deleted, along with all associated products!',
+      text: 'User will be deleted, along with all associated products!',
       icon: 'warning',
       buttons: true,
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {
-        swal('Event has been deleted', {
+        swal('User has been deleted', {
           icon: 'success',
         });
         try {

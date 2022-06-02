@@ -57,7 +57,7 @@ const SubscriptionEntriesRecords = () => {
   const patchSubscriptionEntries = async (subscriptionEntrieId: string, updatedSubscriptionEntrie: any) => {
     try {
       const { data } = await axios.patch(`/api/subscription-entries/${subscriptionEntrieId}`, updatedSubscriptionEntrie);
-      toast.success('Vendor Updated', {
+      toast.success('Entrie Updated', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -78,13 +78,13 @@ const SubscriptionEntriesRecords = () => {
   const deleteSubscriptionEntries = async (subscriptionEntrieId: string) => {
     swal({
       title: 'Are you sure?',
-      text: 'Vendor will be deleted, along with all associated products!',
+      text: 'Entrie will be deleted, along with all associated products!',
       icon: 'warning',
       buttons: true,
       dangerMode: true,
     }).then( async (willDelete) => {
       if (willDelete) {
-        swal('Event has been deleted', {
+        swal('Entrie has been deleted', {
           icon: 'success',
         });
         try {

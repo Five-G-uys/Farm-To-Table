@@ -79,7 +79,7 @@ const ProductsRecords = () => {
         `/api/products/${productId}`,
         updatedProduct,
       );
-      toast.success('Vendor Updated', {
+      toast.success('Product Updated', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -100,13 +100,13 @@ const ProductsRecords = () => {
   const deleteProduct = async (productId: string) => {
     swal({
       title: 'Are you sure?',
-      text: 'Vendor will be deleted, along with all associated products!',
+      text: 'Product will be deleted, along with all associated products!',
       icon: 'warning',
       buttons: true,
       dangerMode: true,
     }).then( async (willDelete) => {
       if (willDelete) {
-        swal('Event has been deleted', {
+        swal('Product has been deleted', {
           icon: 'success',
         });
         try {
