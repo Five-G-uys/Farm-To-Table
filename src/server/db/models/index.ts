@@ -1,7 +1,7 @@
 // import FarmsModel from "./Farms";
 import RolesModel from './Roles';
 import UsersModel from './Users';
-import DeliveryZonesModel from './DeliveryZones';
+// import DeliveryZonesModel from './DeliveryZones';
 import EventsModel from './Events';
 import VendorsModel from './Vendors';
 import ProductsModel from './Products';
@@ -17,7 +17,7 @@ export const syncModels = async (dropTables = false) => {
   try {
     await RolesModel.sync(options);
     await UsersModel.sync(options);
-    await DeliveryZonesModel.sync(options);
+    // await DeliveryZonesModel.sync(options);
     await EventsModel.sync(options);
     await VendorsModel.sync(options);
     await SubscriptionsModel.sync(options);
@@ -95,7 +95,7 @@ syncModels();
 export const Roles = RolesModel;
 export const Users = UsersModel;
 export const Events = EventsModel;
-export const DeliveryZones = DeliveryZonesModel;
+// export const DeliveryZones = DeliveryZonesModel;
 export const Vendors = VendorsModel;
 export const Subscriptions = SubscriptionsModel;
 export const Products = ProductsModel;

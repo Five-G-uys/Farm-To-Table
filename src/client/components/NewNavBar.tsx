@@ -63,7 +63,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
       // { name: 'Packing List', path: '/packing-lists' },
       // { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Delivery Map', path: '/delivery-map' },
-      { name: 'Weather', path: '/weather-page' },
+      // { name: 'Weather', path: '/weather-page' },
       // { name: 'Edit User Role', path: '/edit-users' },
       { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/auth/api/logout' }, // NEEDS ATTENTION!
@@ -73,7 +73,7 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
       // { name: 'Packing List', path: '/packing-lists' },
       // { name: 'Delivery Routes', path: '/delivery-routes' },
       { name: 'Delivery Map', path: '/delivery-map' },
-      { name: 'Weather', path: '/weather-page' },
+      // { name: 'Weather', path: '/weather-page' },
       { name: 'Profile', path: '/profile-page' },
       { name: 'Logout', path: '/auth/api/logout' },
     ];
