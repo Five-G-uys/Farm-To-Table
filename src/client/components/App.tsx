@@ -32,9 +32,10 @@ import UserRecordsPage from './Users/UsersRecordsPage';
 import Weather from './Weather';
 
 //material UI IMPORTS
-import { Box, createTheme, Grid, PaletteMode } from '@mui/material';
+import { Box, CardMedia, createTheme, Grid, PaletteMode } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import { Typography } from '@mui/material';
+<<<<<<< HEAD
 import {
   amber,
   blueGrey,
@@ -43,6 +44,9 @@ import {
   darkGreen,
 } from '@mui/material/colors';
 import EventMapRefact from './Events/EventMapRefact';
+=======
+import { amber, blueGrey, grey, lightGreen } from '@mui/material/colors';
+>>>>>>> ad657cb2d052b3a31747d5e26950af8d274b178a
 
 /*
 ▄ •▄  ▐ ▄        ▄▄· ▄ •▄     ▄ •▄  ▐ ▄        ▄▄· ▄ •▄
@@ -75,9 +79,8 @@ jgs\ `\\//`,.\|/|//.|/\\|/\\|,\|/ //\|/\|.\\\| // \|\\ |/,\|/
 
 function Copyright() {
   return (
-    <Typography variant='body2' color='text.secondary' align='center'>
+    <Typography variant='body2' color='text.primary' align='center'>
       {'Copyright © www.knockknocktomatoes.com'} {new Date().getFullYear()}
-      {'.'}
     </Typography>
   );
 }
@@ -152,7 +155,7 @@ const App = () => {
               paper: blueGrey[900],
             },
             text: {
-              primary: amber[600],
+              primary: lightGreen[100],
               secondary: lightGreen[600],
             },
             transparentBG: 'rgba(25,25,25,0.75)',
@@ -359,22 +362,46 @@ const App = () => {
           </UserContext.Provider>
         </Grid>
         {/* Footer */}
+<<<<<<< HEAD
+=======
+        <br></br>
+        <br></br>
+        <br></br>
+>>>>>>> ad657cb2d052b3a31747d5e26950af8d274b178a
         <Box
           sx={{
             padding: '1rem 1rem',
             background: 'rgba(0,0,0,0)',
             backdropFilter: 'blur(3px)',
+<<<<<<< HEAD
             borderRadius: '2rem',
+=======
+            borderRadius: '1rem',
+>>>>>>> ad657cb2d052b3a31747d5e26950af8d274b178a
             // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
             boxShadow: 8,
             width: 'fit-content',
             margin: '0 auto',
+<<<<<<< HEAD
             p: 6,
           }}
           component='footer'
         >
           <Typography variant='h6' align='center' gutterBottom>
             Knock, Knock Tomatoes
+=======
+            // p: 6,
+          }}
+          component='footer'
+        >
+          <Typography
+            variant='h6'
+            align='center'
+            color='text.primary'
+            component='p'
+          >
+            Knock, Knock!
+>>>>>>> ad657cb2d052b3a31747d5e26950af8d274b178a
           </Typography>
           <Typography
             variant='subtitle1'
@@ -386,6 +413,7 @@ const App = () => {
           </Typography>
           <Copyright />
         </Box>
+        <br></br>
         {/* End footer */}
         {/* </Grid>
           </Container> */}

@@ -461,7 +461,16 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
           pb: 6,
         }}
       >
-        <Container maxWidth='sm'>
+        <Container
+          maxWidth='sm'
+          sx={{
+            padding: '3rem 2rem',
+            background: 'rgba(0,0,0,0)',
+            backdropFilter: 'blur(3px)',
+            borderRadius: '2rem',
+            boxShadow: 8,
+          }}
+        >
           <Typography
             component='h1'
             variant='h2'
@@ -474,11 +483,11 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
           <Typography
             variant='h5'
             align='center'
-            color='text.secondary'
+            color='text.primary'
             paragraph
             marginBottom='12px'
           >
-            We have regular Saturday farmer's markets and our seasonal Customer
+            We have regular Saturday Farmer's Markets and our seasonal Customer
             Appreciation Day is just around the corner. RSVP below and come join
             the fun!
           </Typography>

@@ -271,7 +271,7 @@ orderRouter.get(
       const datesCopy: any = Array.from(
         new Set(
           orders.map((order: any, i: number) => {
-            console.log(`LINE 208 || ORDER ROUTER || ORDER${i}}`, order.id);
+            // console.log(`LINE 208 || ORDER ROUTER || ORDER${i}}`, order.id);
 
             return {
               // id: i + 1,
