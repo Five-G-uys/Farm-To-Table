@@ -47,8 +47,8 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             pb: 6,
           }}
         >
-          <Container 
-            maxWidth='sm' 
+          <Container
+            maxWidth='sm'
             sx={{
               padding: '3rem 2rem',
               background: 'rgba(0,0,0,0)',
@@ -56,7 +56,8 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               borderRadius: '2rem',
               // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
               boxShadow: 8,
-              }}>
+            }}
+          >
             <Typography
               component='h1'
               variant='h2'
@@ -66,26 +67,31 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             >
               Knock, Knock Tomatoes
             </Typography>
-            {/* <CardMedia
+            <CardMedia
               component='img'
               height='194'
-              image='src/media/homePageImage.jpg'
-              alt='Produce'
-            /> */}
+              width='auto'
+              sx={{ borderRadius: '1rem' }}
+              image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654098009/nzi4ldupmu4guhtruita.jpg' //Colorado Box
+              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654099257/dd5gomuyvrayvjyihsej.jpg' //box hands
+              alt='default image'
+            />
+            <br></br>
             <Typography
               variant='h5'
+              padding='10px'
               align='center'
               color='text.primary'
               paragraph
             >
               Community Supported Agriculture is a way for farms to serve their
-              communities & for their communities to serve them. It's a
-              beautifully organized delivery system designed to compliment both
-              the farmers & the eaters so both parties have a chance to learn,
-              work, & grow with each other.
+              communities & for their communities to serve them. A beautifully
+              designed delivery system that compliments both the farmers & the
+              eaters so both parties have a chance to learn, work, & grow
+              together.
             </Typography>
             <Stack
-              sx={{ pt: 4 }}
+              sx={{ pt: 0 }}
               direction='row'
               spacing={2}
               justifyContent='center'
@@ -96,82 +102,14 @@ const HomePage = ({ getAllSubscriptions }: any) => {
                 sx={{ color: 'white' }}
                 onClick={() => navigate('/subscriptions-page')}
               >
-                Sign Up
+                Sign Up Today
               </Button>
-              {/* <Button variant='outlined'>Secondary action</Button> */}
             </Stack>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth='md'>
-          <Card
-            sx={{
-              backgroundColor: '#e2f2d9',
-              minWidth: '15rem',
-              borderRadius: '2rem',
-              boxShadow: 8,
-            }}
-            className='texture2'
-          >
-            <CardMedia
-              component='img'
-              height='194'
-              image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg'
-              alt='random'
-            />
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography gutterBottom variant='h5' component='h2'>
-                Knock, Knock
-              </Typography>
-              <Typography>
-                Who's There? A 4-month subscription of weekly boxes filled with
-                the freshest produce from our farm.
-              </Typography>
-            </CardContent>
-          </Card>
-        </Container>
       </main>
     </div>
   );
 };
 
 export default HomePage;
-
-// {/* <Container sx={{ py: 8 }} maxWidth='md'>
-// {/* End hero unit */}
-// <Grid container spacing={4}>
-//   {cards.map((card) => (
-//     <Grid item key={card} xs={12} sm={6} md={4}>
-//       <Card
-//         sx={{
-//           height: '100%',
-//           display: 'flex',
-//           flexDirection: 'column',
-//         }}
-//       >
-//         <CardMedia
-//           component='img'
-//           sx={{
-//             // 16:9
-//             pt: '56.25%',
-//           }}
-//           image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg'
-//           alt='random'
-//         />
-//         <CardContent sx={{ flexGrow: 1 }}>
-//           <Typography gutterBottom variant='h5' component='h2'>
-//             Knock, Knock
-//           </Typography>
-//           <Typography>
-//             Who's There? A 4-month subscription of weekly boxes filled
-//             with the freshest produce from our farm.
-//           </Typography>
-//         </CardContent>
-//         <CardActions>
-//           {/* <Button size='small'>View</Button>
-//           <Button size='small'>Edit</Button> */}
-//         </CardActions>
-//       </Card>
-//     </Grid>
-//   ))}
-// </Grid>
-// </Container> */}

@@ -12,6 +12,9 @@ import {
   TextField,
   Box,
   Stack,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
 } from '@mui/material';
 
 const SubscriptionsAdmin = ({
@@ -169,13 +172,14 @@ const SubscriptionsAdmin = ({
               <br></br>
               <br></br>
               <TextField
-                type='date'
+                // type='date'
                 fullWidth
                 id='filled-basic'
                 variant='filled'
                 value={start_date}
                 name='start_date'
                 label='Start Date'
+                placeholder='MM/DD/YYYY'
                 onChange={handleInputSubscription}
               />
               <br></br>

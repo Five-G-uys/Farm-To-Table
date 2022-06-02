@@ -169,7 +169,17 @@ const OrdersPage = ({ getOrders }: any) => {
           pb: 6,
         }}
       >
-        <Container maxWidth='sm'>
+        <Container
+          maxWidth='sm'
+          sx={{
+            padding: '3rem 2rem',
+            background: 'rgba(0,0,0,0)',
+            backdropFilter: 'blur(3px)',
+            borderRadius: '2rem',
+            // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+            boxShadow: 8,
+          }}
+        >
           <Typography
             component='h1'
             variant='h2'
@@ -182,11 +192,11 @@ const OrdersPage = ({ getOrders }: any) => {
           <Typography
             variant='h5'
             align='center'
-            color='text.secondary'
+            color='text.primary'
             paragraph
           >
-            Here are all your upcoming CSA produce orders. If you'd like to
-            change or add to your order please contact us to let us know.
+            Here are all of your upcoming CSA produce orders. If you'd like to
+            change or amend your order, please contact us to let us know.
           </Typography>
         </Container>
       </Box>

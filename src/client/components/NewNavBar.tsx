@@ -210,11 +210,10 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   ))}
                 </Menu>
               </Box>
-              <Switch 
-                onChange={() => 
-                changeMode(mode)} 
+              <Switch
+                onChange={() => changeMode(mode)}
                 // sx={{image}}
-                color='error' 
+                color='error'
               />
               <Typography
                 variant='h6'
