@@ -245,7 +245,7 @@ const Event = ({
       >
         <CardHeader title={event.eventName} />
         {event.thumbnail ? (
-          <CardMedia component='img' height='370' image={event.thumbnail} />
+          <CardMedia component='img' height='194' image={event.thumbnail} />
         ) : (
           ''
         )}

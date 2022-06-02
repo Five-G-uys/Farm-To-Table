@@ -351,12 +351,15 @@ const App = () => {
           </UserContext.Provider>
         </Grid>
         {/* Footer */}
+        <br></br>
+        <br></br>
+        <br></br>
         <Box
           sx={{
             padding: '1rem 1rem',
             background: 'rgba(0,0,0,0)',
             backdropFilter: 'blur(3px)',
-            borderRadius: '2rem',
+            borderRadius: '1rem',
             // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
             boxShadow: 8,
             width: 'fit-content',
