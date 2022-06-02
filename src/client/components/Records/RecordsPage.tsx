@@ -41,14 +41,6 @@ const RecordsPage = () => {
       <Grid container alignItems='center' justifyContent='center'>
         <Button
           component={Link}
-          to='/records/delivery-zones-records'
-          variant='contained'
-          color='primary'
-        >
-          DeliveryZones
-        </Button>
-        <Button
-          component={Link}
           to='/records/events-records'
           variant='contained'
           color='primary'

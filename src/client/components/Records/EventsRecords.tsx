@@ -79,7 +79,7 @@ const EventsRecords = () => {
   const patchEvents = async (eventId: string, updatedEvent: any) => {
     try {
       const { data } = await axios.patch(`/api/events/${eventId}`, updatedEvent);
-      toast.success('Vendor Updated', {
+      toast.success('Event Updated', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -100,7 +100,7 @@ const EventsRecords = () => {
   const deleteEvents = async (eventId: string) => {
     swal({
       title: 'Are you sure?',
-      text: 'Vendor will be deleted, along with all associated products!',
+      text: 'Event will be deleted!',
       icon: 'warning',
       buttons: true,
       dangerMode: true,
