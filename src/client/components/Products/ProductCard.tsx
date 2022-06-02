@@ -1,6 +1,6 @@
 // React Imports
-import React, { useEffect, useState } from 'react';
-import swal from 'sweetalert'; 
+import React, { useEffect, useState, useContext } from 'react';
+import swal from 'sweetalert';
 
 // MUI Imports
 import { styled } from '@mui/material/styles';
@@ -19,6 +19,9 @@ import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
+
+//Component Imports
+import { UserContext } from '../App';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -43,6 +46,10 @@ const ProductCard = ({
   getAllProducts,
   setUpdateCounter,
 }: any) => {
+  //user context
+  const user: any = useContext(UserContext);
+  const { roleId } = user;
+
   // expanded state var
   const [expanded, setExpanded] = useState(false);
 
@@ -54,32 +61,30 @@ const ProductCard = ({
 
   const handleProductDelete = (productId: any) => {
     swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this product!",
-      icon: "warning",
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this product!',
+      icon: 'warning',
       buttons: true,
       dangerMode: true,
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
-        swal("Product has been deleted", {
-          icon: "success",
+        swal('Product has been deleted', {
+          icon: 'success',
         });
         axios
-        .delete(`/api/products/${id}`)
-        .then(({ data }: any) => {
-          // console.log('LINE 57', id);
-          // console.log('LINE 55 ', data);
-          setUpdateCounter(updateCounter + 1);
-        })
-        .catch((err: any) => {
-          console.error('LINE 59 ERROR');
-        });
+          .delete(`/api/products/${id}`)
+          .then(({ data }: any) => {
+            // console.log('LINE 57', id);
+            // console.log('LINE 55 ', data);
+            setUpdateCounter(updateCounter + 1);
+          })
+          .catch((err: any) => {
+            console.error('LINE 59 ERROR');
+          });
       } else {
-        swal("Your imaginary file is safe!");
+        swal('Your imaginary file is safe!');
       }
     });
-
   };
 
   useEffect(() => {
@@ -127,20 +132,24 @@ const ProductCard = ({
 
       <CardActions disableSpacing sx={{ justifyContent: 'center' }}>
         <Stack spacing={5} direction='row' id='product_card_stack'>
-          <ExpandMore
-            sx={{ color: 'green' }}
-            expand={expanded}
-            onClick={() => handleProductDelete(id)}
-          >
-            <DeleteIcon sx={{ color: 'green' }} />
-          </ExpandMore>
-          <ExpandMore
-            sx={{ color: 'green' }}
-            expand={expanded}
-            onClick={() => handleEditClick(id)}
-          >
-            <EditIcon sx={{ color: 'green' }} />
-          </ExpandMore>
+          {roleId > 3 && (
+            <ExpandMore
+              sx={{ color: 'green' }}
+              expand={expanded}
+              onClick={() => handleProductDelete(id)}
+            >
+              <DeleteIcon sx={{ color: 'green' }} />
+            </ExpandMore>
+          )}
+          {roleId > 3 && (
+            <ExpandMore
+              sx={{ color: 'green' }}
+              expand={expanded}
+              onClick={() => handleEditClick(id)}
+            >
+              <EditIcon sx={{ color: 'green' }} />
+            </ExpandMore>
+          )}
           <ExpandMore
             sx={{ color: 'green' }}
             expand={expanded}

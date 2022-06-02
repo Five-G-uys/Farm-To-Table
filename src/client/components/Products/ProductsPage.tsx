@@ -1,5 +1,5 @@
 // React Imports
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,9 +31,13 @@ import {
 // Component Imports
 import ProductsContainer from './ProductsContainer';
 import { updateProduct } from './productCallS';
+import { UserContext } from '../App';
 
 const ProductsPage = () => {
   const [updateCounter, setUpdateCounter] = useState(0);
+
+  const user: any = useContext(UserContext);
+  const { id, roleId } = user;
 
   // cerate state var Products array (set to result of get req)
   const [products, setProducts] = useState([]);
@@ -307,7 +311,17 @@ const ProductsPage = () => {
           pb: 6,
         }}
       >
-        <Container maxWidth='sm'>
+        <Container
+          maxWidth='sm'
+          sx={{
+            padding: '3rem 2rem',
+            background: 'rgba(0,0,0,0)',
+            backdropFilter: 'blur(3px)',
+            borderRadius: '2rem',
+            // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+            boxShadow: 8,
+          }}
+        >
           <Typography
             component='h1'
             variant='h2'
@@ -320,12 +334,11 @@ const ProductsPage = () => {
           <Typography
             variant='h5'
             align='center'
-            color='text.secondary'
+            color='text.primary'
             paragraph
           >
             Discover all of our farm fresh goodies, from eggplants to okra and
-            squash to tomatoes. They're all ready to be delivered to your
-            doorstep each week. Sign up today!
+            squash to tomatoes. Harvested weekly and delivered to your doorstep.
           </Typography>
         </Container>
       </Box>
@@ -490,24 +503,26 @@ const ProductsPage = () => {
           }
         </Fade>
       </Modal>
-      <Fab
-        onClick={handleCreateForm}
-        size='large'
-        // color='secondary'
-        aria-label='add'
-        style={{
-          transform: 'scale(1.5)',
-          backgroundColor: '#e2f2d9',
-        }}
-        sx={{
-          position: 'fixed',
-          bottom: (theme) => theme.spacing(8),
-          right: (theme) => theme.spacing(8),
-        }}
-        className='texture2'
-      >
-        <AddIcon style={{ color: 'text.primary' }} />
-      </Fab>
+      {roleId > 3 && (
+        <Fab
+          onClick={handleCreateForm}
+          size='large'
+          // color='secondary'
+          aria-label='add'
+          style={{
+            transform: 'scale(1.5)',
+            backgroundColor: '#e2f2d9',
+          }}
+          sx={{
+            position: 'fixed',
+            bottom: (theme) => theme.spacing(8),
+            right: (theme) => theme.spacing(8),
+          }}
+          className='texture2'
+        >
+          <AddIcon style={{ color: 'text.primary' }} />
+        </Fab>
+      )}
     </div>
   );
 };

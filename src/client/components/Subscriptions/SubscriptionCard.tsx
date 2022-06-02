@@ -87,7 +87,7 @@ const SubscriptionCard = ({
         <CardHeader subheader={`Harvest Year ${year}`} title={season} />
         <CardMedia
           component='img'
-          height='194'
+          height='200'
           image={
             thumbnail
               ? thumbnail

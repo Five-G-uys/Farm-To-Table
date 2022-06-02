@@ -6,7 +6,6 @@ import { CssBaseline, Box, Container, Typography } from '@mui/material';
 import { Grid } from '@material-ui/core';
 
 const RecordsPage = () => {
-
   return (
     <div>
       <CssBaseline />
@@ -18,7 +17,17 @@ const RecordsPage = () => {
           pb: 6,
         }}
       >
-        <Container maxWidth='sm'>
+        <Container
+          maxWidth='sm'
+          sx={{
+            padding: '3rem 2rem',
+            background: 'rgba(0,0,0,0)',
+            backdropFilter: 'blur(3px)',
+            borderRadius: '2rem',
+            // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+            boxShadow: 8,
+          }}
+        >
           <Typography
             component='h1'
             variant='h2'
@@ -31,7 +40,7 @@ const RecordsPage = () => {
           <Typography
             variant='h5'
             align='center'
-            color='text.secondary'
+            color='text.primary'
             paragraph
           >
             One stop shop for all of our farm records.
