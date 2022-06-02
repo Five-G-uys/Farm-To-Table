@@ -61,7 +61,6 @@ eventRouter.get('/api/events', (req: Request, res: Response) => {
   Events.findAll()
     .then((response: []) => {
       //loop over response and split the values by dash
-
       const respo: any = response.sort((a: any, b: any) => {
         return a.dataValues.id - b.dataValues.id;
       });

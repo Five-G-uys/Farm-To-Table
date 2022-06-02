@@ -144,8 +144,8 @@ const EventDirectionModal = ({
           <Typography
             id='modal-modal-title'
             color='darkgreen'
-            variant='h2'
-            component='h2'
+            variant='h5'
+            component='h5'
           >
             {popupInfo.waypoint_index === 0
               ? `Knock Knock Tomatoes Inc`
