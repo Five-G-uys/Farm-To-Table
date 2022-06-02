@@ -223,7 +223,7 @@ const App = () => {
               <Route
                 path='eventmap-page'
                 element={
-                  <EventMapPage
+                  <EventMapPageRefact
                     lat={lat}
                     lon={lon}
                     updateCoords={updateCoords}

@@ -21,6 +21,11 @@ const OrdersPage = ({ getOrders }: any) => {
   // state var for orders array
   const [orders, setOrders]: any = useState([]);
   console.log('LINE 47 || ORDERS', id, roleId, orders);
+  const [updateCounter, setUpdateCounter] = useState(0);
+  const handleUpdateCounter = () => {
+    setUpdateCounter(updateCounter + 1);
+  };
+
   // if (id > 1) {
   //   const uniqueDeliveryDateArray: any = [];
   //   setOrders(
@@ -67,7 +72,7 @@ const OrdersPage = ({ getOrders }: any) => {
       .catch((error: any) => {
         console.log('LINE 68 || ADMIN ORDERSPAGE', error);
       });
-  }, [user]);
+  }, [user, updateCounter]);
 
   const handleSelectedProductsChange = (event: any) => {
     // console.log('LINE 75 || ORDERSPAGE', event.target.checked);
@@ -129,6 +134,14 @@ const OrdersPage = ({ getOrders }: any) => {
       })
       .then((data: any) => {
         console.log('LINE 132 || ORDERSPAGE SUBMIT SUCCESS', data);
+        getOrders()
+          .then((data: any) => {
+            console.log('LINE 29 || ORDERSPAGE ||SUCCESS', data.data); //array of objects
+            setOrders(data.data);
+          })
+          .catch((error: any) => {
+            console.log('LINE 68 || ADMIN ORDERSPAGE', error);
+          });
       })
       .catch((err: any) => {
         console.error('LINE 135 || ORDERSPAGE || SUBMIT ERROR', err);
@@ -155,6 +168,7 @@ const OrdersPage = ({ getOrders }: any) => {
 
   useEffect(() => {
     getAllAvailableProducts();
+
     // getUpcomingOrderContents();
   }, [user.id, orders]);
 
@@ -214,6 +228,7 @@ const OrdersPage = ({ getOrders }: any) => {
         deliveryDate={deliveryDate}
         handleSelectedProductsChange={handleSelectedProductsChange}
         handleOrderContentSubmit={handleOrderContentSubmit}
+        getOrders={getOrders}
       />
     </div>
   );

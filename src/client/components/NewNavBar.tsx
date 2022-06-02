@@ -132,10 +132,11 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
             justifySelf: 'center',
             marginTop: '.7rem',
             maxWidth: '80vw',
-            alignSelf: 'center',
+            // alignSelf: 'center',
             //margin: "auto",
             // marginRight: "1rem",
             marginLeft: '9vw',
+            marginRight: '9vw',
             justifyContent: 'center',
             // marginTop: '1rem',
             // marginRight: '1rem',
@@ -180,7 +181,8 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   onClick={handleOpenNavMenu}
                   color='success'
                 >
-                  <MenuIcon />
+                  {/* Attempt to adjust the burger menu padding */}
+                  <MenuIcon sx={{ paddingLeft: '.009rem' }} />
                 </Button>
                 <Menu
                   id='menu-appbar'
@@ -289,7 +291,11 @@ const NewNavBar = ({ user, mode, changeMode }: AppProps, props: Props) => {
                   // color='success'
                 >
                   {settings.map((setting: any) => (
-                    <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                    <MenuItem
+                      key={setting.name}
+                      onClick={handleCloseUserMenu}
+                      color='success'
+                    >
                       <Button href={setting.path} color='success'>
                         <Typography textAlign='center'>
                           {setting.name}

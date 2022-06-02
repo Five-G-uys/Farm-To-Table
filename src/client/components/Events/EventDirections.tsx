@@ -4,8 +4,8 @@ import React from 'react';
 // Component Imports
 import EventDirectionListEntry from './EventDirectionListEntry';
 
-const EventDirections = ({ steps }: any) => {
-  //   const { steps }: any = popupInfo;
+const EventDirections = ({ popupInfo }: any) => {
+  const { steps }: any = popupInfo;
   console.log('LINE 6 || UPCOMING ORDERS DIRECTIONS || POPUPINFO', steps);
 
   return (
