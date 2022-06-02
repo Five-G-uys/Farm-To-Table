@@ -62,7 +62,7 @@ const OrdersRecords = () => {
   const patchOrders = async (orderId: string, updatedOrder: any) => {
     try {
       const { data } = await axios.patch(`/api/order/${orderId}`, updatedOrder);
-      toast.success('Vendor Updated', {
+      toast.success('Order Updated', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -83,13 +83,13 @@ const OrdersRecords = () => {
   const deleteOrders = async (orderId: string) => {
     swal({
       title: 'Are you sure?',
-      text: 'Vendor will be deleted, along with all associated products!',
+      text: 'Order will be deleted, along with all associated products!',
       icon: 'warning',
       buttons: true,
       dangerMode: true,
     }).then( async (willDelete) => {
       if (willDelete) {
-        swal('Event has been deleted', {
+        swal('Order has been deleted', {
           icon: 'success',
         });
         try {
