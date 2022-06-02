@@ -12,7 +12,7 @@ require('./middleware/auth');
 
 // Import Routers
 import authRouter from './routes/AuthRouter';
-import deliveryZonesRouter from './routes/DeliveryZoneRouter';
+// import deliveryZonesRouter from './routes/DeliveryZoneRouter';
 import dietaryRestrictionRouter from './routes/DietaryRestrictionRouter';
 import eventRouter from './routes/EventRouter';
 import orderRouter from './routes/OrderRouter';
@@ -120,7 +120,7 @@ app.use(passport.session());
 
 // Mount Routers
 app.use('/auth', authRouter);
-app.use('', deliveryZonesRouter);
+// app.use('', deliveryZonesRouter);
 app.use('', dietaryRestrictionRouter);
 app.use('', eventRouter);
 app.use('', orderRouter);

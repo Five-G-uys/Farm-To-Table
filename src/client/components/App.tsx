@@ -16,7 +16,7 @@ import Login from './Profile/Login';
 import NewNavBar from './NewNavBar';
 import ProductsPage from './Products/ProductsPage';
 import RecordsPage from './Records/RecordsPage';
-import DileveryZonesRecords from './Records/DeliveryZonesRecords';
+// import DileveryZonesRecords from './Records/DeliveryZonesRecords';
 import EventsRecords from './Records/EventsRecords';
 import EventMapPageRefact from './Events/EventMapPageRefact';
 import EventMapPage from './Events/EventMapPage';
@@ -320,10 +320,6 @@ const App = () => {
               <Route path='/records' element={<RecordsPage />}>
                 <Route path='products-records' element={<ProductsRecords />} />
                 <Route path='vendors-records' element={<VendorsRecords />} />
-                <Route
-                  path='delivery-zones-records'
-                  element={<DileveryZonesRecords />}
-                />
                 <Route path='events-records' element={<EventsRecords />} />
                 <Route path='orders-records' element={<OrdersRecords />} />
                 <Route path='products-records' element={<ProductsRecords />} />

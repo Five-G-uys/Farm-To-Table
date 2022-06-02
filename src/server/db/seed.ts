@@ -4,7 +4,7 @@ import {
   Vendors,
   Products,
   syncModels,
-  DeliveryZones,
+  // DeliveryZones,
   Events,
 } from './models';
 
