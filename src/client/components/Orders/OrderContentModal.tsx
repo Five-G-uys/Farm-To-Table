@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 // Component Imports
 import OrderContentProductCard from './OrderContentProductCard';
@@ -12,6 +12,7 @@ import { Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
+import { UserContext } from '../App';
 
 // NEED TO MAKE IT SO THAT PRODUCTS THAT HAVE ALREADY BEEN ADDED TO AN ORDER
 
@@ -54,7 +55,8 @@ const OrderContentModal = ({
   handleOrderContentSubmit,
 }: any) => {
   const classes = useStyles();
-
+  const user: { id: number; roleId: number } = useContext(UserContext);
+  const { id, roleId } = user;
   // console.log(
   //   'LINE 64 || PRODUCTS',
   //   products,
@@ -80,6 +82,7 @@ const OrderContentModal = ({
     : [];
 
   console.log('LINE 89 || SELECTED ORDER || ', selectedOrder, productIds);
+  //get request for all orders! upon closing the model
 
   const availableProducts: any = selectedOrder
     ? products
@@ -155,6 +158,9 @@ const OrderContentModal = ({
                 {/* </FormGroup> */}
               </Grid>
               <Button
+                onClick={() => {
+                  handleClose();
+                }}
                 variant='text'
                 size='large'
                 type='submit'

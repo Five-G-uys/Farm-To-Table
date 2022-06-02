@@ -66,6 +66,7 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
     const date: any = dayjs().add(i, 'day').format().slice(0, 10);
     delivery_dates.push({ delivery_date: date });
   }
+
   // console.log('LINE 57 || ORDER ROUTER || TODAYS ORDERS', delivery_dates);
 
   return (
@@ -164,7 +165,7 @@ orderRouter.get('/api/order/todaysOrders', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////// GET USER'S UPCOMING ORDERS
 orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
-  // console.log('LINE 93 || SERVER INDEX', req.params); // user id
+  console.log('LINE 93 || SERVER INDEX', req.params); // user id
   // NEED TO QUERY BETWEEN USER TABLE AND SUBSCRIPTION ENTRY TABLE
   // QUERY USER TABLE THEN JOIN
   SubscriptionEntries.findAll({ where: { userId: Number(req.params.id) } })
@@ -195,10 +196,10 @@ orderRouter.get(`/api/upcoming_orders/:id`, (req: Request, res: Response) => {
         ],
       })
         .then((data: any) => {
-          // console.log('LINE 137 || SERVER INDEX', Array.isArray(data), data); // ==> ARRAY OF ORDER OBJECTS
+          console.log('LINE 137 || SERVER INDEX', Array.isArray(data), data); // ==> ARRAY OF ORDER OBJECTS
           // SORT ORDERS BY ORDER ID (SAME AS SORTING BY DATE)
           data.sort((a: any, b: any) => a.id - b.id);
-          // console.log('LINE 139 || SERVER INDEX', data); // ==> ARRAY OF ORDER OBJECTS
+          console.log('LINE 139 || SERVER INDEX', data); // ==> ARRAY OF ORDER OBJECTS
           res.json(data);
         })
         .catch((err: any) => {

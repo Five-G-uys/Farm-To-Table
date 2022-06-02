@@ -13,7 +13,8 @@ interface AppProps {
   lon: string;
   updateCoords(): void;
   mode: string;
-  // updateCounter: number;
+  getUserRsvps(): void;
+  // handleUpdateState(): void;
 }
 
 //import RSVPS from "./RSVPS";
@@ -34,7 +35,9 @@ const EventCard = ({
   lon,
   updateCoords,
   mode,
-}: AppProps) => {
+  getUserRsvps,
+}: // handleUpdateState,
+AppProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const user: { roleId: number; id: number } = useContext(UserContext);
 
@@ -72,6 +75,8 @@ const EventCard = ({
                     lon={lon}
                     updateCoords={updateCoords}
                     mode={mode}
+                    getUserRsvps={getUserRsvps}
+                    // handleUpdateState={handleUpdateState}
                   />
                 </Grid>
               );

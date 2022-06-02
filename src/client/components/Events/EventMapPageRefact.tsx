@@ -31,31 +31,7 @@ interface AppProps {
 mapboxgl.accessToken =
   'pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iZGszeTExOGkzanBuNWNqcWNxdm8ifQ.fuECEnMtgosol8pKpegx2A';
 
-// takes in state and an action (an obj) , then uses switch case to update the state
-export const driverLocationReducer = (state: any, action: any) => {
-  switch (action.type) {
-    case 'setLocation':
-      console.log('LINE 28 || DELIVERY PAGE || SETTING LOCATION');
-      // return  new state
-      return {
-        ...state,
-        driverLat: action.payload.driverLat,
-        driverLon: action.payload.driverLon,
-      };
-
-    // otherwise return state
-    default:
-      return state;
-  }
-};
-
-const socketUrl = 'ws://localhost:3030';
-
 const EventMapPageRefact = ({ lat, lon, updateCoords, mode }: any) => {
-  const [state, dispatch] = useReducer(driverLocationReducer, {
-    driverLat: lat,
-    driverLon: lon,
-  });
   const { event }: any = useLocation().state;
   const user: { id: number; roleId: number } = useContext(UserContext);
   // console.log('LINE 42', user);
@@ -115,9 +91,9 @@ const EventMapPageRefact = ({ lat, lon, updateCoords, mode }: any) => {
             setUpdateCounter={setUpdateCounter}
             lat={lat}
             lon={lon}
-            state={roleId == 4 && state}
             centerCoords={centerCoords}
             getEventRoutes={getEventRoutes}
+            event={event}
           />
         ) : (
           <h1>Grabbing your map</h1>

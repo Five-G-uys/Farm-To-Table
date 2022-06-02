@@ -61,14 +61,11 @@ eventRouter.get('/api/events', (req: Request, res: Response) => {
   Events.findAll()
     .then((response: []) => {
       //loop over response and split the values by dash
-
       const respo: any = response.sort((a: any, b: any) => {
-        const ab: any = dayjs(a.dataValues.eventDate);
-        const ba: any = dayjs(b.dataValues.eventDate);
-        return ab.format('LL') - ba.format('LL');
+        return a.dataValues.id - b.dataValues.id;
       });
-      // console.log('This is line 186 events gotten', respo);
-      res.status(200).send(response);
+      console.log('This is line 186 events gotten', respo);
+      res.status(200).send(respo);
     })
     .catch((err: object) => {
       console.error('Something went wrong', err);

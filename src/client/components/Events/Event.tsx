@@ -28,6 +28,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { Link } from 'react-router-dom';
 import EventMapPage from './EventMapPage';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import InsertEmoticonRoundedIcon from '@material-ui/icons/InsertEmoticonRounded';
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -61,9 +62,15 @@ interface AppProps {
   lon: string;
   updateCoords(): void;
   mode: string;
+  getUserRsvps(): void;
 }
 
-const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
+const Event = ({
+  event,
+  handleEditClick,
+  getAllEvents,
+  getUserRsvps,
+}: AppProps) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -78,6 +85,13 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
   const { roleId } = user;
 
   const pages = { name: 'Events', path: '/eventmap-page' };
+
+  let time: string = event.eventDate.slice(11, event.eventDate.length);
+  if (Number(time.slice(0, 2)) <= 12) {
+    time = `Time ${time} am`;
+  } else {
+    time = `Time ${time}`;
+  }
 
   ////////???????POSTS AN RSVP FROM USER IN THE DB???????///////////////////////
   const handRSVPosts = () => {
@@ -102,14 +116,11 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         })
         .then(() => {
           totalEventRsvps();
-          getAllEvents();
+          getUserRsvps();
         })
         .catch((err) => {
           console.error('68 REQUEST FAILED', err);
         });
-      //     }
-      //   },
-      // );
     }
   };
 
@@ -191,6 +202,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           .then(() => {
             setUpdateCounter(updateCounter + 1);
             totalEventRsvps();
+            getUserRsvps();
           })
           .catch((err) => {
             console.error('91 REQUEST FAILED', err);
@@ -239,16 +251,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
         )}
         <CardContent>
           <Typography variant='body2' color='text.secondary' fontSize='20px'>
-            {`Date of Event: ${event.eventDate.slice(
-              0,
-              10,
-            )} Time ${event.eventDate.slice(11, event.eventDate.length)}`}
-          </Typography>
-        </CardContent>
-
-        <CardContent>
-          <Typography variant='body2' color='text.secondary' fontSize='20px'>
-            {`Type: ${event.eventType}`}
+            {`Date: ${event.eventDate.slice(0, 10)} ${time}`}
           </Typography>
         </CardContent>
         <CardContent>
@@ -260,7 +263,7 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
             state={{ event }}
             size='large'
           >
-            {`${event.location}` + " "} <LocationOnIcon></LocationOnIcon>
+            {`${event.location}` + ' '} <LocationOnIcon></LocationOnIcon>
           </Button>
           {/* <Link to={`${pages.path}`} state={{ event }}>
             <LocationOnIcon>{event.location}</LocationOnIcon>
@@ -270,9 +273,9 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           <Typography paragraph fontSize='20px'>
             {user.roleId < 4
               ? `${
-                  totalRsvp === 1
-                    ? `Total going:  ${totalRsvp}`
-                    : `Total going:  ${totalRsvp}`
+                  totalRsvp === 0
+                    ? `Be the first to RSVP!!`
+                    : `Already going:  ${totalRsvp}`
                 }`
               : `RSVPS: ${totalRsvp}`}
           </Typography>
@@ -333,7 +336,11 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           </Stack>
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
-          {' '}
+          <CardContent>
+            <Typography variant='body2' color='text.secondary' fontSize='20px'>
+              {`Type: ${event.eventType}`}
+            </Typography>
+          </CardContent>
           <Typography paragraph margin='2.3rem' fontSize='18px'>
             {' '}
             {`Description: ${event.description}`}

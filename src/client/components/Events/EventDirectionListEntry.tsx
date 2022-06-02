@@ -15,8 +15,6 @@ import {
 } from '@mui/material';
 
 const EventDirectionListEntry = ({ step, i }: any) => {
-  console.log('LINE 4 || DIRECTIONS ENTRY || STEP ', step);
-  console.log('LINE 5 || DIRECTIONS ENTRY ||iP ', i);
   return (
     <div>
       <Divider

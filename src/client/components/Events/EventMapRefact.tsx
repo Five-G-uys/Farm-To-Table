@@ -49,6 +49,7 @@ import Map, {
 } from 'react-map-gl';
 import type { LayerProps } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import EventDirectionModal from './EventDirectionModal';
 
 const pointLayer: LayerProps = {
   id: 'point',
@@ -70,7 +71,7 @@ function pointOnCircle({ center }: any) {
   };
 }
 
-const MapRefactored = ({
+const EventMapRefact = ({
   lat,
   lon,
   mode,
@@ -79,8 +80,9 @@ const MapRefactored = ({
   setUpdateCounter,
   routeData, // waypoint and trip data for the route
   state,
-  centerCoords, // object with the center of all order points
+  centerCoords, // object with the center of all event points
   getEventRoutes,
+  event,
 }: any) => {
   const [viewState, setViewState] = useState({});
   const [pointData, setPointData]: any = useState(null);
@@ -99,8 +101,8 @@ const MapRefactored = ({
 
   const onMapLoad: any = useCallback(() => {
     if (!mapRef.current || !popupInfo) return;
-    // mapRef.current.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
-    // // mapRef.current.
+    mapRef.current.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
+    // mapRef.current.
   }, [mapRef.current]);
 
   const geolocateControlRef = useCallback((ref) => {
@@ -115,43 +117,40 @@ const MapRefactored = ({
 
   const markerCoords: any = useMemo(
     () =>
-      routeData.waypoints.map((order: any, i: number) => {
-        // console.log('LINE 157 || REF MAP || ORDER ', order);
+      routeData.waypoints.map((event: any, i: number) => {
+        // console.log('LINE 157 || REF MAP || ORDER ', event);
         // console.log(
         //   'LINE 308 || REF MAP || routeData.trips[0].legs',
         //   routeData.trips[0].legs[i].steps,
         // );
-
+        console.log('EVENT MAP 125', event);
         return (
           <Marker
-            key={`marker-${i}${order.longitude}${order.latitude}`}
-            longitude={order.location[0]}
-            latitude={order.location[1]}
+            key={`marker-${i}${event.longitude}${event.latitude}`}
+            longitude={event.location[0]}
+            latitude={event.location[1]}
             anchor='center'
             onClick={(e) => {
               // If we let the click event propagates to the map, it will immediately close the popup
               // with `closeOnClick: true`
-
+              console.log('LINE 135', e.originalEvent.stopPropagation());
               e.originalEvent.stopPropagation();
-              order.i = i;
-              i !== 0 &&
-                (order.orderId = routeData.orderLocations[i - 1].orderId);
-              if (i > 0) {
-                order.paid = routeData.orderLocations[i - 1].paid;
-              }
-              order.steps =
+              event.i = i;
+
+              event.steps =
                 routeData.trips[0].legs[
-                  order.waypoint_index === 0 ? 4 : order.waypoint_index - 1
+                  event.waypoint_index === 0 ? 4 : event.waypoint_index - 1
                 ].steps;
-              setPopupInfo(order);
+              setPopupInfo(event);
               handleClose();
               handleOpen();
-            //   console.log('LINE 233 || REF MAP || order', order);
+              //   console.log('LINE 233 || REF MAP || event', event);
               mapRef.current.easeTo({
-                center: [order.location[0], order.location[1]],
+                center: [event.location[0], event.location[1]],
               });
               console.log('LINE 254 || REF MAP ||', popupInfo);
             }}
+            color={i === 0 ? 'green' : 'red'}
           />
         );
       }),
@@ -207,7 +206,10 @@ const MapRefactored = ({
   });
 
   return (
-    <div className='map-container'>
+    <div
+      className='map-containerEvent'
+      sx={{ height: '100vh', width: '100vw' }}
+    >
       <Map
         ref={mapRef}
         onLoad={onMapLoad}
@@ -224,6 +226,20 @@ const MapRefactored = ({
         mapboxAccessToken='pk.eyJ1IjoicmVuZWFtZXJjIiwiYSI6ImNsMm9iNTh3NTA0NTYzcnEwZXpibjRsNjAifQ.4XdAlX4G4l9gCed1kgdcdg'
         style={{}}
       >
+        {markerCoords}
+        {popupInfo && (
+          <EventDirectionModal
+            open={open}
+            handleClose={handleClose}
+            popupInfo={popupInfo}
+            getTodaysOrders={getEventRoutes}
+            lat={lat}
+            lon={lon}
+            updateCounter={updateCounter}
+            setUpdateCounter={setUpdateCounter}
+            event={event}
+          />
+        )}
         <Source id='routearrows' type='geojson' data={geojson}>
           <Layer
             id='delivery-route-arrows'
@@ -279,8 +295,8 @@ const MapRefactored = ({
           <Source
             type='geojson'
             data={{
-              properties: {},
               type: 'Feature',
+              properties: {},
               geometry: pointData,
             }}
           >
@@ -300,4 +316,4 @@ const MapRefactored = ({
   );
 };
 
-export default MapRefactored;
+export default EventMapRefact;
