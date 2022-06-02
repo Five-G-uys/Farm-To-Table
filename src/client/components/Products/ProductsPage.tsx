@@ -338,8 +338,7 @@ const ProductsPage = () => {
             paragraph
           >
             Discover all of our farm fresh goodies, from eggplants to okra and
-            squash to tomatoes. Harvested weekly and delivered right on your
-            doorstep.
+            squash to tomatoes. Harvested weekly and delivered to your doorstep.
           </Typography>
         </Container>
       </Box>

@@ -389,7 +389,6 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
             background: 'rgba(0,0,0,0)',
             backdropFilter: 'blur(3px)',
             borderRadius: '2rem',
-            // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
             boxShadow: 8,
           }}
         >
@@ -409,7 +408,7 @@ const EventsPage = ({ lat, lon, updateCoords, mode }: any) => {
             paragraph
             marginBottom='12px'
           >
-            We have regular Saturday farmer's markets and our seasonal Customer
+            We have regular Saturday Farmer's Markets and our seasonal Customer
             Appreciation Day is just around the corner. RSVP below and come join
             the fun!
           </Typography>

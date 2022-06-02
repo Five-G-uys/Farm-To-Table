@@ -54,8 +54,8 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               background: 'rgba(0,0,0,0)',
               backdropFilter: 'blur(3px)',
               borderRadius: '2rem',
-              boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
-              // boxShadow: 8,
+              // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
+              boxShadow: 8,
             }}
           >
             <Typography
@@ -71,11 +71,9 @@ const HomePage = ({ getAllSubscriptions }: any) => {
               component='img'
               height='194'
               width='auto'
-              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg' //default rainbow
-              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654051948/bgr7pdi9ifkfmgmhi99l.jpg' //Tomatoes
-              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654050705/uofoifgt6ced1btybcny.png' //new rainbow produce
-              image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654052233/oyxbvubzdgdytblycpsc.jpg' //tomato basket
-              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654052298/tdxl7ohcwxqwbbtohxhe.webp' //sliced tomatoes
+              sx={{ borderRadius: '1rem' }}
+              image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654098009/nzi4ldupmu4guhtruita.jpg' //Colorado Box
+              // image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1654099257/dd5gomuyvrayvjyihsej.jpg' //box hands
               alt='default image'
             />
             <br></br>
@@ -109,30 +107,6 @@ const HomePage = ({ getAllSubscriptions }: any) => {
             </Stack>
           </Container>
         </Box>
-        {/* <Container sx={{ py: 8 }} maxWidth='md'>
-          <Card
-            sx={{
-              backgroundColor: '#e2f2d9',
-              minWidth: '15rem',
-              borderRadius: '2rem',
-              boxShadow: 8,
-            }}
-            className='texture2'
-          >
-            <CardMedia
-              component='img'
-              height='194'
-              image='http://res.cloudinary.com/ddg1jsejq/image/upload/v1651189122/dpzvzkarpu8vjpwjsabd.jpg'
-              alt='random'
-            />
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography gutterBottom variant='h5' component='h2'>
-                Who's There? A 4-month subscription of weekly boxes filled with
-                the freshest produce from our farm.{' '}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Container> */}
       </main>
     </div>
   );

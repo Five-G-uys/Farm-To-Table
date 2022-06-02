@@ -227,7 +227,6 @@ const Event = ({ event, handleEditClick, getAllEvents }: AppProps) => {
           minWidth: '15rem',
           borderRadius: '2rem',
           boxShadow: 8,
-          // size: 'large',
           marginTop: '100px',
         }}
         className='texture2'

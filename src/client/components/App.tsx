@@ -69,7 +69,6 @@ function Copyright() {
   return (
     <Typography variant='body2' color='text.primary' align='center'>
       {'Copyright © www.knockknocktomatoes.com'} {new Date().getFullYear()}
-      {'.'}
     </Typography>
   );
 }
@@ -359,7 +358,7 @@ const App = () => {
             padding: '1rem 1rem',
             background: 'rgba(0,0,0,0)',
             backdropFilter: 'blur(3px)',
-            borderRadius: '2rem',
+            borderRadius: '1rem',
             // boxShadow: '0 0 4px 1px rgba(25,25,25,1)',
             boxShadow: 8,
             width: 'fit-content',
