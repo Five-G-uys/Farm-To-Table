@@ -64,13 +64,8 @@ eventRouter.get('/api/events', (req: Request, res: Response) => {
       const respo: any = response.sort((a: any, b: any) => {
         return a.dataValues.id - b.dataValues.id;
       });
-<<<<<<< HEAD
       console.log('This is line 186 events gotten', respo);
       res.status(200).send(respo);
-=======
-      // console.log('This is line 186 events gotten', respo);
-      res.status(200).send(response);
->>>>>>> ad657cb2d052b3a31747d5e26950af8d274b178a
     })
     .catch((err: object) => {
       console.error('Something went wrong', err);
