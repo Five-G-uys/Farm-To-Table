@@ -112,65 +112,65 @@ const DeliveryPage = ({ lat, lon, updateCoords, mode }: any) => {
 
   useEffect(getTodaysOrders, [lat, lon, roleId]);
 
-  // useEffect(() => {
-  //   //  Return if socket isn't connected
-  //   if (!socket || roleId != 3 || !lat || !lon) return;
-  //   // only emit events for delivery drivers
-  //   const locationInterval: any = setInterval(() => {
-  //     // get current location (as obj with driverLat driverLon properties)
-  //     // send to websocket server
-  //     socket.send(JSON.stringify({ driverLat: lat, driverLon: lon }));
-  //     // console.log('LINE 122 || DELIVERY PAGE || DRIVER INTERVAL USEEFFECT');
-  //     dispatch({
-  //       type: 'setLocation',
-  //       payload: { driverLat: lat, driverLon: lon },
-  //     });
-  //   }, 3000);
-  //   // Stop interval from running after unmounting.
-  //   //Trying to clean up side effect to prevent unnecessary resource usage and slowdown
-  //   return () => clearInterval(locationInterval);
-  // }, [lat, lon, roleId, socket]);
+  useEffect(() => {
+    //  Return if socket isn't connected
+    if (!socket || roleId != 3 || !lat || !lon) return;
+    // only emit events for delivery drivers
+    const locationInterval: any = setInterval(() => {
+      // get current location (as obj with driverLat driverLon properties)
+      // send to websocket server
+      socket.send(JSON.stringify({ driverLat: lat, driverLon: lon }));
+      // console.log('LINE 122 || DELIVERY PAGE || DRIVER INTERVAL USEEFFECT');
+      dispatch({
+        type: 'setLocation',
+        payload: { driverLat: lat, driverLon: lon },
+      });
+    }, 3000);
+    // Stop interval from running after unmounting.
+    //Trying to clean up side effect to prevent unnecessary resource usage and slowdown
+    return () => clearInterval(locationInterval);
+  }, [lat, lon, roleId, socket]);
 
   // console.log('LINE 115 || STATE', state);
 
   // WebSocket: set up to create the socket and set it in state
-  // useEffect(() => {
-  //   if (!roleId) return;
-  //   const socketInstance = new WebSocket(socketUrl);
-  //   socketInstance.binaryType = 'arraybuffer';
-  //   setSocket(socketInstance);
-  //   // Cleanup ==> disconnect socket
-  //   return () => socket.close();
-  // }, [roleId]);
+  useEffect(() => {
+    if (!roleId) return;
+    const socketInstance = new WebSocket(socketUrl);
+    socketInstance.binaryType = 'arraybuffer';
+    setSocket(socketInstance);
+    // Cleanup ==> disconnect socket
+    return () => socket.close();
+  }, [roleId]);
 
-  // useEffect(() => {
-  //   //  Return if socket isn't connected
-  //   if (!socket || roleId != 4) return;
+  useEffect(() => {
+    //  Return if socket isn't connected
+    if (!socket || roleId != 4) return;
 
-  //   socket.onopen = () => {
-  //     console.log('LINE 129 || SOCKET OPENED');
-  //   };
+    socket.onopen = () => {
+      console.log('LINE 129 || SOCKET OPENED');
+    };
 
-  //   // ONLY ADMIN SHOULD DISPATCH MESSAGE
+    // ONLY ADMIN SHOULD DISPATCH MESSAGE
 
-  //   // if (roleId < 4) {
-  //   socket.onmessage = (e: any) => {
-  //     // console.log('LINE 133 || MESSAGE', e.data, e);
-  //     if (!roleId) return;
-  //     const message: any = JSON.parse(e.data);
-  //     console.log('LINE 157 || MESSAGE', message);
+    // if (roleId < 4) {
+    socket.onmessage = (e: any) => {
+      // console.log('LINE 133 || MESSAGE', e.data, e);
+      if (!roleId) return;
+      const message: any = JSON.parse(e.data);
+      console.log('LINE 157 || MESSAGE', message);
 
-  //     // roleId > 3 &&
-  //     dispatch({
-  //       type: 'setLocation',
-  //       payload: {
-  //         driverLat: message.driverLat,
-  //         driverLon: message.driverLon,
-  //       },
-  //     });
-  //   };
-  //   // }
-  // }, [socket, roleId]);
+      // roleId > 3 &&
+      dispatch({
+        type: 'setLocation',
+        payload: {
+          driverLat: message.driverLat,
+          driverLon: message.driverLon,
+        },
+      });
+    };
+    // }
+  }, [socket, roleId]);
 
   // console.log('LINE 170 || DELIVERY PAGE || routedata', routeData);
   return (
