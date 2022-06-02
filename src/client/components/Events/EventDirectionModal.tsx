@@ -149,7 +149,7 @@ const EventDirectionModal = ({
           >
             {popupInfo.waypoint_index === 0
               ? `Knock Knock Tomatoes Inc`
-              : `${event.eventName}${popupInfo.waypoint_index}`}
+              : `${event.eventName} \n, ${event.eventType}`}
           </Typography>
           {!expanded && (
             <div>

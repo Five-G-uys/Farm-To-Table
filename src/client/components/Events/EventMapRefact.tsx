@@ -206,7 +206,10 @@ const EventMapRefact = ({
   });
 
   return (
-    <div className='map-containerEvent'>
+    <div
+      className='map-containerEvent'
+      sx={{ height: '100vh', width: '100vw' }}
+    >
       <Map
         ref={mapRef}
         onLoad={onMapLoad}
